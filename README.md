@@ -13,4 +13,4 @@ Each SDK has its own documentation with setup instructions, usage examples, and 
 ## Links
 
 - [Vayu Website](https://withvayu.com)
-- [API Documentation](https://docs.withvayu.com)
+- [API Documentation](https://guide.withvayu.com/api-reference/pages/introduction)
