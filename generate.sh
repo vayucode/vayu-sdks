@@ -11,7 +11,7 @@ if [ ! -f "$SPEC_FILE" ]; then
 fi
 
 echo "=== Generating TypeScript client ==="
-yes | npx @openapitools/openapi-generator-cli generate \
+(yes || true) | npx @openapitools/openapi-generator-cli generate \
   -g typescript \
   --additional-properties=prependFormOrBodyParameters=true,disallowAdditionalPropertiesIfNotPresent=false \
   -o "$SCRIPT_DIR/typescript/openapi" \
@@ -24,7 +24,7 @@ rm -rf "$SCRIPT_DIR/typescript/openapi/.openapi-generator" \
 
 echo ""
 echo "=== Generating Go client ==="
-yes | npx @openapitools/openapi-generator-cli generate \
+(yes || true) | npx @openapitools/openapi-generator-cli generate \
   -g go \
   --additional-properties=prependFormOrBodyParameters=true,disallowAdditionalPropertiesIfNotPresent=false,enumClassPrefix=true,isGoSubmodule=true,withGoMod=false \
   -o "$SCRIPT_DIR/go/openapi" \
@@ -39,7 +39,7 @@ rm -rf "$SCRIPT_DIR/go/openapi/.openapi-generator" \
 
 echo ""
 echo "=== Generating Python client ==="
-yes | npx @openapitools/openapi-generator-cli generate \
+(yes || true) | npx @openapitools/openapi-generator-cli generate \
   -g python \
   --additional-properties=prependFormOrBodyParameters=true,disallowAdditionalPropertiesIfNotPresent=false,generateSourceCodeOnly=true,packageName=openapi \
   -o "$SCRIPT_DIR/python" \
