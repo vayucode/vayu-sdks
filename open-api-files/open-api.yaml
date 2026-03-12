@@ -1,0 +1,2996 @@
+info:
+  title: Vayu API
+  version: 1.0.0
+  description: >-
+    The Vayu API is a RESTful API that allows you to submit events for
+    processing and storage & manage billing related entities.
+              The API is secured using the Bearer Authentication scheme with JWT tokens.
+              To obtain a JWT token, please contact Vayu at team@withvayu.com
+  contact:
+    email: dev@withvayu.com
+    name: Vayu, Inc
+    url: https://withvayu.com
+openapi: 3.0.0
+servers:
+  - url: https://connect.withvayu.com
+    description: Production server
+  - url: https://staging-connect.withvayu.com
+    description: Sandbox server
+tags:
+  - name: auth
+    description: The auth tag is used for endpoints related to authentication and
+      authorization.
+  - name: events
+    description: The events tag is used for endpoints related to event ingestion.
+  - name: customers
+    description: The customers tag is used for endpoints related to customer management.
+  - name: meters
+    description: The meters tag is used for endpoints related to meter management.
+  - name: contracts
+    description: The contracts tag is used for endpoints related to contract management.
+  - name: invoices
+    description: The invoices tag is used for endpoints related to invoice management.
+  - name: credits
+    description: The credits tag is used for endpoints related to credit management.
+  - name: webhooks
+    description: The webhooks tag is used for endpoints related to webhook management.
+components:
+  securitySchemes:
+    BearerAuthorizer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  requestBodies:
+    CreateCustomerRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateCustomerRequest"
+    UpdateCustomerRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateCustomerRequest"
+    UpdateMeterRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateMeterRequest"
+    CreateContractRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateContractRequest"
+    CreateMeasurementRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateMeasurementRequest"
+    LoginRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginRequest"
+    EventsDryRunRequest:
+      required: true
+      description: >-
+        An array of events following the EventInput schema. This request body
+        should be included in the PUT request to '/events'
+              Up to 1000 events or a total payload max size of 256KB
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EventsDryRunRequest"
+    SendEventsRequest:
+      required: true
+      description: >-
+        An array of events following the EventInput schema. This request body
+        should be included in the PUT request to '/events'
+              Up to 1000 events or a total payload max size of 256KB
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SendEventsRequest"
+    GrantCreditsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GrantCreditsRequest"
+    DeductCreditsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeductCreditsRequest"
+    WebhookSubscribeRequest:
+      required: true
+      description: Subscribe to webhooks and receive event notifications.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/WebhookSubscribeRequest"
+  responses:
+    CreateCustomerResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateCustomerResponse"
+    ListCustomersResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListCustomersResponse"
+    GetCustomerResponse:
+      description: response contains the customer matching the provided externalId
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCustomerResponse"
+    UpdateCustomerResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateCustomerResponse"
+    DeleteCustomerResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteCustomerResponse"
+    GetMeterResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetMeterResponse"
+    UpdateMeterResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateMeterResponse"
+    DeleteMeterResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteMeterResponse"
+    ListMetersResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListMetersResponse"
+    GetContractResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetContractResponse"
+    DeleteContractResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteContractResponse"
+    ListContractsResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListContractsResponse"
+    CreateContractResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateContractResponse"
+    CreateMeasurementResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateMeasurementResponse"
+    ListMeasurementsResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListMeasurementsResponse"
+    GetMeasurementResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetMeasurementResponse"
+    DeleteMeasurementResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteMeasurementResponse"
+    GetInvoiceResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetInvoiceResponse"
+    ListInvoicesResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListInvoicesResponse"
+    LoginResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginResponse"
+    EventsDryRunResponse:
+      description: Events with their corresponding meter and customer data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EventsDryRunResponse"
+    QueryEventsResponse:
+      description: response contains an array of events
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/QueryEventsResponse"
+    SendEventsResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SendEventsResponse"
+    GetEventResponse:
+      description: response contains the event matching the provided refId
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetEventResponse"
+    DeleteEventResponse:
+      description: Contains the event that was deleted
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteEventResponse"
+    ListCreditLedgerEntriesResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListCreditLedgerEntriesResponse"
+    RequestSuccess:
+      description: RequestSuccess
+    GetCustomerProductsConsumptionsResponse:
+      description: response contains the products consumptions by the customer id
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCustomerProductsConsumptionsResponse"
+    GetCustomerProductsConsumptionsByAliasResponse:
+      description: response contains the products consumptions by the customer alias
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCustomerProductsConsumptionsByAliasResponse"
+    GetProductConsumptionResponse:
+      description: The response from the get product consumption action
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetProductConsumptionResponse"
+  parameters: {}
+  schemas:
+    Address:
+      type: object
+      properties:
+        country:
+          type: string
+          minLength: 1
+        city:
+          type: string
+          minLength: 1
+        addressText:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        postalCode:
+          type: string
+          minLength: 1
+      description: The address of the customer
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        receiveInvoiceEmail:
+          type: boolean
+      required:
+        - email
+    CreateCustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the customer
+        aliases:
+          type: array
+          nullable: true
+          items:
+            type: string
+            minLength: 1
+          default: []
+          description: The aliases of the customer used to match events to the customer.
+        address:
+          $ref: "#/components/schemas/Address"
+        contacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
+          description: The contacts of the customer. Contact marked as primary is the
+            target for invoice sharing.
+        externalId:
+          type: string
+          minLength: 1
+          description: The external ID of the customer
+      required:
+        - name
+    CreateCustomerResponse:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the customer
+            aliases:
+              type: array
+              nullable: true
+              items:
+                type: string
+                minLength: 1
+              default: []
+              description: The aliases of the customer used to match events to the customer.
+            address:
+              $ref: "#/components/schemas/Address"
+            contacts:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contact"
+              description: The contacts of the customer. Contact marked as primary is the
+                target for invoice sharing.
+            externalId:
+              type: string
+              minLength: 1
+              description: The external ID of the customer
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - customer
+    ListCustomersResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                description: The name of the customer
+              aliases:
+                type: array
+                nullable: true
+                items:
+                  type: string
+                  minLength: 1
+                default: []
+                description: The aliases of the customer used to match events to the customer.
+              address:
+                $ref: "#/components/schemas/Address"
+              contacts:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contact"
+                description: The contacts of the customer. Contact marked as primary is the
+                  target for invoice sharing.
+              externalId:
+                type: string
+                minLength: 1
+                description: The external ID of the customer
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - name
+              - id
+              - createdAt
+              - updatedAt
+        total:
+          type: number
+        hasMore:
+          type: boolean
+        nextCursor:
+          type: string
+      required:
+        - customers
+        - total
+        - hasMore
+    GetCustomerResponse:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the customer
+            aliases:
+              type: array
+              nullable: true
+              items:
+                type: string
+                minLength: 1
+              default: []
+              description: The aliases of the customer used to match events to the customer.
+            address:
+              $ref: "#/components/schemas/Address"
+            contacts:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contact"
+              description: The contacts of the customer. Contact marked as primary is the
+                target for invoice sharing.
+            externalId:
+              type: string
+              minLength: 1
+              description: The external ID of the customer
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - customer
+    UpdateCustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the customer
+        aliases:
+          type: array
+          nullable: true
+          items:
+            type: string
+            minLength: 1
+          default: []
+          description: The aliases of the customer used to match events to the customer.
+        address:
+          $ref: "#/components/schemas/Address"
+        contacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
+          description: The contacts of the customer. Contact marked as primary is the
+            target for invoice sharing.
+        externalId:
+          type: string
+          minLength: 1
+          description: The external ID of the customer
+      additionalProperties: false
+    UpdateCustomerResponse:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the customer
+            aliases:
+              type: array
+              nullable: true
+              items:
+                type: string
+                minLength: 1
+              default: []
+              description: The aliases of the customer used to match events to the customer.
+            address:
+              $ref: "#/components/schemas/Address"
+            contacts:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contact"
+              description: The contacts of the customer. Contact marked as primary is the
+                target for invoice sharing.
+            externalId:
+              type: string
+              minLength: 1
+              description: The external ID of the customer
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - customer
+    DeleteCustomerResponse:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the customer
+            aliases:
+              type: array
+              nullable: true
+              items:
+                type: string
+                minLength: 1
+              default: []
+              description: The aliases of the customer used to match events to the customer.
+            address:
+              $ref: "#/components/schemas/Address"
+            contacts:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contact"
+              description: The contacts of the customer. Contact marked as primary is the
+                target for invoice sharing.
+            externalId:
+              type: string
+              minLength: 1
+              description: The external ID of the customer
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
+      required:
+        - customer
+    AggregationOperator:
+      type: string
+      enum:
+        - Count
+        - Sum
+        - Distinct
+        - Max
+        - Min
+        - Average
+        - First
+        - Last
+      description: The aggregation method defines how the events should be summed to
+        represent a usage value.
+    AggregationMethod:
+      type: object
+      properties:
+        operator:
+          $ref: "#/components/schemas/AggregationOperator"
+        field:
+          type: string
+          description: The field inside the "data" property to apply the aggregation
+            method to.
+        instanceKey:
+          type: string
+          description: The fields that is used to group different events together when
+            measuring the usage.
+      required:
+        - operator
+      description: The aggregation method defines how the events should be summed to
+        represent a usage value.
+    CriterionOperator:
+      type: string
+      enum:
+        - Equals
+        - DoesntEqual
+        - Has
+        - In
+        - Contains
+        - DoesntContain
+        - LargerThan
+        - LowerThan
+        - LowerEqualTo
+        - LargerEqualTo
+        - Exists
+        - DoesntExists
+    Criterion:
+      type: object
+      properties:
+        field:
+          type: string
+          minLength: 1
+        operator:
+          $ref: "#/components/schemas/CriterionOperator"
+        value:
+          type: string
+          minLength: 1
+      required:
+        - field
+        - operator
+        - value
+    Condition:
+      type: object
+      properties:
+        criterions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Criterion"
+          minItems: 1
+      required:
+        - criterions
+    Filter:
+      type: object
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Condition"
+          minItems: 1
+      required:
+        - conditions
+      description: >-
+        The filter to apply to the events to be included in the meter.
+            The filter object contains an array of Conditions, each condition represents a logical OR statement.
+            Each condition contains an array of Criteria (criterions), each criterion represents a logical AND statement.
+    GetMeterResponse:
+      type: object
+      properties:
+        meter:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the meter
+            eventName:
+              type: string
+              minLength: 1
+              description: The name of the event that the meter is tracking.
+            aggregationMethod:
+              $ref: "#/components/schemas/AggregationMethod"
+            filter:
+              $ref: "#/components/schemas/Filter"
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - eventName
+            - aggregationMethod
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - meter
+    UpdateMeterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the meter
+        eventName:
+          type: string
+          minLength: 1
+          description: The name of the event that the meter is tracking.
+        aggregationMethod:
+          $ref: "#/components/schemas/AggregationMethod"
+        filter:
+          $ref: "#/components/schemas/Filter"
+      additionalProperties: false
+    UpdateMeterResponse:
+      type: object
+      properties:
+        meter:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the meter
+            eventName:
+              type: string
+              minLength: 1
+              description: The name of the event that the meter is tracking.
+            aggregationMethod:
+              $ref: "#/components/schemas/AggregationMethod"
+            filter:
+              $ref: "#/components/schemas/Filter"
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - eventName
+            - aggregationMethod
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - meter
+    DeleteMeterResponse:
+      type: object
+      properties:
+        meter:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the meter
+            eventName:
+              type: string
+              minLength: 1
+              description: The name of the event that the meter is tracking.
+            aggregationMethod:
+              $ref: "#/components/schemas/AggregationMethod"
+            filter:
+              $ref: "#/components/schemas/Filter"
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - name
+            - eventName
+            - aggregationMethod
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
+      required:
+        - meter
+    ListMetersResponse:
+      type: object
+      properties:
+        meters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                description: The name of the meter
+              eventName:
+                type: string
+                minLength: 1
+                description: The name of the event that the meter is tracking.
+              aggregationMethod:
+                $ref: "#/components/schemas/AggregationMethod"
+              filter:
+                $ref: "#/components/schemas/Filter"
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - name
+              - eventName
+              - aggregationMethod
+              - id
+              - createdAt
+              - updatedAt
+        total:
+          type: number
+        hasMore:
+          type: boolean
+        nextCursor:
+          type: string
+      required:
+        - meters
+        - total
+        - hasMore
+    GetContractResponse:
+      type: object
+      properties:
+        contract:
+          type: object
+          properties:
+            startDate:
+              type: string
+              description: The start date of the contract
+              format: date-time
+            endDate:
+              type: string
+              description: The end date of the contract
+              format: date-time
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the plan that the contract is associated with
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - startDate
+            - customerId
+            - planId
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - contract
+    DeleteContractResponse:
+      type: object
+      properties:
+        contract:
+          type: object
+          properties:
+            startDate:
+              type: string
+              description: The start date of the contract
+              format: date-time
+            endDate:
+              type: string
+              description: The end date of the contract
+              format: date-time
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the plan that the contract is associated with
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - startDate
+            - customerId
+            - planId
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
+      required:
+        - contract
+    ListContractsResponse:
+      type: object
+      properties:
+        contracts:
+          type: array
+          items:
+            type: object
+            properties:
+              startDate:
+                type: string
+                description: The start date of the contract
+                format: date-time
+              endDate:
+                type: string
+                description: The end date of the contract
+                format: date-time
+              customerId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The id of the customer that the contract is associated with
+              planId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The id of the plan that the contract is associated with
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - startDate
+              - customerId
+              - planId
+              - id
+              - createdAt
+              - updatedAt
+        total:
+          type: number
+        hasMore:
+          type: boolean
+        nextCursor:
+          type: string
+      required:
+        - contracts
+        - total
+        - hasMore
+    CreateContractRequest:
+      type: object
+      properties:
+        startDate:
+          type: string
+          description: The start date of the contract
+          format: date-time
+        endDate:
+          type: string
+          description: The end date of the contract
+          format: date-time
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the customer that the contract is associated with
+        planId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the plan that the contract is associated with
+      required:
+        - startDate
+        - customerId
+        - planId
+    CreateContractResponse:
+      type: object
+      properties:
+        contract:
+          type: object
+          properties:
+            startDate:
+              type: string
+              description: The start date of the contract
+              format: date-time
+            endDate:
+              type: string
+              description: The end date of the contract
+              format: date-time
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the plan that the contract is associated with
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - startDate
+            - customerId
+            - planId
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - contract
+    CreateMeasurementRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The customer for whom usage will be attributed
+        meterId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The meter/product that is being measured
+        usageDate:
+          type: object
+          properties:
+            year:
+              type: integer
+              minimum: 0
+            month:
+              type: integer
+              minimum: 0
+              maximum: 12
+            day:
+              type: integer
+              minimum: 1
+              maximum: 31
+          required:
+            - year
+            - month
+            - day
+          description: The day the usage took place
+        value:
+          type: number
+          description: The updated value of product units consumed by the customer, for
+            the product for given day
+      required:
+        - customerId
+        - meterId
+        - usageDate
+        - value
+    CreateMeasurementResponse:
+      type: object
+      properties:
+        measurement:
+          type: object
+          properties:
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The customer for whom usage will be attributed
+            meterId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The meter/product that is being measured
+            usageDate:
+              type: object
+              properties:
+                year:
+                  type: integer
+                  minimum: 0
+                month:
+                  type: integer
+                  minimum: 0
+                  maximum: 12
+                day:
+                  type: integer
+                  minimum: 1
+                  maximum: 31
+              required:
+                - year
+                - month
+                - day
+              description: The day the usage took place
+            value:
+              type: number
+              description: The updated value of product units consumed by the customer, for
+                the product for given day
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - customerId
+            - meterId
+            - usageDate
+            - value
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - measurement
+    ListMeasurementsResponse:
+      type: object
+      properties:
+        measurements:
+          type: array
+          items:
+            type: object
+            properties:
+              customerId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The customer for whom usage will be attributed
+              meterId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The meter/product that is being measured
+              usageDate:
+                type: object
+                properties:
+                  year:
+                    type: integer
+                    minimum: 0
+                  month:
+                    type: integer
+                    minimum: 0
+                    maximum: 12
+                  day:
+                    type: integer
+                    minimum: 1
+                    maximum: 31
+                required:
+                  - year
+                  - month
+                  - day
+                description: The day the usage took place
+              value:
+                type: number
+                description: The updated value of product units consumed by the customer, for
+                  the product for given day
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - customerId
+              - meterId
+              - usageDate
+              - value
+              - id
+              - createdAt
+              - updatedAt
+        total:
+          type: number
+        hasMore:
+          type: boolean
+        nextCursor:
+          type: string
+      required:
+        - measurements
+        - total
+        - hasMore
+    GetMeasurementResponse:
+      type: object
+      properties:
+        measurement:
+          type: object
+          properties:
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The customer for whom usage will be attributed
+            meterId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The meter/product that is being measured
+            usageDate:
+              type: object
+              properties:
+                year:
+                  type: integer
+                  minimum: 0
+                month:
+                  type: integer
+                  minimum: 0
+                  maximum: 12
+                day:
+                  type: integer
+                  minimum: 1
+                  maximum: 31
+              required:
+                - year
+                - month
+                - day
+              description: The day the usage took place
+            value:
+              type: number
+              description: The updated value of product units consumed by the customer, for
+                the product for given day
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - customerId
+            - meterId
+            - usageDate
+            - value
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - measurement
+    DeleteMeasurementResponse:
+      type: object
+      properties:
+        measurement:
+          type: object
+          properties:
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The customer for whom usage will be attributed
+            meterId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The meter/product that is being measured
+            usageDate:
+              type: object
+              properties:
+                year:
+                  type: integer
+                  minimum: 0
+                month:
+                  type: integer
+                  minimum: 0
+                  maximum: 12
+                day:
+                  type: integer
+                  minimum: 1
+                  maximum: 31
+              required:
+                - year
+                - month
+                - day
+              description: The day the usage took place
+            value:
+              type: number
+              description: The updated value of product units consumed by the customer, for
+                the product for given day
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - customerId
+            - meterId
+            - usageDate
+            - value
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
+      required:
+        - measurement
+    FullDayPeriod:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+      required:
+        - startTime
+        - endTime
+      description: The billing cycle of the invoice, consists of a start and end date
+    LineItem:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the invoice that the line item is a part of
+        revenueBreakdown:
+          type: object
+          properties:
+            total:
+              type: number
+            subtotal:
+              type: number
+            overage:
+              type: number
+            discount:
+              type: number
+            creditsUsed:
+              type: number
+            tax:
+              type: number
+              minimum: 0
+          required:
+            - total
+            - subtotal
+            - overage
+            - discount
+            - creditsUsed
+            - tax
+          description: The revenue breakdown of the line item
+      required:
+        - invoiceId
+        - revenueBreakdown
+    GetInvoiceResponse:
+      type: object
+      properties:
+        invoice:
+          type: object
+          properties:
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the customer that the invoice is associated with
+            contractId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the contract that the invoice is associated with
+            name:
+              type: string
+              minLength: 1
+              description: The name of the invoice, usually a description of the billing
+                period
+            billingCycle:
+              $ref: "#/components/schemas/FullDayPeriod"
+            lineItems:
+              type: array
+              items:
+                $ref: "#/components/schemas/LineItem"
+            amount:
+              type: number
+              description: The total amount of the invoice
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - customerId
+            - name
+            - billingCycle
+            - lineItems
+            - amount
+            - id
+            - createdAt
+            - updatedAt
+      required:
+        - invoice
+    ListInvoicesResponse:
+      type: object
+      properties:
+        invoices:
+          type: array
+          items:
+            type: object
+            properties:
+              customerId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The id of the customer that the invoice is associated with
+              contractId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The id of the contract that the invoice is associated with
+              name:
+                type: string
+                minLength: 1
+                description: The name of the invoice, usually a description of the billing
+                  period
+              billingCycle:
+                $ref: "#/components/schemas/FullDayPeriod"
+              lineItems:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LineItem"
+              amount:
+                type: number
+                description: The total amount of the invoice
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - customerId
+              - name
+              - billingCycle
+              - lineItems
+              - amount
+              - id
+              - createdAt
+              - updatedAt
+        total:
+          type: number
+        hasMore:
+          type: boolean
+        nextCursor:
+          type: string
+      required:
+        - invoices
+        - total
+        - hasMore
+    LoginRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          description: The refresh token issued for the authentication process. It is
+            required to obtain a new access token.
+      required:
+        - refreshToken
+    LoginResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The new access token to be used for subsequent API calls. It is set
+            to expire every hour.
+      required:
+        - accessToken
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The distinctive label assigned to an event, serving as a critical
+            identifier for categorizing and pricing events within the system's
+            backend infrastructure.
+          example: api_call
+        timestamp:
+          type: string
+          description: The temporal marker denoting the exact moment of event occurrence.
+            The timestamp is formatted as an ISO 8601 string and is expressed in
+            Coordinated Universal Time (UTC). i.e. YYYY-MM-DDTHH:MM:SS.SSSZ
+          format: date-time
+          example: 2023-09-13T18:25:43.511Z
+        customerAlias:
+          type: string
+          minLength: 1
+          description: A pseudonymous or otherwise obfuscated identifier uniquely assigned
+            to each customer.
+          example: customer_12345
+        ref:
+          type: string
+          description: A universally unique identifier (UUID) or other form of
+            high-entropy string serving as an immutable reference for each event
+            entry.
+          example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+        data:
+          type: object
+          nullable: true
+          additionalProperties:
+            nullable: true
+          description: A schema-less JSON object encapsulating miscellaneous attributes
+            and metrics associated with the event.
+          example:
+            key1: processing_duration
+            key2: api_url
+      required:
+        - name
+        - timestamp
+        - customerAlias
+        - ref
+    EventsDryRunRequest:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+          minItems: 1
+          maxItems: 1000
+      required:
+        - events
+    Meter:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the meter
+        eventName:
+          type: string
+          minLength: 1
+          description: The name of the event that the meter is tracking.
+        aggregationMethod:
+          $ref: "#/components/schemas/AggregationMethod"
+        filter:
+          $ref: "#/components/schemas/Filter"
+      required:
+        - name
+        - eventName
+        - aggregationMethod
+    EventsDryRunResponseObject:
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            customerAlias:
+              type: string
+              minLength: 1
+            accountId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+            data:
+              type: object
+              nullable: true
+              additionalProperties:
+                nullable: true
+            ref:
+              type: string
+            name:
+              type: string
+          required:
+            - timestamp
+            - customerAlias
+            - accountId
+            - ref
+            - name
+        matchedCustomer:
+          type: string
+          nullable: true
+        meterWithValues:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Meter"
+              - type: object
+                properties:
+                  value:
+                    type: number
+                  instanceValue:
+                    nullable: true
+                required:
+                  - value
+      required:
+        - event
+        - meterWithValues
+    EventsDryRunResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventsDryRunResponseObject"
+      required:
+        - events
+    QueryEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The distinctive label assigned to an event, serving as a critical
+                  identifier for categorizing and pricing events within the
+                  system's backend infrastructure.
+                example: api_call
+              timestamp:
+                type: string
+                description: The temporal marker denoting the exact moment of event occurrence.
+                  The timestamp is formatted as an ISO 8601 string and is
+                  expressed in Coordinated Universal Time (UTC). i.e.
+                  YYYY-MM-DDTHH:MM:SS.SSSZ
+                format: date-time
+                example: 2023-09-13T18:25:43.511Z
+              customerAlias:
+                type: string
+                minLength: 1
+                description: A pseudonymous or otherwise obfuscated identifier uniquely assigned
+                  to each customer.
+                example: customer_12345
+              ref:
+                type: string
+                description: A universally unique identifier (UUID) or other form of
+                  high-entropy string serving as an immutable reference for each
+                  event entry.
+                example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+              data:
+                type: object
+                nullable: true
+                additionalProperties:
+                  nullable: true
+                description: A schema-less JSON object encapsulating miscellaneous attributes
+                  and metrics associated with the event.
+                example:
+                  key1: processing_duration
+                  key2: api_url
+              id:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+            required:
+              - name
+              - timestamp
+              - customerAlias
+              - ref
+              - id
+              - createdAt
+              - updatedAt
+          description: An array of events matching the query criteria
+      required:
+        - events
+    SendEventsRequest:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+          minItems: 1
+          maxItems: 1000
+      required:
+        - events
+    InvalidEvent:
+      type: object
+      properties:
+        event:
+          $ref: "#/components/schemas/Event"
+        error:
+          type: string
+          description: The error message indicating the reason the event failed validation.
+          example: Event ref already exists.
+      required:
+        - event
+        - error
+    SendEventsResponse:
+      type: object
+      properties:
+        validEvents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+          description: An array of events that were successfully processed and sent to the
+            queue.
+        invalidEvents:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvalidEvent"
+          description: An array of events that failed validation and were not sent to the
+            queue. Each object contains the event and the error message.
+      required:
+        - validEvents
+        - invalidEvents
+    GetEventResponse:
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The distinctive label assigned to an event, serving as a critical
+                identifier for categorizing and pricing events within the
+                system's backend infrastructure.
+              example: api_call
+            timestamp:
+              type: string
+              description: The temporal marker denoting the exact moment of event occurrence.
+                The timestamp is formatted as an ISO 8601 string and is
+                expressed in Coordinated Universal Time (UTC). i.e.
+                YYYY-MM-DDTHH:MM:SS.SSSZ
+              format: date-time
+              example: 2023-09-13T18:25:43.511Z
+            customerAlias:
+              type: string
+              minLength: 1
+              description: A pseudonymous or otherwise obfuscated identifier uniquely assigned
+                to each customer.
+              example: customer_12345
+            ref:
+              type: string
+              description: A universally unique identifier (UUID) or other form of
+                high-entropy string serving as an immutable reference for each
+                event entry.
+              example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+            data:
+              type: object
+              nullable: true
+              additionalProperties:
+                nullable: true
+              description: A schema-less JSON object encapsulating miscellaneous attributes
+                and metrics associated with the event.
+              example:
+                key1: processing_duration
+                key2: api_url
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - timestamp
+            - customerAlias
+            - ref
+            - id
+            - createdAt
+            - updatedAt
+          description: The event matching the provided refId
+      required:
+        - event
+    DeleteEventResponse:
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The distinctive label assigned to an event, serving as a critical
+                identifier for categorizing and pricing events within the
+                system's backend infrastructure.
+              example: api_call
+            timestamp:
+              type: string
+              description: The temporal marker denoting the exact moment of event occurrence.
+                The timestamp is formatted as an ISO 8601 string and is
+                expressed in Coordinated Universal Time (UTC). i.e.
+                YYYY-MM-DDTHH:MM:SS.SSSZ
+              format: date-time
+              example: 2023-09-13T18:25:43.511Z
+            customerAlias:
+              type: string
+              minLength: 1
+              description: A pseudonymous or otherwise obfuscated identifier uniquely assigned
+                to each customer.
+              example: customer_12345
+            ref:
+              type: string
+              description: A universally unique identifier (UUID) or other form of
+                high-entropy string serving as an immutable reference for each
+                event entry.
+              example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+            data:
+              type: object
+              nullable: true
+              additionalProperties:
+                nullable: true
+              description: A schema-less JSON object encapsulating miscellaneous attributes
+                and metrics associated with the event.
+              example:
+                key1: processing_duration
+                key2: api_url
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - name
+            - timestamp
+            - customerAlias
+            - ref
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
+          description: The event matching the provided refId
+      required:
+        - event
+    BillingCycleStatus:
+      type: string
+      enum:
+        - Grant
+        - Deduct
+    CreditLedgerEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+        createdAt:
+          type: string
+          format: date-time
+        type:
+          $ref: "#/components/schemas/BillingCycleStatus"
+        amount:
+          type: number
+        balanceAfterEntry:
+          type: number
+        invoiceId:
+          type: string
+        productId:
+          type: string
+        contractId:
+          type: string
+      required:
+        - id
+        - createdAt
+        - type
+        - amount
+        - balanceAfterEntry
+    ListCreditLedgerEntriesResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreditLedgerEntry"
+          description: The credit ledger entries for the customer.
+      required:
+        - entries
+    GrantCreditsRequest:
+      type: object
+      properties:
+        creditAmount:
+          type: number
+          description: The amount of credits to be granted to the user.
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The ID of the customer to whom the credits will be granted.
+      required:
+        - creditAmount
+        - customerId
+    DeductCreditsRequest:
+      type: object
+      properties:
+        creditAmount:
+          type: number
+          description: The amount of credits to be deducted from the user.
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The ID of the customer to whom the credits will be deducted from.
+      required:
+        - creditAmount
+        - customerId
+    NotificationEventType:
+      type: string
+      enum:
+        - AnonymousCustomer
+        - Overage
+        - UpcomingRenewal
+        - InvoiceApproved
+        - CustomerPortalLinkSent
+        - NewCustomerWithoutContract
+        - MonthEndReport
+        - UnchargedEvents
+        - TierCrossed
+        - CommitmentCrossed
+    WebhookSubscribeRequest:
+      type: object
+      properties:
+        callbackUrl:
+          type: string
+        eventType:
+          $ref: "#/components/schemas/NotificationEventType"
+      required:
+        - callbackUrl
+        - eventType
+    ProductConsumption:
+      type: object
+      properties:
+        productId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the product.
+        productName:
+          type: string
+          minLength: 1
+          description: The name of the product.
+          example: Vayu Product
+        provisionedAmount:
+          type: number
+          minimum: 0
+          description: The amount of units provisioned to the customer.
+          example: 10
+        consumedAmount:
+          type: number
+          minimum: 0
+          description: The amount of units consumed by the customer.
+          example: 10
+        usagePercentage:
+          type: number
+          minimum: 0
+          description: The percentage of the provisioned amount that has been consumed.
+        hasAccess:
+          type: boolean
+          description: Whether the customer has access to the product.
+          example: true
+        remainingAmount:
+          type: number
+          description: The amount of units remaining to consume.
+          example: 10
+        exceededAmount:
+          type: number
+          description: The amount of units exceeded.
+          example: 10
+      required:
+        - productId
+        - productName
+        - provisionedAmount
+        - consumedAmount
+        - usagePercentage
+        - hasAccess
+    GetCustomerProductsConsumptionsResponse:
+      type: object
+      properties:
+        productsConsumptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductConsumption"
+      required:
+        - productsConsumptions
+    GetCustomerProductsConsumptionsByAliasResponse:
+      type: object
+      properties:
+        productsConsumptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductConsumption"
+      required:
+        - productsConsumptions
+    GetProductConsumptionResponse:
+      type: object
+      properties:
+        productConsumption:
+          allOf:
+            - $ref: "#/components/schemas/ProductConsumption"
+            - description: The product consumption data
+      required:
+        - productConsumption
+    Limit:
+      type: number
+      maximum: 1000
+      default: 10
+    Cursor:
+      type: string
+    CustomerId:
+      type: string
+      pattern: ^[0-9a-fA-F]{24}$
+    MeterId:
+      type: string
+      pattern: ^[0-9a-fA-F]{24}$
+    ContractId:
+      type: string
+      pattern: ^[0-9a-fA-F]{24}$
+    MeasurementId:
+      type: string
+      pattern: ^[0-9a-fA-F]{24}$
+    InvoiceId:
+      type: string
+      pattern: ^[0-9a-fA-F]{24}$
+    StartTime:
+      type: string
+      format: date-time
+    EndTime:
+      type: string
+      format: date-time
+    EventName:
+      type: string
+      minLength: 1
+    RefId:
+      type: string
+    ExternalId:
+      type: string
+    Alias:
+      type: string
+    ProductId:
+      type: string
+paths:
+  /customers:
+    post:
+      tags:
+        - customers
+      operationId: createCustomer
+      description: Create a new Customer.
+      summary: Create Customer
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/CreateCustomerRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/CreateCustomerResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    get:
+      tags:
+        - customers
+      operationId: listCustomers
+      description: Get a list of Customers.
+      summary: List Customers
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListCustomersResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /customers/{customerId}:
+    get:
+      tags:
+        - customers
+      operationId: getCustomer
+      description: Get a Customer by id.
+      summary: Get Customer
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerId"
+          required: true
+          in: path
+          name: customerId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCustomerResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+        - customers
+      operationId: updateCustomer
+      description: Update a Customer by id.
+      summary: Update Customer
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateCustomerRequest"
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerId"
+          required: true
+          in: path
+          name: customerId
+      responses:
+        "200":
+          $ref: "#/components/responses/UpdateCustomerResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - customers
+      operationId: deleteCustomer
+      description: Delete a Customer by id.
+      summary: Delete Customer
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerId"
+          required: true
+          in: path
+          name: customerId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteCustomerResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /meters/{meterId}:
+    get:
+      tags:
+        - meters
+      operationId: getMeter
+      description: Get a Meter by id.
+      summary: Get Meter
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/MeterId"
+          required: true
+          in: path
+          name: meterId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetMeterResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+        - meters
+      operationId: updateMeter
+      description: Update a Meter by id.
+      summary: Update Meter
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateMeterRequest"
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/MeterId"
+          required: true
+          in: path
+          name: meterId
+      responses:
+        "200":
+          $ref: "#/components/responses/UpdateMeterResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - meters
+      operationId: deleteMeter
+      description: Delete a Meter by id.
+      summary: Delete Meter
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/MeterId"
+          required: true
+          in: path
+          name: meterId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteMeterResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /meters:
+    get:
+      tags:
+        - meters
+      operationId: listMeters
+      description: Get a list of Meters.
+      summary: List Meters
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListMetersResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /contracts/{contractId}:
+    get:
+      tags:
+        - contracts
+      operationId: getContract
+      description: Get a Contract by id.
+      summary: Get Contract
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ContractId"
+          required: true
+          in: path
+          name: contractId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetContractResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - contracts
+      operationId: deleteContract
+      description: Delete a Contract by id.
+      summary: Delete Contract
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ContractId"
+          required: true
+          in: path
+          name: contractId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteContractResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /contracts:
+    get:
+      tags:
+        - contracts
+      operationId: listContracts
+      description: Get a list of Contracts.
+      summary: List Contracts
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListContractsResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    post:
+      tags:
+        - contracts
+      operationId: createContract
+      description: Create a new Contract.
+      summary: Create Contract
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/CreateContractRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/CreateContractResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /measurements:
+    post:
+      tags:
+        - measurements
+      operationId: createMeasurement
+      description: Create a new Measurement.
+      summary: Create Measurement
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/CreateMeasurementRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/CreateMeasurementResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    get:
+      tags:
+        - measurements
+      operationId: listMeasurements
+      description: Get a list of Measurements.
+      summary: List Measurements
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListMeasurementsResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /measurements/{measurementId}:
+    get:
+      tags:
+        - measurements
+      operationId: getMeasurement
+      description: Get a Measurement by id.
+      summary: Get Measurement
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/MeasurementId"
+          required: true
+          in: path
+          name: measurementId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetMeasurementResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - measurements
+      operationId: deleteMeasurement
+      description: Delete a Measurement by id.
+      summary: Delete Measurement
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/MeasurementId"
+          required: true
+          in: path
+          name: measurementId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteMeasurementResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /invoices/{invoiceId}:
+    get:
+      tags:
+        - invoices
+      operationId: getInvoice
+      description: Get a Invoice by id.
+      summary: Get Invoice
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetInvoiceResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /invoices:
+    get:
+      tags:
+        - invoices
+      operationId: listInvoices
+      description: Get a list of Invoices.
+      summary: List Invoices
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListInvoicesResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /login:
+    post:
+      tags:
+        - auth
+      operationId: login
+      description: >-
+        This endpoint is designed to acquire a temporary access token.
+            Submit the auth token in the request body to obtain a new access token.
+            Use this new token for subsequent API calls. Token is set to expire every hour.
+      summary: Login by obtaining a new access token
+      requestBody:
+        $ref: "#/components/requestBodies/LoginRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/LoginResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /events/dry-run:
+    post:
+      tags:
+        - events
+      operationId: sendEventsDryRun
+      description: "Use this endpoint to send an array of events for processing. Make
+        sure to comply with the request schema for each event. NOTE: this is a
+        dry run and will not result in actual storage of the events."
+      summary: Submit a batch of events for testing
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/EventsDryRunRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/EventsDryRunResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "413":
+          description: Request Entity Too Large
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /events:
+    get:
+      tags:
+        - events
+      operationId: queryEvents
+      description: Fetch events occurring within a specified timestamp range. An
+        optional event name can be provided to further filter the events.
+      summary: Query events by timestamp period and optional event name
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/StartTime"
+          required: true
+          in: query
+          name: startTime
+        - schema:
+            $ref: "#/components/schemas/EndTime"
+          required: true
+          in: query
+          name: endTime
+        - schema:
+            $ref: "#/components/schemas/EventName"
+          required: false
+          in: query
+          name: eventName
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/QueryEventsResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    post:
+      tags:
+        - events
+      operationId: sendEvents
+      description: Use this endpoint to send an array of events for processing and
+        storage. Make sure to comply with the request schema for each event.
+      summary: Submit a batch of events for ingestion
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/SendEventsRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/SendEventsResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "413":
+          description: Request Entity Too Large
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /events/{refId}:
+    get:
+      tags:
+        - events
+      operationId: getEventByRefId
+      description: Use this endpoint to get a specific event using its reference ID.
+      summary: Get event by refId
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/RefId"
+          required: true
+          in: path
+          name: refId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetEventResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - events
+      operationId: deleteEventByRefId
+      description: Use this endpoint to remove a specific event using its reference ID.
+      summary: Delete an event by refId
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/RefId"
+          required: true
+          in: path
+          name: refId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteEventResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /credits:
+    get:
+      tags:
+        - credits
+      operationId: listCreditLedgerEntries
+      description: This endpoint is used to retrieve the credit ledger entries for a
+        specific customer.
+      summary: Retrieve credit ledger entries for customer.
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerId"
+          required: true
+          in: query
+          name: customerId
+        - schema:
+            $ref: "#/components/schemas/Limit"
+          required: false
+          in: query
+          name: limit
+        - schema:
+            $ref: "#/components/schemas/Cursor"
+          required: false
+          in: query
+          name: cursor
+      responses:
+        "200":
+          $ref: "#/components/responses/ListCreditLedgerEntriesResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /credits/grant:
+    post:
+      tags:
+        - credits
+      operationId: grantCredits
+      description: >-
+        This endpoint is used to grant credits to a customer.
+            Submit the credit amount and customer ID in the request body to grant the credits.
+            The granted credits will be added to the customer's account.
+      summary: Grant credits to a customer credit ledger
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/GrantCreditsRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/RequestSuccess"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /credits/deduct:
+    post:
+      tags:
+        - credits
+      operationId: deductCredits
+      description: >-
+        This endpoint is used to deduct credits from the specified customer
+        account. 
+            Submit the credit amount and customer ID in the request body to deduct the credits. 
+            The deducted credits will be subtracted from the customer's account.
+      summary: Deduct credits from customer credit ledger
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/DeductCreditsRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/RequestSuccess"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /webhook:
+    post:
+      tags:
+        - webhooks
+      operationId: webhookSubscribe
+      description: Use this endpoint to subscribe to webhooks and receive event
+        notifications.
+      summary: Subscribe to webhooks
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/WebhookSubscribeRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/RequestSuccess"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "413":
+          description: Request Entity Too Large
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /customers/externalId/{externalId}:
+    get:
+      tags:
+        - customers
+      operationId: getCustomerByExternalId
+      description: Use this endpoint to get a specific customer using its external Id.
+      summary: Get customer by externalId
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ExternalId"
+          required: true
+          in: path
+          name: externalId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCustomerResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /customers/products-consumptions/{customerId}:
+    get:
+      tags:
+        - customers
+      operationId: getCustomerProductsConsumptions
+      description: Use this endpoint to get the products consumptions by the customer id.
+      summary: Get products consumptions by customer id
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerId"
+          required: true
+          in: path
+          name: customerId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCustomerProductsConsumptionsResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /customers/products-consumptions/alias/{alias}:
+    get:
+      tags:
+        - customers
+      operationId: getCustomerProductsConsumptionsByAlias
+      description: Use this endpoint to get the products consumptions by the customer alias.
+      summary: Get products consumptions by customer alias
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Alias"
+          required: true
+          in: path
+          name: alias
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCustomerProductsConsumptionsByAliasResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
+  /product-consumption/{productId}:
+    get:
+      tags:
+        - product-consumptions
+      operationId: getProductConsumption
+      description: Use this action to get the consumption data for a product
+      summary: Get product consumption
+      security:
+        - BearerAuthorizer: []
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ProductId"
+          required: true
+          in: path
+          name: productId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetProductConsumptionResponse"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "429":
+          description: Too Many Requests
+        "500":
+          description: Internal Server Error
