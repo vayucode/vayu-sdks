@@ -27,7 +27,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 func main() {
@@ -91,7 +91,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 func main() {
@@ -155,7 +155,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 func main() {

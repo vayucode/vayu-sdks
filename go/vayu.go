@@ -1,8 +1,8 @@
 package VayuSDK
 
 import (
-	"github.com/weft-finance/vayu-go/api"
-	"github.com/weft-finance/vayu-go/client"
+	"github.com/vayucode/vayu-sdks/go/api"
+	"github.com/vayucode/vayu-sdks/go/client"
 )
 
 type Vayu struct {

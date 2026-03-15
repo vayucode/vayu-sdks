@@ -3,8 +3,8 @@ package api
 import (
 	"time"
 
-	"github.com/weft-finance/vayu-go/client"
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/client"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type EventsAPI struct {

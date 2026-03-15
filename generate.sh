@@ -26,6 +26,8 @@ echo ""
 echo "=== Generating Go client ==="
 (yes || true) | npx @openapitools/openapi-generator-cli generate \
   -g go \
+  --git-user-id vayucode \
+  --git-repo-id vayu-sdks/go \
   --additional-properties=prependFormOrBodyParameters=true,disallowAdditionalPropertiesIfNotPresent=false,enumClassPrefix=true,isGoSubmodule=true,withGoMod=false \
   -o "$SCRIPT_DIR/go/openapi" \
   -i "$SPEC_FILE"
@@ -36,6 +38,10 @@ rm -rf "$SCRIPT_DIR/go/openapi/.openapi-generator" \
        "$SCRIPT_DIR/go/openapi/git_push.sh" \
        "$SCRIPT_DIR/go/openapi/go.mod" \
        "$SCRIPT_DIR/go/openapi/go.sum"
+
+# Fix any remaining placeholder import paths
+find "$SCRIPT_DIR/go/openapi" -name '*.go' -exec \
+  sed -i 's|github.com/GIT_USER_ID/GIT_REPO_ID|github.com/vayucode/vayu-sdks/go|g' {} +
 
 echo ""
 echo "=== Generating Python client ==="

@@ -6,7 +6,7 @@ import (
 	"net"
 	"net/url"
 
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type VayuError struct {

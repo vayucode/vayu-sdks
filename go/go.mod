@@ -1,4 +1,4 @@
-module github.com/weft-finance/vayu-go
+module github.com/vayucode/vayu-sdks/go
 
 go 1.22.5
 

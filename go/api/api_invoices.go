@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/weft-finance/vayu-go/client"
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/client"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type InvoicesAPI struct {
