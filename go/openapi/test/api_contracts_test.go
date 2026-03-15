@@ -66,7 +66,7 @@ func Test_openapi_ContractsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var integrationType IntegrationType
+		var integrationType openapiclient.IntegrationType
 		var integrationId string
 
 		resp, httpRes, err := apiClient.ContractsAPI.GetContractByIntegrationId(context.Background(), integrationType, integrationId).Execute()

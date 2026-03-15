@@ -92,7 +92,7 @@ func Test_openapi_CustomersAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var integrationType IntegrationType
+		var integrationType openapiclient.IntegrationType
 		var integrationId string
 
 		resp, httpRes, err := apiClient.CustomersAPI.GetCustomerByIntegrationId(context.Background(), integrationType, integrationId).Execute()
