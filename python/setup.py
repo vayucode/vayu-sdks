@@ -21,5 +21,5 @@ setup(
     description="The Vayu API client library in Python",
     author="Vayu Team",
     author_email="team@withvayu.com",
-    url="https://github.com/vayucode/vayu-sdks",
+    url="https://github.com/weft-finance/vayu-py",
 )

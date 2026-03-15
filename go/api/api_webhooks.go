@@ -26,7 +26,7 @@ func NewWebhookSubscribeRequest(callbackUrl string, eventType NotificationEventT
 	}
 }
 
-func (api *PlansAPI) Subscribe(payload WebhookSubscribeRequest) error {
+func (api *WebhooksAPI) Subscribe(payload WebhookSubscribeRequest) error {
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 

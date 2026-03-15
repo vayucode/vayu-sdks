@@ -26,7 +26,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "generate": "cd .. && ./generate.sh",
+    "generate": "./generate.sh && ./generate-v2.sh",
     "build": "tsc",
     "lint": "eslint sdk",
     "lint:fix": "eslint sdk --fix"

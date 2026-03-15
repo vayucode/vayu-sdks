@@ -1,30 +1,36 @@
 package client
 
 import (
-	"fmt"
-	"time"
+	"net/http"
 
 	"github.com/weft-finance/vayu-go/openapi"
 )
 
 type VayuClient struct {
-	accessToken string
-	expiresAt   time.Time
-	apiKey      string
-	Client      *openapi.APIClient
+	auth   *Authenticator
+	Client *openapi.APIClient
 }
 
 func NewVayuClient(APIKey string) *VayuClient {
-	client := openapi.NewAPIClient(openapi.NewConfiguration())
+	apiClient := openapi.NewAPIClient(openapi.NewConfiguration())
 
-	cfg := client.GetConfig()
+	cfg := apiClient.GetConfig()
 	cfg.UserAgent = "VayuSDK/go"
 
-	return &VayuClient{Client: client, apiKey: APIKey}
+	auth := NewAuthenticator(APIKey, apiClient)
+
+	vc := &VayuClient{
+		auth:   auth,
+		Client: apiClient,
+	}
+
+	vc.installRoundTripper()
+
+	return vc
 }
 
-func (api *VayuClient) SetCustomHost(host string) {
-	cfg := api.Client.GetConfig()
+func (vc *VayuClient) SetCustomHost(host string) {
+	cfg := vc.Client.GetConfig()
 	cfg.Servers = openapi.ServerConfigurations{
 		{
 			URL:         host,
@@ -33,38 +39,29 @@ func (api *VayuClient) SetCustomHost(host string) {
 	}
 }
 
-func (api *VayuClient) Login() error {
-	ctx, cancel := GenerateContextWithTimeout()
-	defer cancel()
+// Deprecated: Authentication is now handled automatically. You can remove this call.
+func (vc *VayuClient) Login() error {
+	return vc.auth.Authenticate()
+}
 
-	request := api.Client.AuthAPI.Login(ctx)
-	request = request.LoginRequest(openapi.LoginRequest{RefreshToken: api.apiKey})
-	oApiResponse, _, err := request.Execute()
+func (vc *VayuClient) IsLoggedIn() bool {
+	return vc.auth.IsAuthenticated()
+}
 
-	if err != nil {
-		return BuildVayuErrorFromGenericOpenAPIError(err)
-	}
-
-	api.accessToken = oApiResponse.AccessToken
-
-	err = api.extractJWTExpiryDate()
-	if err != nil {
-		return BuildVayuError(err)
-	}
-
-	api.buildClientConfig()
-
+// Deprecated: Authentication is now handled automatically.
+func (vc *VayuClient) ValidateLoggedIn() error {
 	return nil
 }
 
-func (api *VayuClient) IsLoggedIn() bool {
-	return api.accessToken != ""
-}
+func (vc *VayuClient) installRoundTripper() {
+	cfg := vc.Client.GetConfig()
 
-func (api *VayuClient) ValidateLoggedIn() error {
-	if api.IsLoggedIn() {
-		return nil
+	if cfg.HTTPClient.Transport == nil {
+		cfg.HTTPClient.Transport = http.DefaultTransport
 	}
 
-	return BuildVayuError(fmt.Errorf("vayu client is not logged in. please login before calling this method"))
+	cfg.HTTPClient.Transport = &vayuRoundTripper{
+		rt:   cfg.HTTPClient.Transport,
+		auth: vc.auth,
+	}
 }

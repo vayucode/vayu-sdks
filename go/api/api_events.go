@@ -43,10 +43,6 @@ func NewQueryEventsRequest(startTime time.Time, endTime time.Time, name string, 
 }
 
 func (e *EventsAPI) GetEvent(refId string) (*GetEventResponse, error) {
-	if invalidLoggedInStatus := e.vayuClient.ValidateLoggedIn(); invalidLoggedInStatus != nil {
-		return nil, invalidLoggedInStatus
-	}
-
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 
@@ -61,10 +57,6 @@ func (e *EventsAPI) GetEvent(refId string) (*GetEventResponse, error) {
 }
 
 func (e *EventsAPI) DeleteEvent(refId string) (*DeleteEventResponse, error) {
-	if invalidLoggedInStatus := e.vayuClient.ValidateLoggedIn(); invalidLoggedInStatus != nil {
-		return nil, invalidLoggedInStatus
-	}
-
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 
@@ -79,10 +71,6 @@ func (e *EventsAPI) DeleteEvent(refId string) (*DeleteEventResponse, error) {
 }
 
 func (e *EventsAPI) QueryEvents(payload QueryEventsRequest) (*QueryEventsResponse, error) {
-	if invalidLoggedInStatus := e.vayuClient.ValidateLoggedIn(); invalidLoggedInStatus != nil {
-		return nil, invalidLoggedInStatus
-	}
-
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 
@@ -109,10 +97,6 @@ func (e *EventsAPI) QueryEvents(payload QueryEventsRequest) (*QueryEventsRespons
 }
 
 func (e *EventsAPI) SendEvents(events []Event) (*SendEventsResponse, error) {
-	if invalidLoggedInStatus := e.vayuClient.ValidateLoggedIn(); invalidLoggedInStatus != nil {
-		return nil, invalidLoggedInStatus
-	}
-
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 
@@ -128,10 +112,6 @@ func (e *EventsAPI) SendEvents(events []Event) (*SendEventsResponse, error) {
 }
 
 func (e *EventsAPI) SendEventsDryRun(events []Event) (*EventsDryRunResponse, error) {
-	if invalidLoggedInStatus := e.vayuClient.ValidateLoggedIn(); invalidLoggedInStatus != nil {
-		return nil, invalidLoggedInStatus
-	}
-
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 

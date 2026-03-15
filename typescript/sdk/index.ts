@@ -1,7 +1,9 @@
 import { ContractsClient,
+  CreditsClient,
   CustomersClient,
   EventsClient,
   InvoicesClient,
+  MeasurementsClient,
   MetersClient,
   WebhooksClient,
   ProductConsumptionsClient } from './clients';
@@ -18,6 +20,7 @@ export class Vayu {
     this.configurationManager = ConfigurationService.initialize(apiKey, baseServer);
   }
 
+  /** @deprecated Authentication is now handled automatically. You can remove this call. */
   async login() {
     await this.configurationManager.generateToken();
   }
@@ -48,6 +51,14 @@ export class Vayu {
 
   get productConsumptions() {
     return new ProductConsumptionsClient();
+  }
+
+  get credits() {
+    return new CreditsClient();
+  }
+
+  get measurements() {
+    return new MeasurementsClient();
   }
 }
 
