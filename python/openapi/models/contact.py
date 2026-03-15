@@ -28,7 +28,7 @@ class Contact(BaseModel):
     """
     Contact
     """ # noqa: E501
-    name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None
+    name: Optional[StrictStr] = None
     email: Optional[StrictStr] = None
     title: Optional[StrictStr] = None
     phone: Optional[Annotated[str, Field(strict=True)]] = None

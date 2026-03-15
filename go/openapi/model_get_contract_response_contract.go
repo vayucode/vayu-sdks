@@ -24,12 +24,32 @@ var _ MappedNullable = &GetContractResponseContract{}
 type GetContractResponseContract struct {
 	// The start date of the contract
 	StartDate time.Time `json:"startDate"`
-	// The end date of the contract
-	EndDate *time.Time `json:"endDate,omitempty"`
 	// The id of the customer that the contract is associated with
 	CustomerId string `json:"customerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
-	// The id of the plan that the contract is associated with
-	PlanId string `json:"planId" validate:"regexp=^[0-9a-fA-F]{24}$"`
+	// The name of the contract
+	Name string `json:"name"`
+	// The id of the sales force opportunity that the contract is associated with
+	SalesForceOpportunityId NullableString `json:"salesForceOpportunityId,omitempty"`
+	// The end date of the contract
+	EndDate NullableTime `json:"endDate,omitempty"`
+	// The signature date of the contract
+	SignatureDate NullableTime `json:"signatureDate,omitempty"`
+	// The products that the contract is associated with
+	Products []ProductGroupProductsInner `json:"products,omitempty"`
+	// Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.
+	ProductGroups []ProductGroup `json:"productGroups,omitempty"`
+	// The name of the account manager of the contract
+	AccountManager NullableString `json:"accountManager,omitempty"`
+	// Whether to pro rate the invoices for the contract. If not provided, it will default to false
+	// Deprecated
+	ShouldProRateInvoices *bool `json:"shouldProRateInvoices,omitempty"`
+	// Whether the contract is set to auto renew. If not provided, it will be treated as true
+	AutoRenewContract *bool `json:"autoRenewContract,omitempty"`
+	// Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+	CustomFields []CustomField `json:"customFields,omitempty"`
+	// The stored custom field values associated with the contract
+	CustomFieldValues []CustomFieldValue `json:"customFieldValues,omitempty"`
+	Status *ContractStatus `json:"status,omitempty"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -42,11 +62,11 @@ type _GetContractResponseContract GetContractResponseContract
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetContractResponseContract(startDate time.Time, customerId string, planId string, id string, createdAt time.Time, updatedAt time.Time) *GetContractResponseContract {
+func NewGetContractResponseContract(startDate time.Time, customerId string, name string, id string, createdAt time.Time, updatedAt time.Time) *GetContractResponseContract {
 	this := GetContractResponseContract{}
 	this.StartDate = startDate
 	this.CustomerId = customerId
-	this.PlanId = planId
+	this.Name = name
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -85,38 +105,6 @@ func (o *GetContractResponseContract) SetStartDate(v time.Time) {
 	o.StartDate = v
 }
 
-// GetEndDate returns the EndDate field value if set, zero value otherwise.
-func (o *GetContractResponseContract) GetEndDate() time.Time {
-	if o == nil || IsNil(o.EndDate) {
-		var ret time.Time
-		return ret
-	}
-	return *o.EndDate
-}
-
-// GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetContractResponseContract) GetEndDateOk() (*time.Time, bool) {
-	if o == nil || IsNil(o.EndDate) {
-		return nil, false
-	}
-	return o.EndDate, true
-}
-
-// HasEndDate returns a boolean if a field has been set.
-func (o *GetContractResponseContract) HasEndDate() bool {
-	if o != nil && !IsNil(o.EndDate) {
-		return true
-	}
-
-	return false
-}
-
-// SetEndDate gets a reference to the given time.Time and assigns it to the EndDate field.
-func (o *GetContractResponseContract) SetEndDate(v time.Time) {
-	o.EndDate = &v
-}
-
 // GetCustomerId returns the CustomerId field value
 func (o *GetContractResponseContract) GetCustomerId() string {
 	if o == nil {
@@ -141,28 +129,425 @@ func (o *GetContractResponseContract) SetCustomerId(v string) {
 	o.CustomerId = v
 }
 
-// GetPlanId returns the PlanId field value
-func (o *GetContractResponseContract) GetPlanId() string {
+// GetName returns the Name field value
+func (o *GetContractResponseContract) GetName() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.PlanId
+	return o.Name
 }
 
-// GetPlanIdOk returns a tuple with the PlanId field value
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-func (o *GetContractResponseContract) GetPlanIdOk() (*string, bool) {
+func (o *GetContractResponseContract) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.PlanId, true
+	return &o.Name, true
 }
 
-// SetPlanId sets field value
-func (o *GetContractResponseContract) SetPlanId(v string) {
-	o.PlanId = v
+// SetName sets field value
+func (o *GetContractResponseContract) SetName(v string) {
+	o.Name = v
+}
+
+// GetSalesForceOpportunityId returns the SalesForceOpportunityId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetSalesForceOpportunityId() string {
+	if o == nil || IsNil(o.SalesForceOpportunityId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceOpportunityId.Get()
+}
+
+// GetSalesForceOpportunityIdOk returns a tuple with the SalesForceOpportunityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetSalesForceOpportunityIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceOpportunityId.Get(), o.SalesForceOpportunityId.IsSet()
+}
+
+// HasSalesForceOpportunityId returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasSalesForceOpportunityId() bool {
+	if o != nil && o.SalesForceOpportunityId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceOpportunityId gets a reference to the given NullableString and assigns it to the SalesForceOpportunityId field.
+func (o *GetContractResponseContract) SetSalesForceOpportunityId(v string) {
+	o.SalesForceOpportunityId.Set(&v)
+}
+// SetSalesForceOpportunityIdNil sets the value for SalesForceOpportunityId to be an explicit nil
+func (o *GetContractResponseContract) SetSalesForceOpportunityIdNil() {
+	o.SalesForceOpportunityId.Set(nil)
+}
+
+// UnsetSalesForceOpportunityId ensures that no value is present for SalesForceOpportunityId, not even an explicit nil
+func (o *GetContractResponseContract) UnsetSalesForceOpportunityId() {
+	o.SalesForceOpportunityId.Unset()
+}
+
+// GetEndDate returns the EndDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetEndDate() time.Time {
+	if o == nil || IsNil(o.EndDate.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.EndDate.Get()
+}
+
+// GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetEndDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EndDate.Get(), o.EndDate.IsSet()
+}
+
+// HasEndDate returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasEndDate() bool {
+	if o != nil && o.EndDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEndDate gets a reference to the given NullableTime and assigns it to the EndDate field.
+func (o *GetContractResponseContract) SetEndDate(v time.Time) {
+	o.EndDate.Set(&v)
+}
+// SetEndDateNil sets the value for EndDate to be an explicit nil
+func (o *GetContractResponseContract) SetEndDateNil() {
+	o.EndDate.Set(nil)
+}
+
+// UnsetEndDate ensures that no value is present for EndDate, not even an explicit nil
+func (o *GetContractResponseContract) UnsetEndDate() {
+	o.EndDate.Unset()
+}
+
+// GetSignatureDate returns the SignatureDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetSignatureDate() time.Time {
+	if o == nil || IsNil(o.SignatureDate.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.SignatureDate.Get()
+}
+
+// GetSignatureDateOk returns a tuple with the SignatureDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetSignatureDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SignatureDate.Get(), o.SignatureDate.IsSet()
+}
+
+// HasSignatureDate returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasSignatureDate() bool {
+	if o != nil && o.SignatureDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureDate gets a reference to the given NullableTime and assigns it to the SignatureDate field.
+func (o *GetContractResponseContract) SetSignatureDate(v time.Time) {
+	o.SignatureDate.Set(&v)
+}
+// SetSignatureDateNil sets the value for SignatureDate to be an explicit nil
+func (o *GetContractResponseContract) SetSignatureDateNil() {
+	o.SignatureDate.Set(nil)
+}
+
+// UnsetSignatureDate ensures that no value is present for SignatureDate, not even an explicit nil
+func (o *GetContractResponseContract) UnsetSignatureDate() {
+	o.SignatureDate.Unset()
+}
+
+// GetProducts returns the Products field value if set, zero value otherwise.
+func (o *GetContractResponseContract) GetProducts() []ProductGroupProductsInner {
+	if o == nil || IsNil(o.Products) {
+		var ret []ProductGroupProductsInner
+		return ret
+	}
+	return o.Products
+}
+
+// GetProductsOk returns a tuple with the Products field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetContractResponseContract) GetProductsOk() ([]ProductGroupProductsInner, bool) {
+	if o == nil || IsNil(o.Products) {
+		return nil, false
+	}
+	return o.Products, true
+}
+
+// HasProducts returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasProducts() bool {
+	if o != nil && !IsNil(o.Products) {
+		return true
+	}
+
+	return false
+}
+
+// SetProducts gets a reference to the given []ProductGroupProductsInner and assigns it to the Products field.
+func (o *GetContractResponseContract) SetProducts(v []ProductGroupProductsInner) {
+	o.Products = v
+}
+
+// GetProductGroups returns the ProductGroups field value if set, zero value otherwise.
+func (o *GetContractResponseContract) GetProductGroups() []ProductGroup {
+	if o == nil || IsNil(o.ProductGroups) {
+		var ret []ProductGroup
+		return ret
+	}
+	return o.ProductGroups
+}
+
+// GetProductGroupsOk returns a tuple with the ProductGroups field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetContractResponseContract) GetProductGroupsOk() ([]ProductGroup, bool) {
+	if o == nil || IsNil(o.ProductGroups) {
+		return nil, false
+	}
+	return o.ProductGroups, true
+}
+
+// HasProductGroups returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasProductGroups() bool {
+	if o != nil && !IsNil(o.ProductGroups) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductGroups gets a reference to the given []ProductGroup and assigns it to the ProductGroups field.
+func (o *GetContractResponseContract) SetProductGroups(v []ProductGroup) {
+	o.ProductGroups = v
+}
+
+// GetAccountManager returns the AccountManager field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetAccountManager() string {
+	if o == nil || IsNil(o.AccountManager.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AccountManager.Get()
+}
+
+// GetAccountManagerOk returns a tuple with the AccountManager field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetAccountManagerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AccountManager.Get(), o.AccountManager.IsSet()
+}
+
+// HasAccountManager returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasAccountManager() bool {
+	if o != nil && o.AccountManager.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountManager gets a reference to the given NullableString and assigns it to the AccountManager field.
+func (o *GetContractResponseContract) SetAccountManager(v string) {
+	o.AccountManager.Set(&v)
+}
+// SetAccountManagerNil sets the value for AccountManager to be an explicit nil
+func (o *GetContractResponseContract) SetAccountManagerNil() {
+	o.AccountManager.Set(nil)
+}
+
+// UnsetAccountManager ensures that no value is present for AccountManager, not even an explicit nil
+func (o *GetContractResponseContract) UnsetAccountManager() {
+	o.AccountManager.Unset()
+}
+
+// GetShouldProRateInvoices returns the ShouldProRateInvoices field value if set, zero value otherwise.
+// Deprecated
+func (o *GetContractResponseContract) GetShouldProRateInvoices() bool {
+	if o == nil || IsNil(o.ShouldProRateInvoices) {
+		var ret bool
+		return ret
+	}
+	return *o.ShouldProRateInvoices
+}
+
+// GetShouldProRateInvoicesOk returns a tuple with the ShouldProRateInvoices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *GetContractResponseContract) GetShouldProRateInvoicesOk() (*bool, bool) {
+	if o == nil || IsNil(o.ShouldProRateInvoices) {
+		return nil, false
+	}
+	return o.ShouldProRateInvoices, true
+}
+
+// HasShouldProRateInvoices returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasShouldProRateInvoices() bool {
+	if o != nil && !IsNil(o.ShouldProRateInvoices) {
+		return true
+	}
+
+	return false
+}
+
+// SetShouldProRateInvoices gets a reference to the given bool and assigns it to the ShouldProRateInvoices field.
+// Deprecated
+func (o *GetContractResponseContract) SetShouldProRateInvoices(v bool) {
+	o.ShouldProRateInvoices = &v
+}
+
+// GetAutoRenewContract returns the AutoRenewContract field value if set, zero value otherwise.
+func (o *GetContractResponseContract) GetAutoRenewContract() bool {
+	if o == nil || IsNil(o.AutoRenewContract) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoRenewContract
+}
+
+// GetAutoRenewContractOk returns a tuple with the AutoRenewContract field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetContractResponseContract) GetAutoRenewContractOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutoRenewContract) {
+		return nil, false
+	}
+	return o.AutoRenewContract, true
+}
+
+// HasAutoRenewContract returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasAutoRenewContract() bool {
+	if o != nil && !IsNil(o.AutoRenewContract) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoRenewContract gets a reference to the given bool and assigns it to the AutoRenewContract field.
+func (o *GetContractResponseContract) SetAutoRenewContract(v bool) {
+	o.AutoRenewContract = &v
+}
+
+// GetCustomFields returns the CustomFields field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetCustomFields() []CustomField {
+	if o == nil {
+		var ret []CustomField
+		return ret
+	}
+	return o.CustomFields
+}
+
+// GetCustomFieldsOk returns a tuple with the CustomFields field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetCustomFieldsOk() ([]CustomField, bool) {
+	if o == nil || IsNil(o.CustomFields) {
+		return nil, false
+	}
+	return o.CustomFields, true
+}
+
+// HasCustomFields returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasCustomFields() bool {
+	if o != nil && !IsNil(o.CustomFields) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomFields gets a reference to the given []CustomField and assigns it to the CustomFields field.
+func (o *GetContractResponseContract) SetCustomFields(v []CustomField) {
+	o.CustomFields = v
+}
+
+// GetCustomFieldValues returns the CustomFieldValues field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetContractResponseContract) GetCustomFieldValues() []CustomFieldValue {
+	if o == nil {
+		var ret []CustomFieldValue
+		return ret
+	}
+	return o.CustomFieldValues
+}
+
+// GetCustomFieldValuesOk returns a tuple with the CustomFieldValues field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetContractResponseContract) GetCustomFieldValuesOk() ([]CustomFieldValue, bool) {
+	if o == nil || IsNil(o.CustomFieldValues) {
+		return nil, false
+	}
+	return o.CustomFieldValues, true
+}
+
+// HasCustomFieldValues returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasCustomFieldValues() bool {
+	if o != nil && !IsNil(o.CustomFieldValues) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomFieldValues gets a reference to the given []CustomFieldValue and assigns it to the CustomFieldValues field.
+func (o *GetContractResponseContract) SetCustomFieldValues(v []CustomFieldValue) {
+	o.CustomFieldValues = v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *GetContractResponseContract) GetStatus() ContractStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret ContractStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetContractResponseContract) GetStatusOk() (*ContractStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *GetContractResponseContract) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given ContractStatus and assigns it to the Status field.
+func (o *GetContractResponseContract) SetStatus(v ContractStatus) {
+	o.Status = &v
 }
 
 // GetId returns the Id field value
@@ -248,11 +633,41 @@ func (o GetContractResponseContract) MarshalJSON() ([]byte, error) {
 func (o GetContractResponseContract) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["startDate"] = o.StartDate
-	if !IsNil(o.EndDate) {
-		toSerialize["endDate"] = o.EndDate
-	}
 	toSerialize["customerId"] = o.CustomerId
-	toSerialize["planId"] = o.PlanId
+	toSerialize["name"] = o.Name
+	if o.SalesForceOpportunityId.IsSet() {
+		toSerialize["salesForceOpportunityId"] = o.SalesForceOpportunityId.Get()
+	}
+	if o.EndDate.IsSet() {
+		toSerialize["endDate"] = o.EndDate.Get()
+	}
+	if o.SignatureDate.IsSet() {
+		toSerialize["signatureDate"] = o.SignatureDate.Get()
+	}
+	if !IsNil(o.Products) {
+		toSerialize["products"] = o.Products
+	}
+	if !IsNil(o.ProductGroups) {
+		toSerialize["productGroups"] = o.ProductGroups
+	}
+	if o.AccountManager.IsSet() {
+		toSerialize["accountManager"] = o.AccountManager.Get()
+	}
+	if !IsNil(o.ShouldProRateInvoices) {
+		toSerialize["shouldProRateInvoices"] = o.ShouldProRateInvoices
+	}
+	if !IsNil(o.AutoRenewContract) {
+		toSerialize["autoRenewContract"] = o.AutoRenewContract
+	}
+	if o.CustomFields != nil {
+		toSerialize["customFields"] = o.CustomFields
+	}
+	if o.CustomFieldValues != nil {
+		toSerialize["customFieldValues"] = o.CustomFieldValues
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -271,7 +686,7 @@ func (o *GetContractResponseContract) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"startDate",
 		"customerId",
-		"planId",
+		"name",
 		"id",
 		"createdAt",
 		"updatedAt",
@@ -305,9 +720,19 @@ func (o *GetContractResponseContract) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "startDate")
-		delete(additionalProperties, "endDate")
 		delete(additionalProperties, "customerId")
-		delete(additionalProperties, "planId")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "salesForceOpportunityId")
+		delete(additionalProperties, "endDate")
+		delete(additionalProperties, "signatureDate")
+		delete(additionalProperties, "products")
+		delete(additionalProperties, "productGroups")
+		delete(additionalProperties, "accountManager")
+		delete(additionalProperties, "shouldProRateInvoices")
+		delete(additionalProperties, "autoRenewContract")
+		delete(additionalProperties, "customFields")
+		delete(additionalProperties, "customFieldValues")
+		delete(additionalProperties, "status")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

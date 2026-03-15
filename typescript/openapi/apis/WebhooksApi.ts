@@ -2,8 +2,6 @@
 import {BaseAPIRequestFactory, RequiredError, COLLECTION_FORMATS} from './baseapi';
 import {Configuration} from '../configuration';
 import {RequestContext, HttpMethod, ResponseContext, HttpFile, HttpInfo} from '../http/http';
-import * as FormData from "form-data";
-import { URLSearchParams } from 'url';
 import {ObjectSerializer} from '../models/ObjectSerializer';
 import {ApiException} from './exception';
 import {canConsumeForm, isCodeInRange} from '../util';
@@ -87,9 +85,6 @@ export class WebhooksApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("413", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Request Entity Too Large", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -106,7 +101,7 @@ export class WebhooksApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
 }

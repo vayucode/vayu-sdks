@@ -29,6 +29,13 @@ type GetInvoiceResponseInvoice struct {
 	// The name of the invoice, usually a description of the billing period
 	Name string `json:"name"`
 	BillingCycle FullDayPeriod `json:"billingCycle"`
+	RevenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown `json:"revenueBreakdown"`
+	BillingStatus InvoiceBillingStatus `json:"billingStatus"`
+	PaymentInfo *PaymentInfo `json:"paymentInfo,omitempty"`
+	// The due date of the invoice
+	DueDate NullableTime `json:"dueDate"`
+	// The id of the account that the invoice is associated with
+	AccountId string `json:"accountId"`
 	LineItems []LineItem `json:"lineItems"`
 	// The total amount of the invoice
 	Amount float32 `json:"amount"`
@@ -44,11 +51,15 @@ type _GetInvoiceResponseInvoice GetInvoiceResponseInvoice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, lineItems []LineItem, amount float32, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
+func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
 	this := GetInvoiceResponseInvoice{}
 	this.CustomerId = customerId
 	this.Name = name
 	this.BillingCycle = billingCycle
+	this.RevenueBreakdown = revenueBreakdown
+	this.BillingStatus = billingStatus
+	this.DueDate = dueDate
+	this.AccountId = accountId
 	this.LineItems = lineItems
 	this.Amount = amount
 	this.Id = id
@@ -167,6 +178,136 @@ func (o *GetInvoiceResponseInvoice) GetBillingCycleOk() (*FullDayPeriod, bool) {
 // SetBillingCycle sets field value
 func (o *GetInvoiceResponseInvoice) SetBillingCycle(v FullDayPeriod) {
 	o.BillingCycle = v
+}
+
+// GetRevenueBreakdown returns the RevenueBreakdown field value
+func (o *GetInvoiceResponseInvoice) GetRevenueBreakdown() GetInvoiceResponseInvoiceRevenueBreakdown {
+	if o == nil {
+		var ret GetInvoiceResponseInvoiceRevenueBreakdown
+		return ret
+	}
+
+	return o.RevenueBreakdown
+}
+
+// GetRevenueBreakdownOk returns a tuple with the RevenueBreakdown field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetRevenueBreakdownOk() (*GetInvoiceResponseInvoiceRevenueBreakdown, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RevenueBreakdown, true
+}
+
+// SetRevenueBreakdown sets field value
+func (o *GetInvoiceResponseInvoice) SetRevenueBreakdown(v GetInvoiceResponseInvoiceRevenueBreakdown) {
+	o.RevenueBreakdown = v
+}
+
+// GetBillingStatus returns the BillingStatus field value
+func (o *GetInvoiceResponseInvoice) GetBillingStatus() InvoiceBillingStatus {
+	if o == nil {
+		var ret InvoiceBillingStatus
+		return ret
+	}
+
+	return o.BillingStatus
+}
+
+// GetBillingStatusOk returns a tuple with the BillingStatus field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetBillingStatusOk() (*InvoiceBillingStatus, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BillingStatus, true
+}
+
+// SetBillingStatus sets field value
+func (o *GetInvoiceResponseInvoice) SetBillingStatus(v InvoiceBillingStatus) {
+	o.BillingStatus = v
+}
+
+// GetPaymentInfo returns the PaymentInfo field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetPaymentInfo() PaymentInfo {
+	if o == nil || IsNil(o.PaymentInfo) {
+		var ret PaymentInfo
+		return ret
+	}
+	return *o.PaymentInfo
+}
+
+// GetPaymentInfoOk returns a tuple with the PaymentInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetPaymentInfoOk() (*PaymentInfo, bool) {
+	if o == nil || IsNil(o.PaymentInfo) {
+		return nil, false
+	}
+	return o.PaymentInfo, true
+}
+
+// HasPaymentInfo returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasPaymentInfo() bool {
+	if o != nil && !IsNil(o.PaymentInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetPaymentInfo gets a reference to the given PaymentInfo and assigns it to the PaymentInfo field.
+func (o *GetInvoiceResponseInvoice) SetPaymentInfo(v PaymentInfo) {
+	o.PaymentInfo = &v
+}
+
+// GetDueDate returns the DueDate field value
+// If the value is explicit nil, the zero value for time.Time will be returned
+func (o *GetInvoiceResponseInvoice) GetDueDate() time.Time {
+	if o == nil || o.DueDate.Get() == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return *o.DueDate.Get()
+}
+
+// GetDueDateOk returns a tuple with the DueDate field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvoiceResponseInvoice) GetDueDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DueDate.Get(), o.DueDate.IsSet()
+}
+
+// SetDueDate sets field value
+func (o *GetInvoiceResponseInvoice) SetDueDate(v time.Time) {
+	o.DueDate.Set(&v)
+}
+
+// GetAccountId returns the AccountId field value
+func (o *GetInvoiceResponseInvoice) GetAccountId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetAccountIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AccountId, true
+}
+
+// SetAccountId sets field value
+func (o *GetInvoiceResponseInvoice) SetAccountId(v string) {
+	o.AccountId = v
 }
 
 // GetLineItems returns the LineItems field value
@@ -305,6 +446,13 @@ func (o GetInvoiceResponseInvoice) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["name"] = o.Name
 	toSerialize["billingCycle"] = o.BillingCycle
+	toSerialize["revenueBreakdown"] = o.RevenueBreakdown
+	toSerialize["billingStatus"] = o.BillingStatus
+	if !IsNil(o.PaymentInfo) {
+		toSerialize["paymentInfo"] = o.PaymentInfo
+	}
+	toSerialize["dueDate"] = o.DueDate.Get()
+	toSerialize["accountId"] = o.AccountId
 	toSerialize["lineItems"] = o.LineItems
 	toSerialize["amount"] = o.Amount
 	toSerialize["id"] = o.Id
@@ -326,6 +474,10 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 		"customerId",
 		"name",
 		"billingCycle",
+		"revenueBreakdown",
+		"billingStatus",
+		"dueDate",
+		"accountId",
 		"lineItems",
 		"amount",
 		"id",
@@ -364,6 +516,11 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "contractId")
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "billingCycle")
+		delete(additionalProperties, "revenueBreakdown")
+		delete(additionalProperties, "billingStatus")
+		delete(additionalProperties, "paymentInfo")
+		delete(additionalProperties, "dueDate")
+		delete(additionalProperties, "accountId")
 		delete(additionalProperties, "lineItems")
 		delete(additionalProperties, "amount")
 		delete(additionalProperties, "id")

@@ -96,7 +96,6 @@ class WebhooksApi:
             '200': None,
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -168,7 +167,6 @@ class WebhooksApi:
             '200': None,
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -240,7 +238,6 @@ class WebhooksApi:
             '200': None,
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }

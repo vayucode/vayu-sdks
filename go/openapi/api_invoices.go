@@ -127,11 +127,115 @@ func (a *InvoicesAPIService) GetInvoiceExecute(r ApiGetInvoiceRequest) (*GetInvo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetInvoicePaymentStatusRequest struct {
+	ctx context.Context
+	ApiService *InvoicesAPIService
+	invoiceId string
+}
+
+func (r ApiGetInvoicePaymentStatusRequest) Execute() (*InvoicePaymentStatusResponse, *http.Response, error) {
+	return r.ApiService.GetInvoicePaymentStatusExecute(r)
+}
+
+/*
+GetInvoicePaymentStatus Get invoice payment status
+
+Use this endpoint to retrieve payment status information for a specific invoice, including payment status, amount due, amount paid, total, due date, paid date, and invoice PDF URL.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param invoiceId
+ @return ApiGetInvoicePaymentStatusRequest
+*/
+func (a *InvoicesAPIService) GetInvoicePaymentStatus(ctx context.Context, invoiceId string) ApiGetInvoicePaymentStatusRequest {
+	return ApiGetInvoicePaymentStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+		invoiceId: invoiceId,
+	}
+}
+
+// Execute executes the request
+//  @return InvoicePaymentStatusResponse
+func (a *InvoicesAPIService) GetInvoicePaymentStatusExecute(r ApiGetInvoicePaymentStatusRequest) (*InvoicePaymentStatusResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InvoicePaymentStatusResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvoicesAPIService.GetInvoicePaymentStatus")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoices/{invoiceId}/payment-status"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceId"+"}", url.PathEscape(parameterValueToString(r.invoiceId, "invoiceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListInvoicesRequest struct {
 	ctx context.Context
 	ApiService *InvoicesAPIService
 	limit *float32
 	cursor *string
+	customerId *string
 }
 
 func (r ApiListInvoicesRequest) Limit(limit float32) ApiListInvoicesRequest {
@@ -144,14 +248,19 @@ func (r ApiListInvoicesRequest) Cursor(cursor string) ApiListInvoicesRequest {
 	return r
 }
 
+func (r ApiListInvoicesRequest) CustomerId(customerId string) ApiListInvoicesRequest {
+	r.customerId = &customerId
+	return r
+}
+
 func (r ApiListInvoicesRequest) Execute() (*ListInvoicesResponse, *http.Response, error) {
 	return r.ApiService.ListInvoicesExecute(r)
 }
 
 /*
-ListInvoices List Invoices
+ListInvoices List invoices
 
-Get a list of Invoices.
+List invoices for the account. Optionally filter by customerId to retrieve invoices for a specific customer.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListInvoicesRequest
@@ -192,6 +301,9 @@ func (a *InvoicesAPIService) ListInvoicesExecute(r ApiListInvoicesRequest) (*Lis
 	}
 	if r.cursor != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.customerId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customerId", r.customerId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

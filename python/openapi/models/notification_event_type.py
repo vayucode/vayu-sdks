@@ -37,6 +37,8 @@ class NotificationEventType(str, Enum):
     UNCHARGEDEVENTS = 'UnchargedEvents'
     TIERCROSSED = 'TierCrossed'
     COMMITMENTCROSSED = 'CommitmentCrossed'
+    FINALTIEREXCEEDED = 'FinalTierExceeded'
+    INVOICEPAYMENTSTATUSCHANGED = 'InvoicePaymentStatusChanged'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

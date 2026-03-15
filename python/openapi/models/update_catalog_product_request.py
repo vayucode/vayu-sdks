@@ -30,7 +30,7 @@ class UpdateCatalogProductRequest(BaseModel):
     """ # noqa: E501
     name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The name of the catalog product")
     description: Optional[StrictStr] = Field(default=None, description="The description of the catalog product")
-    external_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
+    external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
     __properties: ClassVar[List[str]] = ["name", "description", "externalId"]
 
     model_config = ConfigDict(

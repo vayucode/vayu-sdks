@@ -16,7 +16,7 @@ import (
 	"fmt"
 )
 
-// Currency the model 'Currency'
+// Currency The billing currency of the customer
 type Currency string
 
 // List of Currency
@@ -25,6 +25,10 @@ const (
 	CURRENCY_EUR Currency = "EUR"
 	CURRENCY_GBP Currency = "GBP"
 	CURRENCY_ILS Currency = "ILS"
+	CURRENCY_CAD Currency = "CAD"
+	CURRENCY_AUD Currency = "AUD"
+	CURRENCY_COP Currency = "COP"
+	CURRENCY_BRL Currency = "BRL"
 )
 
 // All allowed values of Currency enum
@@ -33,6 +37,10 @@ var AllowedCurrencyEnumValues = []Currency{
 	"EUR",
 	"GBP",
 	"ILS",
+	"CAD",
+	"AUD",
+	"COP",
+	"BRL",
 }
 
 func (v *Currency) UnmarshalJSON(src []byte) error {

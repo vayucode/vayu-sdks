@@ -23,7 +23,10 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.full_day_period import FullDayPeriod
+from openapi.models.get_invoice_response_invoice_revenue_breakdown import GetInvoiceResponseInvoiceRevenueBreakdown
+from openapi.models.invoice_billing_status import InvoiceBillingStatus
 from openapi.models.line_item import LineItem
+from openapi.models.payment_info import PaymentInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,13 +38,18 @@ class GetInvoiceResponseInvoice(BaseModel):
     contract_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="The id of the contract that the invoice is associated with", alias="contractId")
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the invoice, usually a description of the billing period")
     billing_cycle: FullDayPeriod = Field(alias="billingCycle")
+    revenue_breakdown: GetInvoiceResponseInvoiceRevenueBreakdown = Field(alias="revenueBreakdown")
+    billing_status: InvoiceBillingStatus = Field(alias="billingStatus")
+    payment_info: Optional[PaymentInfo] = Field(default=None, alias="paymentInfo")
+    due_date: Optional[datetime] = Field(description="The due date of the invoice", alias="dueDate")
+    account_id: StrictStr = Field(description="The id of the account that the invoice is associated with", alias="accountId")
     line_items: List[LineItem] = Field(alias="lineItems")
     amount: Union[StrictFloat, StrictInt] = Field(description="The total amount of the invoice")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["customerId", "contractId", "name", "billingCycle", "lineItems", "amount", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["customerId", "contractId", "name", "billingCycle", "revenueBreakdown", "billingStatus", "paymentInfo", "dueDate", "accountId", "lineItems", "amount", "id", "createdAt", "updatedAt"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
@@ -104,6 +112,12 @@ class GetInvoiceResponseInvoice(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of billing_cycle
         if self.billing_cycle:
             _dict['billingCycle'] = self.billing_cycle.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of revenue_breakdown
+        if self.revenue_breakdown:
+            _dict['revenueBreakdown'] = self.revenue_breakdown.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of payment_info
+        if self.payment_info:
+            _dict['paymentInfo'] = self.payment_info.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in line_items (list)
         _items = []
         if self.line_items:
@@ -115,6 +129,11 @@ class GetInvoiceResponseInvoice(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if due_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.due_date is None and "due_date" in self.model_fields_set:
+            _dict['dueDate'] = None
 
         return _dict
 
@@ -132,6 +151,11 @@ class GetInvoiceResponseInvoice(BaseModel):
             "contractId": obj.get("contractId"),
             "name": obj.get("name"),
             "billingCycle": FullDayPeriod.from_dict(obj["billingCycle"]) if obj.get("billingCycle") is not None else None,
+            "revenueBreakdown": GetInvoiceResponseInvoiceRevenueBreakdown.from_dict(obj["revenueBreakdown"]) if obj.get("revenueBreakdown") is not None else None,
+            "billingStatus": obj.get("billingStatus"),
+            "paymentInfo": PaymentInfo.from_dict(obj["paymentInfo"]) if obj.get("paymentInfo") is not None else None,
+            "dueDate": obj.get("dueDate"),
+            "accountId": obj.get("accountId"),
             "lineItems": [LineItem.from_dict(_item) for _item in obj["lineItems"]] if obj.get("lineItems") is not None else None,
             "amount": obj.get("amount"),
             "id": obj.get("id"),

@@ -10,6 +10,11 @@
  * Do not edit the class manually.
  */
 
+import { ContractStatus } from '../models/ContractStatus';
+import { CustomField } from '../models/CustomField';
+import { CustomFieldValue } from '../models/CustomFieldValue';
+import { ProductGroup } from '../models/ProductGroup';
+import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
 import { HttpFile } from '../http/http';
 
 export class GetContractResponseContract {
@@ -18,17 +23,54 @@ export class GetContractResponseContract {
     */
     'startDate': Date;
     /**
-    * The end date of the contract
-    */
-    'endDate'?: Date;
-    /**
     * The id of the customer that the contract is associated with
     */
     'customerId': string;
     /**
-    * The id of the plan that the contract is associated with
+    * The name of the contract
     */
-    'planId': string;
+    'name': string;
+    /**
+    * The id of the sales force opportunity that the contract is associated with
+    */
+    'salesForceOpportunityId'?: string | null;
+    /**
+    * The end date of the contract
+    */
+    'endDate'?: Date | null;
+    /**
+    * The signature date of the contract
+    */
+    'signatureDate'?: Date | null;
+    /**
+    * The products that the contract is associated with
+    */
+    'products'?: Array<ProductGroupProductsInner>;
+    /**
+    * Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.
+    */
+    'productGroups'?: Array<ProductGroup>;
+    /**
+    * The name of the account manager of the contract
+    */
+    'accountManager'?: string | null;
+    /**
+    * Whether to pro rate the invoices for the contract. If not provided, it will default to false
+    */
+    'shouldProRateInvoices'?: boolean;
+    /**
+    * Whether the contract is set to auto renew. If not provided, it will be treated as true
+    */
+    'autoRenewContract'?: boolean;
+    /**
+    * Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+    */
+    'customFields'?: Array<CustomField> | null;
+    /**
+    * The stored custom field values associated with the contract
+    */
+    'customFieldValues'?: Array<CustomFieldValue> | null;
+    'status'?: ContractStatus;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -45,21 +87,81 @@ export class GetContractResponseContract {
             "format": "date-time"
         },
         {
-            "name": "endDate",
-            "baseName": "endDate",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
             "name": "customerId",
             "baseName": "customerId",
             "type": "string",
             "format": ""
         },
         {
-            "name": "planId",
-            "baseName": "planId",
+            "name": "name",
+            "baseName": "name",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "salesForceOpportunityId",
+            "baseName": "salesForceOpportunityId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "endDate",
+            "baseName": "endDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "signatureDate",
+            "baseName": "signatureDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "products",
+            "baseName": "products",
+            "type": "Array<ProductGroupProductsInner>",
+            "format": ""
+        },
+        {
+            "name": "productGroups",
+            "baseName": "productGroups",
+            "type": "Array<ProductGroup>",
+            "format": ""
+        },
+        {
+            "name": "accountManager",
+            "baseName": "accountManager",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "shouldProRateInvoices",
+            "baseName": "shouldProRateInvoices",
+            "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "autoRenewContract",
+            "baseName": "autoRenewContract",
+            "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "customFields",
+            "baseName": "customFields",
+            "type": "Array<CustomField>",
+            "format": ""
+        },
+        {
+            "name": "customFieldValues",
+            "baseName": "customFieldValues",
+            "type": "Array<CustomFieldValue>",
+            "format": ""
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "ContractStatus",
             "format": ""
         },
         {
@@ -88,3 +190,5 @@ export class GetContractResponseContract {
     public constructor() {
     }
 }
+
+

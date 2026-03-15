@@ -20,7 +20,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +32,7 @@ class LineItemRevenueBreakdown(BaseModel):
     overage: Union[StrictFloat, StrictInt]
     discount: Union[StrictFloat, StrictInt]
     credits_used: Union[StrictFloat, StrictInt] = Field(alias="creditsUsed")
-    tax: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
+    tax: Union[StrictFloat, StrictInt]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["total", "subtotal", "overage", "discount", "creditsUsed", "tax"]
 

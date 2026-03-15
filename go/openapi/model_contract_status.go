@@ -16,13 +16,15 @@ import (
 	"fmt"
 )
 
-// ContractStatus the model 'ContractStatus'
+// ContractStatus The status of the contract
 type ContractStatus string
 
 // List of ContractStatus
 const (
+	CONTRACTSTATUS_IN_REVIEW ContractStatus = "InReview"
 	CONTRACTSTATUS_ACTIVE ContractStatus = "Active"
 	CONTRACTSTATUS_INACTIVE ContractStatus = "Inactive"
+	CONTRACTSTATUS_EXPIRED ContractStatus = "Expired"
 	CONTRACTSTATUS_TERMINATED ContractStatus = "Terminated"
 	CONTRACTSTATUS_PENDING_TERMINATION ContractStatus = "PendingTermination"
 	CONTRACTSTATUS_ERROR ContractStatus = "Error"
@@ -30,8 +32,10 @@ const (
 
 // All allowed values of ContractStatus enum
 var AllowedContractStatusEnumValues = []ContractStatus{
+	"InReview",
 	"Active",
 	"Inactive",
+	"Expired",
 	"Terminated",
 	"PendingTermination",
 	"Error",

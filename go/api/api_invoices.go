@@ -11,12 +11,27 @@ type InvoicesAPI struct {
 
 type Invoice = openapi.GetInvoiceResponseInvoice
 type GetInvoiceResponse = openapi.GetInvoiceResponse
+type InvoicePaymentStatusResponse = openapi.InvoicePaymentStatusResponse
 type ListInvoicesResponse = openapi.ListInvoicesResponse
 
 func NewInvoicesAPI(client *client.VayuClient) *InvoicesAPI {
 	return &InvoicesAPI{
 		vayuClient: client,
 	}
+}
+
+func (api *InvoicesAPI) GetInvoicePaymentStatus(invoiceId string) (*InvoicePaymentStatusResponse, error) {
+	ctx, cancel := client.GenerateContextWithTimeout()
+	defer cancel()
+
+	request := api.vayuClient.Client.InvoicesAPI.GetInvoicePaymentStatus(ctx, invoiceId)
+	response, _, err := request.Execute()
+
+	if err != nil {
+		return nil, client.BuildVayuErrorFromGenericOpenAPIError(err)
+	}
+
+	return response, nil
 }
 
 func (api *InvoicesAPI) ListInvoices(limit *float32, cursor *string) (*ListInvoicesResponse, error) {

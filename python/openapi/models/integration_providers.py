@@ -36,6 +36,10 @@ class IntegrationProviders(str, Enum):
     S3 = 'S3'
     VAYU = 'Vayu'
     MORNING = 'Morning'
+    ANROK = 'Anrok'
+    SNOWFLAKE = 'Snowflake'
+    CONNACT = 'Connact'
+    XERO = 'Xero'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

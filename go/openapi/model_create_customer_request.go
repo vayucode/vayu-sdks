@@ -25,11 +25,31 @@ type CreateCustomerRequest struct {
 	Name string `json:"name"`
 	// The aliases of the customer used to match events to the customer.
 	Aliases []string `json:"aliases,omitempty"`
-	Address *Address `json:"address,omitempty"`
 	// The contacts of the customer. Contact marked as primary is the target for invoice sharing.
 	Contacts []Contact `json:"contacts,omitempty"`
+	Source NullableCustomerSource `json:"source,omitempty"`
+	// The legal name of the customer
+	LegalName NullableString `json:"legalName,omitempty"`
+	// The tax IDs of the customer
+	TaxIds []string `json:"taxIds,omitempty"`
+	// The tax ID of the customer (deprecated, use taxIds instead)
+	// Deprecated
+	TaxId NullableString `json:"taxId,omitempty"`
+	CloudProviderSettings NullableCustomerCloudProviderSettings `json:"cloudProviderSettings,omitempty"`
 	// The external ID of the customer
 	ExternalId *string `json:"externalId,omitempty"`
+	// The ID of the customer in the ERP system
+	CustomerErpId NullableString `json:"customerErpId,omitempty"`
+	Address NullableAddress `json:"address,omitempty"`
+	// The ID of the customer in the Salesforce system
+	SalesForceAccountId NullableString `json:"salesForceAccountId,omitempty"`
+	// The due days of the customer
+	DueDays NullableString `json:"dueDays,omitempty"`
+	Currency NullableCurrency `json:"currency,omitempty"`
+	// Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+	CustomFields []CustomField `json:"customFields,omitempty"`
+	// The name of the subsidiary of the customer
+	Subsidiary NullableString `json:"subsidiary,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -110,41 +130,9 @@ func (o *CreateCustomerRequest) SetAliases(v []string) {
 	o.Aliases = v
 }
 
-// GetAddress returns the Address field value if set, zero value otherwise.
-func (o *CreateCustomerRequest) GetAddress() Address {
-	if o == nil || IsNil(o.Address) {
-		var ret Address
-		return ret
-	}
-	return *o.Address
-}
-
-// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateCustomerRequest) GetAddressOk() (*Address, bool) {
-	if o == nil || IsNil(o.Address) {
-		return nil, false
-	}
-	return o.Address, true
-}
-
-// HasAddress returns a boolean if a field has been set.
-func (o *CreateCustomerRequest) HasAddress() bool {
-	if o != nil && !IsNil(o.Address) {
-		return true
-	}
-
-	return false
-}
-
-// SetAddress gets a reference to the given Address and assigns it to the Address field.
-func (o *CreateCustomerRequest) SetAddress(v Address) {
-	o.Address = &v
-}
-
-// GetContacts returns the Contacts field value if set, zero value otherwise.
+// GetContacts returns the Contacts field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CreateCustomerRequest) GetContacts() []Contact {
-	if o == nil || IsNil(o.Contacts) {
+	if o == nil {
 		var ret []Contact
 		return ret
 	}
@@ -153,6 +141,7 @@ func (o *CreateCustomerRequest) GetContacts() []Contact {
 
 // GetContactsOk returns a tuple with the Contacts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateCustomerRequest) GetContactsOk() ([]Contact, bool) {
 	if o == nil || IsNil(o.Contacts) {
 		return nil, false
@@ -172,6 +161,210 @@ func (o *CreateCustomerRequest) HasContacts() bool {
 // SetContacts gets a reference to the given []Contact and assigns it to the Contacts field.
 func (o *CreateCustomerRequest) SetContacts(v []Contact) {
 	o.Contacts = v
+}
+
+// GetSource returns the Source field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetSource() CustomerSource {
+	if o == nil || IsNil(o.Source.Get()) {
+		var ret CustomerSource
+		return ret
+	}
+	return *o.Source.Get()
+}
+
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetSourceOk() (*CustomerSource, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Source.Get(), o.Source.IsSet()
+}
+
+// HasSource returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasSource() bool {
+	if o != nil && o.Source.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSource gets a reference to the given NullableCustomerSource and assigns it to the Source field.
+func (o *CreateCustomerRequest) SetSource(v CustomerSource) {
+	o.Source.Set(&v)
+}
+// SetSourceNil sets the value for Source to be an explicit nil
+func (o *CreateCustomerRequest) SetSourceNil() {
+	o.Source.Set(nil)
+}
+
+// UnsetSource ensures that no value is present for Source, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetSource() {
+	o.Source.Unset()
+}
+
+// GetLegalName returns the LegalName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetLegalName() string {
+	if o == nil || IsNil(o.LegalName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.LegalName.Get()
+}
+
+// GetLegalNameOk returns a tuple with the LegalName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetLegalNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LegalName.Get(), o.LegalName.IsSet()
+}
+
+// HasLegalName returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasLegalName() bool {
+	if o != nil && o.LegalName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLegalName gets a reference to the given NullableString and assigns it to the LegalName field.
+func (o *CreateCustomerRequest) SetLegalName(v string) {
+	o.LegalName.Set(&v)
+}
+// SetLegalNameNil sets the value for LegalName to be an explicit nil
+func (o *CreateCustomerRequest) SetLegalNameNil() {
+	o.LegalName.Set(nil)
+}
+
+// UnsetLegalName ensures that no value is present for LegalName, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetLegalName() {
+	o.LegalName.Unset()
+}
+
+// GetTaxIds returns the TaxIds field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetTaxIds() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.TaxIds
+}
+
+// GetTaxIdsOk returns a tuple with the TaxIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetTaxIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TaxIds) {
+		return nil, false
+	}
+	return o.TaxIds, true
+}
+
+// HasTaxIds returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasTaxIds() bool {
+	if o != nil && !IsNil(o.TaxIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetTaxIds gets a reference to the given []string and assigns it to the TaxIds field.
+func (o *CreateCustomerRequest) SetTaxIds(v []string) {
+	o.TaxIds = v
+}
+
+// GetTaxId returns the TaxId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
+func (o *CreateCustomerRequest) GetTaxId() string {
+	if o == nil || IsNil(o.TaxId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TaxId.Get()
+}
+
+// GetTaxIdOk returns a tuple with the TaxId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
+func (o *CreateCustomerRequest) GetTaxIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TaxId.Get(), o.TaxId.IsSet()
+}
+
+// HasTaxId returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasTaxId() bool {
+	if o != nil && o.TaxId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTaxId gets a reference to the given NullableString and assigns it to the TaxId field.
+// Deprecated
+func (o *CreateCustomerRequest) SetTaxId(v string) {
+	o.TaxId.Set(&v)
+}
+// SetTaxIdNil sets the value for TaxId to be an explicit nil
+func (o *CreateCustomerRequest) SetTaxIdNil() {
+	o.TaxId.Set(nil)
+}
+
+// UnsetTaxId ensures that no value is present for TaxId, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetTaxId() {
+	o.TaxId.Unset()
+}
+
+// GetCloudProviderSettings returns the CloudProviderSettings field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCloudProviderSettings() CustomerCloudProviderSettings {
+	if o == nil || IsNil(o.CloudProviderSettings.Get()) {
+		var ret CustomerCloudProviderSettings
+		return ret
+	}
+	return *o.CloudProviderSettings.Get()
+}
+
+// GetCloudProviderSettingsOk returns a tuple with the CloudProviderSettings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCloudProviderSettingsOk() (*CustomerCloudProviderSettings, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CloudProviderSettings.Get(), o.CloudProviderSettings.IsSet()
+}
+
+// HasCloudProviderSettings returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCloudProviderSettings() bool {
+	if o != nil && o.CloudProviderSettings.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCloudProviderSettings gets a reference to the given NullableCustomerCloudProviderSettings and assigns it to the CloudProviderSettings field.
+func (o *CreateCustomerRequest) SetCloudProviderSettings(v CustomerCloudProviderSettings) {
+	o.CloudProviderSettings.Set(&v)
+}
+// SetCloudProviderSettingsNil sets the value for CloudProviderSettings to be an explicit nil
+func (o *CreateCustomerRequest) SetCloudProviderSettingsNil() {
+	o.CloudProviderSettings.Set(nil)
+}
+
+// UnsetCloudProviderSettings ensures that no value is present for CloudProviderSettings, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetCloudProviderSettings() {
+	o.CloudProviderSettings.Unset()
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -206,6 +399,291 @@ func (o *CreateCustomerRequest) SetExternalId(v string) {
 	o.ExternalId = &v
 }
 
+// GetCustomerErpId returns the CustomerErpId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCustomerErpId() string {
+	if o == nil || IsNil(o.CustomerErpId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CustomerErpId.Get()
+}
+
+// GetCustomerErpIdOk returns a tuple with the CustomerErpId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCustomerErpIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CustomerErpId.Get(), o.CustomerErpId.IsSet()
+}
+
+// HasCustomerErpId returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCustomerErpId() bool {
+	if o != nil && o.CustomerErpId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomerErpId gets a reference to the given NullableString and assigns it to the CustomerErpId field.
+func (o *CreateCustomerRequest) SetCustomerErpId(v string) {
+	o.CustomerErpId.Set(&v)
+}
+// SetCustomerErpIdNil sets the value for CustomerErpId to be an explicit nil
+func (o *CreateCustomerRequest) SetCustomerErpIdNil() {
+	o.CustomerErpId.Set(nil)
+}
+
+// UnsetCustomerErpId ensures that no value is present for CustomerErpId, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetCustomerErpId() {
+	o.CustomerErpId.Unset()
+}
+
+// GetAddress returns the Address field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetAddress() Address {
+	if o == nil || IsNil(o.Address.Get()) {
+		var ret Address
+		return ret
+	}
+	return *o.Address.Get()
+}
+
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetAddressOk() (*Address, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Address.Get(), o.Address.IsSet()
+}
+
+// HasAddress returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasAddress() bool {
+	if o != nil && o.Address.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAddress gets a reference to the given NullableAddress and assigns it to the Address field.
+func (o *CreateCustomerRequest) SetAddress(v Address) {
+	o.Address.Set(&v)
+}
+// SetAddressNil sets the value for Address to be an explicit nil
+func (o *CreateCustomerRequest) SetAddressNil() {
+	o.Address.Set(nil)
+}
+
+// UnsetAddress ensures that no value is present for Address, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetAddress() {
+	o.Address.Unset()
+}
+
+// GetSalesForceAccountId returns the SalesForceAccountId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetSalesForceAccountId() string {
+	if o == nil || IsNil(o.SalesForceAccountId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceAccountId.Get()
+}
+
+// GetSalesForceAccountIdOk returns a tuple with the SalesForceAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetSalesForceAccountIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceAccountId.Get(), o.SalesForceAccountId.IsSet()
+}
+
+// HasSalesForceAccountId returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasSalesForceAccountId() bool {
+	if o != nil && o.SalesForceAccountId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceAccountId gets a reference to the given NullableString and assigns it to the SalesForceAccountId field.
+func (o *CreateCustomerRequest) SetSalesForceAccountId(v string) {
+	o.SalesForceAccountId.Set(&v)
+}
+// SetSalesForceAccountIdNil sets the value for SalesForceAccountId to be an explicit nil
+func (o *CreateCustomerRequest) SetSalesForceAccountIdNil() {
+	o.SalesForceAccountId.Set(nil)
+}
+
+// UnsetSalesForceAccountId ensures that no value is present for SalesForceAccountId, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetSalesForceAccountId() {
+	o.SalesForceAccountId.Unset()
+}
+
+// GetDueDays returns the DueDays field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetDueDays() string {
+	if o == nil || IsNil(o.DueDays.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DueDays.Get()
+}
+
+// GetDueDaysOk returns a tuple with the DueDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetDueDaysOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DueDays.Get(), o.DueDays.IsSet()
+}
+
+// HasDueDays returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasDueDays() bool {
+	if o != nil && o.DueDays.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDueDays gets a reference to the given NullableString and assigns it to the DueDays field.
+func (o *CreateCustomerRequest) SetDueDays(v string) {
+	o.DueDays.Set(&v)
+}
+// SetDueDaysNil sets the value for DueDays to be an explicit nil
+func (o *CreateCustomerRequest) SetDueDaysNil() {
+	o.DueDays.Set(nil)
+}
+
+// UnsetDueDays ensures that no value is present for DueDays, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetDueDays() {
+	o.DueDays.Unset()
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCurrency() Currency {
+	if o == nil || IsNil(o.Currency.Get()) {
+		var ret Currency
+		return ret
+	}
+	return *o.Currency.Get()
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCurrencyOk() (*Currency, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Currency.Get(), o.Currency.IsSet()
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCurrency() bool {
+	if o != nil && o.Currency.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given NullableCurrency and assigns it to the Currency field.
+func (o *CreateCustomerRequest) SetCurrency(v Currency) {
+	o.Currency.Set(&v)
+}
+// SetCurrencyNil sets the value for Currency to be an explicit nil
+func (o *CreateCustomerRequest) SetCurrencyNil() {
+	o.Currency.Set(nil)
+}
+
+// UnsetCurrency ensures that no value is present for Currency, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetCurrency() {
+	o.Currency.Unset()
+}
+
+// GetCustomFields returns the CustomFields field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCustomFields() []CustomField {
+	if o == nil {
+		var ret []CustomField
+		return ret
+	}
+	return o.CustomFields
+}
+
+// GetCustomFieldsOk returns a tuple with the CustomFields field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCustomFieldsOk() ([]CustomField, bool) {
+	if o == nil || IsNil(o.CustomFields) {
+		return nil, false
+	}
+	return o.CustomFields, true
+}
+
+// HasCustomFields returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCustomFields() bool {
+	if o != nil && !IsNil(o.CustomFields) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomFields gets a reference to the given []CustomField and assigns it to the CustomFields field.
+func (o *CreateCustomerRequest) SetCustomFields(v []CustomField) {
+	o.CustomFields = v
+}
+
+// GetSubsidiary returns the Subsidiary field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetSubsidiary() string {
+	if o == nil || IsNil(o.Subsidiary.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Subsidiary.Get()
+}
+
+// GetSubsidiaryOk returns a tuple with the Subsidiary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetSubsidiaryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Subsidiary.Get(), o.Subsidiary.IsSet()
+}
+
+// HasSubsidiary returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasSubsidiary() bool {
+	if o != nil && o.Subsidiary.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSubsidiary gets a reference to the given NullableString and assigns it to the Subsidiary field.
+func (o *CreateCustomerRequest) SetSubsidiary(v string) {
+	o.Subsidiary.Set(&v)
+}
+// SetSubsidiaryNil sets the value for Subsidiary to be an explicit nil
+func (o *CreateCustomerRequest) SetSubsidiaryNil() {
+	o.Subsidiary.Set(nil)
+}
+
+// UnsetSubsidiary ensures that no value is present for Subsidiary, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetSubsidiary() {
+	o.Subsidiary.Unset()
+}
+
 func (o CreateCustomerRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -220,14 +698,47 @@ func (o CreateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	if o.Aliases != nil {
 		toSerialize["aliases"] = o.Aliases
 	}
-	if !IsNil(o.Address) {
-		toSerialize["address"] = o.Address
-	}
-	if !IsNil(o.Contacts) {
+	if o.Contacts != nil {
 		toSerialize["contacts"] = o.Contacts
+	}
+	if o.Source.IsSet() {
+		toSerialize["source"] = o.Source.Get()
+	}
+	if o.LegalName.IsSet() {
+		toSerialize["legalName"] = o.LegalName.Get()
+	}
+	if o.TaxIds != nil {
+		toSerialize["taxIds"] = o.TaxIds
+	}
+	if o.TaxId.IsSet() {
+		toSerialize["taxId"] = o.TaxId.Get()
+	}
+	if o.CloudProviderSettings.IsSet() {
+		toSerialize["cloudProviderSettings"] = o.CloudProviderSettings.Get()
 	}
 	if !IsNil(o.ExternalId) {
 		toSerialize["externalId"] = o.ExternalId
+	}
+	if o.CustomerErpId.IsSet() {
+		toSerialize["customerErpId"] = o.CustomerErpId.Get()
+	}
+	if o.Address.IsSet() {
+		toSerialize["address"] = o.Address.Get()
+	}
+	if o.SalesForceAccountId.IsSet() {
+		toSerialize["salesForceAccountId"] = o.SalesForceAccountId.Get()
+	}
+	if o.DueDays.IsSet() {
+		toSerialize["dueDays"] = o.DueDays.Get()
+	}
+	if o.Currency.IsSet() {
+		toSerialize["currency"] = o.Currency.Get()
+	}
+	if o.CustomFields != nil {
+		toSerialize["customFields"] = o.CustomFields
+	}
+	if o.Subsidiary.IsSet() {
+		toSerialize["subsidiary"] = o.Subsidiary.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -274,9 +785,20 @@ func (o *CreateCustomerRequest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "aliases")
-		delete(additionalProperties, "address")
 		delete(additionalProperties, "contacts")
+		delete(additionalProperties, "source")
+		delete(additionalProperties, "legalName")
+		delete(additionalProperties, "taxIds")
+		delete(additionalProperties, "taxId")
+		delete(additionalProperties, "cloudProviderSettings")
 		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "customerErpId")
+		delete(additionalProperties, "address")
+		delete(additionalProperties, "salesForceAccountId")
+		delete(additionalProperties, "dueDays")
+		delete(additionalProperties, "currency")
+		delete(additionalProperties, "customFields")
+		delete(additionalProperties, "subsidiary")
 		o.AdditionalProperties = additionalProperties
 	}
 

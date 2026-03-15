@@ -95,7 +95,6 @@ class ProductConsumptionsApi:
             '200': "GetProductConsumptionResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -167,7 +166,6 @@ class ProductConsumptionsApi:
             '200': "GetProductConsumptionResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -239,7 +237,6 @@ class ProductConsumptionsApi:
             '200': "GetProductConsumptionResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }

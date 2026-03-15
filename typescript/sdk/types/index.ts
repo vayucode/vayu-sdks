@@ -1,4 +1,6 @@
 export * from './pagination-options';
+export * from './CatalogProducts';
+export * from './CloudUsageSubmission';
 export * from './Contracts';
 export * from './Customers';
 export * from './Events';

@@ -22,5 +22,7 @@ export enum NotificationEventType {
     MonthEndReport = 'MonthEndReport',
     UnchargedEvents = 'UnchargedEvents',
     TierCrossed = 'TierCrossed',
-    CommitmentCrossed = 'CommitmentCrossed'
+    CommitmentCrossed = 'CommitmentCrossed',
+    FinalTierExceeded = 'FinalTierExceeded',
+    InvoicePaymentStatusChanged = 'InvoicePaymentStatusChanged'
 }

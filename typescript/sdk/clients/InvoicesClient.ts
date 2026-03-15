@@ -19,4 +19,8 @@ export class InvoicesClient {
   async get(id: string) {
     return this.client.getInvoice(id);
   }
+
+  async getPaymentStatus(id: string) {
+    return this.client.getInvoicePaymentStatus(id);
+  }
 }

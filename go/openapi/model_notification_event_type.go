@@ -25,6 +25,14 @@ const (
 	NOTIFICATIONEVENTTYPE_OVERAGE NotificationEventType = "Overage"
 	NOTIFICATIONEVENTTYPE_UPCOMING_RENEWAL NotificationEventType = "UpcomingRenewal"
 	NOTIFICATIONEVENTTYPE_INVOICE_APPROVED NotificationEventType = "InvoiceApproved"
+	NOTIFICATIONEVENTTYPE_CUSTOMER_PORTAL_LINK_SENT NotificationEventType = "CustomerPortalLinkSent"
+	NOTIFICATIONEVENTTYPE_NEW_CUSTOMER_WITHOUT_CONTRACT NotificationEventType = "NewCustomerWithoutContract"
+	NOTIFICATIONEVENTTYPE_MONTH_END_REPORT NotificationEventType = "MonthEndReport"
+	NOTIFICATIONEVENTTYPE_UNCHARGED_EVENTS NotificationEventType = "UnchargedEvents"
+	NOTIFICATIONEVENTTYPE_TIER_CROSSED NotificationEventType = "TierCrossed"
+	NOTIFICATIONEVENTTYPE_COMMITMENT_CROSSED NotificationEventType = "CommitmentCrossed"
+	NOTIFICATIONEVENTTYPE_FINAL_TIER_EXCEEDED NotificationEventType = "FinalTierExceeded"
+	NOTIFICATIONEVENTTYPE_INVOICE_PAYMENT_STATUS_CHANGED NotificationEventType = "InvoicePaymentStatusChanged"
 )
 
 // All allowed values of NotificationEventType enum
@@ -33,6 +41,14 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"Overage",
 	"UpcomingRenewal",
 	"InvoiceApproved",
+	"CustomerPortalLinkSent",
+	"NewCustomerWithoutContract",
+	"MonthEndReport",
+	"UnchargedEvents",
+	"TierCrossed",
+	"CommitmentCrossed",
+	"FinalTierExceeded",
+	"InvoicePaymentStatusChanged",
 }
 
 func (v *NotificationEventType) UnmarshalJSON(src []byte) error {

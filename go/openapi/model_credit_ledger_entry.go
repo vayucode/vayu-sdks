@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 	"fmt"
 )
 
@@ -21,10 +22,15 @@ var _ MappedNullable = &CreditLedgerEntry{}
 
 // CreditLedgerEntry struct for CreditLedgerEntry
 type CreditLedgerEntry struct {
+	Id string `json:"id" validate:"regexp=^[0-9a-fA-F]{24}$"`
+	CreatedAt time.Time `json:"createdAt"`
 	Type BillingCycleStatus `json:"type"`
 	Amount float32 `json:"amount"`
-	InvoiceId *string `json:"invoiceId,omitempty"`
 	BalanceAfterEntry float32 `json:"balanceAfterEntry"`
+	InvoiceId *string `json:"invoiceId,omitempty"`
+	ErpId *string `json:"erpId,omitempty"`
+	ContractId *string `json:"contractId,omitempty"`
+	IntegrationEntities []IntegrationEntity `json:"integrationEntities"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,11 +40,14 @@ type _CreditLedgerEntry CreditLedgerEntry
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreditLedgerEntry(type_ BillingCycleStatus, amount float32, balanceAfterEntry float32) *CreditLedgerEntry {
+func NewCreditLedgerEntry(id string, createdAt time.Time, type_ BillingCycleStatus, amount float32, balanceAfterEntry float32, integrationEntities []IntegrationEntity) *CreditLedgerEntry {
 	this := CreditLedgerEntry{}
+	this.Id = id
+	this.CreatedAt = createdAt
 	this.Type = type_
 	this.Amount = amount
 	this.BalanceAfterEntry = balanceAfterEntry
+	this.IntegrationEntities = integrationEntities
 	return &this
 }
 
@@ -48,6 +57,54 @@ func NewCreditLedgerEntry(type_ BillingCycleStatus, amount float32, balanceAfter
 func NewCreditLedgerEntryWithDefaults() *CreditLedgerEntry {
 	this := CreditLedgerEntry{}
 	return &this
+}
+
+// GetId returns the Id field value
+func (o *CreditLedgerEntry) GetId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Id, true
+}
+
+// SetId sets field value
+func (o *CreditLedgerEntry) SetId(v string) {
+	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *CreditLedgerEntry) GetCreatedAt() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetCreatedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *CreditLedgerEntry) SetCreatedAt(v time.Time) {
+	o.CreatedAt = v
 }
 
 // GetType returns the Type field value
@@ -98,6 +155,30 @@ func (o *CreditLedgerEntry) SetAmount(v float32) {
 	o.Amount = v
 }
 
+// GetBalanceAfterEntry returns the BalanceAfterEntry field value
+func (o *CreditLedgerEntry) GetBalanceAfterEntry() float32 {
+	if o == nil {
+		var ret float32
+		return ret
+	}
+
+	return o.BalanceAfterEntry
+}
+
+// GetBalanceAfterEntryOk returns a tuple with the BalanceAfterEntry field value
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetBalanceAfterEntryOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BalanceAfterEntry, true
+}
+
+// SetBalanceAfterEntry sets field value
+func (o *CreditLedgerEntry) SetBalanceAfterEntry(v float32) {
+	o.BalanceAfterEntry = v
+}
+
 // GetInvoiceId returns the InvoiceId field value if set, zero value otherwise.
 func (o *CreditLedgerEntry) GetInvoiceId() string {
 	if o == nil || IsNil(o.InvoiceId) {
@@ -130,28 +211,92 @@ func (o *CreditLedgerEntry) SetInvoiceId(v string) {
 	o.InvoiceId = &v
 }
 
-// GetBalanceAfterEntry returns the BalanceAfterEntry field value
-func (o *CreditLedgerEntry) GetBalanceAfterEntry() float32 {
+// GetErpId returns the ErpId field value if set, zero value otherwise.
+func (o *CreditLedgerEntry) GetErpId() string {
+	if o == nil || IsNil(o.ErpId) {
+		var ret string
+		return ret
+	}
+	return *o.ErpId
+}
+
+// GetErpIdOk returns a tuple with the ErpId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetErpIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ErpId) {
+		return nil, false
+	}
+	return o.ErpId, true
+}
+
+// HasErpId returns a boolean if a field has been set.
+func (o *CreditLedgerEntry) HasErpId() bool {
+	if o != nil && !IsNil(o.ErpId) {
+		return true
+	}
+
+	return false
+}
+
+// SetErpId gets a reference to the given string and assigns it to the ErpId field.
+func (o *CreditLedgerEntry) SetErpId(v string) {
+	o.ErpId = &v
+}
+
+// GetContractId returns the ContractId field value if set, zero value otherwise.
+func (o *CreditLedgerEntry) GetContractId() string {
+	if o == nil || IsNil(o.ContractId) {
+		var ret string
+		return ret
+	}
+	return *o.ContractId
+}
+
+// GetContractIdOk returns a tuple with the ContractId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetContractIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ContractId) {
+		return nil, false
+	}
+	return o.ContractId, true
+}
+
+// HasContractId returns a boolean if a field has been set.
+func (o *CreditLedgerEntry) HasContractId() bool {
+	if o != nil && !IsNil(o.ContractId) {
+		return true
+	}
+
+	return false
+}
+
+// SetContractId gets a reference to the given string and assigns it to the ContractId field.
+func (o *CreditLedgerEntry) SetContractId(v string) {
+	o.ContractId = &v
+}
+
+// GetIntegrationEntities returns the IntegrationEntities field value
+func (o *CreditLedgerEntry) GetIntegrationEntities() []IntegrationEntity {
 	if o == nil {
-		var ret float32
+		var ret []IntegrationEntity
 		return ret
 	}
 
-	return o.BalanceAfterEntry
+	return o.IntegrationEntities
 }
 
-// GetBalanceAfterEntryOk returns a tuple with the BalanceAfterEntry field value
+// GetIntegrationEntitiesOk returns a tuple with the IntegrationEntities field value
 // and a boolean to check if the value has been set.
-func (o *CreditLedgerEntry) GetBalanceAfterEntryOk() (*float32, bool) {
+func (o *CreditLedgerEntry) GetIntegrationEntitiesOk() ([]IntegrationEntity, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.BalanceAfterEntry, true
+	return o.IntegrationEntities, true
 }
 
-// SetBalanceAfterEntry sets field value
-func (o *CreditLedgerEntry) SetBalanceAfterEntry(v float32) {
-	o.BalanceAfterEntry = v
+// SetIntegrationEntities sets field value
+func (o *CreditLedgerEntry) SetIntegrationEntities(v []IntegrationEntity) {
+	o.IntegrationEntities = v
 }
 
 func (o CreditLedgerEntry) MarshalJSON() ([]byte, error) {
@@ -164,12 +309,21 @@ func (o CreditLedgerEntry) MarshalJSON() ([]byte, error) {
 
 func (o CreditLedgerEntry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["type"] = o.Type
 	toSerialize["amount"] = o.Amount
+	toSerialize["balanceAfterEntry"] = o.BalanceAfterEntry
 	if !IsNil(o.InvoiceId) {
 		toSerialize["invoiceId"] = o.InvoiceId
 	}
-	toSerialize["balanceAfterEntry"] = o.BalanceAfterEntry
+	if !IsNil(o.ErpId) {
+		toSerialize["erpId"] = o.ErpId
+	}
+	if !IsNil(o.ContractId) {
+		toSerialize["contractId"] = o.ContractId
+	}
+	toSerialize["integrationEntities"] = o.IntegrationEntities
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -183,9 +337,12 @@ func (o *CreditLedgerEntry) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"id",
+		"createdAt",
 		"type",
 		"amount",
 		"balanceAfterEntry",
+		"integrationEntities",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -215,10 +372,15 @@ func (o *CreditLedgerEntry) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "amount")
-		delete(additionalProperties, "invoiceId")
 		delete(additionalProperties, "balanceAfterEntry")
+		delete(additionalProperties, "invoiceId")
+		delete(additionalProperties, "erpId")
+		delete(additionalProperties, "contractId")
+		delete(additionalProperties, "integrationEntities")
 		o.AdditionalProperties = additionalProperties
 	}
 

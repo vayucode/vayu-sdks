@@ -6,10 +6,18 @@ import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
 import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { CloudUsageResult } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
 import { Contact } from '../models/Contact';
+import { ContractStatus } from '../models/ContractStatus';
+import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
+import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResponse';
+import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
 import { CreateContractRequest } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
+import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
+import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
+import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
 import { CreateCustomerRequest } from '../models/CreateCustomerRequest';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
 import { CreateCustomerResponseCustomer } from '../models/CreateCustomerResponseCustomer';
@@ -20,13 +28,24 @@ import { CreateMeasurementResponseMeasurement } from '../models/CreateMeasuremen
 import { CreditLedgerEntry } from '../models/CreditLedgerEntry';
 import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
+import { Currency } from '../models/Currency';
+import { CustomField } from '../models/CustomField';
+import { CustomFieldValue } from '../models/CustomFieldValue';
+import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
+import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomerSource } from '../models/CustomerSource';
 import { DeductCreditsRequest } from '../models/DeductCreditsRequest';
+import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResponse';
+import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
 import { DeleteContractResponse } from '../models/DeleteContractResponse';
 import { DeleteContractResponseContract } from '../models/DeleteContractResponseContract';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
 import { DeleteCustomerResponseCustomer } from '../models/DeleteCustomerResponseCustomer';
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
 import { DeleteEventResponseEvent } from '../models/DeleteEventResponseEvent';
+import { DeleteEventsByRefsRequest } from '../models/DeleteEventsByRefsRequest';
+import { DeleteEventsByRefsResponse } from '../models/DeleteEventsByRefsResponse';
+import { DeleteEventsByRefsResponseEventsInner } from '../models/DeleteEventsByRefsResponseEventsInner';
 import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
@@ -37,26 +56,41 @@ import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { EventsDryRunResponseObject } from '../models/EventsDryRunResponseObject';
 import { EventsDryRunResponseObjectEvent } from '../models/EventsDryRunResponseObjectEvent';
 import { EventsDryRunResponseObjectMeterWithValuesInner } from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
+import { ExternalOverageStrategy } from '../models/ExternalOverageStrategy';
 import { Filter } from '../models/Filter';
 import { FullDayPeriod } from '../models/FullDayPeriod';
+import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
+import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
 import { GetContractResponseContract } from '../models/GetContractResponseContract';
+import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
+import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
+import { GetCustomerByNameResponseCustomer } from '../models/GetCustomerByNameResponseCustomer';
 import { GetCustomerProductsConsumptionsByAliasResponse } from '../models/GetCustomerProductsConsumptionsByAliasResponse';
 import { GetCustomerProductsConsumptionsResponse } from '../models/GetCustomerProductsConsumptionsResponse';
+import { GetCustomerRelationResponse } from '../models/GetCustomerRelationResponse';
 import { GetCustomerResponse } from '../models/GetCustomerResponse';
 import { GetEventResponse } from '../models/GetEventResponse';
 import { GetEventResponseEvent } from '../models/GetEventResponseEvent';
 import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
 import { GetInvoiceResponseInvoice } from '../models/GetInvoiceResponseInvoice';
+import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
 import { GetProductConsumptionResponse } from '../models/GetProductConsumptionResponse';
 import { GetProductConsumptionResponseProductConsumption } from '../models/GetProductConsumptionResponseProductConsumption';
 import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
+import { IntegrationEntity } from '../models/IntegrationEntity';
+import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
+import { IntegrationProviders } from '../models/IntegrationProviders';
+import { IntegrationType } from '../models/IntegrationType';
 import { InvalidEvent } from '../models/InvalidEvent';
+import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
+import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
 import { LineItem } from '../models/LineItem';
 import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
+import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
@@ -67,15 +101,42 @@ import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Meter } from '../models/Meter';
 import { NotificationEventType } from '../models/NotificationEventType';
+import { PartnerSubmissionDetail } from '../models/PartnerSubmissionDetail';
+import { PaymentInfo } from '../models/PaymentInfo';
+import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
+import { PaymentTerm } from '../models/PaymentTerm';
+import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
+import { ProductGroup } from '../models/ProductGroup';
+import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
+import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
+import { ProductGroupProductsInnerCommitment } from '../models/ProductGroupProductsInnerCommitment';
+import { ProductGroupProductsInnerCommitmentScheduling } from '../models/ProductGroupProductsInnerCommitmentScheduling';
+import { ProductGroupProductsInnerPricing } from '../models/ProductGroupProductsInnerPricing';
+import { ProductGroupProductsInnerPricingOneOf } from '../models/ProductGroupProductsInnerPricingOneOf';
+import { ProductGroupProductsInnerPricingOneOf1 } from '../models/ProductGroupProductsInnerPricingOneOf1';
+import { ProductGroupProductsInnerPricingOneOf1InstallmentsInner } from '../models/ProductGroupProductsInnerPricingOneOf1InstallmentsInner';
+import { ProductGroupProductsInnerPricingOneOf2 } from '../models/ProductGroupProductsInnerPricingOneOf2';
+import { ProductGroupProductsInnerPricingOneOf2SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf2SubscriptionCadence';
+import { ProductGroupProductsInnerPricingOneOf3 } from '../models/ProductGroupProductsInnerPricingOneOf3';
+import { ProductGroupProductsInnerPricingOneOf3SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence';
+import { ProductGroupProductsInnerPricingOneOf3TiersInner } from '../models/ProductGroupProductsInnerPricingOneOf3TiersInner';
+import { ProductGroupProductsInnerPricingOneOf4 } from '../models/ProductGroupProductsInnerPricingOneOf4';
+import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProductsInnerScheduling';
+import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGroupProductsInnerSchedulingDuration';
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
+import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
+import { SyncStatus } from '../models/SyncStatus';
+import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
+import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
+import { UsageWindow } from '../models/UsageWindow';
 import { WebhookSubscribeRequest } from '../models/WebhookSubscribeRequest';
 
 import { AuthApiRequestFactory, AuthApiResponseProcessor} from "../apis/AuthApi";
@@ -125,6 +186,244 @@ export class ObservableAuthApi {
      */
     public login(loginRequest: LoginRequest, _options?: Configuration): Observable<LoginResponse> {
         return this.loginWithHttpInfo(loginRequest, _options).pipe(map((apiResponse: HttpInfo<LoginResponse>) => apiResponse.data));
+    }
+
+}
+
+import { CatalogProductsApiRequestFactory, CatalogProductsApiResponseProcessor} from "../apis/CatalogProductsApi";
+export class ObservableCatalogProductsApi {
+    private requestFactory: CatalogProductsApiRequestFactory;
+    private responseProcessor: CatalogProductsApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CatalogProductsApiRequestFactory,
+        responseProcessor?: CatalogProductsApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new CatalogProductsApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new CatalogProductsApiResponseProcessor();
+    }
+
+    /**
+     * Create a new Catalog product.
+     * Create Catalog product
+     * @param createCatalogProductRequest
+     */
+    public createCatalogProductWithHttpInfo(createCatalogProductRequest: CreateCatalogProductRequest, _options?: Configuration): Observable<HttpInfo<CreateCatalogProductResponse>> {
+        const requestContextPromise = this.requestFactory.createCatalogProduct(createCatalogProductRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createCatalogProductWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Create a new Catalog product.
+     * Create Catalog product
+     * @param createCatalogProductRequest
+     */
+    public createCatalogProduct(createCatalogProductRequest: CreateCatalogProductRequest, _options?: Configuration): Observable<CreateCatalogProductResponse> {
+        return this.createCatalogProductWithHttpInfo(createCatalogProductRequest, _options).pipe(map((apiResponse: HttpInfo<CreateCatalogProductResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Delete a Catalog product by id.
+     * Delete Catalog product
+     * @param catalogProductId
+     */
+    public deleteCatalogProductWithHttpInfo(catalogProductId: string, _options?: Configuration): Observable<HttpInfo<DeleteCatalogProductResponse>> {
+        const requestContextPromise = this.requestFactory.deleteCatalogProduct(catalogProductId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteCatalogProductWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Delete a Catalog product by id.
+     * Delete Catalog product
+     * @param catalogProductId
+     */
+    public deleteCatalogProduct(catalogProductId: string, _options?: Configuration): Observable<DeleteCatalogProductResponse> {
+        return this.deleteCatalogProductWithHttpInfo(catalogProductId, _options).pipe(map((apiResponse: HttpInfo<DeleteCatalogProductResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Get a Catalog product by id.
+     * Get Catalog product
+     * @param catalogProductId
+     */
+    public getCatalogProductWithHttpInfo(catalogProductId: string, _options?: Configuration): Observable<HttpInfo<GetCatalogProductResponse>> {
+        const requestContextPromise = this.requestFactory.getCatalogProduct(catalogProductId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getCatalogProductWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get a Catalog product by id.
+     * Get Catalog product
+     * @param catalogProductId
+     */
+    public getCatalogProduct(catalogProductId: string, _options?: Configuration): Observable<GetCatalogProductResponse> {
+        return this.getCatalogProductWithHttpInfo(catalogProductId, _options).pipe(map((apiResponse: HttpInfo<GetCatalogProductResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Get a list of Catalog products.
+     * List Catalog products
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCatalogProductsWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Observable<HttpInfo<ListCatalogProductsResponse>> {
+        const requestContextPromise = this.requestFactory.listCatalogProducts(limit, cursor, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.listCatalogProductsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get a list of Catalog products.
+     * List Catalog products
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCatalogProducts(limit?: number, cursor?: string, _options?: Configuration): Observable<ListCatalogProductsResponse> {
+        return this.listCatalogProductsWithHttpInfo(limit, cursor, _options).pipe(map((apiResponse: HttpInfo<ListCatalogProductsResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Update a Catalog product by id.
+     * Update Catalog product
+     * @param updateCatalogProductRequest
+     * @param catalogProductId
+     */
+    public updateCatalogProductWithHttpInfo(updateCatalogProductRequest: UpdateCatalogProductRequest, catalogProductId: string, _options?: Configuration): Observable<HttpInfo<UpdateCatalogProductResponse>> {
+        const requestContextPromise = this.requestFactory.updateCatalogProduct(updateCatalogProductRequest, catalogProductId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.updateCatalogProductWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Update a Catalog product by id.
+     * Update Catalog product
+     * @param updateCatalogProductRequest
+     * @param catalogProductId
+     */
+    public updateCatalogProduct(updateCatalogProductRequest: UpdateCatalogProductRequest, catalogProductId: string, _options?: Configuration): Observable<UpdateCatalogProductResponse> {
+        return this.updateCatalogProductWithHttpInfo(updateCatalogProductRequest, catalogProductId, _options).pipe(map((apiResponse: HttpInfo<UpdateCatalogProductResponse>) => apiResponse.data));
+    }
+
+}
+
+import { CloudUsageSubmissionApiRequestFactory, CloudUsageSubmissionApiResponseProcessor} from "../apis/CloudUsageSubmissionApi";
+export class ObservableCloudUsageSubmissionApi {
+    private requestFactory: CloudUsageSubmissionApiRequestFactory;
+    private responseProcessor: CloudUsageSubmissionApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CloudUsageSubmissionApiRequestFactory,
+        responseProcessor?: CloudUsageSubmissionApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new CloudUsageSubmissionApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new CloudUsageSubmissionApiResponseProcessor();
+    }
+
+    /**
+     * Submit cloud usage data
+     * Submit cloud usage
+     * @param submitCloudUsageRequest
+     */
+    public submitCloudUsageWithHttpInfo(submitCloudUsageRequest: SubmitCloudUsageRequest, _options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.submitCloudUsage(submitCloudUsageRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.submitCloudUsageWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Submit cloud usage data
+     * Submit cloud usage
+     * @param submitCloudUsageRequest
+     */
+    public submitCloudUsage(submitCloudUsageRequest: SubmitCloudUsageRequest, _options?: Configuration): Observable<any> {
+        return this.submitCloudUsageWithHttpInfo(submitCloudUsageRequest, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
 }
@@ -245,13 +544,49 @@ export class ObservableContractsApi {
     }
 
     /**
-     * Get a list of Contracts.
-     * List Contracts
+     * Use this endpoint to get a specific contract using its integration provider and identifier.
+     * Get contract by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Observable<HttpInfo<GetContractByIntegrationIdResponse>> {
+        const requestContextPromise = this.requestFactory.getContractByIntegrationId(integrationType, integrationId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getContractByIntegrationIdWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Use this endpoint to get a specific contract using its integration provider and identifier.
+     * Get contract by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getContractByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Observable<GetContractByIntegrationIdResponse> {
+        return this.getContractByIntegrationIdWithHttpInfo(integrationType, integrationId, _options).pipe(map((apiResponse: HttpInfo<GetContractByIntegrationIdResponse>) => apiResponse.data));
+    }
+
+    /**
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listContractsWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Observable<HttpInfo<ListContractsResponse>> {
-        const requestContextPromise = this.requestFactory.listContracts(limit, cursor, _options);
+    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<HttpInfo<ListContractsResponse>> {
+        const requestContextPromise = this.requestFactory.listContracts(limit, cursor, customerId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -270,13 +605,14 @@ export class ObservableContractsApi {
     }
 
     /**
-     * Get a list of Contracts.
-     * List Contracts
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listContracts(limit?: number, cursor?: string, _options?: Configuration): Observable<ListContractsResponse> {
-        return this.listContractsWithHttpInfo(limit, cursor, _options).pipe(map((apiResponse: HttpInfo<ListContractsResponse>) => apiResponse.data));
+    public listContracts(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<ListContractsResponse> {
+        return this.listContractsWithHttpInfo(limit, cursor, customerId, _options).pipe(map((apiResponse: HttpInfo<ListContractsResponse>) => apiResponse.data));
     }
 
 }
@@ -452,6 +788,39 @@ export class ObservableCustomersApi {
     }
 
     /**
+     * Create a new Customer relation.
+     * Create Customer relation
+     * @param createCustomerRelationRequest
+     */
+    public createCustomerRelationWithHttpInfo(createCustomerRelationRequest: CreateCustomerRelationRequest, _options?: Configuration): Observable<HttpInfo<CreateCustomerRelationResponse>> {
+        const requestContextPromise = this.requestFactory.createCustomerRelation(createCustomerRelationRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createCustomerRelationWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Create a new Customer relation.
+     * Create Customer relation
+     * @param createCustomerRelationRequest
+     */
+    public createCustomerRelation(createCustomerRelationRequest: CreateCustomerRelationRequest, _options?: Configuration): Observable<CreateCustomerRelationResponse> {
+        return this.createCustomerRelationWithHttpInfo(createCustomerRelationRequest, _options).pipe(map((apiResponse: HttpInfo<CreateCustomerRelationResponse>) => apiResponse.data));
+    }
+
+    /**
      * Delete a Customer by id.
      * Delete Customer
      * @param customerId
@@ -551,6 +920,74 @@ export class ObservableCustomersApi {
     }
 
     /**
+     * Use this endpoint to get a specific customer using its integration provider and identifier.
+     * Get customer by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Observable<HttpInfo<GetCustomerByIntegrationIdResponse>> {
+        const requestContextPromise = this.requestFactory.getCustomerByIntegrationId(integrationType, integrationId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getCustomerByIntegrationIdWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its integration provider and identifier.
+     * Get customer by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Observable<GetCustomerByIntegrationIdResponse> {
+        return this.getCustomerByIntegrationIdWithHttpInfo(integrationType, integrationId, _options).pipe(map((apiResponse: HttpInfo<GetCustomerByIntegrationIdResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its name.
+     * Get customer by name
+     * @param name
+     */
+    public getCustomerByNameWithHttpInfo(name: string, _options?: Configuration): Observable<HttpInfo<GetCustomerByNameResponse>> {
+        const requestContextPromise = this.requestFactory.getCustomerByName(name, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getCustomerByNameWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its name.
+     * Get customer by name
+     * @param name
+     */
+    public getCustomerByName(name: string, _options?: Configuration): Observable<GetCustomerByNameResponse> {
+        return this.getCustomerByNameWithHttpInfo(name, _options).pipe(map((apiResponse: HttpInfo<GetCustomerByNameResponse>) => apiResponse.data));
+    }
+
+    /**
      * Use this endpoint to get the products consumptions by the customer id.
      * Get products consumptions by customer id
      * @param customerId
@@ -614,6 +1051,39 @@ export class ObservableCustomersApi {
      */
     public getCustomerProductsConsumptionsByAlias(alias: string, _options?: Configuration): Observable<GetCustomerProductsConsumptionsByAliasResponse> {
         return this.getCustomerProductsConsumptionsByAliasWithHttpInfo(alias, _options).pipe(map((apiResponse: HttpInfo<GetCustomerProductsConsumptionsByAliasResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Get a Customer relation by id.
+     * Get Customer relation
+     * @param customerRelationId
+     */
+    public getCustomerRelationWithHttpInfo(customerRelationId: string, _options?: Configuration): Observable<HttpInfo<GetCustomerRelationResponse>> {
+        const requestContextPromise = this.requestFactory.getCustomerRelation(customerRelationId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getCustomerRelationWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get a Customer relation by id.
+     * Get Customer relation
+     * @param customerRelationId
+     */
+    public getCustomerRelation(customerRelationId: string, _options?: Configuration): Observable<GetCustomerRelationResponse> {
+        return this.getCustomerRelationWithHttpInfo(customerRelationId, _options).pipe(map((apiResponse: HttpInfo<GetCustomerRelationResponse>) => apiResponse.data));
     }
 
     /**
@@ -735,6 +1205,39 @@ export class ObservableEventsApi {
      */
     public deleteEventByRefId(refId: string, _options?: Configuration): Observable<DeleteEventResponse> {
         return this.deleteEventByRefIdWithHttpInfo(refId, _options).pipe(map((apiResponse: HttpInfo<DeleteEventResponse>) => apiResponse.data));
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request.
+     * Delete events by refs
+     * @param deleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public deleteEventsByRefsWithHttpInfo(deleteEventsByRefsRequest: DeleteEventsByRefsRequest, _options?: Configuration): Observable<HttpInfo<DeleteEventsByRefsResponse>> {
+        const requestContextPromise = this.requestFactory.deleteEventsByRefs(deleteEventsByRefsRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteEventsByRefsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request.
+     * Delete events by refs
+     * @param deleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public deleteEventsByRefs(deleteEventsByRefsRequest: DeleteEventsByRefsRequest, _options?: Configuration): Observable<DeleteEventsByRefsResponse> {
+        return this.deleteEventsByRefsWithHttpInfo(deleteEventsByRefsRequest, _options).pipe(map((apiResponse: HttpInfo<DeleteEventsByRefsResponse>) => apiResponse.data));
     }
 
     /**
@@ -929,13 +1432,47 @@ export class ObservableInvoicesApi {
     }
 
     /**
-     * Get a list of Invoices.
-     * List Invoices
+     * Use this endpoint to retrieve payment status information for a specific invoice, including payment status, amount due, amount paid, total, due date, paid date, and invoice PDF URL.
+     * Get invoice payment status
+     * @param invoiceId
+     */
+    public getInvoicePaymentStatusWithHttpInfo(invoiceId: string, _options?: Configuration): Observable<HttpInfo<InvoicePaymentStatusResponse>> {
+        const requestContextPromise = this.requestFactory.getInvoicePaymentStatus(invoiceId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getInvoicePaymentStatusWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Use this endpoint to retrieve payment status information for a specific invoice, including payment status, amount due, amount paid, total, due date, paid date, and invoice PDF URL.
+     * Get invoice payment status
+     * @param invoiceId
+     */
+    public getInvoicePaymentStatus(invoiceId: string, _options?: Configuration): Observable<InvoicePaymentStatusResponse> {
+        return this.getInvoicePaymentStatusWithHttpInfo(invoiceId, _options).pipe(map((apiResponse: HttpInfo<InvoicePaymentStatusResponse>) => apiResponse.data));
+    }
+
+    /**
+     * List invoices for the account. Optionally filter by customerId to retrieve invoices for a specific customer.
+     * List invoices
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Observable<HttpInfo<ListInvoicesResponse>> {
-        const requestContextPromise = this.requestFactory.listInvoices(limit, cursor, _options);
+    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<HttpInfo<ListInvoicesResponse>> {
+        const requestContextPromise = this.requestFactory.listInvoices(limit, cursor, customerId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -954,13 +1491,14 @@ export class ObservableInvoicesApi {
     }
 
     /**
-     * Get a list of Invoices.
-     * List Invoices
+     * List invoices for the account. Optionally filter by customerId to retrieve invoices for a specific customer.
+     * List invoices
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listInvoices(limit?: number, cursor?: string, _options?: Configuration): Observable<ListInvoicesResponse> {
-        return this.listInvoicesWithHttpInfo(limit, cursor, _options).pipe(map((apiResponse: HttpInfo<ListInvoicesResponse>) => apiResponse.data));
+    public listInvoices(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<ListInvoicesResponse> {
+        return this.listInvoicesWithHttpInfo(limit, cursor, customerId, _options).pipe(map((apiResponse: HttpInfo<ListInvoicesResponse>) => apiResponse.data));
     }
 
 }

@@ -1,4 +1,4 @@
-import type { CreateContractRequest } from '../../openapi';
+import type { CreateContractRequest, IntegrationType } from '../../openapi';
 import { ContractsApi } from '../../openapi';
 import { ConfigurationService } from '../services';
 import type { PaginationOptions } from '../types';
@@ -27,5 +27,9 @@ export class ContractsClient {
 
   async delete(id: string) {
     return this.client.deleteContract(id);
+  }
+
+  async getByIntegrationId(integrationType: IntegrationType, integrationId: string) {
+    return this.client.getContractByIntegrationId(integrationType, integrationId);
   }
 }

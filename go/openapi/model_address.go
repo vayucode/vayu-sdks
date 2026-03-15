@@ -20,11 +20,11 @@ var _ MappedNullable = &Address{}
 
 // Address The address of the customer
 type Address struct {
-	Country *string `json:"country,omitempty"`
-	City *string `json:"city,omitempty"`
-	AddressText *string `json:"addressText,omitempty"`
-	State *string `json:"state,omitempty"`
-	PostalCode *string `json:"postalCode,omitempty"`
+	Country NullableString `json:"country,omitempty"`
+	City NullableString `json:"city,omitempty"`
+	AddressText NullableString `json:"addressText,omitempty"`
+	State NullableString `json:"state,omitempty"`
+	PostalCode NullableString `json:"postalCode,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -47,164 +47,214 @@ func NewAddressWithDefaults() *Address {
 	return &this
 }
 
-// GetCountry returns the Country field value if set, zero value otherwise.
+// GetCountry returns the Country field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetCountry() string {
-	if o == nil || IsNil(o.Country) {
+	if o == nil || IsNil(o.Country.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Country
+	return *o.Country.Get()
 }
 
 // GetCountryOk returns a tuple with the Country field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Address) GetCountryOk() (*string, bool) {
-	if o == nil || IsNil(o.Country) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Country, true
+	return o.Country.Get(), o.Country.IsSet()
 }
 
 // HasCountry returns a boolean if a field has been set.
 func (o *Address) HasCountry() bool {
-	if o != nil && !IsNil(o.Country) {
+	if o != nil && o.Country.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCountry gets a reference to the given string and assigns it to the Country field.
+// SetCountry gets a reference to the given NullableString and assigns it to the Country field.
 func (o *Address) SetCountry(v string) {
-	o.Country = &v
+	o.Country.Set(&v)
+}
+// SetCountryNil sets the value for Country to be an explicit nil
+func (o *Address) SetCountryNil() {
+	o.Country.Set(nil)
 }
 
-// GetCity returns the City field value if set, zero value otherwise.
+// UnsetCountry ensures that no value is present for Country, not even an explicit nil
+func (o *Address) UnsetCountry() {
+	o.Country.Unset()
+}
+
+// GetCity returns the City field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetCity() string {
-	if o == nil || IsNil(o.City) {
+	if o == nil || IsNil(o.City.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.City
+	return *o.City.Get()
 }
 
 // GetCityOk returns a tuple with the City field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Address) GetCityOk() (*string, bool) {
-	if o == nil || IsNil(o.City) {
+	if o == nil {
 		return nil, false
 	}
-	return o.City, true
+	return o.City.Get(), o.City.IsSet()
 }
 
 // HasCity returns a boolean if a field has been set.
 func (o *Address) HasCity() bool {
-	if o != nil && !IsNil(o.City) {
+	if o != nil && o.City.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCity gets a reference to the given string and assigns it to the City field.
+// SetCity gets a reference to the given NullableString and assigns it to the City field.
 func (o *Address) SetCity(v string) {
-	o.City = &v
+	o.City.Set(&v)
+}
+// SetCityNil sets the value for City to be an explicit nil
+func (o *Address) SetCityNil() {
+	o.City.Set(nil)
 }
 
-// GetAddressText returns the AddressText field value if set, zero value otherwise.
+// UnsetCity ensures that no value is present for City, not even an explicit nil
+func (o *Address) UnsetCity() {
+	o.City.Unset()
+}
+
+// GetAddressText returns the AddressText field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetAddressText() string {
-	if o == nil || IsNil(o.AddressText) {
+	if o == nil || IsNil(o.AddressText.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.AddressText
+	return *o.AddressText.Get()
 }
 
 // GetAddressTextOk returns a tuple with the AddressText field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Address) GetAddressTextOk() (*string, bool) {
-	if o == nil || IsNil(o.AddressText) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AddressText, true
+	return o.AddressText.Get(), o.AddressText.IsSet()
 }
 
 // HasAddressText returns a boolean if a field has been set.
 func (o *Address) HasAddressText() bool {
-	if o != nil && !IsNil(o.AddressText) {
+	if o != nil && o.AddressText.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAddressText gets a reference to the given string and assigns it to the AddressText field.
+// SetAddressText gets a reference to the given NullableString and assigns it to the AddressText field.
 func (o *Address) SetAddressText(v string) {
-	o.AddressText = &v
+	o.AddressText.Set(&v)
+}
+// SetAddressTextNil sets the value for AddressText to be an explicit nil
+func (o *Address) SetAddressTextNil() {
+	o.AddressText.Set(nil)
 }
 
-// GetState returns the State field value if set, zero value otherwise.
+// UnsetAddressText ensures that no value is present for AddressText, not even an explicit nil
+func (o *Address) UnsetAddressText() {
+	o.AddressText.Unset()
+}
+
+// GetState returns the State field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetState() string {
-	if o == nil || IsNil(o.State) {
+	if o == nil || IsNil(o.State.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.State
+	return *o.State.Get()
 }
 
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Address) GetStateOk() (*string, bool) {
-	if o == nil || IsNil(o.State) {
+	if o == nil {
 		return nil, false
 	}
-	return o.State, true
+	return o.State.Get(), o.State.IsSet()
 }
 
 // HasState returns a boolean if a field has been set.
 func (o *Address) HasState() bool {
-	if o != nil && !IsNil(o.State) {
+	if o != nil && o.State.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetState gets a reference to the given string and assigns it to the State field.
+// SetState gets a reference to the given NullableString and assigns it to the State field.
 func (o *Address) SetState(v string) {
-	o.State = &v
+	o.State.Set(&v)
+}
+// SetStateNil sets the value for State to be an explicit nil
+func (o *Address) SetStateNil() {
+	o.State.Set(nil)
 }
 
-// GetPostalCode returns the PostalCode field value if set, zero value otherwise.
+// UnsetState ensures that no value is present for State, not even an explicit nil
+func (o *Address) UnsetState() {
+	o.State.Unset()
+}
+
+// GetPostalCode returns the PostalCode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetPostalCode() string {
-	if o == nil || IsNil(o.PostalCode) {
+	if o == nil || IsNil(o.PostalCode.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.PostalCode
+	return *o.PostalCode.Get()
 }
 
 // GetPostalCodeOk returns a tuple with the PostalCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Address) GetPostalCodeOk() (*string, bool) {
-	if o == nil || IsNil(o.PostalCode) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PostalCode, true
+	return o.PostalCode.Get(), o.PostalCode.IsSet()
 }
 
 // HasPostalCode returns a boolean if a field has been set.
 func (o *Address) HasPostalCode() bool {
-	if o != nil && !IsNil(o.PostalCode) {
+	if o != nil && o.PostalCode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPostalCode gets a reference to the given string and assigns it to the PostalCode field.
+// SetPostalCode gets a reference to the given NullableString and assigns it to the PostalCode field.
 func (o *Address) SetPostalCode(v string) {
-	o.PostalCode = &v
+	o.PostalCode.Set(&v)
+}
+// SetPostalCodeNil sets the value for PostalCode to be an explicit nil
+func (o *Address) SetPostalCodeNil() {
+	o.PostalCode.Set(nil)
+}
+
+// UnsetPostalCode ensures that no value is present for PostalCode, not even an explicit nil
+func (o *Address) UnsetPostalCode() {
+	o.PostalCode.Unset()
 }
 
 func (o Address) MarshalJSON() ([]byte, error) {
@@ -217,20 +267,20 @@ func (o Address) MarshalJSON() ([]byte, error) {
 
 func (o Address) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Country) {
-		toSerialize["country"] = o.Country
+	if o.Country.IsSet() {
+		toSerialize["country"] = o.Country.Get()
 	}
-	if !IsNil(o.City) {
-		toSerialize["city"] = o.City
+	if o.City.IsSet() {
+		toSerialize["city"] = o.City.Get()
 	}
-	if !IsNil(o.AddressText) {
-		toSerialize["addressText"] = o.AddressText
+	if o.AddressText.IsSet() {
+		toSerialize["addressText"] = o.AddressText.Get()
 	}
-	if !IsNil(o.State) {
-		toSerialize["state"] = o.State
+	if o.State.IsSet() {
+		toSerialize["state"] = o.State.Get()
 	}
-	if !IsNil(o.PostalCode) {
-		toSerialize["postalCode"] = o.PostalCode
+	if o.PostalCode.IsSet() {
+		toSerialize["postalCode"] = o.PostalCode.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {

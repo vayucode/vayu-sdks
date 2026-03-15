@@ -11,7 +11,10 @@
  */
 
 import { FullDayPeriod } from '../models/FullDayPeriod';
+import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
+import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
 import { LineItem } from '../models/LineItem';
+import { PaymentInfo } from '../models/PaymentInfo';
 import { HttpFile } from '../http/http';
 
 export class GetInvoiceResponseInvoice {
@@ -28,6 +31,17 @@ export class GetInvoiceResponseInvoice {
     */
     'name': string;
     'billingCycle': FullDayPeriod;
+    'revenueBreakdown': GetInvoiceResponseInvoiceRevenueBreakdown;
+    'billingStatus': InvoiceBillingStatus;
+    'paymentInfo'?: PaymentInfo;
+    /**
+    * The due date of the invoice
+    */
+    'dueDate': Date | null;
+    /**
+    * The id of the account that the invoice is associated with
+    */
+    'accountId': string;
     'lineItems': Array<LineItem>;
     /**
     * The total amount of the invoice
@@ -64,6 +78,36 @@ export class GetInvoiceResponseInvoice {
             "name": "billingCycle",
             "baseName": "billingCycle",
             "type": "FullDayPeriod",
+            "format": ""
+        },
+        {
+            "name": "revenueBreakdown",
+            "baseName": "revenueBreakdown",
+            "type": "GetInvoiceResponseInvoiceRevenueBreakdown",
+            "format": ""
+        },
+        {
+            "name": "billingStatus",
+            "baseName": "billingStatus",
+            "type": "InvoiceBillingStatus",
+            "format": ""
+        },
+        {
+            "name": "paymentInfo",
+            "baseName": "paymentInfo",
+            "type": "PaymentInfo",
+            "format": ""
+        },
+        {
+            "name": "dueDate",
+            "baseName": "dueDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "accountId",
+            "baseName": "accountId",
+            "type": "string",
             "format": ""
         },
         {
@@ -104,3 +148,5 @@ export class GetInvoiceResponseInvoice {
     public constructor() {
     }
 }
+
+

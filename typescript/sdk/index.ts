@@ -1,4 +1,6 @@
-import { ContractsClient,
+import { CatalogProductsClient,
+  CloudUsageSubmissionClient,
+  ContractsClient,
   CreditsClient,
   CustomersClient,
   EventsClient,
@@ -23,6 +25,14 @@ export class Vayu {
   /** @deprecated Authentication is now handled automatically. You can remove this call. */
   async login() {
     await this.configurationManager.generateToken();
+  }
+
+  get catalogProducts() {
+    return new CatalogProductsClient();
+  }
+
+  get cloudUsageSubmission() {
+    return new CloudUsageSubmissionClient();
   }
 
   get events() {

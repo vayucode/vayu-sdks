@@ -18,9 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,11 +27,11 @@ class Address(BaseModel):
     """
     The address of the customer
     """ # noqa: E501
-    country: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None
-    city: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None
-    address_text: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, alias="addressText")
-    state: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None
-    postal_code: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, alias="postalCode")
+    country: Optional[StrictStr] = None
+    city: Optional[StrictStr] = None
+    address_text: Optional[StrictStr] = Field(default=None, alias="addressText")
+    state: Optional[StrictStr] = None
+    postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["country", "city", "addressText", "state", "postalCode"]
 
@@ -81,6 +80,31 @@ class Address(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if country (nullable) is None
+        # and model_fields_set contains the field
+        if self.country is None and "country" in self.model_fields_set:
+            _dict['country'] = None
+
+        # set to None if city (nullable) is None
+        # and model_fields_set contains the field
+        if self.city is None and "city" in self.model_fields_set:
+            _dict['city'] = None
+
+        # set to None if address_text (nullable) is None
+        # and model_fields_set contains the field
+        if self.address_text is None and "address_text" in self.model_fields_set:
+            _dict['addressText'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
+        # set to None if postal_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.postal_code is None and "postal_code" in self.model_fields_set:
+            _dict['postalCode'] = None
 
         return _dict
 

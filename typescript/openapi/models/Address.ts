@@ -16,11 +16,11 @@ import { HttpFile } from '../http/http';
 * The address of the customer
 */
 export class Address {
-    'country'?: string;
-    'city'?: string;
-    'addressText'?: string;
-    'state'?: string;
-    'postalCode'?: string;
+    'country'?: string | null;
+    'city'?: string | null;
+    'addressText'?: string | null;
+    'state'?: string | null;
+    'postalCode'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 

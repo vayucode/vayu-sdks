@@ -106,7 +106,6 @@ class EventsApi:
             '200': "DeleteEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -178,7 +177,6 @@ class EventsApi:
             '200': "DeleteEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -250,7 +248,6 @@ class EventsApi:
             '200': "DeleteEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -382,7 +379,6 @@ class EventsApi:
             '200': "DeleteEventsByRefsResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -454,7 +450,6 @@ class EventsApi:
             '200': "DeleteEventsByRefsResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -526,7 +521,6 @@ class EventsApi:
             '200': "DeleteEventsByRefsResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -671,7 +665,6 @@ class EventsApi:
             '200': "GetEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -743,7 +736,6 @@ class EventsApi:
             '200': "GetEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -815,7 +807,6 @@ class EventsApi:
             '200': "GetEventResponse",
             '400': None,
             '401': None,
-            '404': None,
             '429': None,
             '500': None,
         }
@@ -1308,7 +1299,6 @@ class EventsApi:
             '200': "SendEventsResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -1380,7 +1370,6 @@ class EventsApi:
             '200': "SendEventsResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -1452,7 +1441,6 @@ class EventsApi:
             '200': "SendEventsResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -1597,7 +1585,6 @@ class EventsApi:
             '200': "EventsDryRunResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -1669,7 +1656,6 @@ class EventsApi:
             '200': "EventsDryRunResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }
@@ -1741,7 +1727,6 @@ class EventsApi:
             '200': "EventsDryRunResponse",
             '400': None,
             '401': None,
-            '413': None,
             '429': None,
             '500': None,
         }

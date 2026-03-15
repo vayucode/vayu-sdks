@@ -18,11 +18,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from openapi.models.address import Address
 from openapi.models.contact import Contact
+from openapi.models.currency import Currency
+from openapi.models.custom_field import CustomField
+from openapi.models.customer_cloud_provider_settings import CustomerCloudProviderSettings
 from openapi.models.customer_source import CustomerSource
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,14 +33,33 @@ class UpdateCustomerRequest(BaseModel):
     """
     UpdateCustomerRequest
     """ # noqa: E501
-    name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The name of the customer")
-    aliases: Optional[List[Annotated[str, Field(min_length=1, strict=True)]]] = Field(default=None, description="The aliases of the customer used to match events to the customer.")
-    address: Optional[Address] = None
+    name: Optional[StrictStr] = Field(default=None, description="The name of the customer")
+    aliases: Optional[List[StrictStr]] = Field(default=None, description="The aliases of the customer used to match events to the customer.")
     contacts: Optional[List[Contact]] = Field(default=None, description="The contacts of the customer. Contact marked as primary is the target for invoice sharing.")
     source: Optional[CustomerSource] = None
-    external_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The external ID of the customer", alias="externalId")
-    customer_erp_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The ID of the customer in the ERP system", alias="customerErpId")
-    __properties: ClassVar[List[str]] = ["name", "aliases", "address", "contacts", "source", "externalId", "customerErpId"]
+    legal_name: Optional[StrictStr] = Field(default=None, description="The legal name of the customer", alias="legalName")
+    tax_ids: Optional[List[StrictStr]] = Field(default=None, description="The tax IDs of the customer", alias="taxIds")
+    tax_id: Optional[StrictStr] = Field(default=None, description="The tax ID of the customer (deprecated, use taxIds instead)", alias="taxId")
+    cloud_provider_settings: Optional[CustomerCloudProviderSettings] = Field(default=None, alias="cloudProviderSettings")
+    external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the customer", alias="externalId")
+    customer_erp_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the ERP system", alias="customerErpId")
+    address: Optional[Address] = None
+    sales_force_account_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the Salesforce system", alias="salesForceAccountId")
+    due_days: Optional[StrictStr] = Field(default=None, description="The due days of the customer", alias="dueDays")
+    currency: Optional[Currency] = None
+    custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
+    subsidiary: Optional[StrictStr] = Field(default=None, description="The name of the subsidiary of the customer")
+    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "dueDays", "currency", "customFields", "subsidiary"]
+
+    @field_validator('due_days')
+    def due_days_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS']):
+            raise ValueError("must be one of enum values ('END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,9 +100,6 @@ class UpdateCustomerRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of address
-        if self.address:
-            _dict['address'] = self.address.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in contacts (list)
         _items = []
         if self.contacts:
@@ -89,20 +107,88 @@ class UpdateCustomerRequest(BaseModel):
                 if _item_contacts:
                     _items.append(_item_contacts.to_dict())
             _dict['contacts'] = _items
+        # override the default output from pydantic by calling `to_dict()` of cloud_provider_settings
+        if self.cloud_provider_settings:
+            _dict['cloudProviderSettings'] = self.cloud_provider_settings.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of address
+        if self.address:
+            _dict['address'] = self.address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in custom_fields (list)
+        _items = []
+        if self.custom_fields:
+            for _item_custom_fields in self.custom_fields:
+                if _item_custom_fields:
+                    _items.append(_item_custom_fields.to_dict())
+            _dict['customFields'] = _items
         # set to None if aliases (nullable) is None
         # and model_fields_set contains the field
         if self.aliases is None and "aliases" in self.model_fields_set:
             _dict['aliases'] = None
+
+        # set to None if contacts (nullable) is None
+        # and model_fields_set contains the field
+        if self.contacts is None and "contacts" in self.model_fields_set:
+            _dict['contacts'] = None
 
         # set to None if source (nullable) is None
         # and model_fields_set contains the field
         if self.source is None and "source" in self.model_fields_set:
             _dict['source'] = None
 
+        # set to None if legal_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.legal_name is None and "legal_name" in self.model_fields_set:
+            _dict['legalName'] = None
+
+        # set to None if tax_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_ids is None and "tax_ids" in self.model_fields_set:
+            _dict['taxIds'] = None
+
+        # set to None if tax_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_id is None and "tax_id" in self.model_fields_set:
+            _dict['taxId'] = None
+
+        # set to None if cloud_provider_settings (nullable) is None
+        # and model_fields_set contains the field
+        if self.cloud_provider_settings is None and "cloud_provider_settings" in self.model_fields_set:
+            _dict['cloudProviderSettings'] = None
+
         # set to None if customer_erp_id (nullable) is None
         # and model_fields_set contains the field
         if self.customer_erp_id is None and "customer_erp_id" in self.model_fields_set:
             _dict['customerErpId'] = None
+
+        # set to None if address (nullable) is None
+        # and model_fields_set contains the field
+        if self.address is None and "address" in self.model_fields_set:
+            _dict['address'] = None
+
+        # set to None if sales_force_account_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.sales_force_account_id is None and "sales_force_account_id" in self.model_fields_set:
+            _dict['salesForceAccountId'] = None
+
+        # set to None if due_days (nullable) is None
+        # and model_fields_set contains the field
+        if self.due_days is None and "due_days" in self.model_fields_set:
+            _dict['dueDays'] = None
+
+        # set to None if currency (nullable) is None
+        # and model_fields_set contains the field
+        if self.currency is None and "currency" in self.model_fields_set:
+            _dict['currency'] = None
+
+        # set to None if custom_fields (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_fields is None and "custom_fields" in self.model_fields_set:
+            _dict['customFields'] = None
+
+        # set to None if subsidiary (nullable) is None
+        # and model_fields_set contains the field
+        if self.subsidiary is None and "subsidiary" in self.model_fields_set:
+            _dict['subsidiary'] = None
 
         return _dict
 
@@ -118,11 +204,20 @@ class UpdateCustomerRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "aliases": obj.get("aliases"),
-            "address": Address.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "contacts": [Contact.from_dict(_item) for _item in obj["contacts"]] if obj.get("contacts") is not None else None,
             "source": obj.get("source"),
+            "legalName": obj.get("legalName"),
+            "taxIds": obj.get("taxIds"),
+            "taxId": obj.get("taxId"),
+            "cloudProviderSettings": CustomerCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None,
             "externalId": obj.get("externalId"),
-            "customerErpId": obj.get("customerErpId")
+            "customerErpId": obj.get("customerErpId"),
+            "address": Address.from_dict(obj["address"]) if obj.get("address") is not None else None,
+            "salesForceAccountId": obj.get("salesForceAccountId"),
+            "dueDays": obj.get("dueDays"),
+            "currency": obj.get("currency"),
+            "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,
+            "subsidiary": obj.get("subsidiary")
         })
         return _obj
 
