@@ -2,6 +2,7 @@ package client
 
 import (
 	"net/http"
+	"strings"
 )
 
 type vayuRoundTripper struct {
@@ -11,7 +12,7 @@ type vayuRoundTripper struct {
 
 func (c *vayuRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	// Skip auth for login endpoint (prevents recursion)
-	if req.URL.Path == "/login" {
+	if strings.HasSuffix(req.URL.Path, "/login") {
 		return c.rt.RoundTrip(req)
 	}
 
