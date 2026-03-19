@@ -12,6 +12,10 @@
 
 import { Address } from '../models/Address';
 import { Contact } from '../models/Contact';
+import { Currency } from '../models/Currency';
+import { CustomField } from '../models/CustomField';
+import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomerSource } from '../models/CustomerSource';
 import { HttpFile } from '../http/http';
 
 export class DeleteCustomerResponseCustomer {
@@ -23,15 +27,50 @@ export class DeleteCustomerResponseCustomer {
     * The aliases of the customer used to match events to the customer.
     */
     'aliases'?: Array<string> | null;
-    'address'?: Address;
     /**
     * The contacts of the customer. Contact marked as primary is the target for invoice sharing.
     */
-    'contacts'?: Array<Contact>;
+    'contacts'?: Array<Contact> | null;
+    'source'?: CustomerSource | null;
+    /**
+    * The legal name of the customer
+    */
+    'legalName'?: string | null;
+    /**
+    * The tax IDs of the customer
+    */
+    'taxIds'?: Array<string> | null;
+    /**
+    * The tax ID of the customer (deprecated, use taxIds instead)
+    */
+    'taxId'?: string | null;
+    'cloudProviderSettings'?: CustomerCloudProviderSettings | null;
     /**
     * The external ID of the customer
     */
     'externalId'?: string;
+    /**
+    * The ID of the customer in the ERP system
+    */
+    'customerErpId'?: string | null;
+    'address'?: Address | null;
+    /**
+    * The ID of the customer in the Salesforce system
+    */
+    'salesForceAccountId'?: string | null;
+    /**
+    * The due days of the customer
+    */
+    'dueDays'?: DeleteCustomerResponseCustomerDueDaysEnum | null;
+    'currency'?: Currency | null;
+    /**
+    * Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+    */
+    'customFields'?: Array<CustomField> | null;
+    /**
+    * The name of the subsidiary of the customer
+    */
+    'subsidiary'?: string | null;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -55,20 +94,86 @@ export class DeleteCustomerResponseCustomer {
             "format": ""
         },
         {
-            "name": "address",
-            "baseName": "address",
-            "type": "Address",
-            "format": ""
-        },
-        {
             "name": "contacts",
             "baseName": "contacts",
             "type": "Array<Contact>",
             "format": ""
         },
         {
+            "name": "source",
+            "baseName": "source",
+            "type": "CustomerSource",
+            "format": ""
+        },
+        {
+            "name": "legalName",
+            "baseName": "legalName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "taxIds",
+            "baseName": "taxIds",
+            "type": "Array<string>",
+            "format": ""
+        },
+        {
+            "name": "taxId",
+            "baseName": "taxId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "cloudProviderSettings",
+            "baseName": "cloudProviderSettings",
+            "type": "CustomerCloudProviderSettings",
+            "format": ""
+        },
+        {
             "name": "externalId",
             "baseName": "externalId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "customerErpId",
+            "baseName": "customerErpId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address",
+            "format": ""
+        },
+        {
+            "name": "salesForceAccountId",
+            "baseName": "salesForceAccountId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "dueDays",
+            "baseName": "dueDays",
+            "type": "DeleteCustomerResponseCustomerDueDaysEnum",
+            "format": ""
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency",
+            "format": ""
+        },
+        {
+            "name": "customFields",
+            "baseName": "customFields",
+            "type": "Array<CustomField>",
+            "format": ""
+        },
+        {
+            "name": "subsidiary",
+            "baseName": "subsidiary",
             "type": "string",
             "format": ""
         },
@@ -104,3 +209,14 @@ export class DeleteCustomerResponseCustomer {
     public constructor() {
     }
 }
+
+export enum DeleteCustomerResponseCustomerDueDaysEnum {
+    EndOfMonth = 'END_OF_MONTH',
+    SameDay = 'SAME_DAY',
+    _15Days = '15_DAYS',
+    _30Days = '30_DAYS',
+    _45Days = '45_DAYS',
+    _60Days = '60_DAYS',
+    _90Days = '90_DAYS'
+}
+

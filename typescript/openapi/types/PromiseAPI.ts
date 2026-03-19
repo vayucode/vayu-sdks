@@ -5,10 +5,18 @@ import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
 import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { CloudUsageResult } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
 import { Contact } from '../models/Contact';
+import { ContractStatus } from '../models/ContractStatus';
+import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
+import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResponse';
+import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
 import { CreateContractRequest } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
+import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
+import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
+import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
 import { CreateCustomerRequest } from '../models/CreateCustomerRequest';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
 import { CreateCustomerResponseCustomer } from '../models/CreateCustomerResponseCustomer';
@@ -19,13 +27,24 @@ import { CreateMeasurementResponseMeasurement } from '../models/CreateMeasuremen
 import { CreditLedgerEntry } from '../models/CreditLedgerEntry';
 import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
+import { Currency } from '../models/Currency';
+import { CustomField } from '../models/CustomField';
+import { CustomFieldValue } from '../models/CustomFieldValue';
+import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
+import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomerSource } from '../models/CustomerSource';
 import { DeductCreditsRequest } from '../models/DeductCreditsRequest';
+import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResponse';
+import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
 import { DeleteContractResponse } from '../models/DeleteContractResponse';
 import { DeleteContractResponseContract } from '../models/DeleteContractResponseContract';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
 import { DeleteCustomerResponseCustomer } from '../models/DeleteCustomerResponseCustomer';
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
 import { DeleteEventResponseEvent } from '../models/DeleteEventResponseEvent';
+import { DeleteEventsByRefsRequest } from '../models/DeleteEventsByRefsRequest';
+import { DeleteEventsByRefsResponse } from '../models/DeleteEventsByRefsResponse';
+import { DeleteEventsByRefsResponseEventsInner } from '../models/DeleteEventsByRefsResponseEventsInner';
 import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
@@ -36,26 +55,41 @@ import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { EventsDryRunResponseObject } from '../models/EventsDryRunResponseObject';
 import { EventsDryRunResponseObjectEvent } from '../models/EventsDryRunResponseObjectEvent';
 import { EventsDryRunResponseObjectMeterWithValuesInner } from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
+import { ExternalOverageStrategy } from '../models/ExternalOverageStrategy';
 import { Filter } from '../models/Filter';
 import { FullDayPeriod } from '../models/FullDayPeriod';
+import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
+import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
 import { GetContractResponseContract } from '../models/GetContractResponseContract';
+import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
+import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
+import { GetCustomerByNameResponseCustomer } from '../models/GetCustomerByNameResponseCustomer';
 import { GetCustomerProductsConsumptionsByAliasResponse } from '../models/GetCustomerProductsConsumptionsByAliasResponse';
 import { GetCustomerProductsConsumptionsResponse } from '../models/GetCustomerProductsConsumptionsResponse';
+import { GetCustomerRelationResponse } from '../models/GetCustomerRelationResponse';
 import { GetCustomerResponse } from '../models/GetCustomerResponse';
 import { GetEventResponse } from '../models/GetEventResponse';
 import { GetEventResponseEvent } from '../models/GetEventResponseEvent';
 import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
 import { GetInvoiceResponseInvoice } from '../models/GetInvoiceResponseInvoice';
+import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
 import { GetProductConsumptionResponse } from '../models/GetProductConsumptionResponse';
 import { GetProductConsumptionResponseProductConsumption } from '../models/GetProductConsumptionResponseProductConsumption';
 import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
+import { IntegrationEntity } from '../models/IntegrationEntity';
+import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
+import { IntegrationProviders } from '../models/IntegrationProviders';
+import { IntegrationType } from '../models/IntegrationType';
 import { InvalidEvent } from '../models/InvalidEvent';
+import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
+import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
 import { LineItem } from '../models/LineItem';
 import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
+import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
@@ -66,15 +100,42 @@ import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Meter } from '../models/Meter';
 import { NotificationEventType } from '../models/NotificationEventType';
+import { PartnerSubmissionDetail } from '../models/PartnerSubmissionDetail';
+import { PaymentInfo } from '../models/PaymentInfo';
+import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
+import { PaymentTerm } from '../models/PaymentTerm';
+import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
+import { ProductGroup } from '../models/ProductGroup';
+import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
+import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
+import { ProductGroupProductsInnerCommitment } from '../models/ProductGroupProductsInnerCommitment';
+import { ProductGroupProductsInnerCommitmentScheduling } from '../models/ProductGroupProductsInnerCommitmentScheduling';
+import { ProductGroupProductsInnerPricing } from '../models/ProductGroupProductsInnerPricing';
+import { ProductGroupProductsInnerPricingOneOf } from '../models/ProductGroupProductsInnerPricingOneOf';
+import { ProductGroupProductsInnerPricingOneOf1 } from '../models/ProductGroupProductsInnerPricingOneOf1';
+import { ProductGroupProductsInnerPricingOneOf1InstallmentsInner } from '../models/ProductGroupProductsInnerPricingOneOf1InstallmentsInner';
+import { ProductGroupProductsInnerPricingOneOf2 } from '../models/ProductGroupProductsInnerPricingOneOf2';
+import { ProductGroupProductsInnerPricingOneOf2SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf2SubscriptionCadence';
+import { ProductGroupProductsInnerPricingOneOf3 } from '../models/ProductGroupProductsInnerPricingOneOf3';
+import { ProductGroupProductsInnerPricingOneOf3SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence';
+import { ProductGroupProductsInnerPricingOneOf3TiersInner } from '../models/ProductGroupProductsInnerPricingOneOf3TiersInner';
+import { ProductGroupProductsInnerPricingOneOf4 } from '../models/ProductGroupProductsInnerPricingOneOf4';
+import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProductsInnerScheduling';
+import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGroupProductsInnerSchedulingDuration';
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
+import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
+import { SyncStatus } from '../models/SyncStatus';
+import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
+import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
+import { UsageWindow } from '../models/UsageWindow';
 import { WebhookSubscribeRequest } from '../models/WebhookSubscribeRequest';
 import { ObservableAuthApi } from './ObservableAPI';
 
@@ -107,6 +168,168 @@ export class PromiseAuthApi {
      */
     public login(loginRequest: LoginRequest, _options?: Configuration): Promise<LoginResponse> {
         const result = this.api.login(loginRequest, _options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableCatalogProductsApi } from './ObservableAPI';
+
+import { CatalogProductsApiRequestFactory, CatalogProductsApiResponseProcessor} from "../apis/CatalogProductsApi";
+export class PromiseCatalogProductsApi {
+    private api: ObservableCatalogProductsApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CatalogProductsApiRequestFactory,
+        responseProcessor?: CatalogProductsApiResponseProcessor
+    ) {
+        this.api = new ObservableCatalogProductsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Create a new Catalog product.
+     * Create Catalog product
+     * @param createCatalogProductRequest
+     */
+    public createCatalogProductWithHttpInfo(createCatalogProductRequest: CreateCatalogProductRequest, _options?: Configuration): Promise<HttpInfo<CreateCatalogProductResponse>> {
+        const result = this.api.createCatalogProductWithHttpInfo(createCatalogProductRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Create a new Catalog product.
+     * Create Catalog product
+     * @param createCatalogProductRequest
+     */
+    public createCatalogProduct(createCatalogProductRequest: CreateCatalogProductRequest, _options?: Configuration): Promise<CreateCatalogProductResponse> {
+        const result = this.api.createCatalogProduct(createCatalogProductRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Catalog product by id.
+     * Delete Catalog product
+     * @param catalogProductId
+     */
+    public deleteCatalogProductWithHttpInfo(catalogProductId: string, _options?: Configuration): Promise<HttpInfo<DeleteCatalogProductResponse>> {
+        const result = this.api.deleteCatalogProductWithHttpInfo(catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Catalog product by id.
+     * Delete Catalog product
+     * @param catalogProductId
+     */
+    public deleteCatalogProduct(catalogProductId: string, _options?: Configuration): Promise<DeleteCatalogProductResponse> {
+        const result = this.api.deleteCatalogProduct(catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Catalog product by id.
+     * Get Catalog product
+     * @param catalogProductId
+     */
+    public getCatalogProductWithHttpInfo(catalogProductId: string, _options?: Configuration): Promise<HttpInfo<GetCatalogProductResponse>> {
+        const result = this.api.getCatalogProductWithHttpInfo(catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Catalog product by id.
+     * Get Catalog product
+     * @param catalogProductId
+     */
+    public getCatalogProduct(catalogProductId: string, _options?: Configuration): Promise<GetCatalogProductResponse> {
+        const result = this.api.getCatalogProduct(catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Catalog products.
+     * List Catalog products
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCatalogProductsWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCatalogProductsResponse>> {
+        const result = this.api.listCatalogProductsWithHttpInfo(limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Catalog products.
+     * List Catalog products
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCatalogProducts(limit?: number, cursor?: string, _options?: Configuration): Promise<ListCatalogProductsResponse> {
+        const result = this.api.listCatalogProducts(limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a Catalog product by id.
+     * Update Catalog product
+     * @param updateCatalogProductRequest
+     * @param catalogProductId
+     */
+    public updateCatalogProductWithHttpInfo(updateCatalogProductRequest: UpdateCatalogProductRequest, catalogProductId: string, _options?: Configuration): Promise<HttpInfo<UpdateCatalogProductResponse>> {
+        const result = this.api.updateCatalogProductWithHttpInfo(updateCatalogProductRequest, catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a Catalog product by id.
+     * Update Catalog product
+     * @param updateCatalogProductRequest
+     * @param catalogProductId
+     */
+    public updateCatalogProduct(updateCatalogProductRequest: UpdateCatalogProductRequest, catalogProductId: string, _options?: Configuration): Promise<UpdateCatalogProductResponse> {
+        const result = this.api.updateCatalogProduct(updateCatalogProductRequest, catalogProductId, _options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableCloudUsageSubmissionApi } from './ObservableAPI';
+
+import { CloudUsageSubmissionApiRequestFactory, CloudUsageSubmissionApiResponseProcessor} from "../apis/CloudUsageSubmissionApi";
+export class PromiseCloudUsageSubmissionApi {
+    private api: ObservableCloudUsageSubmissionApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CloudUsageSubmissionApiRequestFactory,
+        responseProcessor?: CloudUsageSubmissionApiResponseProcessor
+    ) {
+        this.api = new ObservableCloudUsageSubmissionApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Submit cloud usage data
+     * Submit cloud usage
+     * @param submitCloudUsageRequest
+     */
+    public submitCloudUsageWithHttpInfo(submitCloudUsageRequest: SubmitCloudUsageRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.submitCloudUsageWithHttpInfo(submitCloudUsageRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Submit cloud usage data
+     * Submit cloud usage
+     * @param submitCloudUsageRequest
+     */
+    public submitCloudUsage(submitCloudUsageRequest: SubmitCloudUsageRequest, _options?: Configuration): Promise<any> {
+        const result = this.api.submitCloudUsage(submitCloudUsageRequest, _options);
         return result.toPromise();
     }
 
@@ -190,24 +413,48 @@ export class PromiseContractsApi {
     }
 
     /**
-     * Get a list of Contracts.
-     * List Contracts
-     * @param [limit]
-     * @param [cursor]
+     * Use this endpoint to get a specific contract using its integration provider and identifier.
+     * Get contract by integration id
+     * @param integrationType
+     * @param integrationId
      */
-    public listContractsWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
-        const result = this.api.listContractsWithHttpInfo(limit, cursor, _options);
+    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetContractByIntegrationIdResponse>> {
+        const result = this.api.getContractByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
         return result.toPromise();
     }
 
     /**
-     * Get a list of Contracts.
-     * List Contracts
+     * Use this endpoint to get a specific contract using its integration provider and identifier.
+     * Get contract by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getContractByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetContractByIntegrationIdResponse> {
+        const result = this.api.getContractByIntegrationId(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listContracts(limit?: number, cursor?: string, _options?: Configuration): Promise<ListContractsResponse> {
-        const result = this.api.listContracts(limit, cursor, _options);
+    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
+        const result = this.api.listContractsWithHttpInfo(limit, cursor, customerId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts
+     * @param [limit]
+     * @param [cursor]
+     * @param [customerId]
+     */
+    public listContracts(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<ListContractsResponse> {
+        const result = this.api.listContracts(limit, cursor, customerId, _options);
         return result.toPromise();
     }
 
@@ -334,6 +581,26 @@ export class PromiseCustomersApi {
     }
 
     /**
+     * Create a new Customer relation.
+     * Create Customer relation
+     * @param createCustomerRelationRequest
+     */
+    public createCustomerRelationWithHttpInfo(createCustomerRelationRequest: CreateCustomerRelationRequest, _options?: Configuration): Promise<HttpInfo<CreateCustomerRelationResponse>> {
+        const result = this.api.createCustomerRelationWithHttpInfo(createCustomerRelationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Create a new Customer relation.
+     * Create Customer relation
+     * @param createCustomerRelationRequest
+     */
+    public createCustomerRelation(createCustomerRelationRequest: CreateCustomerRelationRequest, _options?: Configuration): Promise<CreateCustomerRelationResponse> {
+        const result = this.api.createCustomerRelation(createCustomerRelationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
      * Delete a Customer by id.
      * Delete Customer
      * @param customerId
@@ -394,6 +661,48 @@ export class PromiseCustomersApi {
     }
 
     /**
+     * Use this endpoint to get a specific customer using its integration provider and identifier.
+     * Get customer by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByIntegrationIdResponse>> {
+        const result = this.api.getCustomerByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its integration provider and identifier.
+     * Get customer by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetCustomerByIntegrationIdResponse> {
+        const result = this.api.getCustomerByIntegrationId(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its name.
+     * Get customer by name
+     * @param name
+     */
+    public getCustomerByNameWithHttpInfo(name: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByNameResponse>> {
+        const result = this.api.getCustomerByNameWithHttpInfo(name, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its name.
+     * Get customer by name
+     * @param name
+     */
+    public getCustomerByName(name: string, _options?: Configuration): Promise<GetCustomerByNameResponse> {
+        const result = this.api.getCustomerByName(name, _options);
+        return result.toPromise();
+    }
+
+    /**
      * Use this endpoint to get the products consumptions by the customer id.
      * Get products consumptions by customer id
      * @param customerId
@@ -430,6 +739,26 @@ export class PromiseCustomersApi {
      */
     public getCustomerProductsConsumptionsByAlias(alias: string, _options?: Configuration): Promise<GetCustomerProductsConsumptionsByAliasResponse> {
         const result = this.api.getCustomerProductsConsumptionsByAlias(alias, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Customer relation by id.
+     * Get Customer relation
+     * @param customerRelationId
+     */
+    public getCustomerRelationWithHttpInfo(customerRelationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerRelationResponse>> {
+        const result = this.api.getCustomerRelationWithHttpInfo(customerRelationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Customer relation by id.
+     * Get Customer relation
+     * @param customerRelationId
+     */
+    public getCustomerRelation(customerRelationId: string, _options?: Configuration): Promise<GetCustomerRelationResponse> {
+        const result = this.api.getCustomerRelation(customerRelationId, _options);
         return result.toPromise();
     }
 
@@ -513,6 +842,26 @@ export class PromiseEventsApi {
      */
     public deleteEventByRefId(refId: string, _options?: Configuration): Promise<DeleteEventResponse> {
         const result = this.api.deleteEventByRefId(refId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request.
+     * Delete events by refs
+     * @param deleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public deleteEventsByRefsWithHttpInfo(deleteEventsByRefsRequest: DeleteEventsByRefsRequest, _options?: Configuration): Promise<HttpInfo<DeleteEventsByRefsResponse>> {
+        const result = this.api.deleteEventsByRefsWithHttpInfo(deleteEventsByRefsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request.
+     * Delete events by refs
+     * @param deleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public deleteEventsByRefs(deleteEventsByRefsRequest: DeleteEventsByRefsRequest, _options?: Configuration): Promise<DeleteEventsByRefsResponse> {
+        const result = this.api.deleteEventsByRefs(deleteEventsByRefsRequest, _options);
         return result.toPromise();
     }
 
@@ -644,24 +993,46 @@ export class PromiseInvoicesApi {
     }
 
     /**
-     * Get a list of Invoices.
-     * List Invoices
-     * @param [limit]
-     * @param [cursor]
+     * Use this endpoint to retrieve payment status information for a specific invoice, including payment status, amount due, amount paid, total, due date, paid date, and invoice PDF URL.
+     * Get invoice payment status
+     * @param invoiceId
      */
-    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
-        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, _options);
+    public getInvoicePaymentStatusWithHttpInfo(invoiceId: string, _options?: Configuration): Promise<HttpInfo<InvoicePaymentStatusResponse>> {
+        const result = this.api.getInvoicePaymentStatusWithHttpInfo(invoiceId, _options);
         return result.toPromise();
     }
 
     /**
-     * Get a list of Invoices.
-     * List Invoices
+     * Use this endpoint to retrieve payment status information for a specific invoice, including payment status, amount due, amount paid, total, due date, paid date, and invoice PDF URL.
+     * Get invoice payment status
+     * @param invoiceId
+     */
+    public getInvoicePaymentStatus(invoiceId: string, _options?: Configuration): Promise<InvoicePaymentStatusResponse> {
+        const result = this.api.getInvoicePaymentStatus(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List invoices for the account. Optionally filter by customerId to retrieve invoices for a specific customer.
+     * List invoices
      * @param [limit]
      * @param [cursor]
+     * @param [customerId]
      */
-    public listInvoices(limit?: number, cursor?: string, _options?: Configuration): Promise<ListInvoicesResponse> {
-        const result = this.api.listInvoices(limit, cursor, _options);
+    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
+        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, customerId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List invoices for the account. Optionally filter by customerId to retrieve invoices for a specific customer.
+     * List invoices
+     * @param [limit]
+     * @param [cursor]
+     * @param [customerId]
+     */
+    public listInvoices(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<ListInvoicesResponse> {
+        const result = this.api.listInvoices(limit, cursor, customerId, _options);
         return result.toPromise();
     }
 

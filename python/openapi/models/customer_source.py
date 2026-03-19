@@ -28,7 +28,7 @@ class CustomerSource(str, Enum):
     allowed enum values
     """
     STRIPE = 'Stripe'
-    INGESTION = 'Ingestion'
+    VAYUEVENTSAPI = 'VayuEventsApi'
     API = 'Api'
     SALESFORCE = 'Salesforce'
     HUBSPOT = 'HubSpot'

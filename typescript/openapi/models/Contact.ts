@@ -14,7 +14,9 @@ import { HttpFile } from '../http/http';
 
 export class Contact {
     'name'?: string;
-    'email': string;
+    'email'?: string;
+    'title'?: string;
+    'phone'?: string;
     'receiveInvoiceEmail'?: boolean;
 
     static readonly discriminator: string | undefined = undefined;
@@ -33,6 +35,18 @@ export class Contact {
             "baseName": "email",
             "type": "string",
             "format": "email"
+        },
+        {
+            "name": "title",
+            "baseName": "title",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "phone",
+            "baseName": "phone",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "receiveInvoiceEmail",

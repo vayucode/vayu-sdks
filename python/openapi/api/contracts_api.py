@@ -23,7 +23,9 @@ from typing_extensions import Annotated
 from openapi.models.create_contract_request import CreateContractRequest
 from openapi.models.create_contract_response import CreateContractResponse
 from openapi.models.delete_contract_response import DeleteContractResponse
+from openapi.models.get_contract_by_integration_id_response import GetContractByIntegrationIdResponse
 from openapi.models.get_contract_response import GetContractResponse
+from openapi.models.integration_type import IntegrationType
 from openapi.models.list_contracts_response import ListContractsResponse
 
 from openapi.api_client import ApiClient, RequestSerialized
@@ -883,10 +885,299 @@ class ContractsApi:
 
 
     @validate_call
+    def get_contract_by_integration_id(
+        self,
+        integration_type: IntegrationType,
+        integration_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetContractByIntegrationIdResponse:
+        """Get contract by integration id
+
+        Use this endpoint to get a specific contract using its integration provider and identifier.
+
+        :param integration_type: (required)
+        :type integration_type: IntegrationType
+        :param integration_id: (required)
+        :type integration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_contract_by_integration_id_serialize(
+            integration_type=integration_type,
+            integration_id=integration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetContractByIntegrationIdResponse",
+            '400': None,
+            '401': None,
+            '429': None,
+            '500': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_contract_by_integration_id_with_http_info(
+        self,
+        integration_type: IntegrationType,
+        integration_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetContractByIntegrationIdResponse]:
+        """Get contract by integration id
+
+        Use this endpoint to get a specific contract using its integration provider and identifier.
+
+        :param integration_type: (required)
+        :type integration_type: IntegrationType
+        :param integration_id: (required)
+        :type integration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_contract_by_integration_id_serialize(
+            integration_type=integration_type,
+            integration_id=integration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetContractByIntegrationIdResponse",
+            '400': None,
+            '401': None,
+            '429': None,
+            '500': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_contract_by_integration_id_without_preload_content(
+        self,
+        integration_type: IntegrationType,
+        integration_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get contract by integration id
+
+        Use this endpoint to get a specific contract using its integration provider and identifier.
+
+        :param integration_type: (required)
+        :type integration_type: IntegrationType
+        :param integration_id: (required)
+        :type integration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_contract_by_integration_id_serialize(
+            integration_type=integration_type,
+            integration_id=integration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetContractByIntegrationIdResponse",
+            '400': None,
+            '401': None,
+            '429': None,
+            '500': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_contract_by_integration_id_serialize(
+        self,
+        integration_type,
+        integration_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if integration_type is not None:
+            _path_params['integrationType'] = integration_type.value
+        if integration_id is not None:
+            _path_params['integrationId'] = integration_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/contracts/integration/{integrationType}/{integrationId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def list_contracts(
         self,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
+        customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -900,14 +1191,16 @@ class ContractsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListContractsResponse:
-        """List Contracts
+        """List contracts
 
-        Get a list of Contracts.
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
         :param cursor:
         :type cursor: str
+        :param customer_id:
+        :type customer_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -933,6 +1226,7 @@ class ContractsApi:
         _param = self._list_contracts_serialize(
             limit=limit,
             cursor=cursor,
+            customer_id=customer_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -962,6 +1256,7 @@ class ContractsApi:
         self,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
+        customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -975,14 +1270,16 @@ class ContractsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListContractsResponse]:
-        """List Contracts
+        """List contracts
 
-        Get a list of Contracts.
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
         :param cursor:
         :type cursor: str
+        :param customer_id:
+        :type customer_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1008,6 +1305,7 @@ class ContractsApi:
         _param = self._list_contracts_serialize(
             limit=limit,
             cursor=cursor,
+            customer_id=customer_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1037,6 +1335,7 @@ class ContractsApi:
         self,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
+        customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1050,14 +1349,16 @@ class ContractsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List Contracts
+        """List contracts
 
-        Get a list of Contracts.
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
         :param cursor:
         :type cursor: str
+        :param customer_id:
+        :type customer_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1083,6 +1384,7 @@ class ContractsApi:
         _param = self._list_contracts_serialize(
             limit=limit,
             cursor=cursor,
+            customer_id=customer_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1107,6 +1409,7 @@ class ContractsApi:
         self,
         limit,
         cursor,
+        customer_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1136,6 +1439,10 @@ class ContractsApi:
         if cursor is not None:
             
             _query_params.append(('cursor', cursor))
+            
+        if customer_id is not None:
+            
+            _query_params.append(('customerId', customer_id))
             
         # process the header parameters
         # process the form parameters

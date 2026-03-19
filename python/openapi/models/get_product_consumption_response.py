@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from openapi.models.product_consumption import ProductConsumption
+from openapi.models.get_product_consumption_response_product_consumption import GetProductConsumptionResponseProductConsumption
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GetProductConsumptionResponse(BaseModel):
     """
     GetProductConsumptionResponse
     """ # noqa: E501
-    product_consumption: ProductConsumption = Field(description="The product consumption data", alias="productConsumption")
+    product_consumption: GetProductConsumptionResponseProductConsumption = Field(alias="productConsumption")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["productConsumption"]
 
@@ -93,7 +93,7 @@ class GetProductConsumptionResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "productConsumption": ProductConsumption.from_dict(obj["productConsumption"]) if obj.get("productConsumption") is not None else None
+            "productConsumption": GetProductConsumptionResponseProductConsumption.from_dict(obj["productConsumption"]) if obj.get("productConsumption") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -1,11 +1,13 @@
 from .api_contracts import (Contract, ContractsAPI, CreateContractRequest,
                             CreateContractResponse, DeleteContractResponse,
-                            GetContractResponse, GetContractResponseContract,
+                            GetContractByIntegrationIdResponse, GetContractResponse,
+                            GetContractResponseContract, IntegrationType,
                             ListContractsResponse)
 from .api_customers import (Address, Contact, CreateCustomerRequest,
                             CreateCustomerResponse,
                             CreateCustomerResponseCustomer, CustomersAPI,
-                            DeleteCustomerResponse, GetCustomerResponse,
+                            DeleteCustomerResponse, GetCustomerByIntegrationIdResponse,
+                            GetCustomerByNameResponse, GetCustomerResponse,
                             ListCustomersResponse, UpdateCustomerRequest,
                             UpdateCustomerResponse)
 from .api_events import (DeleteEventResponse, Event, EventsAPI,
@@ -13,7 +15,8 @@ from .api_events import (DeleteEventResponse, Event, EventsAPI,
                          QueryEventsResponse, SendEventsRequest,
                          SendEventsResponse)
 from .api_invoices import (GetInvoiceResponse, GetInvoiceResponseInvoice,
-                           Invoice, InvoicesAPI, ListInvoicesResponse)
+                           Invoice, InvoicePaymentStatusResponse, InvoicesAPI,
+                           ListInvoicesResponse)
 from .api_meters import (AggregationMethod, AggregationOperator, Condition,
                          Criterion, CriterionOperator, DeleteMeterResponse,
                          Filter, GetMeterResponse, ListMetersResponse, Meter,
@@ -33,3 +36,9 @@ from .api_product_consumptions import (GetProductConsumptionResponse,
                                        ProductConsumptionsAPI)
 from .api_customers import (GetCustomerProductsConsumptionsResponse,
                             GetCustomerProductsConsumptionsByAliasResponse)
+from .api_cloud_usage_submission import (CloudUsageSubmissionAPI,
+                                         SubmitCloudUsageRequest)
+from .api_customer_relations import (CreateCustomerRelationRequest,
+                                     CreateCustomerRelationResponse,
+                                     CustomerRelationsAPI,
+                                     GetCustomerRelationResponse)

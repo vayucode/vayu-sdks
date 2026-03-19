@@ -1,3 +1,5 @@
+export * from './CatalogProductsClient';
+export * from './CloudUsageSubmissionClient';
 export * from './ContractsClient';
 export * from './CustomersClient';
 export * from './EventsClient';

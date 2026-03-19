@@ -31,6 +31,8 @@ const (
 	CRITERIONOPERATOR_LOWER_THAN CriterionOperator = "LowerThan"
 	CRITERIONOPERATOR_LOWER_EQUAL_TO CriterionOperator = "LowerEqualTo"
 	CRITERIONOPERATOR_LARGER_EQUAL_TO CriterionOperator = "LargerEqualTo"
+	CRITERIONOPERATOR_EXISTS CriterionOperator = "Exists"
+	CRITERIONOPERATOR_DOESNT_EXISTS CriterionOperator = "DoesntExists"
 )
 
 // All allowed values of CriterionOperator enum
@@ -45,6 +47,8 @@ var AllowedCriterionOperatorEnumValues = []CriterionOperator{
 	"LowerThan",
 	"LowerEqualTo",
 	"LargerEqualTo",
+	"Exists",
+	"DoesntExists",
 }
 
 func (v *CriterionOperator) UnmarshalJSON(src []byte) error {

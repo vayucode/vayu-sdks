@@ -15,7 +15,7 @@ In order to use the Vayu Client Library you would need to import it first into y
 
 ```go
 import (
-	VayuSDK "github.com/weft-finance/vayu-go"
+	VayuSDK "github.com/vayucode/vayu-sdks/go"
 )
 ```
 

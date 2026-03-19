@@ -17,6 +17,9 @@ from openapi.models.delete_customer_response import DeleteCustomerResponse
 from openapi.models.address import Address
 from openapi.models.get_customer_products_consumptions_response import GetCustomerProductsConsumptionsResponse
 from openapi.models.get_customer_products_consumptions_by_alias_response import GetCustomerProductsConsumptionsByAliasResponse
+from openapi.models.get_customer_by_name_response import GetCustomerByNameResponse
+from openapi.models.get_customer_by_integration_id_response import GetCustomerByIntegrationIdResponse
+from openapi.models.integration_type import IntegrationType
 
 
 Customer = CreateCustomerResponseCustomer
@@ -66,3 +69,12 @@ class CustomersAPI:
 
     def get_products_consumptions_by_alias(self, alias: str):
         return self.__client.get_customer_products_consumptions_by_alias(alias=alias)
+
+    def get_by_name(self, name: str):
+        return self.__client.get_customer_by_name(name=name)
+
+    def get_by_integration_id(self, integration_type: IntegrationType, integration_id: str):
+        return self.__client.get_customer_by_integration_id(
+            integration_type=integration_type,
+            integration_id=integration_id,
+        )

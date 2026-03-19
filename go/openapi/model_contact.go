@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the Contact type satisfies the MappedNullable interface at compile time
@@ -22,8 +21,10 @@ var _ MappedNullable = &Contact{}
 // Contact struct for Contact
 type Contact struct {
 	Name *string `json:"name,omitempty"`
-	Email string `json:"email"`
-	IsPrimary *bool `json:"isPrimary,omitempty"`
+	Email *string `json:"email,omitempty"`
+	Title *string `json:"title,omitempty"`
+	Phone *string `json:"phone,omitempty" validate:"regexp=^\\\\+?[1-9]\\\\d{4,15}$"`
+	ReceiveInvoiceEmail *bool `json:"receiveInvoiceEmail,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -33,9 +34,8 @@ type _Contact Contact
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewContact(email string) *Contact {
+func NewContact() *Contact {
 	this := Contact{}
-	this.Email = email
 	return &this
 }
 
@@ -79,60 +79,132 @@ func (o *Contact) SetName(v string) {
 	o.Name = &v
 }
 
-// GetEmail returns the Email field value
+// GetEmail returns the Email field value if set, zero value otherwise.
 func (o *Contact) GetEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
-
-	return o.Email
+	return *o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Contact) GetEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email, true
 }
 
-// SetEmail sets field value
-func (o *Contact) SetEmail(v string) {
-	o.Email = v
-}
-
-// GetIsPrimary returns the IsPrimary field value if set, zero value otherwise.
-func (o *Contact) GetIsPrimary() bool {
-	if o == nil || IsNil(o.IsPrimary) {
-		var ret bool
-		return ret
-	}
-	return *o.IsPrimary
-}
-
-// GetIsPrimaryOk returns a tuple with the IsPrimary field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Contact) GetIsPrimaryOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsPrimary) {
-		return nil, false
-	}
-	return o.IsPrimary, true
-}
-
-// HasIsPrimary returns a boolean if a field has been set.
-func (o *Contact) HasIsPrimary() bool {
-	if o != nil && !IsNil(o.IsPrimary) {
+// HasEmail returns a boolean if a field has been set.
+func (o *Contact) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
 	return false
 }
 
-// SetIsPrimary gets a reference to the given bool and assigns it to the IsPrimary field.
-func (o *Contact) SetIsPrimary(v bool) {
-	o.IsPrimary = &v
+// SetEmail gets a reference to the given string and assigns it to the Email field.
+func (o *Contact) SetEmail(v string) {
+	o.Email = &v
+}
+
+// GetTitle returns the Title field value if set, zero value otherwise.
+func (o *Contact) GetTitle() string {
+	if o == nil || IsNil(o.Title) {
+		var ret string
+		return ret
+	}
+	return *o.Title
+}
+
+// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Contact) GetTitleOk() (*string, bool) {
+	if o == nil || IsNil(o.Title) {
+		return nil, false
+	}
+	return o.Title, true
+}
+
+// HasTitle returns a boolean if a field has been set.
+func (o *Contact) HasTitle() bool {
+	if o != nil && !IsNil(o.Title) {
+		return true
+	}
+
+	return false
+}
+
+// SetTitle gets a reference to the given string and assigns it to the Title field.
+func (o *Contact) SetTitle(v string) {
+	o.Title = &v
+}
+
+// GetPhone returns the Phone field value if set, zero value otherwise.
+func (o *Contact) GetPhone() string {
+	if o == nil || IsNil(o.Phone) {
+		var ret string
+		return ret
+	}
+	return *o.Phone
+}
+
+// GetPhoneOk returns a tuple with the Phone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Contact) GetPhoneOk() (*string, bool) {
+	if o == nil || IsNil(o.Phone) {
+		return nil, false
+	}
+	return o.Phone, true
+}
+
+// HasPhone returns a boolean if a field has been set.
+func (o *Contact) HasPhone() bool {
+	if o != nil && !IsNil(o.Phone) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhone gets a reference to the given string and assigns it to the Phone field.
+func (o *Contact) SetPhone(v string) {
+	o.Phone = &v
+}
+
+// GetReceiveInvoiceEmail returns the ReceiveInvoiceEmail field value if set, zero value otherwise.
+func (o *Contact) GetReceiveInvoiceEmail() bool {
+	if o == nil || IsNil(o.ReceiveInvoiceEmail) {
+		var ret bool
+		return ret
+	}
+	return *o.ReceiveInvoiceEmail
+}
+
+// GetReceiveInvoiceEmailOk returns a tuple with the ReceiveInvoiceEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Contact) GetReceiveInvoiceEmailOk() (*bool, bool) {
+	if o == nil || IsNil(o.ReceiveInvoiceEmail) {
+		return nil, false
+	}
+	return o.ReceiveInvoiceEmail, true
+}
+
+// HasReceiveInvoiceEmail returns a boolean if a field has been set.
+func (o *Contact) HasReceiveInvoiceEmail() bool {
+	if o != nil && !IsNil(o.ReceiveInvoiceEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetReceiveInvoiceEmail gets a reference to the given bool and assigns it to the ReceiveInvoiceEmail field.
+func (o *Contact) SetReceiveInvoiceEmail(v bool) {
+	o.ReceiveInvoiceEmail = &v
 }
 
 func (o Contact) MarshalJSON() ([]byte, error) {
@@ -148,9 +220,17 @@ func (o Contact) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	toSerialize["email"] = o.Email
-	if !IsNil(o.IsPrimary) {
-		toSerialize["isPrimary"] = o.IsPrimary
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.Title) {
+		toSerialize["title"] = o.Title
+	}
+	if !IsNil(o.Phone) {
+		toSerialize["phone"] = o.Phone
+	}
+	if !IsNil(o.ReceiveInvoiceEmail) {
+		toSerialize["receiveInvoiceEmail"] = o.ReceiveInvoiceEmail
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -161,27 +241,6 @@ func (o Contact) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *Contact) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"email",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varContact := _Contact{}
 
 	err = json.Unmarshal(data, &varContact)
@@ -197,7 +256,9 @@ func (o *Contact) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "email")
-		delete(additionalProperties, "isPrimary")
+		delete(additionalProperties, "title")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "receiveInvoiceEmail")
 		o.AdditionalProperties = additionalProperties
 	}
 

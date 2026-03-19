@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/weft-finance/vayu-go/client"
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/client"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type CustomersAPI struct {
@@ -12,8 +12,11 @@ type CustomersAPI struct {
 type Customer = openapi.CreateCustomerResponseCustomer
 type Address = openapi.Address
 type Contact = openapi.Contact
+type IntegrationType = openapi.IntegrationType
 type ListCustomersResponse = openapi.ListCustomersResponse
 type GetCustomerResponse = openapi.GetCustomerResponse
+type GetCustomerByNameResponse = openapi.GetCustomerByNameResponse
+type GetCustomerByIntegrationIdResponse = openapi.GetCustomerByIntegrationIdResponse
 type CreateCustomerRequest = openapi.CreateCustomerRequest
 type CreateCustomerResponse = openapi.CreateCustomerResponse
 type UpdateCustomerRequest = openapi.UpdateCustomerRequest
@@ -27,25 +30,49 @@ func NewCustomersAPI(client *client.VayuClient) *CustomersAPI {
 }
 
 func NewAddress(country *string, city *string, addressText *string, state *string, postalCode *string) *Address {
-	return &openapi.Address{
-		Country:     country,
-		City:        city,
-		AddressText: addressText,
-		State:       state,
-		PostalCode:  postalCode,
+	address := &openapi.Address{}
+
+	if country != nil {
+		address.SetCountry(*country)
 	}
+	if city != nil {
+		address.SetCity(*city)
+	}
+	if addressText != nil {
+		address.SetAddressText(*addressText)
+	}
+	if state != nil {
+		address.SetState(*state)
+	}
+	if postalCode != nil {
+		address.SetPostalCode(*postalCode)
+	}
+
+	return address
 }
 
-func NewContact(email string, name *string, isPrimary *bool) *Contact {
-	return &openapi.Contact{Email: email, Name: name, IsPrimary: isPrimary}
+func NewContact(email *string, name *string) *Contact {
+	return &openapi.Contact{Email: email, Name: name}
 }
 
 func NewCreateCustomerRequest(name string, externalId *string, aliases []string, address *Address, contacts []Contact) *CreateCustomerRequest {
-	return &openapi.CreateCustomerRequest{Name: name, ExternalId: externalId, Aliases: aliases, Address: address, Contacts: contacts}
+	request := &openapi.CreateCustomerRequest{Name: name, ExternalId: externalId, Aliases: aliases, Contacts: contacts}
+
+	if address != nil {
+		request.SetAddress(*address)
+	}
+
+	return request
 }
 
-func NewUpdateCustomerRequest(name *string, externalId *string, aliases []string, address *Address, contacts []Contact) *UpdateCustomerRequest {
-	return &openapi.UpdateCustomerRequest{Name: name, ExternalId: externalId, Aliases: aliases, Address: address}
+func NewUpdateCustomerRequest(name *string, externalId *string, aliases []string, address *Address) *UpdateCustomerRequest {
+	request := &openapi.UpdateCustomerRequest{Name: name, ExternalId: externalId, Aliases: aliases}
+
+	if address != nil {
+		request.SetAddress(*address)
+	}
+
+	return request
 }
 
 func (api *CustomersAPI) ListCustomers(limit *float32, cursor *string) (*ListCustomersResponse, error) {
@@ -120,6 +147,34 @@ func (api *CustomersAPI) UpdateCustomer(customerId string, payload UpdateCustome
 
 	request := api.vayuClient.Client.CustomersAPI.UpdateCustomer(ctx, customerId)
 	request = request.UpdateCustomerRequest(payload)
+	response, _, err := request.Execute()
+
+	if err != nil {
+		return nil, client.BuildVayuErrorFromGenericOpenAPIError(err)
+	}
+
+	return response, nil
+}
+
+func (api *CustomersAPI) GetCustomerByName(name string) (*GetCustomerByNameResponse, error) {
+	ctx, cancel := client.GenerateContextWithTimeout()
+	defer cancel()
+
+	request := api.vayuClient.Client.CustomersAPI.GetCustomerByName(ctx, name)
+	response, _, err := request.Execute()
+
+	if err != nil {
+		return nil, client.BuildVayuErrorFromGenericOpenAPIError(err)
+	}
+
+	return response, nil
+}
+
+func (api *CustomersAPI) GetCustomerByIntegrationId(integrationType IntegrationType, integrationId string) (*GetCustomerByIntegrationIdResponse, error) {
+	ctx, cancel := client.GenerateContextWithTimeout()
+	defer cancel()
+
+	request := api.vayuClient.Client.CustomersAPI.GetCustomerByIntegrationId(ctx, integrationType, integrationId)
 	response, _, err := request.Execute()
 
 	if err != nil {

@@ -4,6 +4,7 @@ from vayu_sdk.clients.vayu_client import VayuClient
 from openapi.models.get_invoice_response_invoice import GetInvoiceResponseInvoice
 from openapi.models.list_invoices_response import ListInvoicesResponse
 from openapi.models.get_invoice_response import GetInvoiceResponse
+from openapi.models.invoice_payment_status_response import InvoicePaymentStatusResponse
 
 Invoice = GetInvoiceResponseInvoice
 
@@ -20,3 +21,6 @@ class InvoicesAPI:
         get_invoice_response = self.__client.get_invoice(invoice_id=id)
 
         return get_invoice_response
+
+    def get_payment_status(self, invoice_id: str):
+        return self.__client.get_invoice_payment_status(invoice_id=invoice_id)

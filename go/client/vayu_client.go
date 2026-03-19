@@ -3,7 +3,7 @@ package client
 import (
 	"net/http"
 
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type VayuClient struct {

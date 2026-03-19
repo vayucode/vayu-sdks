@@ -1,4 +1,4 @@
-import type { Event } from '../../openapi';
+import type { DeleteEventsByRefsRequest, Event } from '../../openapi';
 import { EventsApi } from '../../openapi';
 import { ConfigurationService } from '../services';
 import type { PaginationOptions } from '../types';
@@ -35,5 +35,9 @@ export class EventsClient {
     return this.client.sendEventsDryRun({
       events,
     });
+  }
+
+  async deleteByRefs(payload: DeleteEventsByRefsRequest) {
+    return this.client.deleteEventsByRefs(payload);
   }
 }

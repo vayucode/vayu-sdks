@@ -52,6 +52,14 @@ class Vayu:
     def product_consumptions(self) -> ProductConsumptionsAPI:
         return ProductConsumptionsAPI(self.__client)
 
+    @property
+    def cloud_usage_submission(self) -> CloudUsageSubmissionAPI:
+        return CloudUsageSubmissionAPI(self.__client)
+
+    @property
+    def customer_relations(self) -> CustomerRelationsAPI:
+        return CustomerRelationsAPI(self.__client)
+
     def login(self):
         """Deprecated: Authentication is now handled automatically. You can remove this call."""
         self.__client.login()

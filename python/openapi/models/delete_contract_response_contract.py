@@ -19,10 +19,14 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from openapi.models.get_contract_response_contract_products_inner import GetContractResponseContractProductsInner
+from openapi.models.contract_status import ContractStatus
+from openapi.models.custom_field import CustomField
+from openapi.models.custom_field_value import CustomFieldValue
+from openapi.models.product_group import ProductGroup
+from openapi.models.product_group_products_inner import ProductGroupProductsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,13 +39,21 @@ class DeleteContractResponseContract(BaseModel):
     name: StrictStr = Field(description="The name of the contract")
     sales_force_opportunity_id: Optional[StrictStr] = Field(default=None, description="The id of the sales force opportunity that the contract is associated with", alias="salesForceOpportunityId")
     end_date: Optional[datetime] = Field(default=None, description="The end date of the contract", alias="endDate")
-    products: Optional[List[GetContractResponseContractProductsInner]] = Field(default=None, description="The products that the contract is associated with")
+    signature_date: Optional[datetime] = Field(default=None, description="The signature date of the contract", alias="signatureDate")
+    products: Optional[List[ProductGroupProductsInner]] = Field(default=None, description="The products that the contract is associated with")
+    product_groups: Optional[List[ProductGroup]] = Field(default=None, description="Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.", alias="productGroups")
+    account_manager: Optional[StrictStr] = Field(default=None, description="The name of the account manager of the contract", alias="accountManager")
+    should_pro_rate_invoices: Optional[StrictBool] = Field(default=None, description="Whether to pro rate the invoices for the contract. If not provided, it will default to false", alias="shouldProRateInvoices")
+    auto_renew_contract: Optional[StrictBool] = Field(default=None, description="Whether the contract is set to auto renew. If not provided, it will be treated as true", alias="autoRenewContract")
+    custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
+    custom_field_values: Optional[List[CustomFieldValue]] = Field(default=None, description="The stored custom field values associated with the contract", alias="customFieldValues")
+    status: Optional[ContractStatus] = None
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     deleted_at: StrictStr = Field(alias="deletedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "products", "id", "createdAt", "updatedAt", "deletedAt"]
+    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "id", "createdAt", "updatedAt", "deletedAt"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
@@ -98,15 +110,61 @@ class DeleteContractResponseContract(BaseModel):
                 if _item_products:
                     _items.append(_item_products.to_dict())
             _dict['products'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in product_groups (list)
+        _items = []
+        if self.product_groups:
+            for _item_product_groups in self.product_groups:
+                if _item_product_groups:
+                    _items.append(_item_product_groups.to_dict())
+            _dict['productGroups'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in custom_fields (list)
+        _items = []
+        if self.custom_fields:
+            for _item_custom_fields in self.custom_fields:
+                if _item_custom_fields:
+                    _items.append(_item_custom_fields.to_dict())
+            _dict['customFields'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in custom_field_values (list)
+        _items = []
+        if self.custom_field_values:
+            for _item_custom_field_values in self.custom_field_values:
+                if _item_custom_field_values:
+                    _items.append(_item_custom_field_values.to_dict())
+            _dict['customFieldValues'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if sales_force_opportunity_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.sales_force_opportunity_id is None and "sales_force_opportunity_id" in self.model_fields_set:
+            _dict['salesForceOpportunityId'] = None
+
         # set to None if end_date (nullable) is None
         # and model_fields_set contains the field
         if self.end_date is None and "end_date" in self.model_fields_set:
             _dict['endDate'] = None
+
+        # set to None if signature_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_date is None and "signature_date" in self.model_fields_set:
+            _dict['signatureDate'] = None
+
+        # set to None if account_manager (nullable) is None
+        # and model_fields_set contains the field
+        if self.account_manager is None and "account_manager" in self.model_fields_set:
+            _dict['accountManager'] = None
+
+        # set to None if custom_fields (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_fields is None and "custom_fields" in self.model_fields_set:
+            _dict['customFields'] = None
+
+        # set to None if custom_field_values (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_field_values is None and "custom_field_values" in self.model_fields_set:
+            _dict['customFieldValues'] = None
 
         return _dict
 
@@ -125,7 +183,15 @@ class DeleteContractResponseContract(BaseModel):
             "name": obj.get("name"),
             "salesForceOpportunityId": obj.get("salesForceOpportunityId"),
             "endDate": obj.get("endDate"),
-            "products": [GetContractResponseContractProductsInner.from_dict(_item) for _item in obj["products"]] if obj.get("products") is not None else None,
+            "signatureDate": obj.get("signatureDate"),
+            "products": [ProductGroupProductsInner.from_dict(_item) for _item in obj["products"]] if obj.get("products") is not None else None,
+            "productGroups": [ProductGroup.from_dict(_item) for _item in obj["productGroups"]] if obj.get("productGroups") is not None else None,
+            "accountManager": obj.get("accountManager"),
+            "shouldProRateInvoices": obj.get("shouldProRateInvoices"),
+            "autoRenewContract": obj.get("autoRenewContract"),
+            "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,
+            "customFieldValues": [CustomFieldValue.from_dict(_item) for _item in obj["customFieldValues"]] if obj.get("customFieldValues") is not None else None,
+            "status": obj.get("status"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),

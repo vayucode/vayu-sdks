@@ -11,6 +11,7 @@
  */
 
 import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { IntegrationEntity } from '../models/IntegrationEntity';
 import { HttpFile } from '../http/http';
 
 export class CreditLedgerEntry {
@@ -20,8 +21,9 @@ export class CreditLedgerEntry {
     'amount': number;
     'balanceAfterEntry': number;
     'invoiceId'?: string;
-    'productId'?: string;
+    'erpId'?: string;
     'contractId'?: string;
+    'integrationEntities': Array<IntegrationEntity>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -65,8 +67,8 @@ export class CreditLedgerEntry {
             "format": ""
         },
         {
-            "name": "productId",
-            "baseName": "productId",
+            "name": "erpId",
+            "baseName": "erpId",
             "type": "string",
             "format": ""
         },
@@ -74,6 +76,12 @@ export class CreditLedgerEntry {
             "name": "contractId",
             "baseName": "contractId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "integrationEntities",
+            "baseName": "integrationEntities",
+            "type": "Array<IntegrationEntity>",
             "format": ""
         }    ];
 

@@ -8,6 +8,8 @@ from openapi.models.list_contracts_response import ListContractsResponse
 from openapi.models.get_contract_response import GetContractResponse
 from openapi.models.create_contract_response import CreateContractResponse
 from openapi.models.delete_contract_response import DeleteContractResponse
+from openapi.models.get_contract_by_integration_id_response import GetContractByIntegrationIdResponse
+from openapi.models.integration_type import IntegrationType
 
 Contract = GetContractResponseContract
 
@@ -46,3 +48,9 @@ class ContractsAPI:
         response = self.__client.delete_contract(contract_id=id)
 
         return response
+
+    def get_by_integration_id(self, integration_type: IntegrationType, integration_id: str):
+        return self.__client.get_contract_by_integration_id(
+            integration_type=integration_type,
+            integration_id=integration_id,
+        )

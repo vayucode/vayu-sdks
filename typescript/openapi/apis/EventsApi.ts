@@ -2,8 +2,6 @@
 import {BaseAPIRequestFactory, RequiredError, COLLECTION_FORMATS} from './baseapi';
 import {Configuration} from '../configuration';
 import {RequestContext, HttpMethod, ResponseContext, HttpFile, HttpInfo} from '../http/http';
-import * as FormData from "form-data";
-import { URLSearchParams } from 'url';
 import {ObjectSerializer} from '../models/ObjectSerializer';
 import {ApiException} from './exception';
 import {canConsumeForm, isCodeInRange} from '../util';
@@ -11,6 +9,8 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
+import { DeleteEventsByRefsRequest } from '../models/DeleteEventsByRefsRequest';
+import { DeleteEventsByRefsResponse } from '../models/DeleteEventsByRefsResponse';
 import { EventsDryRunRequest } from '../models/EventsDryRunRequest';
 import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { GetEventResponse } from '../models/GetEventResponse';
@@ -45,6 +45,54 @@ export class EventsApiRequestFactory extends BaseAPIRequestFactory {
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.DELETE);
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
 
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["BearerAuthorizer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request.
+     * Delete events by refs
+     * @param deleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public async deleteEventsByRefs(deleteEventsByRefsRequest: DeleteEventsByRefsRequest, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'deleteEventsByRefsRequest' is not null or undefined
+        if (deleteEventsByRefsRequest === null || deleteEventsByRefsRequest === undefined) {
+            throw new RequiredError("EventsApi", "deleteEventsByRefs", "deleteEventsByRefsRequest");
+        }
+
+
+        // Path Params
+        const localVarPath = '/events/delete-by-refs';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        // Body Params
+        const contentType = ObjectSerializer.getPreferredMediaType([
+            "application/json"
+        ]);
+        requestContext.setHeaderParam("Content-Type", contentType);
+        const serializedBody = ObjectSerializer.stringify(
+            ObjectSerializer.serialize(deleteEventsByRefsRequest, "DeleteEventsByRefsRequest", ""),
+            contentType
+        );
+        requestContext.setBody(serializedBody);
 
         let authMethod: SecurityAuthentication | undefined;
         // Apply auth methods
@@ -296,9 +344,6 @@ export class EventsApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -315,7 +360,48 @@ export class EventsApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to deleteEventsByRefs
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async deleteEventsByRefsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<DeleteEventsByRefsResponse >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: DeleteEventsByRefsResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "DeleteEventsByRefsResponse", ""
+            ) as DeleteEventsByRefsResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: DeleteEventsByRefsResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "DeleteEventsByRefsResponse", ""
+            ) as DeleteEventsByRefsResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -340,9 +426,6 @@ export class EventsApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -359,7 +442,7 @@ export class EventsApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -400,7 +483,7 @@ export class EventsApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -425,9 +508,6 @@ export class EventsApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("413", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Request Entity Too Large", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -444,7 +524,7 @@ export class EventsApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -469,9 +549,6 @@ export class EventsApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("413", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Request Entity Too Large", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -488,7 +565,7 @@ export class EventsApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
 }

@@ -2,20 +2,24 @@
 import {BaseAPIRequestFactory, RequiredError, COLLECTION_FORMATS} from './baseapi';
 import {Configuration} from '../configuration';
 import {RequestContext, HttpMethod, ResponseContext, HttpFile, HttpInfo} from '../http/http';
-import * as FormData from "form-data";
-import { URLSearchParams } from 'url';
 import {ObjectSerializer} from '../models/ObjectSerializer';
 import {ApiException} from './exception';
 import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
+import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
 import { CreateCustomerRequest } from '../models/CreateCustomerRequest';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
+import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
+import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
 import { GetCustomerProductsConsumptionsByAliasResponse } from '../models/GetCustomerProductsConsumptionsByAliasResponse';
 import { GetCustomerProductsConsumptionsResponse } from '../models/GetCustomerProductsConsumptionsResponse';
+import { GetCustomerRelationResponse } from '../models/GetCustomerRelationResponse';
 import { GetCustomerResponse } from '../models/GetCustomerResponse';
+import { IntegrationType } from '../models/IntegrationType';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
@@ -54,6 +58,54 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
             ObjectSerializer.serialize(createCustomerRequest, "CreateCustomerRequest", ""),
+            contentType
+        );
+        requestContext.setBody(serializedBody);
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["BearerAuthorizer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * Create a new Customer relation.
+     * Create Customer relation
+     * @param createCustomerRelationRequest 
+     */
+    public async createCustomerRelation(createCustomerRelationRequest: CreateCustomerRelationRequest, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'createCustomerRelationRequest' is not null or undefined
+        if (createCustomerRelationRequest === null || createCustomerRelationRequest === undefined) {
+            throw new RequiredError("CustomersApi", "createCustomerRelation", "createCustomerRelationRequest");
+        }
+
+
+        // Path Params
+        const localVarPath = '/customer-relations';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        // Body Params
+        const contentType = ObjectSerializer.getPreferredMediaType([
+            "application/json"
+        ]);
+        requestContext.setHeaderParam("Content-Type", contentType);
+        const serializedBody = ObjectSerializer.stringify(
+            ObjectSerializer.serialize(createCustomerRelationRequest, "CreateCustomerRelationRequest", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -188,6 +240,90 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * Use this endpoint to get a specific customer using its integration provider and identifier.
+     * Get customer by integration id
+     * @param integrationType 
+     * @param integrationId 
+     */
+    public async getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'integrationType' is not null or undefined
+        if (integrationType === null || integrationType === undefined) {
+            throw new RequiredError("CustomersApi", "getCustomerByIntegrationId", "integrationType");
+        }
+
+
+        // verify required parameter 'integrationId' is not null or undefined
+        if (integrationId === null || integrationId === undefined) {
+            throw new RequiredError("CustomersApi", "getCustomerByIntegrationId", "integrationId");
+        }
+
+
+        // Path Params
+        const localVarPath = '/customers/integration/{integrationType}/{integrationId}'
+            .replace('{' + 'integrationType' + '}', encodeURIComponent(String(integrationType)))
+            .replace('{' + 'integrationId' + '}', encodeURIComponent(String(integrationId)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["BearerAuthorizer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * Use this endpoint to get a specific customer using its name.
+     * Get customer by name
+     * @param name 
+     */
+    public async getCustomerByName(name: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'name' is not null or undefined
+        if (name === null || name === undefined) {
+            throw new RequiredError("CustomersApi", "getCustomerByName", "name");
+        }
+
+
+        // Path Params
+        const localVarPath = '/customers/name/{name}'
+            .replace('{' + 'name' + '}', encodeURIComponent(String(name)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["BearerAuthorizer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
      * Use this endpoint to get the products consumptions by the customer id.
      * Get products consumptions by customer id
      * @param customerId 
@@ -242,6 +378,44 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
         // Path Params
         const localVarPath = '/customers/products-consumptions/alias/{alias}'
             .replace('{' + 'alias' + '}', encodeURIComponent(String(alias)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["BearerAuthorizer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * Get a Customer relation by id.
+     * Get Customer relation
+     * @param customerRelationId 
+     */
+    public async getCustomerRelation(customerRelationId: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'customerRelationId' is not null or undefined
+        if (customerRelationId === null || customerRelationId === undefined) {
+            throw new RequiredError("CustomersApi", "getCustomerRelation", "customerRelationId");
+        }
+
+
+        // Path Params
+        const localVarPath = '/customer-relations/{customerRelationId}'
+            .replace('{' + 'customerRelationId' + '}', encodeURIComponent(String(customerRelationId)));
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
@@ -405,7 +579,48 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to createCustomerRelation
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async createCustomerRelationWithHttpInfo(response: ResponseContext): Promise<HttpInfo<CreateCustomerRelationResponse >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: CreateCustomerRelationResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "CreateCustomerRelationResponse", ""
+            ) as CreateCustomerRelationResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: CreateCustomerRelationResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "CreateCustomerRelationResponse", ""
+            ) as CreateCustomerRelationResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -449,7 +664,7 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -493,7 +708,7 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -518,9 +733,6 @@ export class CustomersApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -537,7 +749,89 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to getCustomerByIntegrationId
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async getCustomerByIntegrationIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<GetCustomerByIntegrationIdResponse >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: GetCustomerByIntegrationIdResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerByIntegrationIdResponse", ""
+            ) as GetCustomerByIntegrationIdResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: GetCustomerByIntegrationIdResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerByIntegrationIdResponse", ""
+            ) as GetCustomerByIntegrationIdResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to getCustomerByName
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async getCustomerByNameWithHttpInfo(response: ResponseContext): Promise<HttpInfo<GetCustomerByNameResponse >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: GetCustomerByNameResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerByNameResponse", ""
+            ) as GetCustomerByNameResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: GetCustomerByNameResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerByNameResponse", ""
+            ) as GetCustomerByNameResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -562,9 +856,6 @@ export class CustomersApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -581,7 +872,7 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -606,9 +897,6 @@ export class CustomersApiResponseProcessor {
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
         }
-        if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
-        }
         if (isCodeInRange("429", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
         }
@@ -625,7 +913,51 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to getCustomerRelation
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async getCustomerRelationWithHttpInfo(response: ResponseContext): Promise<HttpInfo<GetCustomerRelationResponse >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: GetCustomerRelationResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerRelationResponse", ""
+            ) as GetCustomerRelationResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+        }
+        if (isCodeInRange("404", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: GetCustomerRelationResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "GetCustomerRelationResponse", ""
+            ) as GetCustomerRelationResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -666,7 +998,7 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
     /**
@@ -710,7 +1042,7 @@ export class CustomersApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
-        throw new ApiException<string | Buffer | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
     }
 
 }

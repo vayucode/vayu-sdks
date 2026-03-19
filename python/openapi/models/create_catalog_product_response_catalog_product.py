@@ -31,7 +31,7 @@ class CreateCatalogProductResponseCatalogProduct(BaseModel):
     """ # noqa: E501
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the catalog product")
     description: Optional[StrictStr] = Field(default=None, description="The description of the catalog product")
-    external_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
+    external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")

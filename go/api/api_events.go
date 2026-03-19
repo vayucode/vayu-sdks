@@ -3,8 +3,8 @@ package api
 import (
 	"time"
 
-	"github.com/weft-finance/vayu-go/client"
-	"github.com/weft-finance/vayu-go/openapi"
+	"github.com/vayucode/vayu-sdks/go/client"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 type EventsAPI struct {
@@ -14,6 +14,8 @@ type EventsAPI struct {
 type Event = openapi.Event
 type GetEventResponse = openapi.GetEventResponse
 type DeleteEventResponse = openapi.DeleteEventResponse
+type DeleteEventsByRefsRequest = openapi.DeleteEventsByRefsRequest
+type DeleteEventsByRefsResponse = openapi.DeleteEventsByRefsResponse
 type SendEventsResponse = openapi.SendEventsResponse
 type EventsDryRunResponse = openapi.EventsDryRunResponse
 type QueryEventsResponse = openapi.QueryEventsResponse
@@ -47,6 +49,21 @@ func (e *EventsAPI) GetEvent(refId string) (*GetEventResponse, error) {
 	defer cancel()
 
 	request := e.vayuClient.Client.EventsAPI.GetEventByRefId(ctx, refId)
+	response, _, err := request.Execute()
+
+	if err != nil {
+		return nil, client.BuildVayuErrorFromGenericOpenAPIError(err)
+	}
+
+	return response, nil
+}
+
+func (e *EventsAPI) DeleteEventsByRefs(payload DeleteEventsByRefsRequest) (*DeleteEventsByRefsResponse, error) {
+	ctx, cancel := client.GenerateContextWithTimeout()
+	defer cancel()
+
+	request := e.vayuClient.Client.EventsAPI.DeleteEventsByRefs(ctx)
+	request = request.DeleteEventsByRefsRequest(payload)
 	response, _, err := request.Execute()
 
 	if err != nil {

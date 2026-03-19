@@ -16,7 +16,7 @@ import (
 	"fmt"
 )
 
-// PaymentTerm flag to indicate if the payment is postpayment or prepayment
+// PaymentTerm The payment term of the product. Can be prepayment or postpayment. If not provided, the payment term will be determined by the pricing model.
 type PaymentTerm string
 
 // List of PaymentTerm
