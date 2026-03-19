@@ -1,5 +1,3 @@
-import type { JwtPayload } from 'jsonwebtoken';
-import jwt from 'jsonwebtoken';
 import type { BaseServerConfiguration } from '../../openapi';
 import { AuthApi, createConfiguration } from '../../openapi';
 
@@ -43,13 +41,25 @@ export class VayuAuthenticator {
 
     this.accessToken = login.accessToken;
 
-    const decodedJWT = jwt.decode(this.accessToken) as JwtPayload;
+    const payload = decodeJwtPayload(this.accessToken);
 
-    if (!decodedJWT) {
+    if (!payload) {
       throw new Error('Invalid JWT token');
     }
 
-    this.expiresAt = calculateJwtExpirationMs(decodedJWT.exp);
+    this.expiresAt = calculateJwtExpirationMs(payload.exp);
+  }
+}
+
+function decodeJwtPayload(token: string): { exp?: number } | null {
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+
+  try {
+    const payload = Buffer.from(parts[1], 'base64url').toString('utf-8');
+    return JSON.parse(payload);
+  } catch {
+    return null;
   }
 }
 

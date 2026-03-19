@@ -1,9 +1,19 @@
-import type { JwtPayload } from 'jsonwebtoken';
-import jwt from 'jsonwebtoken';
 import type { BaseServerConfiguration, Configuration, RequestContext, ResponseContext } from '../../openapi-v2';
 import { createConfiguration, ServerConfiguration, AuthenticationApi } from '../../openapi-v2';
 
 const EXPIRATION_THRESHOLD = 1000 * 60 * 5;
+
+function decodeJwtPayload(token: string): { exp?: number } | null {
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+
+  try {
+    const payload = Buffer.from(parts[1], 'base64url').toString('utf-8');
+    return JSON.parse(payload);
+  } catch {
+    return null;
+  }
+}
 const BASE_URLS_MAP = new Map<string, BaseServerConfiguration>([
 ]);
 
@@ -64,17 +74,17 @@ export class ConfigurationService {
 
     this.accessToken = login.accessToken;
 
-    const decodedJWT = jwt.decode(this.accessToken) as JwtPayload;
+    const payload = decodeJwtPayload(this.accessToken);
 
-    if (!decodedJWT) {
+    if (!payload) {
       throw new Error('Invalid JWT token');
     }
 
-    this.expiresAt = (decodedJWT.exp ?? Math.floor(Date.now() / 1000) + 60 * 15) * 1000;
+    this.expiresAt = (payload.exp ?? Math.floor(Date.now() / 1000) + 60 * 15) * 1000;
 
     return {
       accessToken: login.accessToken,
-      expiresAt: decodedJWT.exp,
+      expiresAt: payload.exp,
     };
   }
 
