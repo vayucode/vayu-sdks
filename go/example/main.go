@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		fatal("ListCustomers", err)
 	}
-	fmt.Printf("Found %d customers\n", customers.Total)
+	fmt.Printf("Found %.0f customers\n", customers.Total)
 
 	fmt.Println("\n=== Create Customer ===")
 	suffix := fmt.Sprintf("%d", time.Now().UnixNano())
@@ -79,7 +79,7 @@ func main() {
 	if err != nil {
 		fatal("ListMeters", err)
 	}
-	fmt.Printf("Found %d meters\n", meters.Total)
+	fmt.Printf("Found %.0f meters\n", meters.Total)
 	for _, m := range meters.Meters {
 		fmt.Printf("  - %s: %s\n", m.Id, m.Name)
 	}
@@ -90,7 +90,7 @@ func main() {
 	if err != nil {
 		fatal("ListContracts", err)
 	}
-	fmt.Printf("Found %d contracts\n", contracts.Total)
+	fmt.Printf("Found %.0f contracts\n", contracts.Total)
 
 	// --- Invoices ---
 	fmt.Println("\n=== List Invoices ===")
@@ -98,7 +98,7 @@ func main() {
 	if err != nil {
 		fatal("ListInvoices", err)
 	}
-	fmt.Printf("Found %d invoices\n", invoices.Total)
+	fmt.Printf("Found %.0f invoices\n", invoices.Total)
 
 	// --- Catalog Products (new in latest update-sdks) ---
 	fmt.Println("\n=== List Catalog Products ===")
@@ -106,7 +106,7 @@ func main() {
 	if err != nil {
 		fatal("ListCatalogProducts", err)
 	}
-	fmt.Printf("Found %d catalog products\n", products.Total)
+	fmt.Printf("Found %.0f catalog products\n", products.Total)
 
 	// --- Cleanup ---
 	fmt.Println("\n=== Delete Customer ===")

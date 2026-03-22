@@ -170,6 +170,6 @@ jobs:
           VERSION="${{ needs.bump-version.outputs.new_version }}"
           BODY="Release v${VERSION}"$'\n\n'"### SDKs"$'\n'
           BODY+="- **TypeScript:** [vayu-ts@${VERSION}](https://www.npmjs.com/package/vayu-ts/v/${VERSION})"$'\n'
-          BODY+="- **Python:** [vayu-client ${VERSION}](https://pypi.org/project/vayu-client/${VERSION}/)"$'\n'
+          BODY+="- **Python:** [vayu-py ${VERSION}](https://pypi.org/project/vayu-py/${VERSION}/)"$'\n'
           BODY+="- **Go:** \`go get github.com/vayucode/vayu-sdks/go@go/v${VERSION}\`"$'\n'
           gh release create "v${VERSION}" --title "v${VERSION}" --notes "$BODY"
