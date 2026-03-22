@@ -13,7 +13,7 @@ def read_requirements():
     return requirements
 
 setup(
-    name="vayu-client",
+    name="vayu-py",
     version=__version__,
     packages=find_packages(),
     install_requires=read_requirements(),
@@ -21,5 +21,5 @@ setup(
     description="The Vayu API client library in Python",
     author="Vayu Team",
     author_email="team@withvayu.com",
-    url="https://github.com/weft-finance/vayu-py",
+    url="https://github.com/vayucode/vayu-sdks",
 )
