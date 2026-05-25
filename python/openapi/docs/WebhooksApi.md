@@ -73,7 +73,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -82,6 +82,7 @@ void (empty response body)
 **200** | RequestSuccess |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**413** | Request Entity Too Large |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 

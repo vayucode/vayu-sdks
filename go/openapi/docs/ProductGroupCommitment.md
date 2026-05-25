@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Units** | **float32** | Units to commit the customer for | 
 **Price** | Pointer to **NullableFloat32** | Price to charge the customer for the committed units | [optional] 
+**Type** | Pointer to **string** | The type of commitment. UNITS means the commitment amount is in units, PRICE means it is a monetary value. Defaults to UNITS. | [optional] [default to "UNITS"]
 **Scheduling** | Pointer to [**NullableProductGroupProductsInnerCommitmentScheduling**](ProductGroupProductsInnerCommitmentScheduling.md) |  | [optional] 
 **OverageStrategy** | Pointer to [**NullableExternalOverageStrategy**](ExternalOverageStrategy.md) |  | [optional] [default to EXTERNALOVERAGESTRATEGY_IGNORE]
 
@@ -83,6 +84,31 @@ HasPrice returns a boolean if a field has been set.
 `func (o *ProductGroupCommitment) UnsetPrice()`
 
 UnsetPrice ensures that no value is present for Price, not even an explicit nil
+### GetType
+
+`func (o *ProductGroupCommitment) GetType() string`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *ProductGroupCommitment) GetTypeOk() (*string, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *ProductGroupCommitment) SetType(v string)`
+
+SetType sets Type field to given value.
+
+### HasType
+
+`func (o *ProductGroupCommitment) HasType() bool`
+
+HasType returns a boolean if a field has been set.
+
 ### GetScheduling
 
 `func (o *ProductGroupCommitment) GetScheduling() ProductGroupProductsInnerCommitmentScheduling`

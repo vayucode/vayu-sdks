@@ -25,7 +25,7 @@ export class EventsDryRunResponseObjectMeterWithValuesInner {
     'eventName': string;
     'aggregationMethod': AggregationMethod;
     'filter'?: Filter;
-    'value': number;
+    'value': number | null;
     'instanceValue'?: any | null;
 
     static readonly discriminator: string | undefined = undefined;

@@ -5,8 +5,10 @@ import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
 import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { BillingInterval } from '../models/BillingInterval';
 import { CloudUsageResult } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
+import { ConflictErrorResponse } from '../models/ConflictErrorResponse';
 import { Contact } from '../models/Contact';
 import { ContractStatus } from '../models/ContractStatus';
 import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
@@ -14,6 +16,9 @@ import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResp
 import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
 import { CreateContractRequest } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
+import { CreateCustomFieldRequest } from '../models/CreateCustomFieldRequest';
+import { CreateCustomFieldResponse } from '../models/CreateCustomFieldResponse';
+import { CreateCustomFieldResponseCustomField } from '../models/CreateCustomFieldResponseCustomField';
 import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
 import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
 import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
@@ -29,6 +34,7 @@ import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
 import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
+import { CustomFieldEntities } from '../models/CustomFieldEntities';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
 import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
@@ -38,6 +44,8 @@ import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResp
 import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
 import { DeleteContractResponse } from '../models/DeleteContractResponse';
 import { DeleteContractResponseContract } from '../models/DeleteContractResponseContract';
+import { DeleteCustomFieldResponse } from '../models/DeleteCustomFieldResponse';
+import { DeleteCustomFieldResponseCustomField } from '../models/DeleteCustomFieldResponseCustomField';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
 import { DeleteCustomerResponseCustomer } from '../models/DeleteCustomerResponseCustomer';
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
@@ -49,6 +57,8 @@ import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
 import { DeleteMeterResponseMeter } from '../models/DeleteMeterResponseMeter';
+import { DeletePlanResponse } from '../models/DeletePlanResponse';
+import { DeletePlanResponsePlan } from '../models/DeletePlanResponsePlan';
 import { Event } from '../models/Event';
 import { EventsDryRunRequest } from '../models/EventsDryRunRequest';
 import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
@@ -62,6 +72,7 @@ import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
 import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
 import { GetContractResponseContract } from '../models/GetContractResponseContract';
+import { GetCustomFieldResponse } from '../models/GetCustomFieldResponse';
 import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
 import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
 import { GetCustomerByNameResponseCustomer } from '../models/GetCustomerByNameResponseCustomer';
@@ -77,6 +88,8 @@ import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceR
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
+import { GetPlanResponse } from '../models/GetPlanResponse';
+import { GetPlanResponsePlan } from '../models/GetPlanResponsePlan';
 import { GetProductConsumptionResponse } from '../models/GetProductConsumptionResponse';
 import { GetProductConsumptionResponseProductConsumption } from '../models/GetProductConsumptionResponseProductConsumption';
 import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
@@ -84,6 +97,7 @@ import { IntegrationEntity } from '../models/IntegrationEntity';
 import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
 import { IntegrationProviders } from '../models/IntegrationProviders';
 import { IntegrationType } from '../models/IntegrationType';
+import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { InvalidEvent } from '../models/InvalidEvent';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
 import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
@@ -92,18 +106,24 @@ import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
 import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
+import { ListCustomFieldsResponse } from '../models/ListCustomFieldsResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
 import { ListMeasurementsResponse } from '../models/ListMeasurementsResponse';
 import { ListMetersResponse } from '../models/ListMetersResponse';
+import { ListPlansResponse } from '../models/ListPlansResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Meter } from '../models/Meter';
+import { NotFoundErrorResponse } from '../models/NotFoundErrorResponse';
 import { NotificationEventType } from '../models/NotificationEventType';
 import { PartnerSubmissionDetail } from '../models/PartnerSubmissionDetail';
 import { PaymentInfo } from '../models/PaymentInfo';
 import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
 import { PaymentTerm } from '../models/PaymentTerm';
+import { PlanBillingData } from '../models/PlanBillingData';
+import { PlanDuration } from '../models/PlanDuration';
+import { PlanStatus } from '../models/PlanStatus';
 import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
 import { ProductGroup } from '../models/ProductGroup';
@@ -111,6 +131,7 @@ import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
 import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
 import { ProductGroupProductsInnerCommitment } from '../models/ProductGroupProductsInnerCommitment';
 import { ProductGroupProductsInnerCommitmentScheduling } from '../models/ProductGroupProductsInnerCommitmentScheduling';
+import { ProductGroupProductsInnerCommitmentSchedulingDuration } from '../models/ProductGroupProductsInnerCommitmentSchedulingDuration';
 import { ProductGroupProductsInnerPricing } from '../models/ProductGroupProductsInnerPricing';
 import { ProductGroupProductsInnerPricingOneOf } from '../models/ProductGroupProductsInnerPricingOneOf';
 import { ProductGroupProductsInnerPricingOneOf1 } from '../models/ProductGroupProductsInnerPricingOneOf1';
@@ -121,21 +142,51 @@ import { ProductGroupProductsInnerPricingOneOf3 } from '../models/ProductGroupPr
 import { ProductGroupProductsInnerPricingOneOf3SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence';
 import { ProductGroupProductsInnerPricingOneOf3TiersInner } from '../models/ProductGroupProductsInnerPricingOneOf3TiersInner';
 import { ProductGroupProductsInnerPricingOneOf4 } from '../models/ProductGroupProductsInnerPricingOneOf4';
+import { ProductGroupProductsInnerPricingOneOf5 } from '../models/ProductGroupProductsInnerPricingOneOf5';
+import { ProductGroupProductsInnerPricingOneOf6 } from '../models/ProductGroupProductsInnerPricingOneOf6';
+import { ProductGroupProductsInnerPricingOneOfDiscount } from '../models/ProductGroupProductsInnerPricingOneOfDiscount';
 import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProductsInnerScheduling';
 import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGroupProductsInnerSchedulingDuration';
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
+import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
+import { RequestTooLongErrorResponse } from '../models/RequestTooLongErrorResponse';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
 import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
 import { SyncStatus } from '../models/SyncStatus';
+import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
+import { UnlimitedDuration } from '../models/UnlimitedDuration';
 import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
 import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
+import { UpdateCustomFieldRequest } from '../models/UpdateCustomFieldRequest';
+import { UpdateCustomFieldResponse } from '../models/UpdateCustomFieldResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
 import { UsageWindow } from '../models/UsageWindow';
+import { V2DeleteEventResponse } from '../models/V2DeleteEventResponse';
+import { V2DeleteEventsByRefsRequest } from '../models/V2DeleteEventsByRefsRequest';
+import { V2DeleteEventsByRefsResponse } from '../models/V2DeleteEventsByRefsResponse';
+import { V2EventsDryRunRequest } from '../models/V2EventsDryRunRequest';
+import { V2EventsDryRunResponse } from '../models/V2EventsDryRunResponse';
+import { V2GetEventResponse } from '../models/V2GetEventResponse';
+import { V2QueryEventsAggregationRequest } from '../models/V2QueryEventsAggregationRequest';
+import { V2QueryEventsAggregationRequestMetersInner } from '../models/V2QueryEventsAggregationRequestMetersInner';
+import { V2QueryEventsAggregationRequestMetersInnerAggregation } from '../models/V2QueryEventsAggregationRequestMetersInnerAggregation';
+import { V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic } from '../models/V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic';
+import { V2QueryEventsAggregationRequestMetersInnerFiltersInner } from '../models/V2QueryEventsAggregationRequestMetersInnerFiltersInner';
+import { V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue } from '../models/V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue';
+import { V2QueryEventsAggregationRequestMetersInnerSqlFullQuery } from '../models/V2QueryEventsAggregationRequestMetersInnerSqlFullQuery';
+import { V2QueryEventsAggregationRequestPeriod } from '../models/V2QueryEventsAggregationRequestPeriod';
+import { V2QueryEventsAggregationResponse } from '../models/V2QueryEventsAggregationResponse';
+import { V2QueryEventsAggregationResponseDataPointsInner } from '../models/V2QueryEventsAggregationResponseDataPointsInner';
+import { V2QueryEventsResponse } from '../models/V2QueryEventsResponse';
+import { V2SendEventsRequest } from '../models/V2SendEventsRequest';
+import { V2SendEventsResponse } from '../models/V2SendEventsResponse';
+import { ValidationErrorResponse } from '../models/ValidationErrorResponse';
+import { ValidationErrorResponseParamsInner } from '../models/ValidationErrorResponseParamsInner';
 import { WebhookSubscribeRequest } from '../models/WebhookSubscribeRequest';
 
 import { ObservableAuthApi } from "./ObservableAPI";
@@ -666,6 +717,172 @@ export class ObjectCreditsApi {
 
 }
 
+import { ObservableCustomFieldsApi } from "./ObservableAPI";
+import { CustomFieldsApiRequestFactory, CustomFieldsApiResponseProcessor} from "../apis/CustomFieldsApi";
+
+export interface CustomFieldsApiCreateCustomFieldRequest {
+    /**
+     * 
+     * @type CreateCustomFieldRequest
+     * @memberof CustomFieldsApicreateCustomField
+     */
+    createCustomFieldRequest: CreateCustomFieldRequest
+}
+
+export interface CustomFieldsApiDeleteCustomFieldRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof CustomFieldsApideleteCustomField
+     */
+    customFieldId: string
+}
+
+export interface CustomFieldsApiGetCustomFieldRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof CustomFieldsApigetCustomField
+     */
+    customFieldId: string
+}
+
+export interface CustomFieldsApiListCustomFieldsRequest {
+    /**
+     * 
+     * Minimum: 1
+     * Maximum: 1000
+     * Defaults to: 10
+     * @type number
+     * @memberof CustomFieldsApilistCustomFields
+     */
+    limit?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof CustomFieldsApilistCustomFields
+     */
+    cursor?: string
+}
+
+export interface CustomFieldsApiUpdateCustomFieldRequest {
+    /**
+     * 
+     * @type UpdateCustomFieldRequest
+     * @memberof CustomFieldsApiupdateCustomField
+     */
+    updateCustomFieldRequest: UpdateCustomFieldRequest
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof CustomFieldsApiupdateCustomField
+     */
+    customFieldId: string
+}
+
+export class ObjectCustomFieldsApi {
+    private api: ObservableCustomFieldsApi
+
+    public constructor(configuration: Configuration, requestFactory?: CustomFieldsApiRequestFactory, responseProcessor?: CustomFieldsApiResponseProcessor) {
+        this.api = new ObservableCustomFieldsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Create a new Custom field.
+     * Create Custom field
+     * @param param the request object
+     */
+    public createCustomFieldWithHttpInfo(param: CustomFieldsApiCreateCustomFieldRequest, options?: Configuration): Promise<HttpInfo<CreateCustomFieldResponse>> {
+        return this.api.createCustomFieldWithHttpInfo(param.createCustomFieldRequest,  options).toPromise();
+    }
+
+    /**
+     * Create a new Custom field.
+     * Create Custom field
+     * @param param the request object
+     */
+    public createCustomField(param: CustomFieldsApiCreateCustomFieldRequest, options?: Configuration): Promise<CreateCustomFieldResponse> {
+        return this.api.createCustomField(param.createCustomFieldRequest,  options).toPromise();
+    }
+
+    /**
+     * Delete a Custom field by id.
+     * Delete Custom field
+     * @param param the request object
+     */
+    public deleteCustomFieldWithHttpInfo(param: CustomFieldsApiDeleteCustomFieldRequest, options?: Configuration): Promise<HttpInfo<DeleteCustomFieldResponse>> {
+        return this.api.deleteCustomFieldWithHttpInfo(param.customFieldId,  options).toPromise();
+    }
+
+    /**
+     * Delete a Custom field by id.
+     * Delete Custom field
+     * @param param the request object
+     */
+    public deleteCustomField(param: CustomFieldsApiDeleteCustomFieldRequest, options?: Configuration): Promise<DeleteCustomFieldResponse> {
+        return this.api.deleteCustomField(param.customFieldId,  options).toPromise();
+    }
+
+    /**
+     * Get a Custom field by id.
+     * Get Custom field
+     * @param param the request object
+     */
+    public getCustomFieldWithHttpInfo(param: CustomFieldsApiGetCustomFieldRequest, options?: Configuration): Promise<HttpInfo<GetCustomFieldResponse>> {
+        return this.api.getCustomFieldWithHttpInfo(param.customFieldId,  options).toPromise();
+    }
+
+    /**
+     * Get a Custom field by id.
+     * Get Custom field
+     * @param param the request object
+     */
+    public getCustomField(param: CustomFieldsApiGetCustomFieldRequest, options?: Configuration): Promise<GetCustomFieldResponse> {
+        return this.api.getCustomField(param.customFieldId,  options).toPromise();
+    }
+
+    /**
+     * Get a list of Custom fields.
+     * List Custom fields
+     * @param param the request object
+     */
+    public listCustomFieldsWithHttpInfo(param: CustomFieldsApiListCustomFieldsRequest = {}, options?: Configuration): Promise<HttpInfo<ListCustomFieldsResponse>> {
+        return this.api.listCustomFieldsWithHttpInfo(param.limit, param.cursor,  options).toPromise();
+    }
+
+    /**
+     * Get a list of Custom fields.
+     * List Custom fields
+     * @param param the request object
+     */
+    public listCustomFields(param: CustomFieldsApiListCustomFieldsRequest = {}, options?: Configuration): Promise<ListCustomFieldsResponse> {
+        return this.api.listCustomFields(param.limit, param.cursor,  options).toPromise();
+    }
+
+    /**
+     * Update a Custom field by id.
+     * Update Custom field
+     * @param param the request object
+     */
+    public updateCustomFieldWithHttpInfo(param: CustomFieldsApiUpdateCustomFieldRequest, options?: Configuration): Promise<HttpInfo<UpdateCustomFieldResponse>> {
+        return this.api.updateCustomFieldWithHttpInfo(param.updateCustomFieldRequest, param.customFieldId,  options).toPromise();
+    }
+
+    /**
+     * Update a Custom field by id.
+     * Update Custom field
+     * @param param the request object
+     */
+    public updateCustomField(param: CustomFieldsApiUpdateCustomFieldRequest, options?: Configuration): Promise<UpdateCustomFieldResponse> {
+        return this.api.updateCustomField(param.updateCustomFieldRequest, param.customFieldId,  options).toPromise();
+    }
+
+}
+
 import { ObservableCustomersApi } from "./ObservableAPI";
 import { CustomersApiRequestFactory, CustomersApiResponseProcessor} from "../apis/CustomersApi";
 
@@ -1090,6 +1307,13 @@ export interface EventsApiQueryEventsRequest {
     eventName?: string
     /**
      * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiqueryEvents
+     */
+    customerAlias?: string
+    /**
+     * 
      * Minimum: 1
      * Maximum: 1000
      * Defaults to: 10
@@ -1122,6 +1346,109 @@ export interface EventsApiSendEventsDryRunRequest {
      * @memberof EventsApisendEventsDryRun
      */
     eventsDryRunRequest: EventsDryRunRequest
+}
+
+export interface EventsApiV2DeleteEventByRefIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiv2DeleteEventByRefId
+     */
+    refId: string
+}
+
+export interface EventsApiV2DeleteEventsByRefsRequest {
+    /**
+     * A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     * @type V2DeleteEventsByRefsRequest
+     * @memberof EventsApiv2DeleteEventsByRefs
+     */
+    v2DeleteEventsByRefsRequest: V2DeleteEventsByRefsRequest
+}
+
+export interface EventsApiV2GetEventByRefIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiv2GetEventByRefId
+     */
+    refId: string
+}
+
+export interface EventsApiV2QueryEventsRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type Date
+     * @memberof EventsApiv2QueryEvents
+     */
+    startTime: Date
+    /**
+     * 
+     * Defaults to: undefined
+     * @type Date
+     * @memberof EventsApiv2QueryEvents
+     */
+    endTime: Date
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiv2QueryEvents
+     */
+    eventName?: string
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiv2QueryEvents
+     */
+    customerAlias?: string
+    /**
+     * 
+     * Minimum: 1
+     * Maximum: 1000
+     * Defaults to: 10
+     * @type number
+     * @memberof EventsApiv2QueryEvents
+     */
+    limit?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof EventsApiv2QueryEvents
+     */
+    cursor?: string
+}
+
+export interface EventsApiV2QueryEventsAggregationRequest {
+    /**
+     * Configuration for aggregating events by meters and time grouping.
+     * @type V2QueryEventsAggregationRequest
+     * @memberof EventsApiv2QueryEventsAggregation
+     */
+    v2QueryEventsAggregationRequest: V2QueryEventsAggregationRequest
+}
+
+export interface EventsApiV2SendEventsRequest {
+    /**
+     * An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     * @type V2SendEventsRequest
+     * @memberof EventsApiv2SendEvents
+     */
+    v2SendEventsRequest: V2SendEventsRequest
+}
+
+export interface EventsApiV2SendEventsDryRunRequest {
+    /**
+     * An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     * @type V2EventsDryRunRequest
+     * @memberof EventsApiv2SendEventsDryRun
+     */
+    v2EventsDryRunRequest: V2EventsDryRunRequest
 }
 
 export class ObjectEventsApi {
@@ -1191,7 +1518,7 @@ export class ObjectEventsApi {
      * @param param the request object
      */
     public queryEventsWithHttpInfo(param: EventsApiQueryEventsRequest, options?: Configuration): Promise<HttpInfo<QueryEventsResponse>> {
-        return this.api.queryEventsWithHttpInfo(param.startTime, param.endTime, param.eventName, param.limit, param.cursor,  options).toPromise();
+        return this.api.queryEventsWithHttpInfo(param.startTime, param.endTime, param.eventName, param.customerAlias, param.limit, param.cursor,  options).toPromise();
     }
 
     /**
@@ -1200,7 +1527,7 @@ export class ObjectEventsApi {
      * @param param the request object
      */
     public queryEvents(param: EventsApiQueryEventsRequest, options?: Configuration): Promise<QueryEventsResponse> {
-        return this.api.queryEvents(param.startTime, param.endTime, param.eventName, param.limit, param.cursor,  options).toPromise();
+        return this.api.queryEvents(param.startTime, param.endTime, param.eventName, param.customerAlias, param.limit, param.cursor,  options).toPromise();
     }
 
     /**
@@ -1237,6 +1564,132 @@ export class ObjectEventsApi {
      */
     public sendEventsDryRun(param: EventsApiSendEventsDryRunRequest, options?: Configuration): Promise<EventsDryRunResponse> {
         return this.api.sendEventsDryRun(param.eventsDryRunRequest,  options).toPromise();
+    }
+
+    /**
+     * Use this endpoint to remove a specific event using its reference ID (v2).
+     * Delete an event by refId (v2)
+     * @param param the request object
+     */
+    public v2DeleteEventByRefIdWithHttpInfo(param: EventsApiV2DeleteEventByRefIdRequest, options?: Configuration): Promise<HttpInfo<V2DeleteEventResponse>> {
+        return this.api.v2DeleteEventByRefIdWithHttpInfo(param.refId,  options).toPromise();
+    }
+
+    /**
+     * Use this endpoint to remove a specific event using its reference ID (v2).
+     * Delete an event by refId (v2)
+     * @param param the request object
+     */
+    public v2DeleteEventByRefId(param: EventsApiV2DeleteEventByRefIdRequest, options?: Configuration): Promise<V2DeleteEventResponse> {
+        return this.api.v2DeleteEventByRefId(param.refId,  options).toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request (v2).
+     * Delete events by refs (v2)
+     * @param param the request object
+     */
+    public v2DeleteEventsByRefsWithHttpInfo(param: EventsApiV2DeleteEventsByRefsRequest, options?: Configuration): Promise<HttpInfo<V2DeleteEventsByRefsResponse>> {
+        return this.api.v2DeleteEventsByRefsWithHttpInfo(param.v2DeleteEventsByRefsRequest,  options).toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request (v2).
+     * Delete events by refs (v2)
+     * @param param the request object
+     */
+    public v2DeleteEventsByRefs(param: EventsApiV2DeleteEventsByRefsRequest, options?: Configuration): Promise<V2DeleteEventsByRefsResponse> {
+        return this.api.v2DeleteEventsByRefs(param.v2DeleteEventsByRefsRequest,  options).toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific event using its reference ID (v2).
+     * Get event by refId (v2)
+     * @param param the request object
+     */
+    public v2GetEventByRefIdWithHttpInfo(param: EventsApiV2GetEventByRefIdRequest, options?: Configuration): Promise<HttpInfo<V2GetEventResponse>> {
+        return this.api.v2GetEventByRefIdWithHttpInfo(param.refId,  options).toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific event using its reference ID (v2).
+     * Get event by refId (v2)
+     * @param param the request object
+     */
+    public v2GetEventByRefId(param: EventsApiV2GetEventByRefIdRequest, options?: Configuration): Promise<V2GetEventResponse> {
+        return this.api.v2GetEventByRefId(param.refId,  options).toPromise();
+    }
+
+    /**
+     * Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+     * Query events by timestamp period and optional event name (v2)
+     * @param param the request object
+     */
+    public v2QueryEventsWithHttpInfo(param: EventsApiV2QueryEventsRequest, options?: Configuration): Promise<HttpInfo<V2QueryEventsResponse>> {
+        return this.api.v2QueryEventsWithHttpInfo(param.startTime, param.endTime, param.eventName, param.customerAlias, param.limit, param.cursor,  options).toPromise();
+    }
+
+    /**
+     * Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+     * Query events by timestamp period and optional event name (v2)
+     * @param param the request object
+     */
+    public v2QueryEvents(param: EventsApiV2QueryEventsRequest, options?: Configuration): Promise<V2QueryEventsResponse> {
+        return this.api.v2QueryEvents(param.startTime, param.endTime, param.eventName, param.customerAlias, param.limit, param.cursor,  options).toPromise();
+    }
+
+    /**
+     * Aggregate events by meters and time grouping via the events-service.
+     * Aggregate events (v2)
+     * @param param the request object
+     */
+    public v2QueryEventsAggregationWithHttpInfo(param: EventsApiV2QueryEventsAggregationRequest, options?: Configuration): Promise<HttpInfo<V2QueryEventsAggregationResponse>> {
+        return this.api.v2QueryEventsAggregationWithHttpInfo(param.v2QueryEventsAggregationRequest,  options).toPromise();
+    }
+
+    /**
+     * Aggregate events by meters and time grouping via the events-service.
+     * Aggregate events (v2)
+     * @param param the request object
+     */
+    public v2QueryEventsAggregation(param: EventsApiV2QueryEventsAggregationRequest, options?: Configuration): Promise<V2QueryEventsAggregationResponse> {
+        return this.api.v2QueryEventsAggregation(param.v2QueryEventsAggregationRequest,  options).toPromise();
+    }
+
+    /**
+     * Submit a batch of events for ingestion via the events-service.
+     * Submit a batch of events for ingestion (v2)
+     * @param param the request object
+     */
+    public v2SendEventsWithHttpInfo(param: EventsApiV2SendEventsRequest, options?: Configuration): Promise<HttpInfo<V2SendEventsResponse>> {
+        return this.api.v2SendEventsWithHttpInfo(param.v2SendEventsRequest,  options).toPromise();
+    }
+
+    /**
+     * Submit a batch of events for ingestion via the events-service.
+     * Submit a batch of events for ingestion (v2)
+     * @param param the request object
+     */
+    public v2SendEvents(param: EventsApiV2SendEventsRequest, options?: Configuration): Promise<V2SendEventsResponse> {
+        return this.api.v2SendEvents(param.v2SendEventsRequest,  options).toPromise();
+    }
+
+    /**
+     * Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+     * Submit a batch of events for testing (v2)
+     * @param param the request object
+     */
+    public v2SendEventsDryRunWithHttpInfo(param: EventsApiV2SendEventsDryRunRequest, options?: Configuration): Promise<HttpInfo<V2EventsDryRunResponse>> {
+        return this.api.v2SendEventsDryRunWithHttpInfo(param.v2EventsDryRunRequest,  options).toPromise();
+    }
+
+    /**
+     * Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+     * Submit a batch of events for testing (v2)
+     * @param param the request object
+     */
+    public v2SendEventsDryRun(param: EventsApiV2SendEventsDryRunRequest, options?: Configuration): Promise<V2EventsDryRunResponse> {
+        return this.api.v2SendEventsDryRun(param.v2EventsDryRunRequest,  options).toPromise();
     }
 
 }
@@ -1620,6 +2073,111 @@ export class ObjectMetersApi {
      */
     public updateMeter(param: MetersApiUpdateMeterRequest, options?: Configuration): Promise<UpdateMeterResponse> {
         return this.api.updateMeter(param.updateMeterRequest, param.meterId,  options).toPromise();
+    }
+
+}
+
+import { ObservablePlansApi } from "./ObservableAPI";
+import { PlansApiRequestFactory, PlansApiResponseProcessor} from "../apis/PlansApi";
+
+export interface PlansApiDeletePlanRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof PlansApideletePlan
+     */
+    planId: string
+}
+
+export interface PlansApiGetPlanRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof PlansApigetPlan
+     */
+    planId: string
+}
+
+export interface PlansApiListPlansRequest {
+    /**
+     * 
+     * Minimum: 1
+     * Maximum: 1000
+     * Defaults to: 10
+     * @type number
+     * @memberof PlansApilistPlans
+     */
+    limit?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof PlansApilistPlans
+     */
+    cursor?: string
+}
+
+export class ObjectPlansApi {
+    private api: ObservablePlansApi
+
+    public constructor(configuration: Configuration, requestFactory?: PlansApiRequestFactory, responseProcessor?: PlansApiResponseProcessor) {
+        this.api = new ObservablePlansApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Delete a Plan by id.
+     * Delete Plan
+     * @param param the request object
+     */
+    public deletePlanWithHttpInfo(param: PlansApiDeletePlanRequest, options?: Configuration): Promise<HttpInfo<DeletePlanResponse>> {
+        return this.api.deletePlanWithHttpInfo(param.planId,  options).toPromise();
+    }
+
+    /**
+     * Delete a Plan by id.
+     * Delete Plan
+     * @param param the request object
+     */
+    public deletePlan(param: PlansApiDeletePlanRequest, options?: Configuration): Promise<DeletePlanResponse> {
+        return this.api.deletePlan(param.planId,  options).toPromise();
+    }
+
+    /**
+     * Get a Plan by id.
+     * Get Plan
+     * @param param the request object
+     */
+    public getPlanWithHttpInfo(param: PlansApiGetPlanRequest, options?: Configuration): Promise<HttpInfo<GetPlanResponse>> {
+        return this.api.getPlanWithHttpInfo(param.planId,  options).toPromise();
+    }
+
+    /**
+     * Get a Plan by id.
+     * Get Plan
+     * @param param the request object
+     */
+    public getPlan(param: PlansApiGetPlanRequest, options?: Configuration): Promise<GetPlanResponse> {
+        return this.api.getPlan(param.planId,  options).toPromise();
+    }
+
+    /**
+     * Get a list of Plans.
+     * List Plans
+     * @param param the request object
+     */
+    public listPlansWithHttpInfo(param: PlansApiListPlansRequest = {}, options?: Configuration): Promise<HttpInfo<ListPlansResponse>> {
+        return this.api.listPlansWithHttpInfo(param.limit, param.cursor,  options).toPromise();
+    }
+
+    /**
+     * Get a list of Plans.
+     * List Plans
+     * @param param the request object
+     */
+    public listPlans(param: PlansApiListPlansRequest = {}, options?: Configuration): Promise<ListPlansResponse> {
+        return this.api.listPlans(param.limit, param.cursor,  options).toPromise();
     }
 
 }

@@ -21,8 +21,10 @@ var _ MappedNullable = &QueryEventsResponse{}
 
 // QueryEventsResponse struct for QueryEventsResponse
 type QueryEventsResponse struct {
-	// An array of events matching the query criteria
 	Events []QueryEventsResponseEventsInner `json:"events"`
+	Total float32 `json:"total"`
+	HasMore bool `json:"hasMore"`
+	NextCursor *string `json:"nextCursor,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -32,9 +34,11 @@ type _QueryEventsResponse QueryEventsResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewQueryEventsResponse(events []QueryEventsResponseEventsInner) *QueryEventsResponse {
+func NewQueryEventsResponse(events []QueryEventsResponseEventsInner, total float32, hasMore bool) *QueryEventsResponse {
 	this := QueryEventsResponse{}
 	this.Events = events
+	this.Total = total
+	this.HasMore = hasMore
 	return &this
 }
 
@@ -70,6 +74,86 @@ func (o *QueryEventsResponse) SetEvents(v []QueryEventsResponseEventsInner) {
 	o.Events = v
 }
 
+// GetTotal returns the Total field value
+func (o *QueryEventsResponse) GetTotal() float32 {
+	if o == nil {
+		var ret float32
+		return ret
+	}
+
+	return o.Total
+}
+
+// GetTotalOk returns a tuple with the Total field value
+// and a boolean to check if the value has been set.
+func (o *QueryEventsResponse) GetTotalOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Total, true
+}
+
+// SetTotal sets field value
+func (o *QueryEventsResponse) SetTotal(v float32) {
+	o.Total = v
+}
+
+// GetHasMore returns the HasMore field value
+func (o *QueryEventsResponse) GetHasMore() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.HasMore
+}
+
+// GetHasMoreOk returns a tuple with the HasMore field value
+// and a boolean to check if the value has been set.
+func (o *QueryEventsResponse) GetHasMoreOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.HasMore, true
+}
+
+// SetHasMore sets field value
+func (o *QueryEventsResponse) SetHasMore(v bool) {
+	o.HasMore = v
+}
+
+// GetNextCursor returns the NextCursor field value if set, zero value otherwise.
+func (o *QueryEventsResponse) GetNextCursor() string {
+	if o == nil || IsNil(o.NextCursor) {
+		var ret string
+		return ret
+	}
+	return *o.NextCursor
+}
+
+// GetNextCursorOk returns a tuple with the NextCursor field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryEventsResponse) GetNextCursorOk() (*string, bool) {
+	if o == nil || IsNil(o.NextCursor) {
+		return nil, false
+	}
+	return o.NextCursor, true
+}
+
+// HasNextCursor returns a boolean if a field has been set.
+func (o *QueryEventsResponse) HasNextCursor() bool {
+	if o != nil && !IsNil(o.NextCursor) {
+		return true
+	}
+
+	return false
+}
+
+// SetNextCursor gets a reference to the given string and assigns it to the NextCursor field.
+func (o *QueryEventsResponse) SetNextCursor(v string) {
+	o.NextCursor = &v
+}
+
 func (o QueryEventsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -81,6 +165,11 @@ func (o QueryEventsResponse) MarshalJSON() ([]byte, error) {
 func (o QueryEventsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["events"] = o.Events
+	toSerialize["total"] = o.Total
+	toSerialize["hasMore"] = o.HasMore
+	if !IsNil(o.NextCursor) {
+		toSerialize["nextCursor"] = o.NextCursor
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -95,6 +184,8 @@ func (o *QueryEventsResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"events",
+		"total",
+		"hasMore",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -125,6 +216,9 @@ func (o *QueryEventsResponse) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "events")
+		delete(additionalProperties, "total")
+		delete(additionalProperties, "hasMore")
+		delete(additionalProperties, "nextCursor")
 		o.AdditionalProperties = additionalProperties
 	}
 

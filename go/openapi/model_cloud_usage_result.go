@@ -32,7 +32,7 @@ type CloudUsageResult struct {
 	// Unique identifier for tracing the submission through the system
 	CorrelationId string `json:"correlationId"`
 	// Key used to ensure the submission is processed exactly once
-	IdempotencyKey string `json:"idempotencyKey" validate:"regexp=^vayu-\\\\S{24}-\\\\S{24}-\\\\S{24}-\\\\S{24}$"`
+	IdempotencyKey string `json:"idempotencyKey" validate:"regexp=^vayu-\\\\S{24}-\\\\S{24}-\\\\S{24}-\\\\S{24}-\\\\d{13}$"`
 	// The dimension of the meter being reported (e.g., API_CALLS, STORAGE_GB)
 	MeterDimension string `json:"meterDimension"`
 	// The quantity that was accepted by the cloud provider

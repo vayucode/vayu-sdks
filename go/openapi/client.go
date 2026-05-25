@@ -60,11 +60,11 @@ type APIClient struct {
 
 	CreditsAPI *CreditsAPIService
 
+	CustomFieldsAPI *CustomFieldsAPIService
+
 	CustomersAPI *CustomersAPIService
 
 	EventsAPI *EventsAPIService
-
-	IntegrationsAPI *IntegrationsAPIService
 
 	InvoicesAPI *InvoicesAPIService
 
@@ -75,8 +75,6 @@ type APIClient struct {
 	PlansAPI *PlansAPIService
 
 	ProductConsumptionsAPI *ProductConsumptionsAPIService
-
-	ReportsAPI *ReportsAPIService
 
 	WebhooksAPI *WebhooksAPIService
 }
@@ -102,15 +100,14 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CloudUsageSubmissionAPI = (*CloudUsageSubmissionAPIService)(&c.common)
 	c.ContractsAPI = (*ContractsAPIService)(&c.common)
 	c.CreditsAPI = (*CreditsAPIService)(&c.common)
+	c.CustomFieldsAPI = (*CustomFieldsAPIService)(&c.common)
 	c.CustomersAPI = (*CustomersAPIService)(&c.common)
 	c.EventsAPI = (*EventsAPIService)(&c.common)
-	c.IntegrationsAPI = (*IntegrationsAPIService)(&c.common)
 	c.InvoicesAPI = (*InvoicesAPIService)(&c.common)
 	c.MeasurementsAPI = (*MeasurementsAPIService)(&c.common)
 	c.MetersAPI = (*MetersAPIService)(&c.common)
 	c.PlansAPI = (*PlansAPIService)(&c.common)
 	c.ProductConsumptionsAPI = (*ProductConsumptionsAPIService)(&c.common)
-	c.ReportsAPI = (*ReportsAPIService)(&c.common)
 	c.WebhooksAPI = (*WebhooksAPIService)(&c.common)
 
 	return c

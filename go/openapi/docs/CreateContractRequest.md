@@ -18,6 +18,8 @@ Name | Type | Description | Notes
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
 **CustomFieldValues** | Pointer to [**[]CustomFieldValue**](CustomFieldValue.md) | The stored custom field values associated with the contract | [optional] 
 **Status** | Pointer to [**ContractStatus**](ContractStatus.md) |  | [optional] 
+**PurchaseOrder** | Pointer to **string** | The purchase order number of the contract | [optional] 
+**Currency** | Pointer to [**Currency**](Currency.md) |  | [optional] 
 
 ## Methods
 
@@ -432,6 +434,56 @@ SetStatus sets Status field to given value.
 `func (o *CreateContractRequest) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetPurchaseOrder
+
+`func (o *CreateContractRequest) GetPurchaseOrder() string`
+
+GetPurchaseOrder returns the PurchaseOrder field if non-nil, zero value otherwise.
+
+### GetPurchaseOrderOk
+
+`func (o *CreateContractRequest) GetPurchaseOrderOk() (*string, bool)`
+
+GetPurchaseOrderOk returns a tuple with the PurchaseOrder field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPurchaseOrder
+
+`func (o *CreateContractRequest) SetPurchaseOrder(v string)`
+
+SetPurchaseOrder sets PurchaseOrder field to given value.
+
+### HasPurchaseOrder
+
+`func (o *CreateContractRequest) HasPurchaseOrder() bool`
+
+HasPurchaseOrder returns a boolean if a field has been set.
+
+### GetCurrency
+
+`func (o *CreateContractRequest) GetCurrency() Currency`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *CreateContractRequest) GetCurrencyOk() (*Currency, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *CreateContractRequest) SetCurrency(v Currency)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *CreateContractRequest) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

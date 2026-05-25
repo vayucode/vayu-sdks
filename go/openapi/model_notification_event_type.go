@@ -31,8 +31,11 @@ const (
 	NOTIFICATIONEVENTTYPE_UNCHARGED_EVENTS NotificationEventType = "UnchargedEvents"
 	NOTIFICATIONEVENTTYPE_TIER_CROSSED NotificationEventType = "TierCrossed"
 	NOTIFICATIONEVENTTYPE_COMMITMENT_CROSSED NotificationEventType = "CommitmentCrossed"
+	NOTIFICATIONEVENTTYPE_COMMITMENT_USAGE_CROSSED NotificationEventType = "CommitmentUsageCrossed"
 	NOTIFICATIONEVENTTYPE_FINAL_TIER_EXCEEDED NotificationEventType = "FinalTierExceeded"
 	NOTIFICATIONEVENTTYPE_INVOICE_PAYMENT_STATUS_CHANGED NotificationEventType = "InvoicePaymentStatusChanged"
+	NOTIFICATIONEVENTTYPE_INVOICE_SEND_FAILED NotificationEventType = "InvoiceSendFailed"
+	NOTIFICATIONEVENTTYPE_PING_TEST NotificationEventType = "PingTest"
 )
 
 // All allowed values of NotificationEventType enum
@@ -47,8 +50,11 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"UnchargedEvents",
 	"TierCrossed",
 	"CommitmentCrossed",
+	"CommitmentUsageCrossed",
 	"FinalTierExceeded",
 	"InvoicePaymentStatusChanged",
+	"InvoiceSendFailed",
+	"PingTest",
 }
 
 func (v *NotificationEventType) UnmarshalJSON(src []byte) error {

@@ -23,9 +23,15 @@
 
 * `COMMITMENT_CROSSED` (value: `"CommitmentCrossed"`)
 
+* `COMMITMENT_USAGE_CROSSED` (value: `"CommitmentUsageCrossed"`)
+
 * `FINAL_TIER_EXCEEDED` (value: `"FinalTierExceeded"`)
 
 * `INVOICE_PAYMENT_STATUS_CHANGED` (value: `"InvoicePaymentStatusChanged"`)
+
+* `INVOICE_SEND_FAILED` (value: `"InvoiceSendFailed"`)
+
+* `PING_TEST` (value: `"PingTest"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

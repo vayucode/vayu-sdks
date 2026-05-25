@@ -10,18 +10,18 @@
  * Do not edit the class manually.
  */
 
-import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGroupProductsInnerSchedulingDuration';
+import { ProductGroupProductsInnerCommitmentSchedulingDuration } from '../models/ProductGroupProductsInnerCommitmentSchedulingDuration';
 import { HttpFile } from '../http/http';
 
 /**
-* Scheduling in case of recurring commitment
+* Scheduling for recurring commitment. Duration unit must be MONTH or YEAR.
 */
 export class ProductGroupProductsInnerCommitmentScheduling {
     /**
-    * The day of the month that the product is billed
+    * The day of the month for the commitment scheduling
     */
     'billingDay'?: number;
-    'duration': ProductGroupProductsInnerSchedulingDuration;
+    'duration': ProductGroupProductsInnerCommitmentSchedulingDuration;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -37,7 +37,7 @@ export class ProductGroupProductsInnerCommitmentScheduling {
         {
             "name": "duration",
             "baseName": "duration",
-            "type": "ProductGroupProductsInnerSchedulingDuration",
+            "type": "ProductGroupProductsInnerCommitmentSchedulingDuration",
             "format": ""
         }    ];
 

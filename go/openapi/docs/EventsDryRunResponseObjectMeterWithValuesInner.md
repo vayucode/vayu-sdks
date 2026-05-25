@@ -8,14 +8,14 @@ Name | Type | Description | Notes
 **EventName** | **string** | The name of the event that the meter is tracking. | 
 **AggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
 **Filter** | Pointer to [**Filter**](Filter.md) |  | [optional] 
-**Value** | **float32** |  | 
+**Value** | **NullableFloat32** |  | 
 **InstanceValue** | Pointer to **interface{}** |  | [optional] 
 
 ## Methods
 
 ### NewEventsDryRunResponseObjectMeterWithValuesInner
 
-`func NewEventsDryRunResponseObjectMeterWithValuesInner(name string, eventName string, aggregationMethod AggregationMethod, value float32, ) *EventsDryRunResponseObjectMeterWithValuesInner`
+`func NewEventsDryRunResponseObjectMeterWithValuesInner(name string, eventName string, aggregationMethod AggregationMethod, value NullableFloat32, ) *EventsDryRunResponseObjectMeterWithValuesInner`
 
 NewEventsDryRunResponseObjectMeterWithValuesInner instantiates a new EventsDryRunResponseObjectMeterWithValuesInner object
 This constructor will assign default values to properties that have it defined,
@@ -135,6 +135,16 @@ and a boolean to check if the value has been set.
 SetValue sets Value field to given value.
 
 
+### SetValueNil
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetValueNil(b bool)`
+
+ SetValueNil sets the value for Value to be an explicit nil
+
+### UnsetValue
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) UnsetValue()`
+
+UnsetValue ensures that no value is present for Value, not even an explicit nil
 ### GetInstanceValue
 
 `func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetInstanceValue() interface{}`

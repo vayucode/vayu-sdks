@@ -24,6 +24,7 @@ const (
 	CUSTOMFIELDVALUETYPES_STRING CustomFieldValueTypes = "String"
 	CUSTOMFIELDVALUETYPES_NUMBER CustomFieldValueTypes = "Number"
 	CUSTOMFIELDVALUETYPES_BOOLEAN CustomFieldValueTypes = "Boolean"
+	CUSTOMFIELDVALUETYPES_ENUM CustomFieldValueTypes = "Enum"
 )
 
 // All allowed values of CustomFieldValueTypes enum
@@ -31,6 +32,7 @@ var AllowedCustomFieldValueTypesEnumValues = []CustomFieldValueTypes{
 	"String",
 	"Number",
 	"Boolean",
+	"Enum",
 }
 
 func (v *CustomFieldValueTypes) UnmarshalJSON(src []byte) error {

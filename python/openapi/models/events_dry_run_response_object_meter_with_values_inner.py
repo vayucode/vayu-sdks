@@ -34,7 +34,7 @@ class EventsDryRunResponseObjectMeterWithValuesInner(BaseModel):
     event_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the event that the meter is tracking.", alias="eventName")
     aggregation_method: AggregationMethod = Field(alias="aggregationMethod")
     filter: Optional[Filter] = None
-    value: Union[StrictFloat, StrictInt]
+    value: Optional[Union[StrictFloat, StrictInt]]
     instance_value: Optional[Any] = Field(default=None, alias="instanceValue")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "eventName", "aggregationMethod", "filter", "value", "instanceValue"]
@@ -90,6 +90,11 @@ class EventsDryRunResponseObjectMeterWithValuesInner(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if value (nullable) is None
+        # and model_fields_set contains the field
+        if self.value is None and "value" in self.model_fields_set:
+            _dict['value'] = None
 
         # set to None if instance_value (nullable) is None
         # and model_fields_set contains the field

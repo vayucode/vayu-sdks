@@ -109,10 +109,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -180,10 +180,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -251,10 +251,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -395,10 +395,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -466,10 +466,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -537,10 +537,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -681,11 +681,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -753,11 +753,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -825,11 +825,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -957,11 +957,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1029,11 +1029,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1101,11 +1101,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1233,10 +1233,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1304,10 +1305,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1375,10 +1377,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1510,10 +1513,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByIntegrationIdResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1585,10 +1589,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByIntegrationIdResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1660,10 +1665,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByIntegrationIdResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1794,10 +1800,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByNameResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1865,10 +1872,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByNameResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1936,10 +1944,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerByNameResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2067,10 +2076,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2138,10 +2148,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2209,10 +2220,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2340,10 +2352,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsByAliasResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2411,10 +2424,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsByAliasResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2482,10 +2496,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerProductsConsumptionsByAliasResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2613,11 +2628,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2685,11 +2700,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2757,11 +2772,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetCustomerRelationResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2893,10 +2908,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCustomersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2968,10 +2983,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCustomersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3043,10 +3058,10 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCustomersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3185,11 +3200,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3261,11 +3276,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3337,11 +3352,11 @@ class CustomersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateCustomerResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,

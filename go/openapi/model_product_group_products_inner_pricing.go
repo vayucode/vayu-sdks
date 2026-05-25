@@ -24,6 +24,8 @@ type ProductGroupProductsInnerPricing struct {
 	ProductGroupProductsInnerPricingOneOf2 *ProductGroupProductsInnerPricingOneOf2
 	ProductGroupProductsInnerPricingOneOf3 *ProductGroupProductsInnerPricingOneOf3
 	ProductGroupProductsInnerPricingOneOf4 *ProductGroupProductsInnerPricingOneOf4
+	ProductGroupProductsInnerPricingOneOf5 *ProductGroupProductsInnerPricingOneOf5
+	ProductGroupProductsInnerPricingOneOf6 *ProductGroupProductsInnerPricingOneOf6
 }
 
 // ProductGroupProductsInnerPricingOneOfAsProductGroupProductsInnerPricing is a convenience function that returns ProductGroupProductsInnerPricingOneOf wrapped in ProductGroupProductsInnerPricing
@@ -58,6 +60,20 @@ func ProductGroupProductsInnerPricingOneOf3AsProductGroupProductsInnerPricing(v 
 func ProductGroupProductsInnerPricingOneOf4AsProductGroupProductsInnerPricing(v *ProductGroupProductsInnerPricingOneOf4) ProductGroupProductsInnerPricing {
 	return ProductGroupProductsInnerPricing{
 		ProductGroupProductsInnerPricingOneOf4: v,
+	}
+}
+
+// ProductGroupProductsInnerPricingOneOf5AsProductGroupProductsInnerPricing is a convenience function that returns ProductGroupProductsInnerPricingOneOf5 wrapped in ProductGroupProductsInnerPricing
+func ProductGroupProductsInnerPricingOneOf5AsProductGroupProductsInnerPricing(v *ProductGroupProductsInnerPricingOneOf5) ProductGroupProductsInnerPricing {
+	return ProductGroupProductsInnerPricing{
+		ProductGroupProductsInnerPricingOneOf5: v,
+	}
+}
+
+// ProductGroupProductsInnerPricingOneOf6AsProductGroupProductsInnerPricing is a convenience function that returns ProductGroupProductsInnerPricingOneOf6 wrapped in ProductGroupProductsInnerPricing
+func ProductGroupProductsInnerPricingOneOf6AsProductGroupProductsInnerPricing(v *ProductGroupProductsInnerPricingOneOf6) ProductGroupProductsInnerPricing {
+	return ProductGroupProductsInnerPricing{
+		ProductGroupProductsInnerPricingOneOf6: v,
 	}
 }
 
@@ -151,6 +167,40 @@ func (dst *ProductGroupProductsInnerPricing) UnmarshalJSON(data []byte) error {
 		dst.ProductGroupProductsInnerPricingOneOf4 = nil
 	}
 
+	// try to unmarshal data into ProductGroupProductsInnerPricingOneOf5
+	err = newStrictDecoder(data).Decode(&dst.ProductGroupProductsInnerPricingOneOf5)
+	if err == nil {
+		jsonProductGroupProductsInnerPricingOneOf5, _ := json.Marshal(dst.ProductGroupProductsInnerPricingOneOf5)
+		if string(jsonProductGroupProductsInnerPricingOneOf5) == "{}" { // empty struct
+			dst.ProductGroupProductsInnerPricingOneOf5 = nil
+		} else {
+			if err = validator.Validate(dst.ProductGroupProductsInnerPricingOneOf5); err != nil {
+				dst.ProductGroupProductsInnerPricingOneOf5 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.ProductGroupProductsInnerPricingOneOf5 = nil
+	}
+
+	// try to unmarshal data into ProductGroupProductsInnerPricingOneOf6
+	err = newStrictDecoder(data).Decode(&dst.ProductGroupProductsInnerPricingOneOf6)
+	if err == nil {
+		jsonProductGroupProductsInnerPricingOneOf6, _ := json.Marshal(dst.ProductGroupProductsInnerPricingOneOf6)
+		if string(jsonProductGroupProductsInnerPricingOneOf6) == "{}" { // empty struct
+			dst.ProductGroupProductsInnerPricingOneOf6 = nil
+		} else {
+			if err = validator.Validate(dst.ProductGroupProductsInnerPricingOneOf6); err != nil {
+				dst.ProductGroupProductsInnerPricingOneOf6 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.ProductGroupProductsInnerPricingOneOf6 = nil
+	}
+
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.ProductGroupProductsInnerPricingOneOf = nil
@@ -158,6 +208,8 @@ func (dst *ProductGroupProductsInnerPricing) UnmarshalJSON(data []byte) error {
 		dst.ProductGroupProductsInnerPricingOneOf2 = nil
 		dst.ProductGroupProductsInnerPricingOneOf3 = nil
 		dst.ProductGroupProductsInnerPricingOneOf4 = nil
+		dst.ProductGroupProductsInnerPricingOneOf5 = nil
+		dst.ProductGroupProductsInnerPricingOneOf6 = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(ProductGroupProductsInnerPricing)")
 	} else if match == 1 {
@@ -189,6 +241,14 @@ func (src ProductGroupProductsInnerPricing) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.ProductGroupProductsInnerPricingOneOf4)
 	}
 
+	if src.ProductGroupProductsInnerPricingOneOf5 != nil {
+		return json.Marshal(&src.ProductGroupProductsInnerPricingOneOf5)
+	}
+
+	if src.ProductGroupProductsInnerPricingOneOf6 != nil {
+		return json.Marshal(&src.ProductGroupProductsInnerPricingOneOf6)
+	}
+
 	return nil, nil // no data in oneOf schemas
 }
 
@@ -215,6 +275,14 @@ func (obj *ProductGroupProductsInnerPricing) GetActualInstance() (interface{}) {
 
 	if obj.ProductGroupProductsInnerPricingOneOf4 != nil {
 		return obj.ProductGroupProductsInnerPricingOneOf4
+	}
+
+	if obj.ProductGroupProductsInnerPricingOneOf5 != nil {
+		return obj.ProductGroupProductsInnerPricingOneOf5
+	}
+
+	if obj.ProductGroupProductsInnerPricingOneOf6 != nil {
+		return obj.ProductGroupProductsInnerPricingOneOf6
 	}
 
 	// all schemas are nil

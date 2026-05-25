@@ -21,16 +21,16 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from openapi.models.product_group_products_inner_scheduling_duration import ProductGroupProductsInnerSchedulingDuration
+from openapi.models.product_group_products_inner_commitment_scheduling_duration import ProductGroupProductsInnerCommitmentSchedulingDuration
 from typing import Optional, Set
 from typing_extensions import Self
 
 class ProductGroupProductsInnerCommitmentScheduling(BaseModel):
     """
-    Scheduling in case of recurring commitment
+    Scheduling for recurring commitment. Duration unit must be MONTH or YEAR.
     """ # noqa: E501
-    billing_day: Optional[Annotated[int, Field(le=31, strict=True, ge=1)]] = Field(default=1, description="The day of the month that the product is billed", alias="billingDay")
-    duration: ProductGroupProductsInnerSchedulingDuration
+    billing_day: Optional[Annotated[int, Field(le=31, strict=True, ge=1)]] = Field(default=1, description="The day of the month for the commitment scheduling", alias="billingDay")
+    duration: ProductGroupProductsInnerCommitmentSchedulingDuration
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["billingDay", "duration"]
 
@@ -96,7 +96,7 @@ class ProductGroupProductsInnerCommitmentScheduling(BaseModel):
 
         _obj = cls.model_validate({
             "billingDay": obj.get("billingDay") if obj.get("billingDay") is not None else 1,
-            "duration": ProductGroupProductsInnerSchedulingDuration.from_dict(obj["duration"]) if obj.get("duration") is not None else None
+            "duration": ProductGroupProductsInnerCommitmentSchedulingDuration.from_dict(obj["duration"]) if obj.get("duration") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

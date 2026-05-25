@@ -27,7 +27,7 @@ type EventsDryRunResponseObjectMeterWithValuesInner struct {
 	EventName string `json:"eventName"`
 	AggregationMethod AggregationMethod `json:"aggregationMethod"`
 	Filter *Filter `json:"filter,omitempty"`
-	Value float32 `json:"value"`
+	Value NullableFloat32 `json:"value"`
 	InstanceValue interface{} `json:"instanceValue,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -38,7 +38,7 @@ type _EventsDryRunResponseObjectMeterWithValuesInner EventsDryRunResponseObjectM
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEventsDryRunResponseObjectMeterWithValuesInner(name string, eventName string, aggregationMethod AggregationMethod, value float32) *EventsDryRunResponseObjectMeterWithValuesInner {
+func NewEventsDryRunResponseObjectMeterWithValuesInner(name string, eventName string, aggregationMethod AggregationMethod, value NullableFloat32) *EventsDryRunResponseObjectMeterWithValuesInner {
 	this := EventsDryRunResponseObjectMeterWithValuesInner{}
 	this.Name = name
 	this.EventName = eventName
@@ -160,27 +160,29 @@ func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetFilter(v Filter) {
 }
 
 // GetValue returns the Value field value
+// If the value is explicit nil, the zero value for float32 will be returned
 func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetValue() float32 {
-	if o == nil {
+	if o == nil || o.Value.Get() == nil {
 		var ret float32
 		return ret
 	}
 
-	return o.Value
+	return *o.Value.Get()
 }
 
 // GetValueOk returns a tuple with the Value field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetValueOk() (*float32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Value, true
+	return o.Value.Get(), o.Value.IsSet()
 }
 
 // SetValue sets field value
 func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetValue(v float32) {
-	o.Value = v
+	o.Value.Set(&v)
 }
 
 // GetInstanceValue returns the InstanceValue field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -232,7 +234,7 @@ func (o EventsDryRunResponseObjectMeterWithValuesInner) ToMap() (map[string]inte
 	if !IsNil(o.Filter) {
 		toSerialize["filter"] = o.Filter
 	}
-	toSerialize["value"] = o.Value
+	toSerialize["value"] = o.Value.Get()
 	if o.InstanceValue != nil {
 		toSerialize["instanceValue"] = o.InstanceValue
 	}

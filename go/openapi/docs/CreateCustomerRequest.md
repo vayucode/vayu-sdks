@@ -20,6 +20,11 @@ Name | Type | Description | Notes
 **Currency** | Pointer to [**NullableCurrency**](Currency.md) |  | [optional] 
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
 **Subsidiary** | Pointer to **NullableString** | The name of the subsidiary of the customer | [optional] 
+**TotalOutstandingAmount** | Pointer to **float32** | Total outstanding amount across all unpaid invoices (in USD) | [optional] 
+**OpenAmount** | Pointer to **float32** | Total amount of invoices with no billing status set (in USD) | [optional] 
+**OverdueAmount** | Pointer to **float32** | Total amount of overdue invoices (in USD) | [optional] 
+**PendingPaymentAmount** | Pointer to **float32** | Total amount of invoices pending payment (in USD) | [optional] 
+**PaidAmount** | Pointer to **float32** | Total amount of paid invoices (in USD) | [optional] 
 
 ## Methods
 
@@ -575,6 +580,131 @@ HasSubsidiary returns a boolean if a field has been set.
 `func (o *CreateCustomerRequest) UnsetSubsidiary()`
 
 UnsetSubsidiary ensures that no value is present for Subsidiary, not even an explicit nil
+### GetTotalOutstandingAmount
+
+`func (o *CreateCustomerRequest) GetTotalOutstandingAmount() float32`
+
+GetTotalOutstandingAmount returns the TotalOutstandingAmount field if non-nil, zero value otherwise.
+
+### GetTotalOutstandingAmountOk
+
+`func (o *CreateCustomerRequest) GetTotalOutstandingAmountOk() (*float32, bool)`
+
+GetTotalOutstandingAmountOk returns a tuple with the TotalOutstandingAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalOutstandingAmount
+
+`func (o *CreateCustomerRequest) SetTotalOutstandingAmount(v float32)`
+
+SetTotalOutstandingAmount sets TotalOutstandingAmount field to given value.
+
+### HasTotalOutstandingAmount
+
+`func (o *CreateCustomerRequest) HasTotalOutstandingAmount() bool`
+
+HasTotalOutstandingAmount returns a boolean if a field has been set.
+
+### GetOpenAmount
+
+`func (o *CreateCustomerRequest) GetOpenAmount() float32`
+
+GetOpenAmount returns the OpenAmount field if non-nil, zero value otherwise.
+
+### GetOpenAmountOk
+
+`func (o *CreateCustomerRequest) GetOpenAmountOk() (*float32, bool)`
+
+GetOpenAmountOk returns a tuple with the OpenAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOpenAmount
+
+`func (o *CreateCustomerRequest) SetOpenAmount(v float32)`
+
+SetOpenAmount sets OpenAmount field to given value.
+
+### HasOpenAmount
+
+`func (o *CreateCustomerRequest) HasOpenAmount() bool`
+
+HasOpenAmount returns a boolean if a field has been set.
+
+### GetOverdueAmount
+
+`func (o *CreateCustomerRequest) GetOverdueAmount() float32`
+
+GetOverdueAmount returns the OverdueAmount field if non-nil, zero value otherwise.
+
+### GetOverdueAmountOk
+
+`func (o *CreateCustomerRequest) GetOverdueAmountOk() (*float32, bool)`
+
+GetOverdueAmountOk returns a tuple with the OverdueAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverdueAmount
+
+`func (o *CreateCustomerRequest) SetOverdueAmount(v float32)`
+
+SetOverdueAmount sets OverdueAmount field to given value.
+
+### HasOverdueAmount
+
+`func (o *CreateCustomerRequest) HasOverdueAmount() bool`
+
+HasOverdueAmount returns a boolean if a field has been set.
+
+### GetPendingPaymentAmount
+
+`func (o *CreateCustomerRequest) GetPendingPaymentAmount() float32`
+
+GetPendingPaymentAmount returns the PendingPaymentAmount field if non-nil, zero value otherwise.
+
+### GetPendingPaymentAmountOk
+
+`func (o *CreateCustomerRequest) GetPendingPaymentAmountOk() (*float32, bool)`
+
+GetPendingPaymentAmountOk returns a tuple with the PendingPaymentAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPendingPaymentAmount
+
+`func (o *CreateCustomerRequest) SetPendingPaymentAmount(v float32)`
+
+SetPendingPaymentAmount sets PendingPaymentAmount field to given value.
+
+### HasPendingPaymentAmount
+
+`func (o *CreateCustomerRequest) HasPendingPaymentAmount() bool`
+
+HasPendingPaymentAmount returns a boolean if a field has been set.
+
+### GetPaidAmount
+
+`func (o *CreateCustomerRequest) GetPaidAmount() float32`
+
+GetPaidAmount returns the PaidAmount field if non-nil, zero value otherwise.
+
+### GetPaidAmountOk
+
+`func (o *CreateCustomerRequest) GetPaidAmountOk() (*float32, bool)`
+
+GetPaidAmountOk returns a tuple with the PaidAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPaidAmount
+
+`func (o *CreateCustomerRequest) SetPaidAmount(v float32)`
+
+SetPaidAmount sets PaidAmount field to given value.
+
+### HasPaidAmount
+
+`func (o *CreateCustomerRequest) HasPaidAmount() bool`
+
+HasPaidAmount returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

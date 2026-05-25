@@ -1,13 +1,13 @@
 # ProductGroupProductsInnerCommitmentScheduling
 
-Scheduling in case of recurring commitment
+Scheduling for recurring commitment. Duration unit must be MONTH or YEAR.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**billing_day** | **int** | The day of the month that the product is billed | [optional] [default to 1]
-**duration** | [**ProductGroupProductsInnerSchedulingDuration**](ProductGroupProductsInnerSchedulingDuration.md) |  | 
+**billing_day** | **int** | The day of the month for the commitment scheduling | [optional] [default to 1]
+**duration** | [**ProductGroupProductsInnerCommitmentSchedulingDuration**](ProductGroupProductsInnerCommitmentSchedulingDuration.md) |  | 
 
 ## Example
 

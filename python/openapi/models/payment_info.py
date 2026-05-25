@@ -19,8 +19,9 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from openapi.models.currency import Currency
 from openapi.models.payment_info_deposit_to import PaymentInfoDepositTo
 from typing import Optional, Set
@@ -34,7 +35,7 @@ class PaymentInfo(BaseModel):
     var_date: Optional[datetime] = Field(default=None, alias="date")
     payment_method: Optional[StrictStr] = Field(default=None, alias="paymentMethod")
     payment_method_id: Optional[StrictStr] = Field(default=None, alias="paymentMethodId")
-    amount: Optional[Union[StrictFloat, StrictInt]] = None
+    amount: Optional[Union[Annotated[float, Field(strict=True, gt=0)], Annotated[int, Field(strict=True, gt=0)]]] = None
     currency: Optional[Currency] = None
     status: Optional[StrictStr] = None
     note: Optional[StrictStr] = None

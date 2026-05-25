@@ -5,8 +5,10 @@ import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
 import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { BillingInterval } from '../models/BillingInterval';
 import { CloudUsageResult } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
+import { ConflictErrorResponse } from '../models/ConflictErrorResponse';
 import { Contact } from '../models/Contact';
 import { ContractStatus } from '../models/ContractStatus';
 import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
@@ -14,6 +16,9 @@ import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResp
 import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
 import { CreateContractRequest } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
+import { CreateCustomFieldRequest } from '../models/CreateCustomFieldRequest';
+import { CreateCustomFieldResponse } from '../models/CreateCustomFieldResponse';
+import { CreateCustomFieldResponseCustomField } from '../models/CreateCustomFieldResponseCustomField';
 import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
 import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
 import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
@@ -29,6 +34,7 @@ import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
 import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
+import { CustomFieldEntities } from '../models/CustomFieldEntities';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
 import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
@@ -38,6 +44,8 @@ import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResp
 import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
 import { DeleteContractResponse } from '../models/DeleteContractResponse';
 import { DeleteContractResponseContract } from '../models/DeleteContractResponseContract';
+import { DeleteCustomFieldResponse } from '../models/DeleteCustomFieldResponse';
+import { DeleteCustomFieldResponseCustomField } from '../models/DeleteCustomFieldResponseCustomField';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
 import { DeleteCustomerResponseCustomer } from '../models/DeleteCustomerResponseCustomer';
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
@@ -49,6 +57,8 @@ import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
 import { DeleteMeterResponseMeter } from '../models/DeleteMeterResponseMeter';
+import { DeletePlanResponse } from '../models/DeletePlanResponse';
+import { DeletePlanResponsePlan } from '../models/DeletePlanResponsePlan';
 import { Event } from '../models/Event';
 import { EventsDryRunRequest } from '../models/EventsDryRunRequest';
 import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
@@ -62,6 +72,7 @@ import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
 import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
 import { GetContractResponseContract } from '../models/GetContractResponseContract';
+import { GetCustomFieldResponse } from '../models/GetCustomFieldResponse';
 import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
 import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
 import { GetCustomerByNameResponseCustomer } from '../models/GetCustomerByNameResponseCustomer';
@@ -77,6 +88,8 @@ import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceR
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
+import { GetPlanResponse } from '../models/GetPlanResponse';
+import { GetPlanResponsePlan } from '../models/GetPlanResponsePlan';
 import { GetProductConsumptionResponse } from '../models/GetProductConsumptionResponse';
 import { GetProductConsumptionResponseProductConsumption } from '../models/GetProductConsumptionResponseProductConsumption';
 import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
@@ -84,6 +97,7 @@ import { IntegrationEntity } from '../models/IntegrationEntity';
 import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
 import { IntegrationProviders } from '../models/IntegrationProviders';
 import { IntegrationType } from '../models/IntegrationType';
+import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { InvalidEvent } from '../models/InvalidEvent';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
 import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
@@ -92,18 +106,24 @@ import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
 import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
+import { ListCustomFieldsResponse } from '../models/ListCustomFieldsResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
 import { ListMeasurementsResponse } from '../models/ListMeasurementsResponse';
 import { ListMetersResponse } from '../models/ListMetersResponse';
+import { ListPlansResponse } from '../models/ListPlansResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Meter } from '../models/Meter';
+import { NotFoundErrorResponse } from '../models/NotFoundErrorResponse';
 import { NotificationEventType } from '../models/NotificationEventType';
 import { PartnerSubmissionDetail } from '../models/PartnerSubmissionDetail';
 import { PaymentInfo } from '../models/PaymentInfo';
 import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
 import { PaymentTerm } from '../models/PaymentTerm';
+import { PlanBillingData } from '../models/PlanBillingData';
+import { PlanDuration } from '../models/PlanDuration';
+import { PlanStatus } from '../models/PlanStatus';
 import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
 import { ProductGroup } from '../models/ProductGroup';
@@ -111,6 +131,7 @@ import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
 import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
 import { ProductGroupProductsInnerCommitment } from '../models/ProductGroupProductsInnerCommitment';
 import { ProductGroupProductsInnerCommitmentScheduling } from '../models/ProductGroupProductsInnerCommitmentScheduling';
+import { ProductGroupProductsInnerCommitmentSchedulingDuration } from '../models/ProductGroupProductsInnerCommitmentSchedulingDuration';
 import { ProductGroupProductsInnerPricing } from '../models/ProductGroupProductsInnerPricing';
 import { ProductGroupProductsInnerPricingOneOf } from '../models/ProductGroupProductsInnerPricingOneOf';
 import { ProductGroupProductsInnerPricingOneOf1 } from '../models/ProductGroupProductsInnerPricingOneOf1';
@@ -121,21 +142,51 @@ import { ProductGroupProductsInnerPricingOneOf3 } from '../models/ProductGroupPr
 import { ProductGroupProductsInnerPricingOneOf3SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence';
 import { ProductGroupProductsInnerPricingOneOf3TiersInner } from '../models/ProductGroupProductsInnerPricingOneOf3TiersInner';
 import { ProductGroupProductsInnerPricingOneOf4 } from '../models/ProductGroupProductsInnerPricingOneOf4';
+import { ProductGroupProductsInnerPricingOneOf5 } from '../models/ProductGroupProductsInnerPricingOneOf5';
+import { ProductGroupProductsInnerPricingOneOf6 } from '../models/ProductGroupProductsInnerPricingOneOf6';
+import { ProductGroupProductsInnerPricingOneOfDiscount } from '../models/ProductGroupProductsInnerPricingOneOfDiscount';
 import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProductsInnerScheduling';
 import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGroupProductsInnerSchedulingDuration';
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
+import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
+import { RequestTooLongErrorResponse } from '../models/RequestTooLongErrorResponse';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
 import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
 import { SyncStatus } from '../models/SyncStatus';
+import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
+import { UnlimitedDuration } from '../models/UnlimitedDuration';
 import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
 import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
+import { UpdateCustomFieldRequest } from '../models/UpdateCustomFieldRequest';
+import { UpdateCustomFieldResponse } from '../models/UpdateCustomFieldResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
 import { UsageWindow } from '../models/UsageWindow';
+import { V2DeleteEventResponse } from '../models/V2DeleteEventResponse';
+import { V2DeleteEventsByRefsRequest } from '../models/V2DeleteEventsByRefsRequest';
+import { V2DeleteEventsByRefsResponse } from '../models/V2DeleteEventsByRefsResponse';
+import { V2EventsDryRunRequest } from '../models/V2EventsDryRunRequest';
+import { V2EventsDryRunResponse } from '../models/V2EventsDryRunResponse';
+import { V2GetEventResponse } from '../models/V2GetEventResponse';
+import { V2QueryEventsAggregationRequest } from '../models/V2QueryEventsAggregationRequest';
+import { V2QueryEventsAggregationRequestMetersInner } from '../models/V2QueryEventsAggregationRequestMetersInner';
+import { V2QueryEventsAggregationRequestMetersInnerAggregation } from '../models/V2QueryEventsAggregationRequestMetersInnerAggregation';
+import { V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic } from '../models/V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic';
+import { V2QueryEventsAggregationRequestMetersInnerFiltersInner } from '../models/V2QueryEventsAggregationRequestMetersInnerFiltersInner';
+import { V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue } from '../models/V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue';
+import { V2QueryEventsAggregationRequestMetersInnerSqlFullQuery } from '../models/V2QueryEventsAggregationRequestMetersInnerSqlFullQuery';
+import { V2QueryEventsAggregationRequestPeriod } from '../models/V2QueryEventsAggregationRequestPeriod';
+import { V2QueryEventsAggregationResponse } from '../models/V2QueryEventsAggregationResponse';
+import { V2QueryEventsAggregationResponseDataPointsInner } from '../models/V2QueryEventsAggregationResponseDataPointsInner';
+import { V2QueryEventsResponse } from '../models/V2QueryEventsResponse';
+import { V2SendEventsRequest } from '../models/V2SendEventsRequest';
+import { V2SendEventsResponse } from '../models/V2SendEventsResponse';
+import { ValidationErrorResponse } from '../models/ValidationErrorResponse';
+import { ValidationErrorResponseParamsInner } from '../models/ValidationErrorResponseParamsInner';
 import { WebhookSubscribeRequest } from '../models/WebhookSubscribeRequest';
 import { ObservableAuthApi } from './ObservableAPI';
 
@@ -546,6 +597,129 @@ export class PromiseCreditsApi {
 
 
 
+import { ObservableCustomFieldsApi } from './ObservableAPI';
+
+import { CustomFieldsApiRequestFactory, CustomFieldsApiResponseProcessor} from "../apis/CustomFieldsApi";
+export class PromiseCustomFieldsApi {
+    private api: ObservableCustomFieldsApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CustomFieldsApiRequestFactory,
+        responseProcessor?: CustomFieldsApiResponseProcessor
+    ) {
+        this.api = new ObservableCustomFieldsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Create a new Custom field.
+     * Create Custom field
+     * @param createCustomFieldRequest
+     */
+    public createCustomFieldWithHttpInfo(createCustomFieldRequest: CreateCustomFieldRequest, _options?: Configuration): Promise<HttpInfo<CreateCustomFieldResponse>> {
+        const result = this.api.createCustomFieldWithHttpInfo(createCustomFieldRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Create a new Custom field.
+     * Create Custom field
+     * @param createCustomFieldRequest
+     */
+    public createCustomField(createCustomFieldRequest: CreateCustomFieldRequest, _options?: Configuration): Promise<CreateCustomFieldResponse> {
+        const result = this.api.createCustomField(createCustomFieldRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Custom field by id.
+     * Delete Custom field
+     * @param customFieldId
+     */
+    public deleteCustomFieldWithHttpInfo(customFieldId: string, _options?: Configuration): Promise<HttpInfo<DeleteCustomFieldResponse>> {
+        const result = this.api.deleteCustomFieldWithHttpInfo(customFieldId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Custom field by id.
+     * Delete Custom field
+     * @param customFieldId
+     */
+    public deleteCustomField(customFieldId: string, _options?: Configuration): Promise<DeleteCustomFieldResponse> {
+        const result = this.api.deleteCustomField(customFieldId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Custom field by id.
+     * Get Custom field
+     * @param customFieldId
+     */
+    public getCustomFieldWithHttpInfo(customFieldId: string, _options?: Configuration): Promise<HttpInfo<GetCustomFieldResponse>> {
+        const result = this.api.getCustomFieldWithHttpInfo(customFieldId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Custom field by id.
+     * Get Custom field
+     * @param customFieldId
+     */
+    public getCustomField(customFieldId: string, _options?: Configuration): Promise<GetCustomFieldResponse> {
+        const result = this.api.getCustomField(customFieldId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Custom fields.
+     * List Custom fields
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCustomFieldsWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCustomFieldsResponse>> {
+        const result = this.api.listCustomFieldsWithHttpInfo(limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Custom fields.
+     * List Custom fields
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listCustomFields(limit?: number, cursor?: string, _options?: Configuration): Promise<ListCustomFieldsResponse> {
+        const result = this.api.listCustomFields(limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a Custom field by id.
+     * Update Custom field
+     * @param updateCustomFieldRequest
+     * @param customFieldId
+     */
+    public updateCustomFieldWithHttpInfo(updateCustomFieldRequest: UpdateCustomFieldRequest, customFieldId: string, _options?: Configuration): Promise<HttpInfo<UpdateCustomFieldResponse>> {
+        const result = this.api.updateCustomFieldWithHttpInfo(updateCustomFieldRequest, customFieldId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a Custom field by id.
+     * Update Custom field
+     * @param updateCustomFieldRequest
+     * @param customFieldId
+     */
+    public updateCustomField(updateCustomFieldRequest: UpdateCustomFieldRequest, customFieldId: string, _options?: Configuration): Promise<UpdateCustomFieldResponse> {
+        const result = this.api.updateCustomField(updateCustomFieldRequest, customFieldId, _options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
 import { ObservableCustomersApi } from './ObservableAPI';
 
 import { CustomersApiRequestFactory, CustomersApiResponseProcessor} from "../apis/CustomersApi";
@@ -891,11 +1065,12 @@ export class PromiseEventsApi {
      * @param startTime
      * @param endTime
      * @param [eventName]
+     * @param [customerAlias]
      * @param [limit]
      * @param [cursor]
      */
-    public queryEventsWithHttpInfo(startTime: Date, endTime: Date, eventName?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<QueryEventsResponse>> {
-        const result = this.api.queryEventsWithHttpInfo(startTime, endTime, eventName, limit, cursor, _options);
+    public queryEventsWithHttpInfo(startTime: Date, endTime: Date, eventName?: string, customerAlias?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<QueryEventsResponse>> {
+        const result = this.api.queryEventsWithHttpInfo(startTime, endTime, eventName, customerAlias, limit, cursor, _options);
         return result.toPromise();
     }
 
@@ -905,11 +1080,12 @@ export class PromiseEventsApi {
      * @param startTime
      * @param endTime
      * @param [eventName]
+     * @param [customerAlias]
      * @param [limit]
      * @param [cursor]
      */
-    public queryEvents(startTime: Date, endTime: Date, eventName?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<QueryEventsResponse> {
-        const result = this.api.queryEvents(startTime, endTime, eventName, limit, cursor, _options);
+    public queryEvents(startTime: Date, endTime: Date, eventName?: string, customerAlias?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<QueryEventsResponse> {
+        const result = this.api.queryEvents(startTime, endTime, eventName, customerAlias, limit, cursor, _options);
         return result.toPromise();
     }
 
@@ -950,6 +1126,156 @@ export class PromiseEventsApi {
      */
     public sendEventsDryRun(eventsDryRunRequest: EventsDryRunRequest, _options?: Configuration): Promise<EventsDryRunResponse> {
         const result = this.api.sendEventsDryRun(eventsDryRunRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to remove a specific event using its reference ID (v2).
+     * Delete an event by refId (v2)
+     * @param refId
+     */
+    public v2DeleteEventByRefIdWithHttpInfo(refId: string, _options?: Configuration): Promise<HttpInfo<V2DeleteEventResponse>> {
+        const result = this.api.v2DeleteEventByRefIdWithHttpInfo(refId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to remove a specific event using its reference ID (v2).
+     * Delete an event by refId (v2)
+     * @param refId
+     */
+    public v2DeleteEventByRefId(refId: string, _options?: Configuration): Promise<V2DeleteEventResponse> {
+        const result = this.api.v2DeleteEventByRefId(refId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request (v2).
+     * Delete events by refs (v2)
+     * @param v2DeleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public v2DeleteEventsByRefsWithHttpInfo(v2DeleteEventsByRefsRequest: V2DeleteEventsByRefsRequest, _options?: Configuration): Promise<HttpInfo<V2DeleteEventsByRefsResponse>> {
+        const result = this.api.v2DeleteEventsByRefsWithHttpInfo(v2DeleteEventsByRefsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete multiple events, identified by ref, in a single request (v2).
+     * Delete events by refs (v2)
+     * @param v2DeleteEventsByRefsRequest A list of event refs to delete. The request deletes the matching events for the authenticated account.
+     */
+    public v2DeleteEventsByRefs(v2DeleteEventsByRefsRequest: V2DeleteEventsByRefsRequest, _options?: Configuration): Promise<V2DeleteEventsByRefsResponse> {
+        const result = this.api.v2DeleteEventsByRefs(v2DeleteEventsByRefsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific event using its reference ID (v2).
+     * Get event by refId (v2)
+     * @param refId
+     */
+    public v2GetEventByRefIdWithHttpInfo(refId: string, _options?: Configuration): Promise<HttpInfo<V2GetEventResponse>> {
+        const result = this.api.v2GetEventByRefIdWithHttpInfo(refId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific event using its reference ID (v2).
+     * Get event by refId (v2)
+     * @param refId
+     */
+    public v2GetEventByRefId(refId: string, _options?: Configuration): Promise<V2GetEventResponse> {
+        const result = this.api.v2GetEventByRefId(refId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+     * Query events by timestamp period and optional event name (v2)
+     * @param startTime
+     * @param endTime
+     * @param [eventName]
+     * @param [customerAlias]
+     * @param [limit]
+     * @param [cursor]
+     */
+    public v2QueryEventsWithHttpInfo(startTime: Date, endTime: Date, eventName?: string, customerAlias?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<V2QueryEventsResponse>> {
+        const result = this.api.v2QueryEventsWithHttpInfo(startTime, endTime, eventName, customerAlias, limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+     * Query events by timestamp period and optional event name (v2)
+     * @param startTime
+     * @param endTime
+     * @param [eventName]
+     * @param [customerAlias]
+     * @param [limit]
+     * @param [cursor]
+     */
+    public v2QueryEvents(startTime: Date, endTime: Date, eventName?: string, customerAlias?: string, limit?: number, cursor?: string, _options?: Configuration): Promise<V2QueryEventsResponse> {
+        const result = this.api.v2QueryEvents(startTime, endTime, eventName, customerAlias, limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Aggregate events by meters and time grouping via the events-service.
+     * Aggregate events (v2)
+     * @param v2QueryEventsAggregationRequest Configuration for aggregating events by meters and time grouping.
+     */
+    public v2QueryEventsAggregationWithHttpInfo(v2QueryEventsAggregationRequest: V2QueryEventsAggregationRequest, _options?: Configuration): Promise<HttpInfo<V2QueryEventsAggregationResponse>> {
+        const result = this.api.v2QueryEventsAggregationWithHttpInfo(v2QueryEventsAggregationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Aggregate events by meters and time grouping via the events-service.
+     * Aggregate events (v2)
+     * @param v2QueryEventsAggregationRequest Configuration for aggregating events by meters and time grouping.
+     */
+    public v2QueryEventsAggregation(v2QueryEventsAggregationRequest: V2QueryEventsAggregationRequest, _options?: Configuration): Promise<V2QueryEventsAggregationResponse> {
+        const result = this.api.v2QueryEventsAggregation(v2QueryEventsAggregationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Submit a batch of events for ingestion via the events-service.
+     * Submit a batch of events for ingestion (v2)
+     * @param v2SendEventsRequest An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     */
+    public v2SendEventsWithHttpInfo(v2SendEventsRequest: V2SendEventsRequest, _options?: Configuration): Promise<HttpInfo<V2SendEventsResponse>> {
+        const result = this.api.v2SendEventsWithHttpInfo(v2SendEventsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Submit a batch of events for ingestion via the events-service.
+     * Submit a batch of events for ingestion (v2)
+     * @param v2SendEventsRequest An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     */
+    public v2SendEvents(v2SendEventsRequest: V2SendEventsRequest, _options?: Configuration): Promise<V2SendEventsResponse> {
+        const result = this.api.v2SendEvents(v2SendEventsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+     * Submit a batch of events for testing (v2)
+     * @param v2EventsDryRunRequest An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     */
+    public v2SendEventsDryRunWithHttpInfo(v2EventsDryRunRequest: V2EventsDryRunRequest, _options?: Configuration): Promise<HttpInfo<V2EventsDryRunResponse>> {
+        const result = this.api.v2SendEventsDryRunWithHttpInfo(v2EventsDryRunRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+     * Submit a batch of events for testing (v2)
+     * @param v2EventsDryRunRequest An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB
+     */
+    public v2SendEventsDryRun(v2EventsDryRunRequest: V2EventsDryRunRequest, _options?: Configuration): Promise<V2EventsDryRunResponse> {
+        const result = this.api.v2SendEventsDryRun(v2EventsDryRunRequest, _options);
         return result.toPromise();
     }
 
@@ -1237,6 +1563,87 @@ export class PromiseMetersApi {
      */
     public updateMeter(updateMeterRequest: UpdateMeterRequest, meterId: string, _options?: Configuration): Promise<UpdateMeterResponse> {
         const result = this.api.updateMeter(updateMeterRequest, meterId, _options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservablePlansApi } from './ObservableAPI';
+
+import { PlansApiRequestFactory, PlansApiResponseProcessor} from "../apis/PlansApi";
+export class PromisePlansApi {
+    private api: ObservablePlansApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: PlansApiRequestFactory,
+        responseProcessor?: PlansApiResponseProcessor
+    ) {
+        this.api = new ObservablePlansApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Delete a Plan by id.
+     * Delete Plan
+     * @param planId
+     */
+    public deletePlanWithHttpInfo(planId: string, _options?: Configuration): Promise<HttpInfo<DeletePlanResponse>> {
+        const result = this.api.deletePlanWithHttpInfo(planId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Plan by id.
+     * Delete Plan
+     * @param planId
+     */
+    public deletePlan(planId: string, _options?: Configuration): Promise<DeletePlanResponse> {
+        const result = this.api.deletePlan(planId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Plan by id.
+     * Get Plan
+     * @param planId
+     */
+    public getPlanWithHttpInfo(planId: string, _options?: Configuration): Promise<HttpInfo<GetPlanResponse>> {
+        const result = this.api.getPlanWithHttpInfo(planId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a Plan by id.
+     * Get Plan
+     * @param planId
+     */
+    public getPlan(planId: string, _options?: Configuration): Promise<GetPlanResponse> {
+        const result = this.api.getPlan(planId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Plans.
+     * List Plans
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listPlansWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListPlansResponse>> {
+        const result = this.api.listPlansWithHttpInfo(limit, cursor, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a list of Plans.
+     * List Plans
+     * @param [limit]
+     * @param [cursor]
+     */
+    public listPlans(limit?: number, cursor?: string, _options?: Configuration): Promise<ListPlansResponse> {
+        const result = this.api.listPlans(limit, cursor, _options);
         return result.toPromise();
     }
 

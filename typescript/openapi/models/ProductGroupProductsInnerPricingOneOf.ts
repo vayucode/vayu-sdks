@@ -10,11 +10,17 @@
  * Do not edit the class manually.
  */
 
+import { ProductGroupProductsInnerPricingOneOfDiscount } from '../models/ProductGroupProductsInnerPricingOneOfDiscount';
 import { HttpFile } from '../http/http';
 
 export class ProductGroupProductsInnerPricingOneOf {
     'type': ProductGroupProductsInnerPricingOneOfTypeEnum;
     'price': number;
+    'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
+    /**
+    * Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.
+    */
+    'isCreditPurchase'?: boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -31,6 +37,18 @@ export class ProductGroupProductsInnerPricingOneOf {
             "name": "price",
             "baseName": "price",
             "type": "number",
+            "format": ""
+        },
+        {
+            "name": "discount",
+            "baseName": "discount",
+            "type": "ProductGroupProductsInnerPricingOneOfDiscount",
+            "format": ""
+        },
+        {
+            "name": "isCreditPurchase",
+            "baseName": "isCreditPurchase",
+            "type": "boolean",
             "format": ""
         }    ];
 

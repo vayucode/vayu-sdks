@@ -6,7 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
-**Installments** | Pointer to [**[]ProductGroupProductsInnerPricingOneOf1InstallmentsInner**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
+**Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
+**IsCreditPurchase** | Pointer to **bool** | Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false. | [optional] 
+**Installments** | Pointer to **int32** | The number of installments to spread the deduction over | [optional] 
 **SubscriptionCadence** | [**NullableProductGroupProductsInnerPricingOneOf3SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md) |  | 
 **Tiers** | [**[]ProductGroupProductsInnerPricingOneOf3TiersInner**](ProductGroupProductsInnerPricingOneOf3TiersInner.md) |  | 
 **AutoUpgrade** | Pointer to **NullableBool** |  | [optional] 
@@ -15,12 +17,14 @@ Name | Type | Description | Notes
 **BaseAmount** | Pointer to **NullableFloat32** |  | [optional] 
 **UsageReset** | Pointer to **NullableInt32** | Usage reset is represented in months and must be one of: 1, 2, 3, 6, 12 | [optional] 
 **ChunkSize** | Pointer to **NullableFloat32** |  | [optional] 
+**AmountToDeduct** | **float32** | The fixed amount to deduct | 
+**PercentageToDeduct** | **float32** | The percentage to deduct | 
 
 ## Methods
 
 ### NewProductGroupProductsInnerPricing
 
-`func NewProductGroupProductsInnerPricing(type_ string, price float32, subscriptionCadence NullableProductGroupProductsInnerPricingOneOf3SubscriptionCadence, tiers []ProductGroupProductsInnerPricingOneOf3TiersInner, ) *ProductGroupProductsInnerPricing`
+`func NewProductGroupProductsInnerPricing(type_ string, price float32, subscriptionCadence NullableProductGroupProductsInnerPricingOneOf3SubscriptionCadence, tiers []ProductGroupProductsInnerPricingOneOf3TiersInner, amountToDeduct float32, percentageToDeduct float32, ) *ProductGroupProductsInnerPricing`
 
 NewProductGroupProductsInnerPricing instantiates a new ProductGroupProductsInnerPricing object
 This constructor will assign default values to properties that have it defined,
@@ -75,22 +79,82 @@ and a boolean to check if the value has been set.
 SetPrice sets Price field to given value.
 
 
+### GetDiscount
+
+`func (o *ProductGroupProductsInnerPricing) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount`
+
+GetDiscount returns the Discount field if non-nil, zero value otherwise.
+
+### GetDiscountOk
+
+`func (o *ProductGroupProductsInnerPricing) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool)`
+
+GetDiscountOk returns a tuple with the Discount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDiscount
+
+`func (o *ProductGroupProductsInnerPricing) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount)`
+
+SetDiscount sets Discount field to given value.
+
+### HasDiscount
+
+`func (o *ProductGroupProductsInnerPricing) HasDiscount() bool`
+
+HasDiscount returns a boolean if a field has been set.
+
+### SetDiscountNil
+
+`func (o *ProductGroupProductsInnerPricing) SetDiscountNil(b bool)`
+
+ SetDiscountNil sets the value for Discount to be an explicit nil
+
+### UnsetDiscount
+`func (o *ProductGroupProductsInnerPricing) UnsetDiscount()`
+
+UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+### GetIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricing) GetIsCreditPurchase() bool`
+
+GetIsCreditPurchase returns the IsCreditPurchase field if non-nil, zero value otherwise.
+
+### GetIsCreditPurchaseOk
+
+`func (o *ProductGroupProductsInnerPricing) GetIsCreditPurchaseOk() (*bool, bool)`
+
+GetIsCreditPurchaseOk returns a tuple with the IsCreditPurchase field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricing) SetIsCreditPurchase(v bool)`
+
+SetIsCreditPurchase sets IsCreditPurchase field to given value.
+
+### HasIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricing) HasIsCreditPurchase() bool`
+
+HasIsCreditPurchase returns a boolean if a field has been set.
+
 ### GetInstallments
 
-`func (o *ProductGroupProductsInnerPricing) GetInstallments() []ProductGroupProductsInnerPricingOneOf1InstallmentsInner`
+`func (o *ProductGroupProductsInnerPricing) GetInstallments() int32`
 
 GetInstallments returns the Installments field if non-nil, zero value otherwise.
 
 ### GetInstallmentsOk
 
-`func (o *ProductGroupProductsInnerPricing) GetInstallmentsOk() (*[]ProductGroupProductsInnerPricingOneOf1InstallmentsInner, bool)`
+`func (o *ProductGroupProductsInnerPricing) GetInstallmentsOk() (*int32, bool)`
 
 GetInstallmentsOk returns a tuple with the Installments field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInstallments
 
-`func (o *ProductGroupProductsInnerPricing) SetInstallments(v []ProductGroupProductsInnerPricingOneOf1InstallmentsInner)`
+`func (o *ProductGroupProductsInnerPricing) SetInstallments(v int32)`
 
 SetInstallments sets Installments field to given value.
 
@@ -100,16 +164,6 @@ SetInstallments sets Installments field to given value.
 
 HasInstallments returns a boolean if a field has been set.
 
-### SetInstallmentsNil
-
-`func (o *ProductGroupProductsInnerPricing) SetInstallmentsNil(b bool)`
-
- SetInstallmentsNil sets the value for Installments to be an explicit nil
-
-### UnsetInstallments
-`func (o *ProductGroupProductsInnerPricing) UnsetInstallments()`
-
-UnsetInstallments ensures that no value is present for Installments, not even an explicit nil
 ### GetSubscriptionCadence
 
 `func (o *ProductGroupProductsInnerPricing) GetSubscriptionCadence() ProductGroupProductsInnerPricingOneOf3SubscriptionCadence`
@@ -370,6 +424,46 @@ HasChunkSize returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInnerPricing) UnsetChunkSize()`
 
 UnsetChunkSize ensures that no value is present for ChunkSize, not even an explicit nil
+### GetAmountToDeduct
+
+`func (o *ProductGroupProductsInnerPricing) GetAmountToDeduct() float32`
+
+GetAmountToDeduct returns the AmountToDeduct field if non-nil, zero value otherwise.
+
+### GetAmountToDeductOk
+
+`func (o *ProductGroupProductsInnerPricing) GetAmountToDeductOk() (*float32, bool)`
+
+GetAmountToDeductOk returns a tuple with the AmountToDeduct field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmountToDeduct
+
+`func (o *ProductGroupProductsInnerPricing) SetAmountToDeduct(v float32)`
+
+SetAmountToDeduct sets AmountToDeduct field to given value.
+
+
+### GetPercentageToDeduct
+
+`func (o *ProductGroupProductsInnerPricing) GetPercentageToDeduct() float32`
+
+GetPercentageToDeduct returns the PercentageToDeduct field if non-nil, zero value otherwise.
+
+### GetPercentageToDeductOk
+
+`func (o *ProductGroupProductsInnerPricing) GetPercentageToDeductOk() (*float32, bool)`
+
+GetPercentageToDeductOk returns a tuple with the PercentageToDeduct field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPercentageToDeduct
+
+`func (o *ProductGroupProductsInnerPricing) SetPercentageToDeduct(v float32)`
+
+SetPercentageToDeduct sets PercentageToDeduct field to given value.
+
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

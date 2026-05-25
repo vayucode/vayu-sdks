@@ -16,6 +16,7 @@ import { HttpFile } from '../http/http';
 export class WebhookSubscribeRequest {
     'callbackUrl': string;
     'eventType': NotificationEventType;
+    'threshold'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -32,6 +33,12 @@ export class WebhookSubscribeRequest {
             "name": "eventType",
             "baseName": "eventType",
             "type": "NotificationEventType",
+            "format": ""
+        },
+        {
+            "name": "threshold",
+            "baseName": "threshold",
+            "type": "number",
             "format": ""
         }    ];
 

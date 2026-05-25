@@ -94,10 +94,11 @@ class WebhooksApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -165,10 +166,11 @@ class WebhooksApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -236,10 +238,11 @@ class WebhooksApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -280,6 +283,13 @@ class WebhooksApi:
             _body_params = webhook_subscribe_request
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:

@@ -96,6 +96,11 @@ Class | Method | HTTP request | Description
 *CreditsAPI* | [**DeductCredits**](docs/CreditsAPI.md#deductcredits) | **Post** /credits/deduct | Deduct credits from customer credit ledger
 *CreditsAPI* | [**GrantCredits**](docs/CreditsAPI.md#grantcredits) | **Post** /credits/grant | Grant credits to a customer credit ledger
 *CreditsAPI* | [**ListCreditLedgerEntries**](docs/CreditsAPI.md#listcreditledgerentries) | **Get** /credits | Retrieve credit ledger entries for customer.
+*CustomFieldsAPI* | [**CreateCustomField**](docs/CustomFieldsAPI.md#createcustomfield) | **Post** /customFields | Create Custom field
+*CustomFieldsAPI* | [**DeleteCustomField**](docs/CustomFieldsAPI.md#deletecustomfield) | **Delete** /customFields/{customFieldId} | Delete Custom field
+*CustomFieldsAPI* | [**GetCustomField**](docs/CustomFieldsAPI.md#getcustomfield) | **Get** /customFields/{customFieldId} | Get Custom field
+*CustomFieldsAPI* | [**ListCustomFields**](docs/CustomFieldsAPI.md#listcustomfields) | **Get** /customFields | List Custom fields
+*CustomFieldsAPI* | [**UpdateCustomField**](docs/CustomFieldsAPI.md#updatecustomfield) | **Put** /customFields/{customFieldId} | Update Custom field
 *CustomersAPI* | [**CreateCustomer**](docs/CustomersAPI.md#createcustomer) | **Post** /customers | Create Customer
 *CustomersAPI* | [**CreateCustomerRelation**](docs/CustomersAPI.md#createcustomerrelation) | **Post** /customer-relations | Create Customer relation
 *CustomersAPI* | [**DeleteCustomer**](docs/CustomersAPI.md#deletecustomer) | **Delete** /customers/{customerId} | Delete Customer
@@ -114,6 +119,13 @@ Class | Method | HTTP request | Description
 *EventsAPI* | [**QueryEvents**](docs/EventsAPI.md#queryevents) | **Get** /events | Query events by timestamp period and optional event name
 *EventsAPI* | [**SendEvents**](docs/EventsAPI.md#sendevents) | **Post** /events | Submit a batch of events for ingestion
 *EventsAPI* | [**SendEventsDryRun**](docs/EventsAPI.md#sendeventsdryrun) | **Post** /events/dry-run | Submit a batch of events for testing
+*EventsAPI* | [**V2DeleteEventByRefId**](docs/EventsAPI.md#v2deleteeventbyrefid) | **Delete** /v2/events/{refId} | Delete an event by refId (v2)
+*EventsAPI* | [**V2DeleteEventsByRefs**](docs/EventsAPI.md#v2deleteeventsbyrefs) | **Post** /v2/events/delete-by-refs | Delete events by refs (v2)
+*EventsAPI* | [**V2GetEventByRefId**](docs/EventsAPI.md#v2geteventbyrefid) | **Get** /v2/events/{refId} | Get event by refId (v2)
+*EventsAPI* | [**V2QueryEvents**](docs/EventsAPI.md#v2queryevents) | **Get** /v2/events | Query events by timestamp period and optional event name (v2)
+*EventsAPI* | [**V2QueryEventsAggregation**](docs/EventsAPI.md#v2queryeventsaggregation) | **Post** /v2/events/aggregation | Aggregate events (v2)
+*EventsAPI* | [**V2SendEvents**](docs/EventsAPI.md#v2sendevents) | **Post** /v2/events | Submit a batch of events for ingestion (v2)
+*EventsAPI* | [**V2SendEventsDryRun**](docs/EventsAPI.md#v2sendeventsdryrun) | **Post** /v2/events/dry-run | Submit a batch of events for testing (v2)
 *InvoicesAPI* | [**GetInvoice**](docs/InvoicesAPI.md#getinvoice) | **Get** /invoices/{invoiceId} | Get Invoice
 *InvoicesAPI* | [**GetInvoicePaymentStatus**](docs/InvoicesAPI.md#getinvoicepaymentstatus) | **Get** /invoices/{invoiceId}/payment-status | Get invoice payment status
 *InvoicesAPI* | [**ListInvoices**](docs/InvoicesAPI.md#listinvoices) | **Get** /invoices | List invoices
@@ -125,6 +137,9 @@ Class | Method | HTTP request | Description
 *MetersAPI* | [**GetMeter**](docs/MetersAPI.md#getmeter) | **Get** /meters/{meterId} | Get Meter
 *MetersAPI* | [**ListMeters**](docs/MetersAPI.md#listmeters) | **Get** /meters | List Meters
 *MetersAPI* | [**UpdateMeter**](docs/MetersAPI.md#updatemeter) | **Put** /meters/{meterId} | Update Meter
+*PlansAPI* | [**DeletePlan**](docs/PlansAPI.md#deleteplan) | **Delete** /plans/{planId} | Delete Plan
+*PlansAPI* | [**GetPlan**](docs/PlansAPI.md#getplan) | **Get** /plans/{planId} | Get Plan
+*PlansAPI* | [**ListPlans**](docs/PlansAPI.md#listplans) | **Get** /plans | List Plans
 *ProductConsumptionsAPI* | [**GetProductConsumption**](docs/ProductConsumptionsAPI.md#getproductconsumption) | **Get** /product-consumption/{productId} | Get product consumption
 *WebhooksAPI* | [**WebhookSubscribe**](docs/WebhooksAPI.md#webhooksubscribe) | **Post** /webhook | Subscribe to webhooks
 
@@ -135,8 +150,10 @@ Class | Method | HTTP request | Description
  - [AggregationMethod](docs/AggregationMethod.md)
  - [AggregationOperator](docs/AggregationOperator.md)
  - [BillingCycleStatus](docs/BillingCycleStatus.md)
+ - [BillingInterval](docs/BillingInterval.md)
  - [CloudUsageResult](docs/CloudUsageResult.md)
  - [Condition](docs/Condition.md)
+ - [ConflictErrorResponse](docs/ConflictErrorResponse.md)
  - [Contact](docs/Contact.md)
  - [ContractStatus](docs/ContractStatus.md)
  - [CreateCatalogProductRequest](docs/CreateCatalogProductRequest.md)
@@ -144,6 +161,9 @@ Class | Method | HTTP request | Description
  - [CreateCatalogProductResponseCatalogProduct](docs/CreateCatalogProductResponseCatalogProduct.md)
  - [CreateContractRequest](docs/CreateContractRequest.md)
  - [CreateContractResponse](docs/CreateContractResponse.md)
+ - [CreateCustomFieldRequest](docs/CreateCustomFieldRequest.md)
+ - [CreateCustomFieldResponse](docs/CreateCustomFieldResponse.md)
+ - [CreateCustomFieldResponseCustomField](docs/CreateCustomFieldResponseCustomField.md)
  - [CreateCustomerRelationRequest](docs/CreateCustomerRelationRequest.md)
  - [CreateCustomerRelationResponse](docs/CreateCustomerRelationResponse.md)
  - [CreateCustomerRelationResponseCustomerRelation](docs/CreateCustomerRelationResponseCustomerRelation.md)
@@ -159,6 +179,7 @@ Class | Method | HTTP request | Description
  - [CriterionOperator](docs/CriterionOperator.md)
  - [Currency](docs/Currency.md)
  - [CustomField](docs/CustomField.md)
+ - [CustomFieldEntities](docs/CustomFieldEntities.md)
  - [CustomFieldValue](docs/CustomFieldValue.md)
  - [CustomFieldValueTypes](docs/CustomFieldValueTypes.md)
  - [CustomerCloudProviderSettings](docs/CustomerCloudProviderSettings.md)
@@ -168,6 +189,8 @@ Class | Method | HTTP request | Description
  - [DeleteCatalogProductResponseCatalogProduct](docs/DeleteCatalogProductResponseCatalogProduct.md)
  - [DeleteContractResponse](docs/DeleteContractResponse.md)
  - [DeleteContractResponseContract](docs/DeleteContractResponseContract.md)
+ - [DeleteCustomFieldResponse](docs/DeleteCustomFieldResponse.md)
+ - [DeleteCustomFieldResponseCustomField](docs/DeleteCustomFieldResponseCustomField.md)
  - [DeleteCustomerResponse](docs/DeleteCustomerResponse.md)
  - [DeleteCustomerResponseCustomer](docs/DeleteCustomerResponseCustomer.md)
  - [DeleteEventResponse](docs/DeleteEventResponse.md)
@@ -179,6 +202,8 @@ Class | Method | HTTP request | Description
  - [DeleteMeasurementResponseMeasurement](docs/DeleteMeasurementResponseMeasurement.md)
  - [DeleteMeterResponse](docs/DeleteMeterResponse.md)
  - [DeleteMeterResponseMeter](docs/DeleteMeterResponseMeter.md)
+ - [DeletePlanResponse](docs/DeletePlanResponse.md)
+ - [DeletePlanResponsePlan](docs/DeletePlanResponsePlan.md)
  - [Event](docs/Event.md)
  - [EventsDryRunRequest](docs/EventsDryRunRequest.md)
  - [EventsDryRunResponse](docs/EventsDryRunResponse.md)
@@ -192,6 +217,7 @@ Class | Method | HTTP request | Description
  - [GetContractByIntegrationIdResponse](docs/GetContractByIntegrationIdResponse.md)
  - [GetContractResponse](docs/GetContractResponse.md)
  - [GetContractResponseContract](docs/GetContractResponseContract.md)
+ - [GetCustomFieldResponse](docs/GetCustomFieldResponse.md)
  - [GetCustomerByIntegrationIdResponse](docs/GetCustomerByIntegrationIdResponse.md)
  - [GetCustomerByNameResponse](docs/GetCustomerByNameResponse.md)
  - [GetCustomerByNameResponseCustomer](docs/GetCustomerByNameResponseCustomer.md)
@@ -207,6 +233,8 @@ Class | Method | HTTP request | Description
  - [GetMeasurementResponse](docs/GetMeasurementResponse.md)
  - [GetMeterResponse](docs/GetMeterResponse.md)
  - [GetMeterResponseMeter](docs/GetMeterResponseMeter.md)
+ - [GetPlanResponse](docs/GetPlanResponse.md)
+ - [GetPlanResponsePlan](docs/GetPlanResponsePlan.md)
  - [GetProductConsumptionResponse](docs/GetProductConsumptionResponse.md)
  - [GetProductConsumptionResponseProductConsumption](docs/GetProductConsumptionResponseProductConsumption.md)
  - [GrantCreditsRequest](docs/GrantCreditsRequest.md)
@@ -214,6 +242,7 @@ Class | Method | HTTP request | Description
  - [IntegrationEntityTypes](docs/IntegrationEntityTypes.md)
  - [IntegrationProviders](docs/IntegrationProviders.md)
  - [IntegrationType](docs/IntegrationType.md)
+ - [InternalServerErrorResponse](docs/InternalServerErrorResponse.md)
  - [InvalidEvent](docs/InvalidEvent.md)
  - [InvoiceBillingStatus](docs/InvoiceBillingStatus.md)
  - [InvoicePaymentStatusResponse](docs/InvoicePaymentStatusResponse.md)
@@ -222,18 +251,24 @@ Class | Method | HTTP request | Description
  - [ListCatalogProductsResponse](docs/ListCatalogProductsResponse.md)
  - [ListContractsResponse](docs/ListContractsResponse.md)
  - [ListCreditLedgerEntriesResponse](docs/ListCreditLedgerEntriesResponse.md)
+ - [ListCustomFieldsResponse](docs/ListCustomFieldsResponse.md)
  - [ListCustomersResponse](docs/ListCustomersResponse.md)
  - [ListInvoicesResponse](docs/ListInvoicesResponse.md)
  - [ListMeasurementsResponse](docs/ListMeasurementsResponse.md)
  - [ListMetersResponse](docs/ListMetersResponse.md)
+ - [ListPlansResponse](docs/ListPlansResponse.md)
  - [LoginRequest](docs/LoginRequest.md)
  - [LoginResponse](docs/LoginResponse.md)
  - [Meter](docs/Meter.md)
+ - [NotFoundErrorResponse](docs/NotFoundErrorResponse.md)
  - [NotificationEventType](docs/NotificationEventType.md)
  - [PartnerSubmissionDetail](docs/PartnerSubmissionDetail.md)
  - [PaymentInfo](docs/PaymentInfo.md)
  - [PaymentInfoDepositTo](docs/PaymentInfoDepositTo.md)
  - [PaymentTerm](docs/PaymentTerm.md)
+ - [PlanBillingData](docs/PlanBillingData.md)
+ - [PlanDuration](docs/PlanDuration.md)
+ - [PlanStatus](docs/PlanStatus.md)
  - [ProductCloudProviderSettings](docs/ProductCloudProviderSettings.md)
  - [ProductConsumption](docs/ProductConsumption.md)
  - [ProductGroup](docs/ProductGroup.md)
@@ -241,6 +276,7 @@ Class | Method | HTTP request | Description
  - [ProductGroupProductsInner](docs/ProductGroupProductsInner.md)
  - [ProductGroupProductsInnerCommitment](docs/ProductGroupProductsInnerCommitment.md)
  - [ProductGroupProductsInnerCommitmentScheduling](docs/ProductGroupProductsInnerCommitmentScheduling.md)
+ - [ProductGroupProductsInnerCommitmentSchedulingDuration](docs/ProductGroupProductsInnerCommitmentSchedulingDuration.md)
  - [ProductGroupProductsInnerPricing](docs/ProductGroupProductsInnerPricing.md)
  - [ProductGroupProductsInnerPricingOneOf](docs/ProductGroupProductsInnerPricingOneOf.md)
  - [ProductGroupProductsInnerPricingOneOf1](docs/ProductGroupProductsInnerPricingOneOf1.md)
@@ -251,21 +287,51 @@ Class | Method | HTTP request | Description
  - [ProductGroupProductsInnerPricingOneOf3SubscriptionCadence](docs/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md)
  - [ProductGroupProductsInnerPricingOneOf3TiersInner](docs/ProductGroupProductsInnerPricingOneOf3TiersInner.md)
  - [ProductGroupProductsInnerPricingOneOf4](docs/ProductGroupProductsInnerPricingOneOf4.md)
+ - [ProductGroupProductsInnerPricingOneOf5](docs/ProductGroupProductsInnerPricingOneOf5.md)
+ - [ProductGroupProductsInnerPricingOneOf6](docs/ProductGroupProductsInnerPricingOneOf6.md)
+ - [ProductGroupProductsInnerPricingOneOfDiscount](docs/ProductGroupProductsInnerPricingOneOfDiscount.md)
  - [ProductGroupProductsInnerScheduling](docs/ProductGroupProductsInnerScheduling.md)
  - [ProductGroupProductsInnerSchedulingDuration](docs/ProductGroupProductsInnerSchedulingDuration.md)
  - [QueryEventsResponse](docs/QueryEventsResponse.md)
  - [QueryEventsResponseEventsInner](docs/QueryEventsResponseEventsInner.md)
+ - [RateLimitErrorResponse](docs/RateLimitErrorResponse.md)
+ - [RequestTooLongErrorResponse](docs/RequestTooLongErrorResponse.md)
  - [SendEventsRequest](docs/SendEventsRequest.md)
  - [SendEventsResponse](docs/SendEventsResponse.md)
  - [SubmitCloudUsageRequest](docs/SubmitCloudUsageRequest.md)
  - [SyncStatus](docs/SyncStatus.md)
+ - [UnauthorizedErrorResponse](docs/UnauthorizedErrorResponse.md)
+ - [UnlimitedDuration](docs/UnlimitedDuration.md)
  - [UpdateCatalogProductRequest](docs/UpdateCatalogProductRequest.md)
  - [UpdateCatalogProductResponse](docs/UpdateCatalogProductResponse.md)
+ - [UpdateCustomFieldRequest](docs/UpdateCustomFieldRequest.md)
+ - [UpdateCustomFieldResponse](docs/UpdateCustomFieldResponse.md)
  - [UpdateCustomerRequest](docs/UpdateCustomerRequest.md)
  - [UpdateCustomerResponse](docs/UpdateCustomerResponse.md)
  - [UpdateMeterRequest](docs/UpdateMeterRequest.md)
  - [UpdateMeterResponse](docs/UpdateMeterResponse.md)
  - [UsageWindow](docs/UsageWindow.md)
+ - [V2DeleteEventResponse](docs/V2DeleteEventResponse.md)
+ - [V2DeleteEventsByRefsRequest](docs/V2DeleteEventsByRefsRequest.md)
+ - [V2DeleteEventsByRefsResponse](docs/V2DeleteEventsByRefsResponse.md)
+ - [V2EventsDryRunRequest](docs/V2EventsDryRunRequest.md)
+ - [V2EventsDryRunResponse](docs/V2EventsDryRunResponse.md)
+ - [V2GetEventResponse](docs/V2GetEventResponse.md)
+ - [V2QueryEventsAggregationRequest](docs/V2QueryEventsAggregationRequest.md)
+ - [V2QueryEventsAggregationRequestMetersInner](docs/V2QueryEventsAggregationRequestMetersInner.md)
+ - [V2QueryEventsAggregationRequestMetersInnerAggregation](docs/V2QueryEventsAggregationRequestMetersInnerAggregation.md)
+ - [V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic](docs/V2QueryEventsAggregationRequestMetersInnerAggregationFieldArithmetic.md)
+ - [V2QueryEventsAggregationRequestMetersInnerFiltersInner](docs/V2QueryEventsAggregationRequestMetersInnerFiltersInner.md)
+ - [V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue](docs/V2QueryEventsAggregationRequestMetersInnerFiltersInnerValue.md)
+ - [V2QueryEventsAggregationRequestMetersInnerSqlFullQuery](docs/V2QueryEventsAggregationRequestMetersInnerSqlFullQuery.md)
+ - [V2QueryEventsAggregationRequestPeriod](docs/V2QueryEventsAggregationRequestPeriod.md)
+ - [V2QueryEventsAggregationResponse](docs/V2QueryEventsAggregationResponse.md)
+ - [V2QueryEventsAggregationResponseDataPointsInner](docs/V2QueryEventsAggregationResponseDataPointsInner.md)
+ - [V2QueryEventsResponse](docs/V2QueryEventsResponse.md)
+ - [V2SendEventsRequest](docs/V2SendEventsRequest.md)
+ - [V2SendEventsResponse](docs/V2SendEventsResponse.md)
+ - [ValidationErrorResponse](docs/ValidationErrorResponse.md)
+ - [ValidationErrorResponseParamsInner](docs/ValidationErrorResponseParamsInner.md)
  - [WebhookSubscribeRequest](docs/WebhookSubscribeRequest.md)
 
 

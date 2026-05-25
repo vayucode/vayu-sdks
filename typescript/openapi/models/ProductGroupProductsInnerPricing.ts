@@ -15,6 +15,8 @@ import { ProductGroupProductsInnerPricingOneOf1 } from '../models/ProductGroupPr
 import { ProductGroupProductsInnerPricingOneOf2 } from '../models/ProductGroupProductsInnerPricingOneOf2';
 import { ProductGroupProductsInnerPricingOneOf3 } from '../models/ProductGroupProductsInnerPricingOneOf3';
 import { ProductGroupProductsInnerPricingOneOf4 } from '../models/ProductGroupProductsInnerPricingOneOf4';
+import { ProductGroupProductsInnerPricingOneOf5 } from '../models/ProductGroupProductsInnerPricingOneOf5';
+import { ProductGroupProductsInnerPricingOneOf6 } from '../models/ProductGroupProductsInnerPricingOneOf6';
 import { HttpFile } from '../http/http';
 
 /**
@@ -25,7 +27,7 @@ import { HttpFile } from '../http/http';
  * Type
  * @export
  */
-export type ProductGroupProductsInnerPricing = ProductGroupProductsInnerPricingOneOf | ProductGroupProductsInnerPricingOneOf1 | ProductGroupProductsInnerPricingOneOf2 | ProductGroupProductsInnerPricingOneOf3 | ProductGroupProductsInnerPricingOneOf4;
+export type ProductGroupProductsInnerPricing = ProductGroupProductsInnerPricingOneOf | ProductGroupProductsInnerPricingOneOf1 | ProductGroupProductsInnerPricingOneOf2 | ProductGroupProductsInnerPricingOneOf3 | ProductGroupProductsInnerPricingOneOf4 | ProductGroupProductsInnerPricingOneOf5 | ProductGroupProductsInnerPricingOneOf6;
 
 /**
 * @type ProductGroupProductsInnerPricingClass
@@ -37,6 +39,8 @@ export class ProductGroupProductsInnerPricingClass {
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 }
+
+
 
 
 

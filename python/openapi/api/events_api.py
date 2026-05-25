@@ -30,6 +30,17 @@ from openapi.models.get_event_response import GetEventResponse
 from openapi.models.query_events_response import QueryEventsResponse
 from openapi.models.send_events_request import SendEventsRequest
 from openapi.models.send_events_response import SendEventsResponse
+from openapi.models.v2_delete_event_response import V2DeleteEventResponse
+from openapi.models.v2_delete_events_by_refs_request import V2DeleteEventsByRefsRequest
+from openapi.models.v2_delete_events_by_refs_response import V2DeleteEventsByRefsResponse
+from openapi.models.v2_events_dry_run_request import V2EventsDryRunRequest
+from openapi.models.v2_events_dry_run_response import V2EventsDryRunResponse
+from openapi.models.v2_get_event_response import V2GetEventResponse
+from openapi.models.v2_query_events_aggregation_request import V2QueryEventsAggregationRequest
+from openapi.models.v2_query_events_aggregation_response import V2QueryEventsAggregationResponse
+from openapi.models.v2_query_events_response import V2QueryEventsResponse
+from openapi.models.v2_send_events_request import V2SendEventsRequest
+from openapi.models.v2_send_events_response import V2SendEventsResponse
 
 from openapi.api_client import ApiClient, RequestSerialized
 from openapi.api_response import ApiResponse
@@ -104,10 +115,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -175,10 +187,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -246,10 +259,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -377,10 +391,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventsByRefsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -448,10 +463,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventsByRefsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -519,10 +535,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteEventsByRefsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -663,10 +680,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -734,10 +752,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -805,10 +824,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetEventResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -887,6 +907,7 @@ class EventsApi:
         start_time: datetime,
         end_time: datetime,
         event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -912,6 +933,8 @@ class EventsApi:
         :type end_time: datetime
         :param event_name:
         :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
         :param limit:
         :type limit: float
         :param cursor:
@@ -942,6 +965,7 @@ class EventsApi:
             start_time=start_time,
             end_time=end_time,
             event_name=event_name,
+            customer_alias=customer_alias,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -952,10 +976,10 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "QueryEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -974,6 +998,7 @@ class EventsApi:
         start_time: datetime,
         end_time: datetime,
         event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -999,6 +1024,8 @@ class EventsApi:
         :type end_time: datetime
         :param event_name:
         :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
         :param limit:
         :type limit: float
         :param cursor:
@@ -1029,6 +1056,7 @@ class EventsApi:
             start_time=start_time,
             end_time=end_time,
             event_name=event_name,
+            customer_alias=customer_alias,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -1039,10 +1067,10 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "QueryEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1061,6 +1089,7 @@ class EventsApi:
         start_time: datetime,
         end_time: datetime,
         event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -1086,6 +1115,8 @@ class EventsApi:
         :type end_time: datetime
         :param event_name:
         :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
         :param limit:
         :type limit: float
         :param cursor:
@@ -1116,6 +1147,7 @@ class EventsApi:
             start_time=start_time,
             end_time=end_time,
             event_name=event_name,
+            customer_alias=customer_alias,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -1126,10 +1158,10 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "QueryEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1143,6 +1175,7 @@ class EventsApi:
         start_time,
         end_time,
         event_name,
+        customer_alias,
         limit,
         cursor,
         _request_auth,
@@ -1196,6 +1229,10 @@ class EventsApi:
         if event_name is not None:
             
             _query_params.append(('eventName', event_name))
+            
+        if customer_alias is not None:
+            
+            _query_params.append(('customerAlias', customer_alias))
             
         if limit is not None:
             
@@ -1297,10 +1334,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SendEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1368,10 +1406,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SendEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1439,10 +1478,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SendEventsResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1583,10 +1623,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventsDryRunResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1654,10 +1695,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventsDryRunResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1725,10 +1767,11 @@ class EventsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventsDryRunResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1799,6 +1842,2089 @@ class EventsApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/events/dry-run',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_delete_event_by_ref_id(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2DeleteEventResponse:
+        """Delete an event by refId (v2)
+
+        Use this endpoint to remove a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_delete_event_by_ref_id_with_http_info(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2DeleteEventResponse]:
+        """Delete an event by refId (v2)
+
+        Use this endpoint to remove a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_delete_event_by_ref_id_without_preload_content(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete an event by refId (v2)
+
+        Use this endpoint to remove a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_delete_event_by_ref_id_serialize(
+        self,
+        ref_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if ref_id is not None:
+            _path_params['refId'] = ref_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/v2/events/{refId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_delete_events_by_refs(
+        self,
+        v2_delete_events_by_refs_request: Annotated[V2DeleteEventsByRefsRequest, Field(description="A list of event refs to delete. The request deletes the matching events for the authenticated account.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2DeleteEventsByRefsResponse:
+        """Delete events by refs (v2)
+
+        Delete multiple events, identified by ref, in a single request (v2).
+
+        :param v2_delete_events_by_refs_request: A list of event refs to delete. The request deletes the matching events for the authenticated account. (required)
+        :type v2_delete_events_by_refs_request: V2DeleteEventsByRefsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_events_by_refs_serialize(
+            v2_delete_events_by_refs_request=v2_delete_events_by_refs_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventsByRefsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_delete_events_by_refs_with_http_info(
+        self,
+        v2_delete_events_by_refs_request: Annotated[V2DeleteEventsByRefsRequest, Field(description="A list of event refs to delete. The request deletes the matching events for the authenticated account.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2DeleteEventsByRefsResponse]:
+        """Delete events by refs (v2)
+
+        Delete multiple events, identified by ref, in a single request (v2).
+
+        :param v2_delete_events_by_refs_request: A list of event refs to delete. The request deletes the matching events for the authenticated account. (required)
+        :type v2_delete_events_by_refs_request: V2DeleteEventsByRefsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_events_by_refs_serialize(
+            v2_delete_events_by_refs_request=v2_delete_events_by_refs_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventsByRefsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_delete_events_by_refs_without_preload_content(
+        self,
+        v2_delete_events_by_refs_request: Annotated[V2DeleteEventsByRefsRequest, Field(description="A list of event refs to delete. The request deletes the matching events for the authenticated account.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete events by refs (v2)
+
+        Delete multiple events, identified by ref, in a single request (v2).
+
+        :param v2_delete_events_by_refs_request: A list of event refs to delete. The request deletes the matching events for the authenticated account. (required)
+        :type v2_delete_events_by_refs_request: V2DeleteEventsByRefsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_delete_events_by_refs_serialize(
+            v2_delete_events_by_refs_request=v2_delete_events_by_refs_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2DeleteEventsByRefsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_delete_events_by_refs_serialize(
+        self,
+        v2_delete_events_by_refs_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if v2_delete_events_by_refs_request is not None:
+            _body_params = v2_delete_events_by_refs_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v2/events/delete-by-refs',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_get_event_by_ref_id(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2GetEventResponse:
+        """Get event by refId (v2)
+
+        Use this endpoint to get a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_get_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2GetEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_get_event_by_ref_id_with_http_info(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2GetEventResponse]:
+        """Get event by refId (v2)
+
+        Use this endpoint to get a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_get_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2GetEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_get_event_by_ref_id_without_preload_content(
+        self,
+        ref_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get event by refId (v2)
+
+        Use this endpoint to get a specific event using its reference ID (v2).
+
+        :param ref_id: (required)
+        :type ref_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_get_event_by_ref_id_serialize(
+            ref_id=ref_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2GetEventResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_get_event_by_ref_id_serialize(
+        self,
+        ref_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if ref_id is not None:
+            _path_params['refId'] = ref_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v2/events/{refId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_query_events(
+        self,
+        start_time: datetime,
+        end_time: datetime,
+        event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
+        cursor: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2QueryEventsResponse:
+        """Query events by timestamp period and optional event name (v2)
+
+        Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+
+        :param start_time: (required)
+        :type start_time: datetime
+        :param end_time: (required)
+        :type end_time: datetime
+        :param event_name:
+        :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
+        :param limit:
+        :type limit: float
+        :param cursor:
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_serialize(
+            start_time=start_time,
+            end_time=end_time,
+            event_name=event_name,
+            customer_alias=customer_alias,
+            limit=limit,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_query_events_with_http_info(
+        self,
+        start_time: datetime,
+        end_time: datetime,
+        event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
+        cursor: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2QueryEventsResponse]:
+        """Query events by timestamp period and optional event name (v2)
+
+        Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+
+        :param start_time: (required)
+        :type start_time: datetime
+        :param end_time: (required)
+        :type end_time: datetime
+        :param event_name:
+        :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
+        :param limit:
+        :type limit: float
+        :param cursor:
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_serialize(
+            start_time=start_time,
+            end_time=end_time,
+            event_name=event_name,
+            customer_alias=customer_alias,
+            limit=limit,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_query_events_without_preload_content(
+        self,
+        start_time: datetime,
+        end_time: datetime,
+        event_name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        customer_alias: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None,
+        limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
+        cursor: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Query events by timestamp period and optional event name (v2)
+
+        Fetch events occurring within a specified timestamp range via the events-service (ClickHouse-backed).
+
+        :param start_time: (required)
+        :type start_time: datetime
+        :param end_time: (required)
+        :type end_time: datetime
+        :param event_name:
+        :type event_name: str
+        :param customer_alias:
+        :type customer_alias: str
+        :param limit:
+        :type limit: float
+        :param cursor:
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_serialize(
+            start_time=start_time,
+            end_time=end_time,
+            event_name=event_name,
+            customer_alias=customer_alias,
+            limit=limit,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_query_events_serialize(
+        self,
+        start_time,
+        end_time,
+        event_name,
+        customer_alias,
+        limit,
+        cursor,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if start_time is not None:
+            if isinstance(start_time, datetime):
+                _query_params.append(
+                    (
+                        'startTime',
+                        start_time.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('startTime', start_time))
+            
+        if end_time is not None:
+            if isinstance(end_time, datetime):
+                _query_params.append(
+                    (
+                        'endTime',
+                        end_time.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('endTime', end_time))
+            
+        if event_name is not None:
+            
+            _query_params.append(('eventName', event_name))
+            
+        if customer_alias is not None:
+            
+            _query_params.append(('customerAlias', customer_alias))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if cursor is not None:
+            
+            _query_params.append(('cursor', cursor))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v2/events',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_query_events_aggregation(
+        self,
+        v2_query_events_aggregation_request: Annotated[V2QueryEventsAggregationRequest, Field(description="Configuration for aggregating events by meters and time grouping.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2QueryEventsAggregationResponse:
+        """Aggregate events (v2)
+
+        Aggregate events by meters and time grouping via the events-service.
+
+        :param v2_query_events_aggregation_request: Configuration for aggregating events by meters and time grouping. (required)
+        :type v2_query_events_aggregation_request: V2QueryEventsAggregationRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_aggregation_serialize(
+            v2_query_events_aggregation_request=v2_query_events_aggregation_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsAggregationResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_query_events_aggregation_with_http_info(
+        self,
+        v2_query_events_aggregation_request: Annotated[V2QueryEventsAggregationRequest, Field(description="Configuration for aggregating events by meters and time grouping.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2QueryEventsAggregationResponse]:
+        """Aggregate events (v2)
+
+        Aggregate events by meters and time grouping via the events-service.
+
+        :param v2_query_events_aggregation_request: Configuration for aggregating events by meters and time grouping. (required)
+        :type v2_query_events_aggregation_request: V2QueryEventsAggregationRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_aggregation_serialize(
+            v2_query_events_aggregation_request=v2_query_events_aggregation_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsAggregationResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_query_events_aggregation_without_preload_content(
+        self,
+        v2_query_events_aggregation_request: Annotated[V2QueryEventsAggregationRequest, Field(description="Configuration for aggregating events by meters and time grouping.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Aggregate events (v2)
+
+        Aggregate events by meters and time grouping via the events-service.
+
+        :param v2_query_events_aggregation_request: Configuration for aggregating events by meters and time grouping. (required)
+        :type v2_query_events_aggregation_request: V2QueryEventsAggregationRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_query_events_aggregation_serialize(
+            v2_query_events_aggregation_request=v2_query_events_aggregation_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2QueryEventsAggregationResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_query_events_aggregation_serialize(
+        self,
+        v2_query_events_aggregation_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if v2_query_events_aggregation_request is not None:
+            _body_params = v2_query_events_aggregation_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v2/events/aggregation',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_send_events(
+        self,
+        v2_send_events_request: Annotated[V2SendEventsRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2SendEventsResponse:
+        """Submit a batch of events for ingestion (v2)
+
+        Submit a batch of events for ingestion via the events-service.
+
+        :param v2_send_events_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_send_events_request: V2SendEventsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_serialize(
+            v2_send_events_request=v2_send_events_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2SendEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_send_events_with_http_info(
+        self,
+        v2_send_events_request: Annotated[V2SendEventsRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2SendEventsResponse]:
+        """Submit a batch of events for ingestion (v2)
+
+        Submit a batch of events for ingestion via the events-service.
+
+        :param v2_send_events_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_send_events_request: V2SendEventsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_serialize(
+            v2_send_events_request=v2_send_events_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2SendEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_send_events_without_preload_content(
+        self,
+        v2_send_events_request: Annotated[V2SendEventsRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Submit a batch of events for ingestion (v2)
+
+        Submit a batch of events for ingestion via the events-service.
+
+        :param v2_send_events_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_send_events_request: V2SendEventsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_serialize(
+            v2_send_events_request=v2_send_events_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2SendEventsResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_send_events_serialize(
+        self,
+        v2_send_events_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if v2_send_events_request is not None:
+            _body_params = v2_send_events_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v2/events',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def v2_send_events_dry_run(
+        self,
+        v2_events_dry_run_request: Annotated[V2EventsDryRunRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> V2EventsDryRunResponse:
+        """Submit a batch of events for testing (v2)
+
+        Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+
+        :param v2_events_dry_run_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_events_dry_run_request: V2EventsDryRunRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_dry_run_serialize(
+            v2_events_dry_run_request=v2_events_dry_run_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2EventsDryRunResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def v2_send_events_dry_run_with_http_info(
+        self,
+        v2_events_dry_run_request: Annotated[V2EventsDryRunRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[V2EventsDryRunResponse]:
+        """Submit a batch of events for testing (v2)
+
+        Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+
+        :param v2_events_dry_run_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_events_dry_run_request: V2EventsDryRunRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_dry_run_serialize(
+            v2_events_dry_run_request=v2_events_dry_run_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2EventsDryRunResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def v2_send_events_dry_run_without_preload_content(
+        self,
+        v2_events_dry_run_request: Annotated[V2EventsDryRunRequest, Field(description="An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Submit a batch of events for testing (v2)
+
+        Submit a batch of events for testing via the events-service. NOTE: this is a dry run and will not store the events.
+
+        :param v2_events_dry_run_request: An array of events following the EventInput schema. Up to 1000 events or a total payload max size of 256KB (required)
+        :type v2_events_dry_run_request: V2EventsDryRunRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._v2_send_events_dry_run_serialize(
+            v2_events_dry_run_request=v2_events_dry_run_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "V2EventsDryRunResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '413': "RequestTooLongErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _v2_send_events_dry_run_serialize(
+        self,
+        v2_events_dry_run_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if v2_events_dry_run_request is not None:
+            _body_params = v2_events_dry_run_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v2/events/dry-run',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

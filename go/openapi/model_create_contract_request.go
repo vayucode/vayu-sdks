@@ -50,6 +50,9 @@ type CreateContractRequest struct {
 	// The stored custom field values associated with the contract
 	CustomFieldValues []CustomFieldValue `json:"customFieldValues,omitempty"`
 	Status *ContractStatus `json:"status,omitempty"`
+	// The purchase order number of the contract
+	PurchaseOrder *string `json:"purchaseOrder,omitempty"`
+	Currency *Currency `json:"currency,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -544,6 +547,70 @@ func (o *CreateContractRequest) SetStatus(v ContractStatus) {
 	o.Status = &v
 }
 
+// GetPurchaseOrder returns the PurchaseOrder field value if set, zero value otherwise.
+func (o *CreateContractRequest) GetPurchaseOrder() string {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		var ret string
+		return ret
+	}
+	return *o.PurchaseOrder
+}
+
+// GetPurchaseOrderOk returns a tuple with the PurchaseOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateContractRequest) GetPurchaseOrderOk() (*string, bool) {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		return nil, false
+	}
+	return o.PurchaseOrder, true
+}
+
+// HasPurchaseOrder returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasPurchaseOrder() bool {
+	if o != nil && !IsNil(o.PurchaseOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetPurchaseOrder gets a reference to the given string and assigns it to the PurchaseOrder field.
+func (o *CreateContractRequest) SetPurchaseOrder(v string) {
+	o.PurchaseOrder = &v
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *CreateContractRequest) GetCurrency() Currency {
+	if o == nil || IsNil(o.Currency) {
+		var ret Currency
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateContractRequest) GetCurrencyOk() (*Currency, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given Currency and assigns it to the Currency field.
+func (o *CreateContractRequest) SetCurrency(v Currency) {
+	o.Currency = &v
+}
+
 func (o CreateContractRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -589,6 +656,12 @@ func (o CreateContractRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.PurchaseOrder) {
+		toSerialize["purchaseOrder"] = o.PurchaseOrder
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -649,6 +722,8 @@ func (o *CreateContractRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "customFields")
 		delete(additionalProperties, "customFieldValues")
 		delete(additionalProperties, "status")
+		delete(additionalProperties, "purchaseOrder")
+		delete(additionalProperties, "currency")
 		o.AdditionalProperties = additionalProperties
 	}
 

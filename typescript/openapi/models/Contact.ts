@@ -34,7 +34,7 @@ export class Contact {
             "name": "email",
             "baseName": "email",
             "type": "string",
-            "format": "email"
+            "format": ""
         },
         {
             "name": "title",

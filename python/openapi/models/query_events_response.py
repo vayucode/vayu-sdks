@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from openapi.models.query_events_response_events_inner import QueryEventsResponseEventsInner
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,9 +28,12 @@ class QueryEventsResponse(BaseModel):
     """
     QueryEventsResponse
     """ # noqa: E501
-    events: List[QueryEventsResponseEventsInner] = Field(description="An array of events matching the query criteria")
+    events: List[QueryEventsResponseEventsInner]
+    total: Union[StrictFloat, StrictInt]
+    has_more: StrictBool = Field(alias="hasMore")
+    next_cursor: Optional[StrictStr] = Field(default=None, alias="nextCursor")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["events"]
+    __properties: ClassVar[List[str]] = ["events", "total", "hasMore", "nextCursor"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,7 +100,10 @@ class QueryEventsResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "events": [QueryEventsResponseEventsInner.from_dict(_item) for _item in obj["events"]] if obj.get("events") is not None else None
+            "events": [QueryEventsResponseEventsInner.from_dict(_item) for _item in obj["events"]] if obj.get("events") is not None else None,
+            "total": obj.get("total"),
+            "hasMore": obj.get("hasMore"),
+            "nextCursor": obj.get("nextCursor")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

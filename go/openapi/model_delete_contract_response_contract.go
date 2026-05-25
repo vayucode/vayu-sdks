@@ -50,6 +50,9 @@ type DeleteContractResponseContract struct {
 	// The stored custom field values associated with the contract
 	CustomFieldValues []CustomFieldValue `json:"customFieldValues,omitempty"`
 	Status *ContractStatus `json:"status,omitempty"`
+	// The purchase order number of the contract
+	PurchaseOrder *string `json:"purchaseOrder,omitempty"`
+	Currency *Currency `json:"currency,omitempty"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -552,6 +555,70 @@ func (o *DeleteContractResponseContract) SetStatus(v ContractStatus) {
 	o.Status = &v
 }
 
+// GetPurchaseOrder returns the PurchaseOrder field value if set, zero value otherwise.
+func (o *DeleteContractResponseContract) GetPurchaseOrder() string {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		var ret string
+		return ret
+	}
+	return *o.PurchaseOrder
+}
+
+// GetPurchaseOrderOk returns a tuple with the PurchaseOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteContractResponseContract) GetPurchaseOrderOk() (*string, bool) {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		return nil, false
+	}
+	return o.PurchaseOrder, true
+}
+
+// HasPurchaseOrder returns a boolean if a field has been set.
+func (o *DeleteContractResponseContract) HasPurchaseOrder() bool {
+	if o != nil && !IsNil(o.PurchaseOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetPurchaseOrder gets a reference to the given string and assigns it to the PurchaseOrder field.
+func (o *DeleteContractResponseContract) SetPurchaseOrder(v string) {
+	o.PurchaseOrder = &v
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *DeleteContractResponseContract) GetCurrency() Currency {
+	if o == nil || IsNil(o.Currency) {
+		var ret Currency
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteContractResponseContract) GetCurrencyOk() (*Currency, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *DeleteContractResponseContract) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given Currency and assigns it to the Currency field.
+func (o *DeleteContractResponseContract) SetCurrency(v Currency) {
+	o.Currency = &v
+}
+
 // GetId returns the Id field value
 func (o *DeleteContractResponseContract) GetId() string {
 	if o == nil {
@@ -694,6 +761,12 @@ func (o DeleteContractResponseContract) ToMap() (map[string]interface{}, error) 
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
+	if !IsNil(o.PurchaseOrder) {
+		toSerialize["purchaseOrder"] = o.PurchaseOrder
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -761,6 +834,8 @@ func (o *DeleteContractResponseContract) UnmarshalJSON(data []byte) (err error) 
 		delete(additionalProperties, "customFields")
 		delete(additionalProperties, "customFieldValues")
 		delete(additionalProperties, "status")
+		delete(additionalProperties, "purchaseOrder")
+		delete(additionalProperties, "currency")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

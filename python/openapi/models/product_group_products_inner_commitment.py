@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.external_overage_strategy import ExternalOverageStrategy
@@ -32,10 +32,21 @@ class ProductGroupProductsInnerCommitment(BaseModel):
     """ # noqa: E501
     units: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Units to commit the customer for")
     price: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Price to charge the customer for the committed units")
+    type: Optional[StrictStr] = Field(default='UNITS', description="The type of commitment. UNITS means the commitment amount is in units, PRICE means it is a monetary value. Defaults to UNITS.")
     scheduling: Optional[ProductGroupProductsInnerCommitmentScheduling] = None
     overage_strategy: Optional[ExternalOverageStrategy] = Field(default=ExternalOverageStrategy.IGNORE, alias="overageStrategy")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["units", "price", "scheduling", "overageStrategy"]
+    __properties: ClassVar[List[str]] = ["units", "price", "type", "scheduling", "overageStrategy"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['PRICE', 'UNITS']):
+            raise ValueError("must be one of enum values ('PRICE', 'UNITS')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -115,6 +126,7 @@ class ProductGroupProductsInnerCommitment(BaseModel):
         _obj = cls.model_validate({
             "units": obj.get("units"),
             "price": obj.get("price"),
+            "type": obj.get("type") if obj.get("type") is not None else 'UNITS',
             "scheduling": ProductGroupProductsInnerCommitmentScheduling.from_dict(obj["scheduling"]) if obj.get("scheduling") is not None else None,
             "overageStrategy": obj.get("overageStrategy") if obj.get("overageStrategy") is not None else ExternalOverageStrategy.IGNORE
         })

@@ -8,6 +8,11 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
+import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
+import { RequestTooLongErrorResponse } from '../models/RequestTooLongErrorResponse';
+import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
+import { ValidationErrorResponse } from '../models/ValidationErrorResponse';
 import { WebhookSubscribeRequest } from '../models/WebhookSubscribeRequest';
 
 /**
@@ -80,16 +85,39 @@ export class WebhooksApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
         }
         if (isCodeInRange("400", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+            const body: ValidationErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ValidationErrorResponse", ""
+            ) as ValidationErrorResponse;
+            throw new ApiException<ValidationErrorResponse>(response.httpStatusCode, "Bad Request", body, response.headers);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+            const body: UnauthorizedErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "UnauthorizedErrorResponse", ""
+            ) as UnauthorizedErrorResponse;
+            throw new ApiException<UnauthorizedErrorResponse>(response.httpStatusCode, "Unauthorized", body, response.headers);
+        }
+        if (isCodeInRange("413", response.httpStatusCode)) {
+            const body: RequestTooLongErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RequestTooLongErrorResponse", ""
+            ) as RequestTooLongErrorResponse;
+            throw new ApiException<RequestTooLongErrorResponse>(response.httpStatusCode, "Request Entity Too Large", body, response.headers);
         }
         if (isCodeInRange("429", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+            const body: RateLimitErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RateLimitErrorResponse", ""
+            ) as RateLimitErrorResponse;
+            throw new ApiException<RateLimitErrorResponse>(response.httpStatusCode, "Too Many Requests", body, response.headers);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+            const body: InternalServerErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "InternalServerErrorResponse", ""
+            ) as InternalServerErrorResponse;
+            throw new ApiException<InternalServerErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

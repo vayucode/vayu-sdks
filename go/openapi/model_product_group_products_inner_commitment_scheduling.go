@@ -19,11 +19,11 @@ import (
 // checks if the ProductGroupProductsInnerCommitmentScheduling type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ProductGroupProductsInnerCommitmentScheduling{}
 
-// ProductGroupProductsInnerCommitmentScheduling Scheduling in case of recurring commitment
+// ProductGroupProductsInnerCommitmentScheduling Scheduling for recurring commitment. Duration unit must be MONTH or YEAR.
 type ProductGroupProductsInnerCommitmentScheduling struct {
-	// The day of the month that the product is billed
+	// The day of the month for the commitment scheduling
 	BillingDay *int32 `json:"billingDay,omitempty"`
-	Duration ProductGroupProductsInnerSchedulingDuration `json:"duration"`
+	Duration ProductGroupProductsInnerCommitmentSchedulingDuration `json:"duration"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -33,7 +33,7 @@ type _ProductGroupProductsInnerCommitmentScheduling ProductGroupProductsInnerCom
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProductGroupProductsInnerCommitmentScheduling(duration ProductGroupProductsInnerSchedulingDuration) *ProductGroupProductsInnerCommitmentScheduling {
+func NewProductGroupProductsInnerCommitmentScheduling(duration ProductGroupProductsInnerCommitmentSchedulingDuration) *ProductGroupProductsInnerCommitmentScheduling {
 	this := ProductGroupProductsInnerCommitmentScheduling{}
 	var billingDay int32 = 1
 	this.BillingDay = &billingDay
@@ -84,9 +84,9 @@ func (o *ProductGroupProductsInnerCommitmentScheduling) SetBillingDay(v int32) {
 }
 
 // GetDuration returns the Duration field value
-func (o *ProductGroupProductsInnerCommitmentScheduling) GetDuration() ProductGroupProductsInnerSchedulingDuration {
+func (o *ProductGroupProductsInnerCommitmentScheduling) GetDuration() ProductGroupProductsInnerCommitmentSchedulingDuration {
 	if o == nil {
-		var ret ProductGroupProductsInnerSchedulingDuration
+		var ret ProductGroupProductsInnerCommitmentSchedulingDuration
 		return ret
 	}
 
@@ -95,7 +95,7 @@ func (o *ProductGroupProductsInnerCommitmentScheduling) GetDuration() ProductGro
 
 // GetDurationOk returns a tuple with the Duration field value
 // and a boolean to check if the value has been set.
-func (o *ProductGroupProductsInnerCommitmentScheduling) GetDurationOk() (*ProductGroupProductsInnerSchedulingDuration, bool) {
+func (o *ProductGroupProductsInnerCommitmentScheduling) GetDurationOk() (*ProductGroupProductsInnerCommitmentSchedulingDuration, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -103,7 +103,7 @@ func (o *ProductGroupProductsInnerCommitmentScheduling) GetDurationOk() (*Produc
 }
 
 // SetDuration sets field value
-func (o *ProductGroupProductsInnerCommitmentScheduling) SetDuration(v ProductGroupProductsInnerSchedulingDuration) {
+func (o *ProductGroupProductsInnerCommitmentScheduling) SetDuration(v ProductGroupProductsInnerCommitmentSchedulingDuration) {
 	o.Duration = v
 }
 

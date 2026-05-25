@@ -8,7 +8,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | 
 **price** | **float** |  | 
-**installments** | [**List[ProductGroupProductsInnerPricingOneOf1InstallmentsInner]**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
+**discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
+**is_credit_purchase** | **bool** | Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false. | [optional] 
+**installments** | **int** | The number of installments to spread the deduction over | [optional] 
 **subscription_cadence** | [**ProductGroupProductsInnerPricingOneOf3SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md) |  | 
 **tiers** | [**List[ProductGroupProductsInnerPricingOneOf3TiersInner]**](ProductGroupProductsInnerPricingOneOf3TiersInner.md) |  | 
 **auto_upgrade** | **bool** |  | [optional] 
@@ -17,6 +19,8 @@ Name | Type | Description | Notes
 **base_amount** | **float** |  | [optional] 
 **usage_reset** | **int** | Usage reset is represented in months and must be one of: 1, 2, 3, 6, 12 | [optional] 
 **chunk_size** | **float** |  | [optional] 
+**amount_to_deduct** | **float** | The fixed amount to deduct | 
+**percentage_to_deduct** | **float** | The percentage to deduct | 
 
 ## Example
 

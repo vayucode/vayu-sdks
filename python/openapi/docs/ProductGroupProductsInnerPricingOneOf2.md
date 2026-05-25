@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **price** | **float** |  | 
 **subscription_cadence** | [**ProductGroupProductsInnerPricingOneOf2SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.md) |  | 
+**discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 
 ## Example
 

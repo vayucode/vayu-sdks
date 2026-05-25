@@ -99,11 +99,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -171,11 +171,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -243,11 +243,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DeleteMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -375,11 +375,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -447,11 +447,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -519,11 +519,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -655,10 +655,10 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMetersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -730,10 +730,10 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMetersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -805,10 +805,10 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMetersResponse",
-            '400': None,
-            '401': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -947,11 +947,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1023,11 +1023,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1099,11 +1099,11 @@ class MetersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateMeterResponse",
-            '400': None,
-            '401': None,
-            '404': None,
-            '429': None,
-            '500': None,
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,

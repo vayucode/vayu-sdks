@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
 **SubscriptionCadence** | [**ProductGroupProductsInnerPricingOneOf2SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.md) |  | 
+**Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 
 ## Methods
 
@@ -87,6 +88,41 @@ and a boolean to check if the value has been set.
 SetSubscriptionCadence sets SubscriptionCadence field to given value.
 
 
+### GetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount`
+
+GetDiscount returns the Discount field if non-nil, zero value otherwise.
+
+### GetDiscountOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool)`
+
+GetDiscountOk returns a tuple with the Discount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount)`
+
+SetDiscount sets Discount field to given value.
+
+### HasDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) HasDiscount() bool`
+
+HasDiscount returns a boolean if a field has been set.
+
+### SetDiscountNil
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) SetDiscountNil(b bool)`
+
+ SetDiscountNil sets the value for Discount to be an explicit nil
+
+### UnsetDiscount
+`func (o *ProductGroupProductsInnerPricingOneOf2) UnsetDiscount()`
+
+UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

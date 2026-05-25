@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **units** | **float** | Units to commit the customer for | 
 **price** | **float** | Price to charge the customer for the committed units | [optional] 
+**type** | **str** | The type of commitment. UNITS means the commitment amount is in units, PRICE means it is a monetary value. Defaults to UNITS. | [optional] [default to 'UNITS']
 **scheduling** | [**ProductGroupProductsInnerCommitmentScheduling**](ProductGroupProductsInnerCommitmentScheduling.md) |  | [optional] 
 **overage_strategy** | [**ExternalOverageStrategy**](ExternalOverageStrategy.md) |  | [optional] [default to ExternalOverageStrategy.IGNORE]
 
