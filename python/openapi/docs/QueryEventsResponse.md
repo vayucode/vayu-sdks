@@ -5,7 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**events** | [**List[QueryEventsResponseEventsInner]**](QueryEventsResponseEventsInner.md) | An array of events matching the query criteria | 
+**events** | [**List[QueryEventsResponseEventsInner]**](QueryEventsResponseEventsInner.md) |  | 
+**total** | **float** |  | 
+**has_more** | **bool** |  | 
+**next_cursor** | **str** |  | [optional] 
 
 ## Example
 

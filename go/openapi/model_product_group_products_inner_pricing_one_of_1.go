@@ -24,6 +24,7 @@ type ProductGroupProductsInnerPricingOneOf1 struct {
 	Type string `json:"type"`
 	Price float32 `json:"price"`
 	Installments []ProductGroupProductsInnerPricingOneOf1InstallmentsInner `json:"installments,omitempty"`
+	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -129,6 +130,48 @@ func (o *ProductGroupProductsInnerPricingOneOf1) SetInstallments(v []ProductGrou
 	o.Installments = v
 }
 
+// GetDiscount returns the Discount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInnerPricingOneOf1) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount {
+	if o == nil || IsNil(o.Discount.Get()) {
+		var ret ProductGroupProductsInnerPricingOneOfDiscount
+		return ret
+	}
+	return *o.Discount.Get()
+}
+
+// GetDiscountOk returns a tuple with the Discount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInnerPricingOneOf1) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Discount.Get(), o.Discount.IsSet()
+}
+
+// HasDiscount returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf1) HasDiscount() bool {
+	if o != nil && o.Discount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscount gets a reference to the given NullableProductGroupProductsInnerPricingOneOfDiscount and assigns it to the Discount field.
+func (o *ProductGroupProductsInnerPricingOneOf1) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount) {
+	o.Discount.Set(&v)
+}
+// SetDiscountNil sets the value for Discount to be an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf1) SetDiscountNil() {
+	o.Discount.Set(nil)
+}
+
+// UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf1) UnsetDiscount() {
+	o.Discount.Unset()
+}
+
 func (o ProductGroupProductsInnerPricingOneOf1) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -143,6 +186,9 @@ func (o ProductGroupProductsInnerPricingOneOf1) ToMap() (map[string]interface{},
 	toSerialize["price"] = o.Price
 	if o.Installments != nil {
 		toSerialize["installments"] = o.Installments
+	}
+	if o.Discount.IsSet() {
+		toSerialize["discount"] = o.Discount.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -191,6 +237,7 @@ func (o *ProductGroupProductsInnerPricingOneOf1) UnmarshalJSON(data []byte) (err
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "price")
 		delete(additionalProperties, "installments")
+		delete(additionalProperties, "discount")
 		o.AdditionalProperties = additionalProperties
 	}
 

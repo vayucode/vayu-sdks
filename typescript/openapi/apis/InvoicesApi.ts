@@ -9,8 +9,13 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
+import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
+import { NotFoundErrorResponse } from '../models/NotFoundErrorResponse';
+import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
+import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
+import { ValidationErrorResponse } from '../models/ValidationErrorResponse';
 
 /**
  * no description
@@ -165,19 +170,39 @@ export class InvoicesApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("400", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+            const body: ValidationErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ValidationErrorResponse", ""
+            ) as ValidationErrorResponse;
+            throw new ApiException<ValidationErrorResponse>(response.httpStatusCode, "Bad Request", body, response.headers);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+            const body: UnauthorizedErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "UnauthorizedErrorResponse", ""
+            ) as UnauthorizedErrorResponse;
+            throw new ApiException<UnauthorizedErrorResponse>(response.httpStatusCode, "Unauthorized", body, response.headers);
         }
         if (isCodeInRange("404", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Not Found", undefined, response.headers);
+            const body: NotFoundErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "NotFoundErrorResponse", ""
+            ) as NotFoundErrorResponse;
+            throw new ApiException<NotFoundErrorResponse>(response.httpStatusCode, "Not Found", body, response.headers);
         }
         if (isCodeInRange("429", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+            const body: RateLimitErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RateLimitErrorResponse", ""
+            ) as RateLimitErrorResponse;
+            throw new ApiException<RateLimitErrorResponse>(response.httpStatusCode, "Too Many Requests", body, response.headers);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+            const body: InternalServerErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "InternalServerErrorResponse", ""
+            ) as InternalServerErrorResponse;
+            throw new ApiException<InternalServerErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
@@ -209,16 +234,32 @@ export class InvoicesApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("400", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+            const body: ValidationErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ValidationErrorResponse", ""
+            ) as ValidationErrorResponse;
+            throw new ApiException<ValidationErrorResponse>(response.httpStatusCode, "Bad Request", body, response.headers);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+            const body: UnauthorizedErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "UnauthorizedErrorResponse", ""
+            ) as UnauthorizedErrorResponse;
+            throw new ApiException<UnauthorizedErrorResponse>(response.httpStatusCode, "Unauthorized", body, response.headers);
         }
         if (isCodeInRange("429", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+            const body: RateLimitErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RateLimitErrorResponse", ""
+            ) as RateLimitErrorResponse;
+            throw new ApiException<RateLimitErrorResponse>(response.httpStatusCode, "Too Many Requests", body, response.headers);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+            const body: InternalServerErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "InternalServerErrorResponse", ""
+            ) as InternalServerErrorResponse;
+            throw new ApiException<InternalServerErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
@@ -250,16 +291,32 @@ export class InvoicesApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("400", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Bad Request", undefined, response.headers);
+            const body: ValidationErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ValidationErrorResponse", ""
+            ) as ValidationErrorResponse;
+            throw new ApiException<ValidationErrorResponse>(response.httpStatusCode, "Bad Request", body, response.headers);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized", undefined, response.headers);
+            const body: UnauthorizedErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "UnauthorizedErrorResponse", ""
+            ) as UnauthorizedErrorResponse;
+            throw new ApiException<UnauthorizedErrorResponse>(response.httpStatusCode, "Unauthorized", body, response.headers);
         }
         if (isCodeInRange("429", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Too Many Requests", undefined, response.headers);
+            const body: RateLimitErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RateLimitErrorResponse", ""
+            ) as RateLimitErrorResponse;
+            throw new ApiException<RateLimitErrorResponse>(response.httpStatusCode, "Too Many Requests", body, response.headers);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
-            throw new ApiException<undefined>(response.httpStatusCode, "Internal Server Error", undefined, response.headers);
+            const body: InternalServerErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "InternalServerErrorResponse", ""
+            ) as InternalServerErrorResponse;
+            throw new ApiException<InternalServerErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

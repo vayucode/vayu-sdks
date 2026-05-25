@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
 **Installments** | Pointer to [**[]ProductGroupProductsInnerPricingOneOf1InstallmentsInner**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
+**Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 
 ## Methods
 
@@ -102,6 +103,41 @@ HasInstallments returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInnerPricingOneOf1) UnsetInstallments()`
 
 UnsetInstallments ensures that no value is present for Installments, not even an explicit nil
+### GetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount`
+
+GetDiscount returns the Discount field if non-nil, zero value otherwise.
+
+### GetDiscountOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool)`
+
+GetDiscountOk returns a tuple with the Discount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount)`
+
+SetDiscount sets Discount field to given value.
+
+### HasDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) HasDiscount() bool`
+
+HasDiscount returns a boolean if a field has been set.
+
+### SetDiscountNil
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) SetDiscountNil(b bool)`
+
+ SetDiscountNil sets the value for Discount to be an explicit nil
+
+### UnsetDiscount
+`func (o *ProductGroupProductsInnerPricingOneOf1) UnsetDiscount()`
+
+UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

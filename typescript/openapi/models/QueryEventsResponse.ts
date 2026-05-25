@@ -14,10 +14,10 @@ import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEve
 import { HttpFile } from '../http/http';
 
 export class QueryEventsResponse {
-    /**
-    * An array of events matching the query criteria
-    */
     'events': Array<QueryEventsResponseEventsInner>;
+    'total': number;
+    'hasMore': boolean;
+    'nextCursor'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -28,6 +28,24 @@ export class QueryEventsResponse {
             "name": "events",
             "baseName": "events",
             "type": "Array<QueryEventsResponseEventsInner>",
+            "format": ""
+        },
+        {
+            "name": "total",
+            "baseName": "total",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "hasMore",
+            "baseName": "hasMore",
+            "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "nextCursor",
+            "baseName": "nextCursor",
+            "type": "string",
             "format": ""
         }    ];
 

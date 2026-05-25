@@ -48,11 +48,13 @@ class GetContractResponseContract(BaseModel):
     custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
     custom_field_values: Optional[List[CustomFieldValue]] = Field(default=None, description="The stored custom field values associated with the contract", alias="customFieldValues")
     status: Optional[ContractStatus] = None
+    purchase_order: Optional[StrictStr] = Field(default=None, description="The purchase order number of the contract", alias="purchaseOrder")
+    currency: Optional[Any] = None
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "purchaseOrder", "currency", "id", "createdAt", "updatedAt"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
@@ -130,6 +132,9 @@ class GetContractResponseContract(BaseModel):
                 if _item_custom_field_values:
                     _items.append(_item_custom_field_values.to_dict())
             _dict['customFieldValues'] = _items
+        # override the default output from pydantic by calling `to_dict()` of currency
+        if self.currency:
+            _dict['currency'] = self.currency.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -191,6 +196,8 @@ class GetContractResponseContract(BaseModel):
             "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,
             "customFieldValues": [CustomFieldValue.from_dict(_item) for _item in obj["customFieldValues"]] if obj.get("customFieldValues") is not None else None,
             "status": obj.get("status"),
+            "purchaseOrder": obj.get("purchaseOrder"),
+            "currency": Currency.from_dict(obj["currency"]) if obj.get("currency") is not None else None,
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")

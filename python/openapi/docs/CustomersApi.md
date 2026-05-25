@@ -427,6 +427,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided externalId |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -512,6 +513,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided integration id |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -594,6 +596,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided name |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -676,6 +679,7 @@ Name | Type | Description  | Notes
 **200** | response contains the products consumptions by the customer id |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -758,6 +762,7 @@ Name | Type | Description  | Notes
 **200** | response contains the products consumptions by the customer alias |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 

@@ -18,5 +18,6 @@ import { HttpFile } from '../http/http';
 export enum CustomFieldValueTypes {
     String = 'String',
     Number = 'Number',
-    Boolean = 'Boolean'
+    Boolean = 'Boolean',
+    Enum = 'Enum'
 }

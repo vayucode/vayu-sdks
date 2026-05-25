@@ -25,6 +25,8 @@ type ProductGroupProductsInnerCommitment struct {
 	Units float32 `json:"units"`
 	// Price to charge the customer for the committed units
 	Price NullableFloat32 `json:"price,omitempty"`
+	// The type of commitment. UNITS means the commitment amount is in units, PRICE means it is a monetary value. Defaults to UNITS.
+	Type *string `json:"type,omitempty"`
 	Scheduling NullableProductGroupProductsInnerCommitmentScheduling `json:"scheduling,omitempty"`
 	OverageStrategy NullableExternalOverageStrategy `json:"overageStrategy,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -39,6 +41,8 @@ type _ProductGroupProductsInnerCommitment ProductGroupProductsInnerCommitment
 func NewProductGroupProductsInnerCommitment(units float32) *ProductGroupProductsInnerCommitment {
 	this := ProductGroupProductsInnerCommitment{}
 	this.Units = units
+	var type_ string = "UNITS"
+	this.Type = &type_
 	var overageStrategy ExternalOverageStrategy = EXTERNALOVERAGESTRATEGY_IGNORE
 	this.OverageStrategy = *NewNullableExternalOverageStrategy(&overageStrategy)
 	return &this
@@ -49,6 +53,8 @@ func NewProductGroupProductsInnerCommitment(units float32) *ProductGroupProducts
 // but it doesn't guarantee that properties required by API are set
 func NewProductGroupProductsInnerCommitmentWithDefaults() *ProductGroupProductsInnerCommitment {
 	this := ProductGroupProductsInnerCommitment{}
+	var type_ string = "UNITS"
+	this.Type = &type_
 	var overageStrategy ExternalOverageStrategy = EXTERNALOVERAGESTRATEGY_IGNORE
 	this.OverageStrategy = *NewNullableExternalOverageStrategy(&overageStrategy)
 	return &this
@@ -118,6 +124,38 @@ func (o *ProductGroupProductsInnerCommitment) SetPriceNil() {
 // UnsetPrice ensures that no value is present for Price, not even an explicit nil
 func (o *ProductGroupProductsInnerCommitment) UnsetPrice() {
 	o.Price.Unset()
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *ProductGroupProductsInnerCommitment) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductGroupProductsInnerCommitment) GetTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerCommitment) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
+func (o *ProductGroupProductsInnerCommitment) SetType(v string) {
+	o.Type = &v
 }
 
 // GetScheduling returns the Scheduling field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -218,6 +256,9 @@ func (o ProductGroupProductsInnerCommitment) ToMap() (map[string]interface{}, er
 	if o.Price.IsSet() {
 		toSerialize["price"] = o.Price.Get()
 	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
 	if o.Scheduling.IsSet() {
 		toSerialize["scheduling"] = o.Scheduling.Get()
 	}
@@ -269,6 +310,7 @@ func (o *ProductGroupProductsInnerCommitment) UnmarshalJSON(data []byte) (err er
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "units")
 		delete(additionalProperties, "price")
+		delete(additionalProperties, "type")
 		delete(additionalProperties, "scheduling")
 		delete(additionalProperties, "overageStrategy")
 		o.AdditionalProperties = additionalProperties

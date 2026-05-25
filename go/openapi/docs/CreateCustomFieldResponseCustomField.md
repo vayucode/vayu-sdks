@@ -1,0 +1,286 @@
+# CreateCustomFieldResponseCustomField
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**VayuEntity** | [**CustomFieldEntities**](CustomFieldEntities.md) |  | 
+**VayuCustomFieldName** | **string** | The name of the custom field in Vayu | 
+**ValueType** | [**CustomFieldValueTypes**](CustomFieldValueTypes.md) |  | 
+**IntegrationSource** | Pointer to **string** | The integration provider (e.g., \&quot;Salesforce\&quot;, \&quot;HubSpot\&quot;) | [optional] 
+**IntegrationEntityType** | Pointer to [**IntegrationEntityTypes**](IntegrationEntityTypes.md) |  | [optional] 
+**FieldPath** | Pointer to **string** | The path to the field in the integration | [optional] 
+**AllowedValues** | Pointer to **[]string** | Allowed values for Enum type fields | [optional] 
+**DefaultValue** | Pointer to **string** | Default value for Enum type fields. Must be one of allowedValues. | [optional] 
+**Id** | **string** |  | 
+**CreatedAt** | **time.Time** |  | 
+**UpdatedAt** | **time.Time** |  | 
+
+## Methods
+
+### NewCreateCustomFieldResponseCustomField
+
+`func NewCreateCustomFieldResponseCustomField(vayuEntity CustomFieldEntities, vayuCustomFieldName string, valueType CustomFieldValueTypes, id string, createdAt time.Time, updatedAt time.Time, ) *CreateCustomFieldResponseCustomField`
+
+NewCreateCustomFieldResponseCustomField instantiates a new CreateCustomFieldResponseCustomField object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewCreateCustomFieldResponseCustomFieldWithDefaults
+
+`func NewCreateCustomFieldResponseCustomFieldWithDefaults() *CreateCustomFieldResponseCustomField`
+
+NewCreateCustomFieldResponseCustomFieldWithDefaults instantiates a new CreateCustomFieldResponseCustomField object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetVayuEntity
+
+`func (o *CreateCustomFieldResponseCustomField) GetVayuEntity() CustomFieldEntities`
+
+GetVayuEntity returns the VayuEntity field if non-nil, zero value otherwise.
+
+### GetVayuEntityOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetVayuEntityOk() (*CustomFieldEntities, bool)`
+
+GetVayuEntityOk returns a tuple with the VayuEntity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVayuEntity
+
+`func (o *CreateCustomFieldResponseCustomField) SetVayuEntity(v CustomFieldEntities)`
+
+SetVayuEntity sets VayuEntity field to given value.
+
+
+### GetVayuCustomFieldName
+
+`func (o *CreateCustomFieldResponseCustomField) GetVayuCustomFieldName() string`
+
+GetVayuCustomFieldName returns the VayuCustomFieldName field if non-nil, zero value otherwise.
+
+### GetVayuCustomFieldNameOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetVayuCustomFieldNameOk() (*string, bool)`
+
+GetVayuCustomFieldNameOk returns a tuple with the VayuCustomFieldName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVayuCustomFieldName
+
+`func (o *CreateCustomFieldResponseCustomField) SetVayuCustomFieldName(v string)`
+
+SetVayuCustomFieldName sets VayuCustomFieldName field to given value.
+
+
+### GetValueType
+
+`func (o *CreateCustomFieldResponseCustomField) GetValueType() CustomFieldValueTypes`
+
+GetValueType returns the ValueType field if non-nil, zero value otherwise.
+
+### GetValueTypeOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetValueTypeOk() (*CustomFieldValueTypes, bool)`
+
+GetValueTypeOk returns a tuple with the ValueType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValueType
+
+`func (o *CreateCustomFieldResponseCustomField) SetValueType(v CustomFieldValueTypes)`
+
+SetValueType sets ValueType field to given value.
+
+
+### GetIntegrationSource
+
+`func (o *CreateCustomFieldResponseCustomField) GetIntegrationSource() string`
+
+GetIntegrationSource returns the IntegrationSource field if non-nil, zero value otherwise.
+
+### GetIntegrationSourceOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetIntegrationSourceOk() (*string, bool)`
+
+GetIntegrationSourceOk returns a tuple with the IntegrationSource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrationSource
+
+`func (o *CreateCustomFieldResponseCustomField) SetIntegrationSource(v string)`
+
+SetIntegrationSource sets IntegrationSource field to given value.
+
+### HasIntegrationSource
+
+`func (o *CreateCustomFieldResponseCustomField) HasIntegrationSource() bool`
+
+HasIntegrationSource returns a boolean if a field has been set.
+
+### GetIntegrationEntityType
+
+`func (o *CreateCustomFieldResponseCustomField) GetIntegrationEntityType() IntegrationEntityTypes`
+
+GetIntegrationEntityType returns the IntegrationEntityType field if non-nil, zero value otherwise.
+
+### GetIntegrationEntityTypeOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetIntegrationEntityTypeOk() (*IntegrationEntityTypes, bool)`
+
+GetIntegrationEntityTypeOk returns a tuple with the IntegrationEntityType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrationEntityType
+
+`func (o *CreateCustomFieldResponseCustomField) SetIntegrationEntityType(v IntegrationEntityTypes)`
+
+SetIntegrationEntityType sets IntegrationEntityType field to given value.
+
+### HasIntegrationEntityType
+
+`func (o *CreateCustomFieldResponseCustomField) HasIntegrationEntityType() bool`
+
+HasIntegrationEntityType returns a boolean if a field has been set.
+
+### GetFieldPath
+
+`func (o *CreateCustomFieldResponseCustomField) GetFieldPath() string`
+
+GetFieldPath returns the FieldPath field if non-nil, zero value otherwise.
+
+### GetFieldPathOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetFieldPathOk() (*string, bool)`
+
+GetFieldPathOk returns a tuple with the FieldPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFieldPath
+
+`func (o *CreateCustomFieldResponseCustomField) SetFieldPath(v string)`
+
+SetFieldPath sets FieldPath field to given value.
+
+### HasFieldPath
+
+`func (o *CreateCustomFieldResponseCustomField) HasFieldPath() bool`
+
+HasFieldPath returns a boolean if a field has been set.
+
+### GetAllowedValues
+
+`func (o *CreateCustomFieldResponseCustomField) GetAllowedValues() []string`
+
+GetAllowedValues returns the AllowedValues field if non-nil, zero value otherwise.
+
+### GetAllowedValuesOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetAllowedValuesOk() (*[]string, bool)`
+
+GetAllowedValuesOk returns a tuple with the AllowedValues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedValues
+
+`func (o *CreateCustomFieldResponseCustomField) SetAllowedValues(v []string)`
+
+SetAllowedValues sets AllowedValues field to given value.
+
+### HasAllowedValues
+
+`func (o *CreateCustomFieldResponseCustomField) HasAllowedValues() bool`
+
+HasAllowedValues returns a boolean if a field has been set.
+
+### GetDefaultValue
+
+`func (o *CreateCustomFieldResponseCustomField) GetDefaultValue() string`
+
+GetDefaultValue returns the DefaultValue field if non-nil, zero value otherwise.
+
+### GetDefaultValueOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetDefaultValueOk() (*string, bool)`
+
+GetDefaultValueOk returns a tuple with the DefaultValue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultValue
+
+`func (o *CreateCustomFieldResponseCustomField) SetDefaultValue(v string)`
+
+SetDefaultValue sets DefaultValue field to given value.
+
+### HasDefaultValue
+
+`func (o *CreateCustomFieldResponseCustomField) HasDefaultValue() bool`
+
+HasDefaultValue returns a boolean if a field has been set.
+
+### GetId
+
+`func (o *CreateCustomFieldResponseCustomField) GetId() string`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetIdOk() (*string, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *CreateCustomFieldResponseCustomField) SetId(v string)`
+
+SetId sets Id field to given value.
+
+
+### GetCreatedAt
+
+`func (o *CreateCustomFieldResponseCustomField) GetCreatedAt() time.Time`
+
+GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
+
+### GetCreatedAtOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetCreatedAtOk() (*time.Time, bool)`
+
+GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedAt
+
+`func (o *CreateCustomFieldResponseCustomField) SetCreatedAt(v time.Time)`
+
+SetCreatedAt sets CreatedAt field to given value.
+
+
+### GetUpdatedAt
+
+`func (o *CreateCustomFieldResponseCustomField) GetUpdatedAt() time.Time`
+
+GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+
+### GetUpdatedAtOk
+
+`func (o *CreateCustomFieldResponseCustomField) GetUpdatedAtOk() (*time.Time, bool)`
+
+GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedAt
+
+`func (o *CreateCustomFieldResponseCustomField) SetUpdatedAt(v time.Time)`
+
+SetUpdatedAt sets UpdatedAt field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

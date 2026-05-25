@@ -18,6 +18,8 @@ Name | Type | Description | Notes
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
 **CustomFieldValues** | Pointer to [**[]CustomFieldValue**](CustomFieldValue.md) | The stored custom field values associated with the contract | [optional] 
 **Status** | Pointer to [**ContractStatus**](ContractStatus.md) |  | [optional] 
+**PurchaseOrder** | Pointer to **string** | The purchase order number of the contract | [optional] 
+**Currency** | Pointer to [**Currency**](Currency.md) |  | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -435,6 +437,56 @@ SetStatus sets Status field to given value.
 `func (o *GetContractResponseContract) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetPurchaseOrder
+
+`func (o *GetContractResponseContract) GetPurchaseOrder() string`
+
+GetPurchaseOrder returns the PurchaseOrder field if non-nil, zero value otherwise.
+
+### GetPurchaseOrderOk
+
+`func (o *GetContractResponseContract) GetPurchaseOrderOk() (*string, bool)`
+
+GetPurchaseOrderOk returns a tuple with the PurchaseOrder field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPurchaseOrder
+
+`func (o *GetContractResponseContract) SetPurchaseOrder(v string)`
+
+SetPurchaseOrder sets PurchaseOrder field to given value.
+
+### HasPurchaseOrder
+
+`func (o *GetContractResponseContract) HasPurchaseOrder() bool`
+
+HasPurchaseOrder returns a boolean if a field has been set.
+
+### GetCurrency
+
+`func (o *GetContractResponseContract) GetCurrency() Currency`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *GetContractResponseContract) GetCurrencyOk() (*Currency, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *GetContractResponseContract) SetCurrency(v Currency)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *GetContractResponseContract) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
 
 ### GetId
 

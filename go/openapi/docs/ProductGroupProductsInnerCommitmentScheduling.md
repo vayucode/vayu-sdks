@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BillingDay** | Pointer to **int32** | The day of the month that the product is billed | [optional] [default to 1]
-**Duration** | [**ProductGroupProductsInnerSchedulingDuration**](ProductGroupProductsInnerSchedulingDuration.md) |  | 
+**BillingDay** | Pointer to **int32** | The day of the month for the commitment scheduling | [optional] [default to 1]
+**Duration** | [**ProductGroupProductsInnerCommitmentSchedulingDuration**](ProductGroupProductsInnerCommitmentSchedulingDuration.md) |  | 
 
 ## Methods
 
 ### NewProductGroupProductsInnerCommitmentScheduling
 
-`func NewProductGroupProductsInnerCommitmentScheduling(duration ProductGroupProductsInnerSchedulingDuration, ) *ProductGroupProductsInnerCommitmentScheduling`
+`func NewProductGroupProductsInnerCommitmentScheduling(duration ProductGroupProductsInnerCommitmentSchedulingDuration, ) *ProductGroupProductsInnerCommitmentScheduling`
 
 NewProductGroupProductsInnerCommitmentScheduling instantiates a new ProductGroupProductsInnerCommitmentScheduling object
 This constructor will assign default values to properties that have it defined,
@@ -53,20 +53,20 @@ HasBillingDay returns a boolean if a field has been set.
 
 ### GetDuration
 
-`func (o *ProductGroupProductsInnerCommitmentScheduling) GetDuration() ProductGroupProductsInnerSchedulingDuration`
+`func (o *ProductGroupProductsInnerCommitmentScheduling) GetDuration() ProductGroupProductsInnerCommitmentSchedulingDuration`
 
 GetDuration returns the Duration field if non-nil, zero value otherwise.
 
 ### GetDurationOk
 
-`func (o *ProductGroupProductsInnerCommitmentScheduling) GetDurationOk() (*ProductGroupProductsInnerSchedulingDuration, bool)`
+`func (o *ProductGroupProductsInnerCommitmentScheduling) GetDurationOk() (*ProductGroupProductsInnerCommitmentSchedulingDuration, bool)`
 
 GetDurationOk returns a tuple with the Duration field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDuration
 
-`func (o *ProductGroupProductsInnerCommitmentScheduling) SetDuration(v ProductGroupProductsInnerSchedulingDuration)`
+`func (o *ProductGroupProductsInnerCommitmentScheduling) SetDuration(v ProductGroupProductsInnerCommitmentSchedulingDuration)`
 
 SetDuration sets Duration field to given value.
 

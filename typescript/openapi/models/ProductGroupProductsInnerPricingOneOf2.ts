@@ -11,12 +11,14 @@
  */
 
 import { ProductGroupProductsInnerPricingOneOf2SubscriptionCadence } from '../models/ProductGroupProductsInnerPricingOneOf2SubscriptionCadence';
+import { ProductGroupProductsInnerPricingOneOfDiscount } from '../models/ProductGroupProductsInnerPricingOneOfDiscount';
 import { HttpFile } from '../http/http';
 
 export class ProductGroupProductsInnerPricingOneOf2 {
     'type': ProductGroupProductsInnerPricingOneOf2TypeEnum;
     'price': number;
     'subscriptionCadence': ProductGroupProductsInnerPricingOneOf2SubscriptionCadence;
+    'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -39,6 +41,12 @@ export class ProductGroupProductsInnerPricingOneOf2 {
             "name": "subscriptionCadence",
             "baseName": "subscriptionCadence",
             "type": "ProductGroupProductsInnerPricingOneOf2SubscriptionCadence",
+            "format": ""
+        },
+        {
+            "name": "discount",
+            "baseName": "discount",
+            "type": "ProductGroupProductsInnerPricingOneOfDiscount",
             "format": ""
         }    ];
 

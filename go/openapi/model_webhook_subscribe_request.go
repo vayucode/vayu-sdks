@@ -23,6 +23,7 @@ var _ MappedNullable = &WebhookSubscribeRequest{}
 type WebhookSubscribeRequest struct {
 	CallbackUrl string `json:"callbackUrl"`
 	EventType NotificationEventType `json:"eventType"`
+	Threshold *float32 `json:"threshold,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -95,6 +96,38 @@ func (o *WebhookSubscribeRequest) SetEventType(v NotificationEventType) {
 	o.EventType = v
 }
 
+// GetThreshold returns the Threshold field value if set, zero value otherwise.
+func (o *WebhookSubscribeRequest) GetThreshold() float32 {
+	if o == nil || IsNil(o.Threshold) {
+		var ret float32
+		return ret
+	}
+	return *o.Threshold
+}
+
+// GetThresholdOk returns a tuple with the Threshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WebhookSubscribeRequest) GetThresholdOk() (*float32, bool) {
+	if o == nil || IsNil(o.Threshold) {
+		return nil, false
+	}
+	return o.Threshold, true
+}
+
+// HasThreshold returns a boolean if a field has been set.
+func (o *WebhookSubscribeRequest) HasThreshold() bool {
+	if o != nil && !IsNil(o.Threshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetThreshold gets a reference to the given float32 and assigns it to the Threshold field.
+func (o *WebhookSubscribeRequest) SetThreshold(v float32) {
+	o.Threshold = &v
+}
+
 func (o WebhookSubscribeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -107,6 +140,9 @@ func (o WebhookSubscribeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["callbackUrl"] = o.CallbackUrl
 	toSerialize["eventType"] = o.EventType
+	if !IsNil(o.Threshold) {
+		toSerialize["threshold"] = o.Threshold
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -153,6 +189,7 @@ func (o *WebhookSubscribeRequest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "callbackUrl")
 		delete(additionalProperties, "eventType")
+		delete(additionalProperties, "threshold")
 		o.AdditionalProperties = additionalProperties
 	}
 

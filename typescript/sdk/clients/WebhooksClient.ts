@@ -43,6 +43,14 @@ export class WebhooksClient {
     });
   }
 
+  subscribeToCommitmentUsageCrossed(callbackUrl: string, threshold: number) {
+    return this.subscribe({
+      callbackUrl,
+      eventType: NotificationEventType.CommitmentUsageCrossed,
+      threshold,
+    });
+  }
+
   subscribeToAnonymousCustomerCreated(callbackUrl: string) {
     return this.subscribe({
       callbackUrl,

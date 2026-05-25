@@ -22,6 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.product_group_products_inner_pricing_one_of1_installments_inner import ProductGroupProductsInnerPricingOneOf1InstallmentsInner
+from openapi.models.product_group_products_inner_pricing_one_of_discount import ProductGroupProductsInnerPricingOneOfDiscount
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,8 +33,9 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
     type: StrictStr
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
     installments: Optional[List[ProductGroupProductsInnerPricingOneOf1InstallmentsInner]] = None
+    discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price", "installments"]
+    __properties: ClassVar[List[str]] = ["type", "price", "installments", "discount"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -90,6 +92,9 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
                 if _item_installments:
                     _items.append(_item_installments.to_dict())
             _dict['installments'] = _items
+        # override the default output from pydantic by calling `to_dict()` of discount
+        if self.discount:
+            _dict['discount'] = self.discount.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -99,6 +104,11 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
         # and model_fields_set contains the field
         if self.installments is None and "installments" in self.model_fields_set:
             _dict['installments'] = None
+
+        # set to None if discount (nullable) is None
+        # and model_fields_set contains the field
+        if self.discount is None and "discount" in self.model_fields_set:
+            _dict['discount'] = None
 
         return _dict
 
@@ -114,7 +124,8 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "price": obj.get("price"),
-            "installments": [ProductGroupProductsInnerPricingOneOf1InstallmentsInner.from_dict(_item) for _item in obj["installments"]] if obj.get("installments") is not None else None
+            "installments": [ProductGroupProductsInnerPricingOneOf1InstallmentsInner.from_dict(_item) for _item in obj["installments"]] if obj.get("installments") is not None else None,
+            "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

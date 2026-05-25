@@ -74,6 +74,26 @@ export class GetCustomerByNameResponseCustomer {
     * The name of the subsidiary of the customer
     */
     'subsidiary'?: string | null;
+    /**
+    * Total outstanding amount across all unpaid invoices (in USD)
+    */
+    'totalOutstandingAmount'?: number;
+    /**
+    * Total amount of invoices with no billing status set (in USD)
+    */
+    'openAmount'?: number;
+    /**
+    * Total amount of overdue invoices (in USD)
+    */
+    'overdueAmount'?: number;
+    /**
+    * Total amount of invoices pending payment (in USD)
+    */
+    'pendingPaymentAmount'?: number;
+    /**
+    * Total amount of paid invoices (in USD)
+    */
+    'paidAmount'?: number;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -177,6 +197,36 @@ export class GetCustomerByNameResponseCustomer {
             "name": "subsidiary",
             "baseName": "subsidiary",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "totalOutstandingAmount",
+            "baseName": "totalOutstandingAmount",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "openAmount",
+            "baseName": "openAmount",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "overdueAmount",
+            "baseName": "overdueAmount",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "pendingPaymentAmount",
+            "baseName": "pendingPaymentAmount",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "paidAmount",
+            "baseName": "paidAmount",
+            "type": "number",
             "format": ""
         },
         {

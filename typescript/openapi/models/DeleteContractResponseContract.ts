@@ -11,6 +11,7 @@
  */
 
 import { ContractStatus } from '../models/ContractStatus';
+import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { ProductGroup } from '../models/ProductGroup';
@@ -71,6 +72,11 @@ export class DeleteContractResponseContract {
     */
     'customFieldValues'?: Array<CustomFieldValue> | null;
     'status'?: ContractStatus;
+    /**
+    * The purchase order number of the contract
+    */
+    'purchaseOrder'?: string;
+    'currency'?: Currency;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -163,6 +169,18 @@ export class DeleteContractResponseContract {
             "name": "status",
             "baseName": "status",
             "type": "ContractStatus",
+            "format": ""
+        },
+        {
+            "name": "purchaseOrder",
+            "baseName": "purchaseOrder",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency",
             "format": ""
         },
         {

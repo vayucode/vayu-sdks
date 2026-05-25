@@ -27,6 +27,7 @@ const request: WebhooksApiWebhookSubscribeRequest = {
   webhookSubscribeRequest: {
     callbackUrl: "callbackUrl_example",
     eventType: "AnonymousCustomer",
+    threshold: 0,
   },
 };
 
@@ -53,7 +54,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
@@ -62,6 +63,7 @@ Name | Type | Description  | Notes
 **200** | RequestSuccess |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**413** | Request Entity Too Large |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 

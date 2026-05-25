@@ -22,10 +22,10 @@ var _ MappedNullable = &PlanBillingData{}
 // PlanBillingData The billing data of the plan. The billing data contains the billing interval, the plan duration the payment terms and auto renewal, and the billing method.
 type PlanBillingData struct {
 	BillingInterval BillingInterval `json:"billingInterval"`
-	Duration float32 `json:"duration"`
+	Duration PlanDuration `json:"duration"`
 	PaymentTerm PaymentTerm `json:"paymentTerm"`
 	AutoRenewal bool `json:"autoRenewal"`
-	ProRated bool `json:"proRated"`
+	ProRated NullableBool `json:"proRated,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -35,13 +35,12 @@ type _PlanBillingData PlanBillingData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlanBillingData(billingInterval BillingInterval, duration float32, paymentTerm PaymentTerm, autoRenewal bool, proRated bool) *PlanBillingData {
+func NewPlanBillingData(billingInterval BillingInterval, duration PlanDuration, paymentTerm PaymentTerm, autoRenewal bool) *PlanBillingData {
 	this := PlanBillingData{}
 	this.BillingInterval = billingInterval
 	this.Duration = duration
 	this.PaymentTerm = paymentTerm
 	this.AutoRenewal = autoRenewal
-	this.ProRated = proRated
 	return &this
 }
 
@@ -50,12 +49,8 @@ func NewPlanBillingData(billingInterval BillingInterval, duration float32, payme
 // but it doesn't guarantee that properties required by API are set
 func NewPlanBillingDataWithDefaults() *PlanBillingData {
 	this := PlanBillingData{}
-	var paymentTerm PaymentTerm = PAYMENTTERM_POSTPAYMENT
-	this.PaymentTerm = paymentTerm
 	var autoRenewal bool = false
 	this.AutoRenewal = autoRenewal
-	var proRated bool = true
-	this.ProRated = proRated
 	return &this
 }
 
@@ -84,9 +79,9 @@ func (o *PlanBillingData) SetBillingInterval(v BillingInterval) {
 }
 
 // GetDuration returns the Duration field value
-func (o *PlanBillingData) GetDuration() float32 {
+func (o *PlanBillingData) GetDuration() PlanDuration {
 	if o == nil {
-		var ret float32
+		var ret PlanDuration
 		return ret
 	}
 
@@ -95,7 +90,7 @@ func (o *PlanBillingData) GetDuration() float32 {
 
 // GetDurationOk returns a tuple with the Duration field value
 // and a boolean to check if the value has been set.
-func (o *PlanBillingData) GetDurationOk() (*float32, bool) {
+func (o *PlanBillingData) GetDurationOk() (*PlanDuration, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -103,7 +98,7 @@ func (o *PlanBillingData) GetDurationOk() (*float32, bool) {
 }
 
 // SetDuration sets field value
-func (o *PlanBillingData) SetDuration(v float32) {
+func (o *PlanBillingData) SetDuration(v PlanDuration) {
 	o.Duration = v
 }
 
@@ -155,28 +150,46 @@ func (o *PlanBillingData) SetAutoRenewal(v bool) {
 	o.AutoRenewal = v
 }
 
-// GetProRated returns the ProRated field value
+// GetProRated returns the ProRated field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PlanBillingData) GetProRated() bool {
-	if o == nil {
+	if o == nil || IsNil(o.ProRated.Get()) {
 		var ret bool
 		return ret
 	}
-
-	return o.ProRated
+	return *o.ProRated.Get()
 }
 
-// GetProRatedOk returns a tuple with the ProRated field value
+// GetProRatedOk returns a tuple with the ProRated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PlanBillingData) GetProRatedOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.ProRated, true
+	return o.ProRated.Get(), o.ProRated.IsSet()
 }
 
-// SetProRated sets field value
+// HasProRated returns a boolean if a field has been set.
+func (o *PlanBillingData) HasProRated() bool {
+	if o != nil && o.ProRated.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProRated gets a reference to the given NullableBool and assigns it to the ProRated field.
 func (o *PlanBillingData) SetProRated(v bool) {
-	o.ProRated = v
+	o.ProRated.Set(&v)
+}
+// SetProRatedNil sets the value for ProRated to be an explicit nil
+func (o *PlanBillingData) SetProRatedNil() {
+	o.ProRated.Set(nil)
+}
+
+// UnsetProRated ensures that no value is present for ProRated, not even an explicit nil
+func (o *PlanBillingData) UnsetProRated() {
+	o.ProRated.Unset()
 }
 
 func (o PlanBillingData) MarshalJSON() ([]byte, error) {
@@ -193,7 +206,9 @@ func (o PlanBillingData) ToMap() (map[string]interface{}, error) {
 	toSerialize["duration"] = o.Duration
 	toSerialize["paymentTerm"] = o.PaymentTerm
 	toSerialize["autoRenewal"] = o.AutoRenewal
-	toSerialize["proRated"] = o.ProRated
+	if o.ProRated.IsSet() {
+		toSerialize["proRated"] = o.ProRated.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -211,7 +226,6 @@ func (o *PlanBillingData) UnmarshalJSON(data []byte) (err error) {
 		"duration",
 		"paymentTerm",
 		"autoRenewal",
-		"proRated",
 	}
 
 	allProperties := make(map[string]interface{})

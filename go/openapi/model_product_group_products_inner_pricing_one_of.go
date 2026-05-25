@@ -23,6 +23,9 @@ var _ MappedNullable = &ProductGroupProductsInnerPricingOneOf{}
 type ProductGroupProductsInnerPricingOneOf struct {
 	Type string `json:"type"`
 	Price float32 `json:"price"`
+	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
+	// Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.
+	IsCreditPurchase *bool `json:"isCreditPurchase,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -95,6 +98,80 @@ func (o *ProductGroupProductsInnerPricingOneOf) SetPrice(v float32) {
 	o.Price = v
 }
 
+// GetDiscount returns the Discount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInnerPricingOneOf) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount {
+	if o == nil || IsNil(o.Discount.Get()) {
+		var ret ProductGroupProductsInnerPricingOneOfDiscount
+		return ret
+	}
+	return *o.Discount.Get()
+}
+
+// GetDiscountOk returns a tuple with the Discount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInnerPricingOneOf) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Discount.Get(), o.Discount.IsSet()
+}
+
+// HasDiscount returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf) HasDiscount() bool {
+	if o != nil && o.Discount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscount gets a reference to the given NullableProductGroupProductsInnerPricingOneOfDiscount and assigns it to the Discount field.
+func (o *ProductGroupProductsInnerPricingOneOf) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount) {
+	o.Discount.Set(&v)
+}
+// SetDiscountNil sets the value for Discount to be an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf) SetDiscountNil() {
+	o.Discount.Set(nil)
+}
+
+// UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf) UnsetDiscount() {
+	o.Discount.Unset()
+}
+
+// GetIsCreditPurchase returns the IsCreditPurchase field value if set, zero value otherwise.
+func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchase() bool {
+	if o == nil || IsNil(o.IsCreditPurchase) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCreditPurchase
+}
+
+// GetIsCreditPurchaseOk returns a tuple with the IsCreditPurchase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchaseOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCreditPurchase) {
+		return nil, false
+	}
+	return o.IsCreditPurchase, true
+}
+
+// HasIsCreditPurchase returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf) HasIsCreditPurchase() bool {
+	if o != nil && !IsNil(o.IsCreditPurchase) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCreditPurchase gets a reference to the given bool and assigns it to the IsCreditPurchase field.
+func (o *ProductGroupProductsInnerPricingOneOf) SetIsCreditPurchase(v bool) {
+	o.IsCreditPurchase = &v
+}
+
 func (o ProductGroupProductsInnerPricingOneOf) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -107,6 +184,12 @@ func (o ProductGroupProductsInnerPricingOneOf) ToMap() (map[string]interface{}, 
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
 	toSerialize["price"] = o.Price
+	if o.Discount.IsSet() {
+		toSerialize["discount"] = o.Discount.Get()
+	}
+	if !IsNil(o.IsCreditPurchase) {
+		toSerialize["isCreditPurchase"] = o.IsCreditPurchase
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -153,6 +236,8 @@ func (o *ProductGroupProductsInnerPricingOneOf) UnmarshalJSON(data []byte) (err 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "price")
+		delete(additionalProperties, "discount")
+		delete(additionalProperties, "isCreditPurchase")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -49,6 +49,16 @@ type UpdateCustomerRequest struct {
 	CustomFields []CustomField `json:"customFields,omitempty"`
 	// The name of the subsidiary of the customer
 	Subsidiary NullableString `json:"subsidiary,omitempty"`
+	// Total outstanding amount across all unpaid invoices (in USD)
+	TotalOutstandingAmount *float32 `json:"totalOutstandingAmount,omitempty"`
+	// Total amount of invoices with no billing status set (in USD)
+	OpenAmount *float32 `json:"openAmount,omitempty"`
+	// Total amount of overdue invoices (in USD)
+	OverdueAmount *float32 `json:"overdueAmount,omitempty"`
+	// Total amount of invoices pending payment (in USD)
+	PendingPaymentAmount *float32 `json:"pendingPaymentAmount,omitempty"`
+	// Total amount of paid invoices (in USD)
+	PaidAmount *float32 `json:"paidAmount,omitempty"`
 }
 
 // NewUpdateCustomerRequest instantiates a new UpdateCustomerRequest object
@@ -687,6 +697,166 @@ func (o *UpdateCustomerRequest) UnsetSubsidiary() {
 	o.Subsidiary.Unset()
 }
 
+// GetTotalOutstandingAmount returns the TotalOutstandingAmount field value if set, zero value otherwise.
+func (o *UpdateCustomerRequest) GetTotalOutstandingAmount() float32 {
+	if o == nil || IsNil(o.TotalOutstandingAmount) {
+		var ret float32
+		return ret
+	}
+	return *o.TotalOutstandingAmount
+}
+
+// GetTotalOutstandingAmountOk returns a tuple with the TotalOutstandingAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCustomerRequest) GetTotalOutstandingAmountOk() (*float32, bool) {
+	if o == nil || IsNil(o.TotalOutstandingAmount) {
+		return nil, false
+	}
+	return o.TotalOutstandingAmount, true
+}
+
+// HasTotalOutstandingAmount returns a boolean if a field has been set.
+func (o *UpdateCustomerRequest) HasTotalOutstandingAmount() bool {
+	if o != nil && !IsNil(o.TotalOutstandingAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalOutstandingAmount gets a reference to the given float32 and assigns it to the TotalOutstandingAmount field.
+func (o *UpdateCustomerRequest) SetTotalOutstandingAmount(v float32) {
+	o.TotalOutstandingAmount = &v
+}
+
+// GetOpenAmount returns the OpenAmount field value if set, zero value otherwise.
+func (o *UpdateCustomerRequest) GetOpenAmount() float32 {
+	if o == nil || IsNil(o.OpenAmount) {
+		var ret float32
+		return ret
+	}
+	return *o.OpenAmount
+}
+
+// GetOpenAmountOk returns a tuple with the OpenAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCustomerRequest) GetOpenAmountOk() (*float32, bool) {
+	if o == nil || IsNil(o.OpenAmount) {
+		return nil, false
+	}
+	return o.OpenAmount, true
+}
+
+// HasOpenAmount returns a boolean if a field has been set.
+func (o *UpdateCustomerRequest) HasOpenAmount() bool {
+	if o != nil && !IsNil(o.OpenAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOpenAmount gets a reference to the given float32 and assigns it to the OpenAmount field.
+func (o *UpdateCustomerRequest) SetOpenAmount(v float32) {
+	o.OpenAmount = &v
+}
+
+// GetOverdueAmount returns the OverdueAmount field value if set, zero value otherwise.
+func (o *UpdateCustomerRequest) GetOverdueAmount() float32 {
+	if o == nil || IsNil(o.OverdueAmount) {
+		var ret float32
+		return ret
+	}
+	return *o.OverdueAmount
+}
+
+// GetOverdueAmountOk returns a tuple with the OverdueAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCustomerRequest) GetOverdueAmountOk() (*float32, bool) {
+	if o == nil || IsNil(o.OverdueAmount) {
+		return nil, false
+	}
+	return o.OverdueAmount, true
+}
+
+// HasOverdueAmount returns a boolean if a field has been set.
+func (o *UpdateCustomerRequest) HasOverdueAmount() bool {
+	if o != nil && !IsNil(o.OverdueAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOverdueAmount gets a reference to the given float32 and assigns it to the OverdueAmount field.
+func (o *UpdateCustomerRequest) SetOverdueAmount(v float32) {
+	o.OverdueAmount = &v
+}
+
+// GetPendingPaymentAmount returns the PendingPaymentAmount field value if set, zero value otherwise.
+func (o *UpdateCustomerRequest) GetPendingPaymentAmount() float32 {
+	if o == nil || IsNil(o.PendingPaymentAmount) {
+		var ret float32
+		return ret
+	}
+	return *o.PendingPaymentAmount
+}
+
+// GetPendingPaymentAmountOk returns a tuple with the PendingPaymentAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCustomerRequest) GetPendingPaymentAmountOk() (*float32, bool) {
+	if o == nil || IsNil(o.PendingPaymentAmount) {
+		return nil, false
+	}
+	return o.PendingPaymentAmount, true
+}
+
+// HasPendingPaymentAmount returns a boolean if a field has been set.
+func (o *UpdateCustomerRequest) HasPendingPaymentAmount() bool {
+	if o != nil && !IsNil(o.PendingPaymentAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPendingPaymentAmount gets a reference to the given float32 and assigns it to the PendingPaymentAmount field.
+func (o *UpdateCustomerRequest) SetPendingPaymentAmount(v float32) {
+	o.PendingPaymentAmount = &v
+}
+
+// GetPaidAmount returns the PaidAmount field value if set, zero value otherwise.
+func (o *UpdateCustomerRequest) GetPaidAmount() float32 {
+	if o == nil || IsNil(o.PaidAmount) {
+		var ret float32
+		return ret
+	}
+	return *o.PaidAmount
+}
+
+// GetPaidAmountOk returns a tuple with the PaidAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCustomerRequest) GetPaidAmountOk() (*float32, bool) {
+	if o == nil || IsNil(o.PaidAmount) {
+		return nil, false
+	}
+	return o.PaidAmount, true
+}
+
+// HasPaidAmount returns a boolean if a field has been set.
+func (o *UpdateCustomerRequest) HasPaidAmount() bool {
+	if o != nil && !IsNil(o.PaidAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPaidAmount gets a reference to the given float32 and assigns it to the PaidAmount field.
+func (o *UpdateCustomerRequest) SetPaidAmount(v float32) {
+	o.PaidAmount = &v
+}
+
 func (o UpdateCustomerRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -744,6 +914,21 @@ func (o UpdateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Subsidiary.IsSet() {
 		toSerialize["subsidiary"] = o.Subsidiary.Get()
+	}
+	if !IsNil(o.TotalOutstandingAmount) {
+		toSerialize["totalOutstandingAmount"] = o.TotalOutstandingAmount
+	}
+	if !IsNil(o.OpenAmount) {
+		toSerialize["openAmount"] = o.OpenAmount
+	}
+	if !IsNil(o.OverdueAmount) {
+		toSerialize["overdueAmount"] = o.OverdueAmount
+	}
+	if !IsNil(o.PendingPaymentAmount) {
+		toSerialize["pendingPaymentAmount"] = o.PendingPaymentAmount
+	}
+	if !IsNil(o.PaidAmount) {
+		toSerialize["paidAmount"] = o.PaidAmount
 	}
 	return toSerialize, nil
 }

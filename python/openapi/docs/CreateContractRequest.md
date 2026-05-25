@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **custom_fields** | [**List[CustomField]**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
 **custom_field_values** | [**List[CustomFieldValue]**](CustomFieldValue.md) | The stored custom field values associated with the contract | [optional] 
 **status** | [**ContractStatus**](ContractStatus.md) |  | [optional] 
+**purchase_order** | **str** | The purchase order number of the contract | [optional] 
+**currency** | [**Currency**](Currency.md) |  | [optional] 
 
 ## Example
 

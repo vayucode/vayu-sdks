@@ -26,6 +26,10 @@ export class ProductGroupCommitment {
     * Price to charge the customer for the committed units
     */
     'price'?: number | null;
+    /**
+    * The type of commitment. UNITS means the commitment amount is in units, PRICE means it is a monetary value. Defaults to UNITS.
+    */
+    'type'?: ProductGroupCommitmentTypeEnum;
     'scheduling'?: ProductGroupProductsInnerCommitmentScheduling | null;
     'overageStrategy'?: ExternalOverageStrategy | null;
 
@@ -44,6 +48,12 @@ export class ProductGroupCommitment {
             "name": "price",
             "baseName": "price",
             "type": "number",
+            "format": ""
+        },
+        {
+            "name": "type",
+            "baseName": "type",
+            "type": "ProductGroupCommitmentTypeEnum",
             "format": ""
         },
         {
@@ -67,4 +77,8 @@ export class ProductGroupCommitment {
     }
 }
 
+export enum ProductGroupCommitmentTypeEnum {
+    Price = 'PRICE',
+    Units = 'UNITS'
+}
 

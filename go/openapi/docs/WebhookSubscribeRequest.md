@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CallbackUrl** | **string** |  | 
 **EventType** | [**NotificationEventType**](NotificationEventType.md) |  | 
+**Threshold** | Pointer to **float32** |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetEventType sets EventType field to given value.
 
+
+### GetThreshold
+
+`func (o *WebhookSubscribeRequest) GetThreshold() float32`
+
+GetThreshold returns the Threshold field if non-nil, zero value otherwise.
+
+### GetThresholdOk
+
+`func (o *WebhookSubscribeRequest) GetThresholdOk() (*float32, bool)`
+
+GetThresholdOk returns a tuple with the Threshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetThreshold
+
+`func (o *WebhookSubscribeRequest) SetThreshold(v float32)`
+
+SetThreshold sets Threshold field to given value.
+
+### HasThreshold
+
+`func (o *WebhookSubscribeRequest) HasThreshold() bool`
+
+HasThreshold returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

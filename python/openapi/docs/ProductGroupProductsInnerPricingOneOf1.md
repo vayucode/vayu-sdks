@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **price** | **float** |  | 
 **installments** | [**List[ProductGroupProductsInnerPricingOneOf1InstallmentsInner]**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
+**discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 
 ## Example
 

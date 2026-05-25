@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from openapi.models.address import Address
 from openapi.models.contact import Contact
 from openapi.models.currency import Currency
@@ -49,8 +49,13 @@ class CreateCustomerRequest(BaseModel):
     currency: Optional[Currency] = None
     custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
     subsidiary: Optional[StrictStr] = Field(default=None, description="The name of the subsidiary of the customer")
+    total_outstanding_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total outstanding amount across all unpaid invoices (in USD)", alias="totalOutstandingAmount")
+    open_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total amount of invoices with no billing status set (in USD)", alias="openAmount")
+    overdue_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total amount of overdue invoices (in USD)", alias="overdueAmount")
+    pending_payment_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total amount of invoices pending payment (in USD)", alias="pendingPaymentAmount")
+    paid_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total amount of paid invoices (in USD)", alias="paidAmount")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "dueDays", "currency", "customFields", "subsidiary"]
+    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "dueDays", "currency", "customFields", "subsidiary", "totalOutstandingAmount", "openAmount", "overdueAmount", "pendingPaymentAmount", "paidAmount"]
 
     @field_validator('due_days')
     def due_days_validate_enum(cls, value):
@@ -225,7 +230,12 @@ class CreateCustomerRequest(BaseModel):
             "dueDays": obj.get("dueDays"),
             "currency": obj.get("currency"),
             "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,
-            "subsidiary": obj.get("subsidiary")
+            "subsidiary": obj.get("subsidiary"),
+            "totalOutstandingAmount": obj.get("totalOutstandingAmount"),
+            "openAmount": obj.get("openAmount"),
+            "overdueAmount": obj.get("overdueAmount"),
+            "pendingPaymentAmount": obj.get("pendingPaymentAmount"),
+            "paidAmount": obj.get("paidAmount")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

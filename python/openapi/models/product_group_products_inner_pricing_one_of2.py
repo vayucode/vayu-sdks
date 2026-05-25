@@ -19,9 +19,10 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.product_group_products_inner_pricing_one_of2_subscription_cadence import ProductGroupProductsInnerPricingOneOf2SubscriptionCadence
+from openapi.models.product_group_products_inner_pricing_one_of_discount import ProductGroupProductsInnerPricingOneOfDiscount
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,8 +33,9 @@ class ProductGroupProductsInnerPricingOneOf2(BaseModel):
     type: StrictStr
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
     subscription_cadence: ProductGroupProductsInnerPricingOneOf2SubscriptionCadence = Field(alias="subscriptionCadence")
+    discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price", "subscriptionCadence"]
+    __properties: ClassVar[List[str]] = ["type", "price", "subscriptionCadence", "discount"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -86,10 +88,18 @@ class ProductGroupProductsInnerPricingOneOf2(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of subscription_cadence
         if self.subscription_cadence:
             _dict['subscriptionCadence'] = self.subscription_cadence.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of discount
+        if self.discount:
+            _dict['discount'] = self.discount.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if discount (nullable) is None
+        # and model_fields_set contains the field
+        if self.discount is None and "discount" in self.model_fields_set:
+            _dict['discount'] = None
 
         return _dict
 
@@ -105,7 +115,8 @@ class ProductGroupProductsInnerPricingOneOf2(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "price": obj.get("price"),
-            "subscriptionCadence": ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.from_dict(obj["subscriptionCadence"]) if obj.get("subscriptionCadence") is not None else None
+            "subscriptionCadence": ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.from_dict(obj["subscriptionCadence"]) if obj.get("subscriptionCadence") is not None else None,
+            "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -26,6 +26,14 @@ func NewWebhookSubscribeRequest(callbackUrl string, eventType NotificationEventT
 	}
 }
 
+func NewCommitmentUsageCrossedWebhookSubscribeRequest(callbackUrl string, threshold float32) *WebhookSubscribeRequest {
+	return &openapi.WebhookSubscribeRequest{
+		CallbackUrl: callbackUrl,
+		EventType:   openapi.NOTIFICATIONEVENTTYPE_COMMITMENT_USAGE_CROSSED,
+		Threshold:   &threshold,
+	}
+}
+
 func (api *WebhooksAPI) Subscribe(payload WebhookSubscribeRequest) error {
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()

@@ -41,7 +41,7 @@ const request: CustomersApiCreateCustomerRequest = {
     contacts: [
       {
         name: "name_example",
-        email: "email_example",
+        email: "/-a7kp.R/g2*SVXkjc1XP^68kTyn!RSD}A?k-F-^+^%dG+%40$okj#v~z_k`mAwSdahssq^U0eYAPBcee8jqrm.='mk#ik&^m~.#-y|{pDW.OFjEPFVfXE8^Ej3ivU+}0'3ba5ng!NY8RFHCzKsJ3PJRFdvJiioPWo'G!+Cqg&xs8QX|V.zSdd'BOPeeq0ytC_7QRG9&n+ADTr%qIWZ{G7^q#/XM5}uMUC3oXkEDfs9iVJJ6uyAxmx4KkpP%rUjo.nRLjHba0KFCPIf_nngxBYmN&J~wT`mhGFn#i0v_Xcw%2gT=K2=_I4WfD{f`'}/7G{.EGFK*'LUA7V3c.}m|^AjUCYqyL38l3}B23YEfvC!9OtvR&5!_0`8.F#18cYR5`H9FRePCcc4Yolh+cnRMpkE=bpD3'K-1~06?.!M+aY?vEa%fOhK!MRzF3Fji=e&6O$kG~zQCd2r4}2E{qT-mTc!tE~/^YCWi$cMr.r`Q|'lDEC~nSmNUy&Z7-+oWzGSi'ZP.9!xG4esl%N9G6|EXKX8alZiUDfb4*${W?`fN-_7{e?*?sTQL3D5.Mx5OJk32RgE~m=NXAh'pEI*mKM=RuSculcIYSM?pH4y&D6$t||?+k6nvg0LJW!u%#GygMxUEFm.j+l~hjNdSTA{h!!OElFLP+R&mIyjH7u!^kZ}w$I~yiw'Xb$hdzwmW_TinGxtcW!.}Jugm=#zWcX8Fjx/EM5#0wkWX1c*wb'2n1{d8&2*X!xf'%GhF{oo?j51AuL5c}QXTMsz!hO-%}g{Vb|_ja--.*UOnpNz#-fkfhpE2CwY$YzM4J~6BZaF!h/A}UaMlRV`ZrDq+_IDiYQ~xyp-IOF{G24J5%/.22Z*Akgrq4-6WAVfnxMC-%QRapCV{tL*tvsh'LNSxNSy4EBqPfGaMgMn$C_5%v*3sV^s5%uQZ=FYbWpfwzHfx%X$D36bL$ZT.'uHMWCKhE3FiRc?N'&MDPvgs9votz0~vT~tZLB2cP3uEESw?gqG`Ldb6R~~V92=|_NxRLyue6P0oGa29M3B7y&rKpL.gKl_3vMPSNYYbf2gi-71~%pohKYhHe4cFLB64BD+QW^-D+U%H==FQ9$Ys.}zh/GFK?lDX.%X=7kCw2YxT2.WIx~=v80Pqmp`}md+eGD{rdW~A5XZ6pZF~lMzNzO-{*^8Oy*7Q+cDwwS|jGwCbq.k|7&Pby6$5y`Od9`HPh3jAI3u*?HY?#.jT&N7ZELavUjL4w$W8GOA/iFYRihZYJPn0ym$~hjh15ut48Hb5}A~~T'Z7N*jl0.N1PX38gmt0CnV&*!Fy~9PYW`O}X8^Zwg*4T=.W3z&YoohI4OcYABkKA-{-qfeIvy%UK8hlTA1R1hSoW!6Uqy9S.MSItPxh5ET90H*?h_`pmcq`y{0PKp3}mo?7Vpy+GCvfJkRPW?CCJ1NpFQFk9B1^J8.A#GpUSzEiA'|4U?qA~ERv$hXW{tvKb?4&DcTvGKJ8^R6H%/~FgqmkMQIV8R}'!-FfZHI0r6f%$u7VqYjy`DGZ+BU.pP2SIMvH8j${rUm8w34-7381C8$pS#y8R-q_TT~dWyTztybJuM?41G'NPX.}lDS}H3|v/3A.h#ikh{VcD2s7^-9R|5qFr7ixZ*O_H4?u324fbhMH*-`5VyR`%3u3Lf7TYK!.28KKvsp}z*kXaJj`.yga}|uRvPaih2s~4k7`p1Y4!G*f$Cj1xcI`y}diYEQk&/{l.6K~w~#^I=O9g$b3kJff`Fiz{9wrX-1v1uT1V8|zgeS-VyRDmU%*rRJ*hiV3K3+HAJV8{eLL3m.RF{Hco^qi'`DLQ-T|YGj*|*8_'l_NajW/!^BZ~He6?63XSE?0-&RVA$.T0ZGp`Vfm6CmzI&v%CWVu'xD/iqV=afMqo+w3a5}f._G|voHMnRc/&|L3%ej^Nfd-Xj|09F_QELr~/xFlF/tPbU_E/k_!~mnii5mtQrdER9P7VoV`.bu?+9M*%{w&O%W$1.C3{4#O`H!*00xx&%!H`jT?3hbq?d`0G6ZcV9berP26Cr7N.soTO{SUFJLm.wN%Z!!wrOI#Gzc!xm}.D?7s+Cy.G#aEEm%UR{0/vi|xY=Z-aH$3qnA_s~O7I*J.W?=1^+H5!dE+xTg-ByWax-sxRVadH9CI.OI}b1x7DQEIVS|rY-T=t2/#N7a2Lq*N7j&'/V?7x%I1nuf=+hyKjePv_q!Wo=07OgON9Z'KlOK}hmMzi}&8qB6W-.4d3Eq&tN/hWFV#h6EE-Na1|9giAFfO_n1.JG|RwZNaXj.`bkV$KF&0#mETI~nt&YlZ}KNpYdl^coM8^4!-mG-VL1KMaL#jnb0uNS?Q/E+Xf%p*v28jsKxacx`ARKh?|Bntj~lbL^b=.oppD~QSq!zhLbLcI0fOI=rrMn36yTauutf|SZQEtMJyJLCeu0M9.0q?0lTDi7c&`3!aOuKWwiMtZaJebNxa'`1T^`1ZJB|hON_Tp'32G{PVc|my/=cJ&4r`cTa9'u*HObsZhA5{V%-u}GKFuROW.t-3i3AOonpuxN}9-VGdeWH5c`b2c{ctEs=t7|oGM54Yw'NR?dQ.cHbzP6u!sCExBknaYytUdCPN}sB?i%HIje.r?Y#DikrnDo}M$UbpBb.3R5A}u+Q7jEp?rivObIY%0ZnA|1rq5XhL}ekUc6A7q'K-1fgjOF1LqH_'t8HvEMIt7kzL|wdzrJ.SEIeR=`1%=&^7vSF{jttak&`hfX%Se7p?Gr*4G$s.954pwC1J|+wu&m20FLO$q?B7~v~FLU'88PT=T|-ex7fJ|sDOE^^$'7HzOE{PETn|EN5mtfuzKFf8${t77.!r?_1JT#!1/1p7B#FGIJ^&9-%UljNB?SAsBdw3FeyWH?&g{NV*}Pb|||rvpRy?gWIX}5h^wqip3E+bUW}h'G%bUugMEt`n/.u.giIC`8o_HxClR`_H{P4{p0m2/U}B8/#5x^6~8'}/F2m4/0k.0{azQ+ZYHJcP0t3lSzy?OI^HdM4`ORuT0K.oD_2XzTuU2/'%0^qJ3p4I+/PTlD#_WDwiKb#S.yoR+kk|EmTh-sMB+/IVz!4&w=0!v.rj/xD?xD{MfhGH%E49KRxAvqBv!eOx*$lnsHsZ5~7q4405|2SP_h'$~Ti'Z~xrV9hl#U%ZDmtkR=htU^R.y7Biwh{dPO0SUE%yKy*&b#cE1XV$$`Pg=Kw~}4E|1TT.v~b4a&BMp#Pc|#D|U=/Hc8/pe.N.DSUNa6b=||*hKvpbw{XzCZSqU84}n=.0erxQU6t?JQstw8bSe_{{YBv*fJi/bHOl%~hTp5rN'k^bh~?dT8WA9pxi}EN/DKk1pKz5d7VrNn7w!Bpou+DL%$?93.wXcG?Uim2WGZXo.f!aY'i.v+X+Vw=nT.N'cpvUIE`6`dolBDy4&X3FWVT?R^QF_2OImoZ!ZSShemCg`QjoQVbNE00tGMBofxNJ.W+-_|FjzXMsW8^wESCh2Yau'u?*yunPFt'H-.wDfX1ODzM`%6j4x!f3!`%dylZtb8U8ljhu_s.eq!sekNi-^hob64}FvNhZl_^&}VBh{bAAbkD2vOgZgs|_|ck%w^^2oV_~=zaMBmlm9-JjpO#tHXoZl.0QF+XUTx%By4D=802HI#'lx#P_+7!lNbEz5*o4q!Q&D+%aZ5gKU&4nY&.F8n%l|#5K&MU38OYRC-$U#ysBuW*Gu4.+5!$hlG#ienjCGMBbL`O%9pXFEwvrnZOc|yeiAEkqacTtYXABXxN/aQM-KPo'1Y*-_M-?qw.EcCS#'DBlUI*o7_xsox7D6Vcl%K.yKYWst$!xUvsdRxw$nhC3oG3xrbqr&CmBCRtTA'z$NaHUYk`.+}VW.GgHO//5xYC_UM&8D|~=qbCa-DOx^wCAl/Ak+c3e&JC0T*czocRbFY5++.QvWrL750MD^PDvn}GOljTsyn'cA5v*i-^~8bOI}*z1^lvP&8jqtM4snk{D^gzs_^&5icJ`D9jqC9=k6c#iTk.`N3D2H}12{p6Y9NJsv/|d9lVS~H+b3jnZm?~Ya|ABfSSYPC~oMD$DVrl#-3e.~QZlHhy_Wrkaa&^+y70wHCBX{dHdH0Fz1Lu5KoF'tc5UfI=A4|Dt^E41d?mWzV3xwMJ6{5m^Ltbn$|UTW3|y{A3O_+E2dlM7*.5RF^?nKu*4e8ikF%wP9wIy/iY=Oku_UffmHkUoVF~a-QVvX_WLsotA7_gyWr#/$K6K!x3$9FEpCZI0*=8.VHEXTYBn6~JdiY!V1*=UO1Gg}QPtn=8MuQ~o$Md^3f^Wl{aJ|Kx8Z6KrNo63?^K5dIX*.FG3+#ojjS2o}R2IHXK9TBliYq?X+WUk3m{0tN/lw!aYs{/xYq_xc$}J'.38{oiJ8QbdPfeL5`.ann6P8PLKq'a{u&2}QVWSz}+O~{4&PcsT$i^t?GAgxi&mg*kg6F~39M_HLkm2ARj3sXY*IiL^?u7'1S7bxm$M|PAc'1~OM_U0epV@Uw3o7bGJFAxDmjp8R-rlInxKc3EWfJNqE1K4apn48yZsSVG3J-AF4DX.WyNlY",
         title: "title_example",
         phone: "+9072888",
         receiveInvoiceEmail: true,
@@ -79,6 +79,11 @@ const request: CustomersApiCreateCustomerRequest = {
       },
     ],
     subsidiary: "subsidiary_example",
+    totalOutstandingAmount: 3.14,
+    openAmount: 3.14,
+    overdueAmount: 3.14,
+    pendingPaymentAmount: 3.14,
+    paidAmount: 3.14,
   },
 };
 
@@ -347,6 +352,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided externalId |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -407,6 +413,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided integration id |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -464,6 +471,7 @@ Name | Type | Description  | Notes
 **200** | response contains the customer matching the provided name |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -521,6 +529,7 @@ Name | Type | Description  | Notes
 **200** | response contains the products consumptions by the customer id |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -578,6 +587,7 @@ Name | Type | Description  | Notes
 **200** | response contains the products consumptions by the customer alias |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 
@@ -724,7 +734,7 @@ const request: CustomersApiUpdateCustomerRequest = {
     contacts: [
       {
         name: "name_example",
-        email: "email_example",
+        email: "/-a7kp.R/g2*SVXkjc1XP^68kTyn!RSD}A?k-F-^+^%dG+%40$okj#v~z_k`mAwSdahssq^U0eYAPBcee8jqrm.='mk#ik&^m~.#-y|{pDW.OFjEPFVfXE8^Ej3ivU+}0'3ba5ng!NY8RFHCzKsJ3PJRFdvJiioPWo'G!+Cqg&xs8QX|V.zSdd'BOPeeq0ytC_7QRG9&n+ADTr%qIWZ{G7^q#/XM5}uMUC3oXkEDfs9iVJJ6uyAxmx4KkpP%rUjo.nRLjHba0KFCPIf_nngxBYmN&J~wT`mhGFn#i0v_Xcw%2gT=K2=_I4WfD{f`'}/7G{.EGFK*'LUA7V3c.}m|^AjUCYqyL38l3}B23YEfvC!9OtvR&5!_0`8.F#18cYR5`H9FRePCcc4Yolh+cnRMpkE=bpD3'K-1~06?.!M+aY?vEa%fOhK!MRzF3Fji=e&6O$kG~zQCd2r4}2E{qT-mTc!tE~/^YCWi$cMr.r`Q|'lDEC~nSmNUy&Z7-+oWzGSi'ZP.9!xG4esl%N9G6|EXKX8alZiUDfb4*${W?`fN-_7{e?*?sTQL3D5.Mx5OJk32RgE~m=NXAh'pEI*mKM=RuSculcIYSM?pH4y&D6$t||?+k6nvg0LJW!u%#GygMxUEFm.j+l~hjNdSTA{h!!OElFLP+R&mIyjH7u!^kZ}w$I~yiw'Xb$hdzwmW_TinGxtcW!.}Jugm=#zWcX8Fjx/EM5#0wkWX1c*wb'2n1{d8&2*X!xf'%GhF{oo?j51AuL5c}QXTMsz!hO-%}g{Vb|_ja--.*UOnpNz#-fkfhpE2CwY$YzM4J~6BZaF!h/A}UaMlRV`ZrDq+_IDiYQ~xyp-IOF{G24J5%/.22Z*Akgrq4-6WAVfnxMC-%QRapCV{tL*tvsh'LNSxNSy4EBqPfGaMgMn$C_5%v*3sV^s5%uQZ=FYbWpfwzHfx%X$D36bL$ZT.'uHMWCKhE3FiRc?N'&MDPvgs9votz0~vT~tZLB2cP3uEESw?gqG`Ldb6R~~V92=|_NxRLyue6P0oGa29M3B7y&rKpL.gKl_3vMPSNYYbf2gi-71~%pohKYhHe4cFLB64BD+QW^-D+U%H==FQ9$Ys.}zh/GFK?lDX.%X=7kCw2YxT2.WIx~=v80Pqmp`}md+eGD{rdW~A5XZ6pZF~lMzNzO-{*^8Oy*7Q+cDwwS|jGwCbq.k|7&Pby6$5y`Od9`HPh3jAI3u*?HY?#.jT&N7ZELavUjL4w$W8GOA/iFYRihZYJPn0ym$~hjh15ut48Hb5}A~~T'Z7N*jl0.N1PX38gmt0CnV&*!Fy~9PYW`O}X8^Zwg*4T=.W3z&YoohI4OcYABkKA-{-qfeIvy%UK8hlTA1R1hSoW!6Uqy9S.MSItPxh5ET90H*?h_`pmcq`y{0PKp3}mo?7Vpy+GCvfJkRPW?CCJ1NpFQFk9B1^J8.A#GpUSzEiA'|4U?qA~ERv$hXW{tvKb?4&DcTvGKJ8^R6H%/~FgqmkMQIV8R}'!-FfZHI0r6f%$u7VqYjy`DGZ+BU.pP2SIMvH8j${rUm8w34-7381C8$pS#y8R-q_TT~dWyTztybJuM?41G'NPX.}lDS}H3|v/3A.h#ikh{VcD2s7^-9R|5qFr7ixZ*O_H4?u324fbhMH*-`5VyR`%3u3Lf7TYK!.28KKvsp}z*kXaJj`.yga}|uRvPaih2s~4k7`p1Y4!G*f$Cj1xcI`y}diYEQk&/{l.6K~w~#^I=O9g$b3kJff`Fiz{9wrX-1v1uT1V8|zgeS-VyRDmU%*rRJ*hiV3K3+HAJV8{eLL3m.RF{Hco^qi'`DLQ-T|YGj*|*8_'l_NajW/!^BZ~He6?63XSE?0-&RVA$.T0ZGp`Vfm6CmzI&v%CWVu'xD/iqV=afMqo+w3a5}f._G|voHMnRc/&|L3%ej^Nfd-Xj|09F_QELr~/xFlF/tPbU_E/k_!~mnii5mtQrdER9P7VoV`.bu?+9M*%{w&O%W$1.C3{4#O`H!*00xx&%!H`jT?3hbq?d`0G6ZcV9berP26Cr7N.soTO{SUFJLm.wN%Z!!wrOI#Gzc!xm}.D?7s+Cy.G#aEEm%UR{0/vi|xY=Z-aH$3qnA_s~O7I*J.W?=1^+H5!dE+xTg-ByWax-sxRVadH9CI.OI}b1x7DQEIVS|rY-T=t2/#N7a2Lq*N7j&'/V?7x%I1nuf=+hyKjePv_q!Wo=07OgON9Z'KlOK}hmMzi}&8qB6W-.4d3Eq&tN/hWFV#h6EE-Na1|9giAFfO_n1.JG|RwZNaXj.`bkV$KF&0#mETI~nt&YlZ}KNpYdl^coM8^4!-mG-VL1KMaL#jnb0uNS?Q/E+Xf%p*v28jsKxacx`ARKh?|Bntj~lbL^b=.oppD~QSq!zhLbLcI0fOI=rrMn36yTauutf|SZQEtMJyJLCeu0M9.0q?0lTDi7c&`3!aOuKWwiMtZaJebNxa'`1T^`1ZJB|hON_Tp'32G{PVc|my/=cJ&4r`cTa9'u*HObsZhA5{V%-u}GKFuROW.t-3i3AOonpuxN}9-VGdeWH5c`b2c{ctEs=t7|oGM54Yw'NR?dQ.cHbzP6u!sCExBknaYytUdCPN}sB?i%HIje.r?Y#DikrnDo}M$UbpBb.3R5A}u+Q7jEp?rivObIY%0ZnA|1rq5XhL}ekUc6A7q'K-1fgjOF1LqH_'t8HvEMIt7kzL|wdzrJ.SEIeR=`1%=&^7vSF{jttak&`hfX%Se7p?Gr*4G$s.954pwC1J|+wu&m20FLO$q?B7~v~FLU'88PT=T|-ex7fJ|sDOE^^$'7HzOE{PETn|EN5mtfuzKFf8${t77.!r?_1JT#!1/1p7B#FGIJ^&9-%UljNB?SAsBdw3FeyWH?&g{NV*}Pb|||rvpRy?gWIX}5h^wqip3E+bUW}h'G%bUugMEt`n/.u.giIC`8o_HxClR`_H{P4{p0m2/U}B8/#5x^6~8'}/F2m4/0k.0{azQ+ZYHJcP0t3lSzy?OI^HdM4`ORuT0K.oD_2XzTuU2/'%0^qJ3p4I+/PTlD#_WDwiKb#S.yoR+kk|EmTh-sMB+/IVz!4&w=0!v.rj/xD?xD{MfhGH%E49KRxAvqBv!eOx*$lnsHsZ5~7q4405|2SP_h'$~Ti'Z~xrV9hl#U%ZDmtkR=htU^R.y7Biwh{dPO0SUE%yKy*&b#cE1XV$$`Pg=Kw~}4E|1TT.v~b4a&BMp#Pc|#D|U=/Hc8/pe.N.DSUNa6b=||*hKvpbw{XzCZSqU84}n=.0erxQU6t?JQstw8bSe_{{YBv*fJi/bHOl%~hTp5rN'k^bh~?dT8WA9pxi}EN/DKk1pKz5d7VrNn7w!Bpou+DL%$?93.wXcG?Uim2WGZXo.f!aY'i.v+X+Vw=nT.N'cpvUIE`6`dolBDy4&X3FWVT?R^QF_2OImoZ!ZSShemCg`QjoQVbNE00tGMBofxNJ.W+-_|FjzXMsW8^wESCh2Yau'u?*yunPFt'H-.wDfX1ODzM`%6j4x!f3!`%dylZtb8U8ljhu_s.eq!sekNi-^hob64}FvNhZl_^&}VBh{bAAbkD2vOgZgs|_|ck%w^^2oV_~=zaMBmlm9-JjpO#tHXoZl.0QF+XUTx%By4D=802HI#'lx#P_+7!lNbEz5*o4q!Q&D+%aZ5gKU&4nY&.F8n%l|#5K&MU38OYRC-$U#ysBuW*Gu4.+5!$hlG#ienjCGMBbL`O%9pXFEwvrnZOc|yeiAEkqacTtYXABXxN/aQM-KPo'1Y*-_M-?qw.EcCS#'DBlUI*o7_xsox7D6Vcl%K.yKYWst$!xUvsdRxw$nhC3oG3xrbqr&CmBCRtTA'z$NaHUYk`.+}VW.GgHO//5xYC_UM&8D|~=qbCa-DOx^wCAl/Ak+c3e&JC0T*czocRbFY5++.QvWrL750MD^PDvn}GOljTsyn'cA5v*i-^~8bOI}*z1^lvP&8jqtM4snk{D^gzs_^&5icJ`D9jqC9=k6c#iTk.`N3D2H}12{p6Y9NJsv/|d9lVS~H+b3jnZm?~Ya|ABfSSYPC~oMD$DVrl#-3e.~QZlHhy_Wrkaa&^+y70wHCBX{dHdH0Fz1Lu5KoF'tc5UfI=A4|Dt^E41d?mWzV3xwMJ6{5m^Ltbn$|UTW3|y{A3O_+E2dlM7*.5RF^?nKu*4e8ikF%wP9wIy/iY=Oku_UffmHkUoVF~a-QVvX_WLsotA7_gyWr#/$K6K!x3$9FEpCZI0*=8.VHEXTYBn6~JdiY!V1*=UO1Gg}QPtn=8MuQ~o$Md^3f^Wl{aJ|Kx8Z6KrNo63?^K5dIX*.FG3+#ojjS2o}R2IHXK9TBliYq?X+WUk3m{0tN/lw!aYs{/xYq_xc$}J'.38{oiJ8QbdPfeL5`.ann6P8PLKq'a{u&2}QVWSz}+O~{4&PcsT$i^t?GAgxi&mg*kg6F~39M_HLkm2ARj3sXY*IiL^?u7'1S7bxm$M|PAc'1~OM_U0epV@Uw3o7bGJFAxDmjp8R-rlInxKc3EWfJNqE1K4apn48yZsSVG3J-AF4DX.WyNlY",
         title: "title_example",
         phone: "+9072888",
         receiveInvoiceEmail: true,
@@ -762,6 +772,11 @@ const request: CustomersApiUpdateCustomerRequest = {
       },
     ],
     subsidiary: "subsidiary_example",
+    totalOutstandingAmount: 3.14,
+    openAmount: 3.14,
+    overdueAmount: 3.14,
+    pendingPaymentAmount: 3.14,
+    paidAmount: 3.14,
   },
   
   customerId: "62ECB020842930cc01FFCCfe",

@@ -340,6 +340,7 @@ Name | Type | Description  | Notes
 **200** | Response contains the contract matching the provided integration id |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 **429** | Too Many Requests |  -  |
 **500** | Internal Server Error |  -  |
 

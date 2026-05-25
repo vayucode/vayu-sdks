@@ -18,9 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from openapi.models.product_group_products_inner_pricing_one_of_discount import ProductGroupProductsInnerPricingOneOfDiscount
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,8 +31,10 @@ class ProductGroupProductsInnerPricingOneOf(BaseModel):
     """ # noqa: E501
     type: StrictStr
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
+    discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
+    is_credit_purchase: Optional[StrictBool] = Field(default=None, description="Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.", alias="isCreditPurchase")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price"]
+    __properties: ClassVar[List[str]] = ["type", "price", "discount", "isCreditPurchase"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -81,10 +84,18 @@ class ProductGroupProductsInnerPricingOneOf(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of discount
+        if self.discount:
+            _dict['discount'] = self.discount.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if discount (nullable) is None
+        # and model_fields_set contains the field
+        if self.discount is None and "discount" in self.model_fields_set:
+            _dict['discount'] = None
 
         return _dict
 
@@ -99,7 +110,9 @@ class ProductGroupProductsInnerPricingOneOf(BaseModel):
 
         _obj = cls.model_validate({
             "type": obj.get("type"),
-            "price": obj.get("price")
+            "price": obj.get("price"),
+            "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None,
+            "isCreditPurchase": obj.get("isCreditPurchase")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

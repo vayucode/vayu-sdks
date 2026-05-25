@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
+**Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
+**IsCreditPurchase** | Pointer to **bool** | Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false. | [optional] 
 
 ## Methods
 
@@ -65,6 +67,66 @@ and a boolean to check if the value has been set.
 
 SetPrice sets Price field to given value.
 
+
+### GetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount`
+
+GetDiscount returns the Discount field if non-nil, zero value otherwise.
+
+### GetDiscountOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool)`
+
+GetDiscountOk returns a tuple with the Discount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount)`
+
+SetDiscount sets Discount field to given value.
+
+### HasDiscount
+
+`func (o *ProductGroupProductsInnerPricingOneOf) HasDiscount() bool`
+
+HasDiscount returns a boolean if a field has been set.
+
+### SetDiscountNil
+
+`func (o *ProductGroupProductsInnerPricingOneOf) SetDiscountNil(b bool)`
+
+ SetDiscountNil sets the value for Discount to be an explicit nil
+
+### UnsetDiscount
+`func (o *ProductGroupProductsInnerPricingOneOf) UnsetDiscount()`
+
+UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+### GetIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchase() bool`
+
+GetIsCreditPurchase returns the IsCreditPurchase field if non-nil, zero value otherwise.
+
+### GetIsCreditPurchaseOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchaseOk() (*bool, bool)`
+
+GetIsCreditPurchaseOk returns a tuple with the IsCreditPurchase field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricingOneOf) SetIsCreditPurchase(v bool)`
+
+SetIsCreditPurchase sets IsCreditPurchase field to given value.
+
+### HasIsCreditPurchase
+
+`func (o *ProductGroupProductsInnerPricingOneOf) HasIsCreditPurchase() bool`
+
+HasIsCreditPurchase returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

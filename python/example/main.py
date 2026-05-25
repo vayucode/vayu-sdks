@@ -74,6 +74,17 @@ def main():
     products = vayu.catalog_products.list(limit=5)
     print(f"Found {products.total} catalog products")
 
+    # --- Webhooks ---
+    print("\n=== Subscribe Webhook (CommitmentUsageCrossed @ 80%) ===")
+    try:
+        vayu.webhooks.subscribe_to_commitment_usage_crossed(
+            callback_url="https://example.com/webhooks/vayu",
+            threshold=0.8,
+        )
+        print("Subscribed.")
+    except Exception as e:
+        print(f"Subscribe failed (non-fatal): {e}")
+
     # --- Cleanup ---
     print("\n=== Delete Customer ===")
     try:

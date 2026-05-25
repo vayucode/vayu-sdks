@@ -22,6 +22,11 @@ Name | Type | Description | Notes
 **currency** | [**Currency**](Currency.md) |  | [optional] 
 **custom_fields** | [**List[CustomField]**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
 **subsidiary** | **str** | The name of the subsidiary of the customer | [optional] 
+**total_outstanding_amount** | **float** | Total outstanding amount across all unpaid invoices (in USD) | [optional] 
+**open_amount** | **float** | Total amount of invoices with no billing status set (in USD) | [optional] 
+**overdue_amount** | **float** | Total amount of overdue invoices (in USD) | [optional] 
+**pending_payment_amount** | **float** | Total amount of invoices pending payment (in USD) | [optional] 
+**paid_amount** | **float** | Total amount of paid invoices (in USD) | [optional] 
 **id** | **str** |  | 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 

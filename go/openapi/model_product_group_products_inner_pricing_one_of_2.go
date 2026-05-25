@@ -24,6 +24,7 @@ type ProductGroupProductsInnerPricingOneOf2 struct {
 	Type string `json:"type"`
 	Price float32 `json:"price"`
 	SubscriptionCadence ProductGroupProductsInnerPricingOneOf2SubscriptionCadence `json:"subscriptionCadence"`
+	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -121,6 +122,48 @@ func (o *ProductGroupProductsInnerPricingOneOf2) SetSubscriptionCadence(v Produc
 	o.SubscriptionCadence = v
 }
 
+// GetDiscount returns the Discount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInnerPricingOneOf2) GetDiscount() ProductGroupProductsInnerPricingOneOfDiscount {
+	if o == nil || IsNil(o.Discount.Get()) {
+		var ret ProductGroupProductsInnerPricingOneOfDiscount
+		return ret
+	}
+	return *o.Discount.Get()
+}
+
+// GetDiscountOk returns a tuple with the Discount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInnerPricingOneOf2) GetDiscountOk() (*ProductGroupProductsInnerPricingOneOfDiscount, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Discount.Get(), o.Discount.IsSet()
+}
+
+// HasDiscount returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf2) HasDiscount() bool {
+	if o != nil && o.Discount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscount gets a reference to the given NullableProductGroupProductsInnerPricingOneOfDiscount and assigns it to the Discount field.
+func (o *ProductGroupProductsInnerPricingOneOf2) SetDiscount(v ProductGroupProductsInnerPricingOneOfDiscount) {
+	o.Discount.Set(&v)
+}
+// SetDiscountNil sets the value for Discount to be an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf2) SetDiscountNil() {
+	o.Discount.Set(nil)
+}
+
+// UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+func (o *ProductGroupProductsInnerPricingOneOf2) UnsetDiscount() {
+	o.Discount.Unset()
+}
+
 func (o ProductGroupProductsInnerPricingOneOf2) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -134,6 +177,9 @@ func (o ProductGroupProductsInnerPricingOneOf2) ToMap() (map[string]interface{},
 	toSerialize["type"] = o.Type
 	toSerialize["price"] = o.Price
 	toSerialize["subscriptionCadence"] = o.SubscriptionCadence
+	if o.Discount.IsSet() {
+		toSerialize["discount"] = o.Discount.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -182,6 +228,7 @@ func (o *ProductGroupProductsInnerPricingOneOf2) UnmarshalJSON(data []byte) (err
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "price")
 		delete(additionalProperties, "subscriptionCadence")
+		delete(additionalProperties, "discount")
 		o.AdditionalProperties = additionalProperties
 	}
 

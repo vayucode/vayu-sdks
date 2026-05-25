@@ -11,12 +11,14 @@
  */
 
 import { ProductGroupProductsInnerPricingOneOf1InstallmentsInner } from '../models/ProductGroupProductsInnerPricingOneOf1InstallmentsInner';
+import { ProductGroupProductsInnerPricingOneOfDiscount } from '../models/ProductGroupProductsInnerPricingOneOfDiscount';
 import { HttpFile } from '../http/http';
 
 export class ProductGroupProductsInnerPricingOneOf1 {
     'type': ProductGroupProductsInnerPricingOneOf1TypeEnum;
     'price': number;
     'installments'?: Array<ProductGroupProductsInnerPricingOneOf1InstallmentsInner> | null;
+    'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -39,6 +41,12 @@ export class ProductGroupProductsInnerPricingOneOf1 {
             "name": "installments",
             "baseName": "installments",
             "type": "Array<ProductGroupProductsInnerPricingOneOf1InstallmentsInner>",
+            "format": ""
+        },
+        {
+            "name": "discount",
+            "baseName": "discount",
+            "type": "ProductGroupProductsInnerPricingOneOfDiscount",
             "format": ""
         }    ];
 

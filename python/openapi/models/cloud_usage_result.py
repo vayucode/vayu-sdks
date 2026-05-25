@@ -56,8 +56,8 @@ class CloudUsageResult(BaseModel):
     @field_validator('idempotency_key')
     def idempotency_key_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"^vayu-\S{24}-\S{24}-\S{24}-\S{24}$", value):
-            raise ValueError(r"must validate the regular expression /^vayu-\S{24}-\S{24}-\S{24}-\S{24}$/")
+        if not re.match(r"^vayu-\S{24}-\S{24}-\S{24}-\S{24}-\d{13}$", value):
+            raise ValueError(r"must validate the regular expression /^vayu-\S{24}-\S{24}-\S{24}-\S{24}-\d{13}$/")
         return value
 
     model_config = ConfigDict(

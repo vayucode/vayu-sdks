@@ -30,6 +30,7 @@ class CustomFieldValueTypes(str, Enum):
     STRING = 'String'
     NUMBER = 'Number'
     BOOLEAN = 'Boolean'
+    ENUM = 'Enum'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

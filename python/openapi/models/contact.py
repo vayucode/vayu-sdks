@@ -29,12 +29,22 @@ class Contact(BaseModel):
     Contact
     """ # noqa: E501
     name: Optional[StrictStr] = None
-    email: Optional[StrictStr] = None
+    email: Optional[Annotated[str, Field(strict=True)]] = None
     title: Optional[StrictStr] = None
     phone: Optional[Annotated[str, Field(strict=True)]] = None
     receive_invoice_email: Optional[StrictBool] = Field(default=None, alias="receiveInvoiceEmail")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "email", "title", "phone", "receiveInvoiceEmail"]
+
+    @field_validator('email')
+    def email_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!\.)[A-Za-z0-9_!#$%&\'*+\/=?^`{|}~-]+(?:\.[A-Za-z0-9_!#$%&\'*+\/=?^`{|}~-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$", value):
+            raise ValueError(r"must validate the regular expression /^(?!\.)[A-Za-z0-9_!#$%&'*+\/=?^`{|}~-]+(?:\.[A-Za-z0-9_!#$%&'*+\/=?^`{|}~-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/")
+        return value
 
     @field_validator('phone')
     def phone_validate_regular_expression(cls, value):

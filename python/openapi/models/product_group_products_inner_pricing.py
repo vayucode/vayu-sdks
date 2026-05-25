@@ -23,11 +23,13 @@ from openapi.models.product_group_products_inner_pricing_one_of1 import ProductG
 from openapi.models.product_group_products_inner_pricing_one_of2 import ProductGroupProductsInnerPricingOneOf2
 from openapi.models.product_group_products_inner_pricing_one_of3 import ProductGroupProductsInnerPricingOneOf3
 from openapi.models.product_group_products_inner_pricing_one_of4 import ProductGroupProductsInnerPricingOneOf4
+from openapi.models.product_group_products_inner_pricing_one_of5 import ProductGroupProductsInnerPricingOneOf5
+from openapi.models.product_group_products_inner_pricing_one_of6 import ProductGroupProductsInnerPricingOneOf6
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-PRODUCTGROUPPRODUCTSINNERPRICING_ONE_OF_SCHEMAS = ["ProductGroupProductsInnerPricingOneOf", "ProductGroupProductsInnerPricingOneOf1", "ProductGroupProductsInnerPricingOneOf2", "ProductGroupProductsInnerPricingOneOf3", "ProductGroupProductsInnerPricingOneOf4"]
+PRODUCTGROUPPRODUCTSINNERPRICING_ONE_OF_SCHEMAS = ["ProductGroupProductsInnerPricingOneOf", "ProductGroupProductsInnerPricingOneOf1", "ProductGroupProductsInnerPricingOneOf2", "ProductGroupProductsInnerPricingOneOf3", "ProductGroupProductsInnerPricingOneOf4", "ProductGroupProductsInnerPricingOneOf5", "ProductGroupProductsInnerPricingOneOf6"]
 
 class ProductGroupProductsInnerPricing(BaseModel):
     """
@@ -43,8 +45,12 @@ class ProductGroupProductsInnerPricing(BaseModel):
     oneof_schema_4_validator: Optional[ProductGroupProductsInnerPricingOneOf3] = None
     # data type: ProductGroupProductsInnerPricingOneOf4
     oneof_schema_5_validator: Optional[ProductGroupProductsInnerPricingOneOf4] = None
-    actual_instance: Optional[Union[ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4]] = None
-    one_of_schemas: Set[str] = { "ProductGroupProductsInnerPricingOneOf", "ProductGroupProductsInnerPricingOneOf1", "ProductGroupProductsInnerPricingOneOf2", "ProductGroupProductsInnerPricingOneOf3", "ProductGroupProductsInnerPricingOneOf4" }
+    # data type: ProductGroupProductsInnerPricingOneOf5
+    oneof_schema_6_validator: Optional[ProductGroupProductsInnerPricingOneOf5] = None
+    # data type: ProductGroupProductsInnerPricingOneOf6
+    oneof_schema_7_validator: Optional[ProductGroupProductsInnerPricingOneOf6] = None
+    actual_instance: Optional[Union[ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6]] = None
+    one_of_schemas: Set[str] = { "ProductGroupProductsInnerPricingOneOf", "ProductGroupProductsInnerPricingOneOf1", "ProductGroupProductsInnerPricingOneOf2", "ProductGroupProductsInnerPricingOneOf3", "ProductGroupProductsInnerPricingOneOf4", "ProductGroupProductsInnerPricingOneOf5", "ProductGroupProductsInnerPricingOneOf6" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -92,12 +98,22 @@ class ProductGroupProductsInnerPricing(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `ProductGroupProductsInnerPricingOneOf4`")
         else:
             match += 1
+        # validate data type: ProductGroupProductsInnerPricingOneOf5
+        if not isinstance(v, ProductGroupProductsInnerPricingOneOf5):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ProductGroupProductsInnerPricingOneOf5`")
+        else:
+            match += 1
+        # validate data type: ProductGroupProductsInnerPricingOneOf6
+        if not isinstance(v, ProductGroupProductsInnerPricingOneOf6):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ProductGroupProductsInnerPricingOneOf6`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -142,13 +158,25 @@ class ProductGroupProductsInnerPricing(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into ProductGroupProductsInnerPricingOneOf5
+        try:
+            instance.actual_instance = ProductGroupProductsInnerPricingOneOf5.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into ProductGroupProductsInnerPricingOneOf6
+        try:
+            instance.actual_instance = ProductGroupProductsInnerPricingOneOf6.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ProductGroupProductsInnerPricing with oneOf schemas: ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -162,7 +190,7 @@ class ProductGroupProductsInnerPricing(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf4, ProductGroupProductsInnerPricingOneOf5, ProductGroupProductsInnerPricingOneOf6]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
