@@ -136,22 +136,20 @@ print(response['customer'])
 
 ### Contracts
 
-#### Assigning a contract to a customer
+#### Creating a contract for a customer
 
-To create a contract for a customer, build a `CreateContractRequest` and pass it
-to `vayu.contracts.create()`. See the OpenAPI schema for the full set of fields
-(name and customerId and startDate are required; products / productGroups
-attach pricing and commitments).
+Required: a name, the customer id, and a start date. Optional kwargs mirror the
+rest of the schema — pass `products` / `product_groups` to attach pricing and
+commitments, `end_date` for fixed-term contracts, etc.
 
 ```python
 from datetime import datetime, timezone
-from openapi.models.create_contract_request import CreateContractRequest
 
-response = vayu.contracts.create(CreateContractRequest(
+response = vayu.contracts.create(
   name='Pro Subscription',
-  customerId='1f4cf23x2c4y483z1111158621f77a21',
-  startDate=datetime.now(timezone.utc),
-))
+  customer_id='1f4cf23x2c4y483z1111158621f77a21',
+  start_date=datetime.now(timezone.utc),
+)
 
 print(response.contract)
 ```
