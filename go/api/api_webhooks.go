@@ -26,10 +26,10 @@ func NewWebhookSubscribeRequest(callbackUrl string, eventType NotificationEventT
 	}
 }
 
-func NewWebhookSubscribeRequestWithThreshold(callbackUrl string, eventType NotificationEventType, threshold float32) *WebhookSubscribeRequest {
+func NewCommitmentUsageCrossedWebhookSubscribeRequest(callbackUrl string, threshold float32) *WebhookSubscribeRequest {
 	return &openapi.WebhookSubscribeRequest{
 		CallbackUrl: callbackUrl,
-		EventType:   eventType,
+		EventType:   openapi.NOTIFICATIONEVENTTYPE_COMMITMENT_USAGE_CROSSED,
 		Threshold:   &threshold,
 	}
 }

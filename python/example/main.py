@@ -7,7 +7,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from vayu_sdk import Vayu
 from openapi.models.event import Event
-from openapi.models.notification_event_type import NotificationEventType
 
 VAYU_API_KEY = os.environ.get("VAYU_API_KEY")
 if not VAYU_API_KEY:
@@ -78,9 +77,8 @@ def main():
     # --- Webhooks ---
     print("\n=== Subscribe Webhook (CommitmentUsageCrossed @ 80%) ===")
     try:
-        vayu.webhooks.subscribe(
+        vayu.webhooks.subscribe_to_commitment_usage_crossed(
             callback_url="https://example.com/webhooks/vayu",
-            event_type=NotificationEventType.COMMITMENTUSAGECROSSED,
             threshold=0.8,
         )
         print("Subscribed.")
