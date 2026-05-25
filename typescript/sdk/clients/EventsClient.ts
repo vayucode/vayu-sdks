@@ -22,7 +22,7 @@ export class EventsClient {
     const cursor = paginationOptions?.cursor;
     const limit = paginationOptions?.limit;
 
-    return this.client.queryEvents(startTime, endTime, eventName, limit, cursor);
+    return this.client.queryEvents(startTime, endTime, eventName, undefined, limit, cursor);
   }
 
   async send(events: Event[]) {

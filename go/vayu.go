@@ -18,8 +18,6 @@ type Vayu struct {
 	Plans               *api.PlansAPI
 	Webhooks            *api.WebhooksAPI
 	Credits             *api.CreditsAPI
-	Integrations        *api.IntegrationsAPI
-	Reports             *api.ReportsAPI
 }
 
 func NewVayu(APIKey string) *Vayu {
@@ -37,8 +35,6 @@ func NewVayu(APIKey string) *Vayu {
 		Plans:                api.NewPlansAPI(vayuClient),
 		Webhooks:             api.NewWebhooksAPI(vayuClient),
 		Credits:              api.NewCreditsAPI(vayuClient),
-		Integrations:         api.NewIntegrationsAPI(vayuClient),
-		Reports:              api.NewReportsAPI(vayuClient),
 	}
 }
 
@@ -153,13 +149,3 @@ type (
 	DeleteMeterResponse = api.DeleteMeterResponse
 )
 
-type (
-	NetSuiteExportSalesOrderRequest = api.NetSuiteExportSalesOrderRequest
-	NetSuiteSyncInvoicesRequest     = api.NetSuiteSyncInvoicesRequest
-	NetSuiteSyncInvoicesResponse    = api.NetSuiteSyncInvoicesResponse
-)
-
-type (
-	GetCommitmentReportResponse    = api.GetCommitmentReportResponse
-	GetProductsUsageReportResponse = api.GetProductsUsageReportResponse
-)
