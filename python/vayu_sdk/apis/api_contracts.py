@@ -1,7 +1,6 @@
 from openapi.api.contracts_api import ContractsApi
 from vayu_sdk.clients.vayu_client import VayuClient
 from openapi.models.create_contract_request import CreateContractRequest
-from datetime import datetime
 
 from openapi.models.get_contract_response_contract import GetContractResponseContract
 from openapi.models.list_contracts_response import ListContractsResponse
@@ -28,21 +27,8 @@ class ContractsAPI:
 
         return response
 
-    def create(
-        self, start_date: datetime, end_date: datetime | None, customer_id: str, plan_id: str
-    ):
-        request = CreateContractRequest(
-            startDate=start_date,
-            endDate=end_date,
-            customerId=customer_id,
-            planId=plan_id,
-        )
-
-        response = self.__client.create_contract(
-            create_contract_request=request
-        )
-
-        return response
+    def create(self, request: CreateContractRequest):
+        return self.__client.create_contract(create_contract_request=request)
 
     def delete(self, id: str):
         response = self.__client.delete_contract(contract_id=id)

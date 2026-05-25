@@ -138,17 +138,22 @@ print(response['customer'])
 
 #### Assigning a contract to a customer
 
-In order to assign a contract to a customer you would need to provide the customer Id and the relevant plan
+To create a contract for a customer, build a `CreateContractRequest` and pass it
+to `vayu.contracts.create()`. See the OpenAPI schema for the full set of fields
+(name and customerId and startDate are required; products / productGroups
+attach pricing and commitments).
 
 ```python
-response = vayu.contracts.create(
-  start_date=time.time(), 
-  end_date=None, 
-  customer_id='1f4cf23x-2c4y-483z-1111-158621f77a21', 
-  plan_id='4f6cf35x-1234-483z-a0a9-158621f77a21'
-)
+from datetime import datetime, timezone
+from openapi.models.create_contract_request import CreateContractRequest
 
-print(response['contract'])
+response = vayu.contracts.create(CreateContractRequest(
+  name='Pro Subscription',
+  customerId='1f4cf23x2c4y483z1111158621f77a21',
+  startDate=datetime.now(timezone.utc),
+))
+
+print(response.contract)
 ```
 
 ### Meters
