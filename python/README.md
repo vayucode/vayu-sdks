@@ -136,19 +136,22 @@ print(response['customer'])
 
 ### Contracts
 
-#### Assigning a contract to a customer
+#### Creating a contract for a customer
 
-In order to assign a contract to a customer you would need to provide the customer Id and the relevant plan
+Required: a name, the customer id, and a start date. Optional kwargs mirror the
+rest of the schema — pass `products` / `product_groups` to attach pricing and
+commitments, `end_date` for fixed-term contracts, etc.
 
 ```python
+from datetime import datetime, timezone
+
 response = vayu.contracts.create(
-  start_date=time.time(), 
-  end_date=None, 
-  customer_id='1f4cf23x-2c4y-483z-1111-158621f77a21', 
-  plan_id='4f6cf35x-1234-483z-a0a9-158621f77a21'
+  name='Pro Subscription',
+  customer_id='1f4cf23x2c4y483z1111158621f77a21',
+  start_date=datetime.now(timezone.utc),
 )
 
-print(response['contract'])
+print(response.contract)
 ```
 
 ### Meters
