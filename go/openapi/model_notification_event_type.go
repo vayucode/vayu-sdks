@@ -32,6 +32,7 @@ const (
 	NOTIFICATIONEVENTTYPE_TIER_CROSSED NotificationEventType = "TierCrossed"
 	NOTIFICATIONEVENTTYPE_COMMITMENT_CROSSED NotificationEventType = "CommitmentCrossed"
 	NOTIFICATIONEVENTTYPE_COMMITMENT_USAGE_CROSSED NotificationEventType = "CommitmentUsageCrossed"
+	NOTIFICATIONEVENTTYPE_CURRENCY_COMMITMENT_USAGE_CROSSED NotificationEventType = "CurrencyCommitmentUsageCrossed"
 	NOTIFICATIONEVENTTYPE_FINAL_TIER_EXCEEDED NotificationEventType = "FinalTierExceeded"
 	NOTIFICATIONEVENTTYPE_INVOICE_PAYMENT_STATUS_CHANGED NotificationEventType = "InvoicePaymentStatusChanged"
 	NOTIFICATIONEVENTTYPE_INVOICE_SEND_FAILED NotificationEventType = "InvoiceSendFailed"
@@ -51,6 +52,7 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"TierCrossed",
 	"CommitmentCrossed",
 	"CommitmentUsageCrossed",
+	"CurrencyCommitmentUsageCrossed",
 	"FinalTierExceeded",
 	"InvoicePaymentStatusChanged",
 	"InvoiceSendFailed",

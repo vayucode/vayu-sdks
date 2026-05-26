@@ -85,6 +85,16 @@ def main():
     except Exception as e:
         print(f"Subscribe failed (non-fatal): {e}")
 
+    print("\n=== Subscribe Webhook (CurrencyCommitmentUsageCrossed @ 80%) ===")
+    try:
+        vayu.webhooks.subscribe_to_currency_commitment_usage_crossed(
+            callback_url="https://example.com/webhooks/vayu",
+            threshold=0.8,
+        )
+        print("Subscribed.")
+    except Exception as e:
+        print(f"Subscribe failed (non-fatal): {e}")
+
     # --- Cleanup ---
     print("\n=== Delete Customer ===")
     try:
