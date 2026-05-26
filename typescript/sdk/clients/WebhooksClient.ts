@@ -51,6 +51,14 @@ export class WebhooksClient {
     });
   }
 
+  subscribeToCurrencyCommitmentUsageCrossed(callbackUrl: string, threshold: number) {
+    return this.subscribe({
+      callbackUrl,
+      eventType: NotificationEventType.CurrencyCommitmentUsageCrossed,
+      threshold,
+    });
+  }
+
   subscribeToAnonymousCustomerCreated(callbackUrl: string) {
     return this.subscribe({
       callbackUrl,

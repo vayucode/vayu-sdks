@@ -24,6 +24,7 @@ export enum NotificationEventType {
     TierCrossed = 'TierCrossed',
     CommitmentCrossed = 'CommitmentCrossed',
     CommitmentUsageCrossed = 'CommitmentUsageCrossed',
+    CurrencyCommitmentUsageCrossed = 'CurrencyCommitmentUsageCrossed',
     FinalTierExceeded = 'FinalTierExceeded',
     InvoicePaymentStatusChanged = 'InvoicePaymentStatusChanged',
     InvoiceSendFailed = 'InvoiceSendFailed',

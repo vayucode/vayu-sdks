@@ -25,6 +25,8 @@
 
 * `COMMITMENTUSAGECROSSED` (value: `'CommitmentUsageCrossed'`)
 
+* `CURRENCYCOMMITMENTUSAGECROSSED` (value: `'CurrencyCommitmentUsageCrossed'`)
+
 * `FINALTIEREXCEEDED` (value: `'FinalTierExceeded'`)
 
 * `INVOICEPAYMENTSTATUSCHANGED` (value: `'InvoicePaymentStatusChanged'`)

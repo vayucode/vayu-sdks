@@ -38,6 +38,7 @@ class NotificationEventType(str, Enum):
     TIERCROSSED = 'TierCrossed'
     COMMITMENTCROSSED = 'CommitmentCrossed'
     COMMITMENTUSAGECROSSED = 'CommitmentUsageCrossed'
+    CURRENCYCOMMITMENTUSAGECROSSED = 'CurrencyCommitmentUsageCrossed'
     FINALTIEREXCEEDED = 'FinalTierExceeded'
     INVOICEPAYMENTSTATUSCHANGED = 'InvoicePaymentStatusChanged'
     INVOICESENDFAILED = 'InvoiceSendFailed'

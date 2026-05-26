@@ -6850,6 +6850,7 @@ components:
         - TierCrossed
         - CommitmentCrossed
         - CommitmentUsageCrossed
+        - CurrencyCommitmentUsageCrossed
         - FinalTierExceeded
         - InvoicePaymentStatusChanged
         - InvoiceSendFailed
