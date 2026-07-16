@@ -37,6 +37,8 @@ class CreateContractRequest(BaseModel):
     start_date: datetime = Field(description="The start date of the contract", alias="startDate")
     customer_id: Annotated[str, Field(strict=True)] = Field(description="The id of the customer that the contract is associated with", alias="customerId")
     name: StrictStr = Field(description="The name of the contract")
+    plan_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="The id of the plan template to create the contract from. When provided, the contract's products are derived from the plan template.", alias="planId")
+    external_id: Optional[StrictStr] = Field(default=None, description="An external identifier for the contract", alias="externalId")
     sales_force_opportunity_id: Optional[StrictStr] = Field(default=None, description="The id of the sales force opportunity that the contract is associated with", alias="salesForceOpportunityId")
     end_date: Optional[datetime] = Field(default=None, description="The end date of the contract", alias="endDate")
     signature_date: Optional[datetime] = Field(default=None, description="The signature date of the contract", alias="signatureDate")
@@ -51,11 +53,21 @@ class CreateContractRequest(BaseModel):
     purchase_order: Optional[StrictStr] = Field(default=None, description="The purchase order number of the contract", alias="purchaseOrder")
     currency: Optional[Any] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "purchaseOrder", "currency"]
+    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "planId", "externalId", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "purchaseOrder", "currency"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if not re.match(r"^[0-9a-fA-F]{24}$", value):
+            raise ValueError(r"must validate the regular expression /^[0-9a-fA-F]{24}$/")
+        return value
+
+    @field_validator('plan_id')
+    def plan_id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"^[0-9a-fA-F]{24}$", value):
             raise ValueError(r"must validate the regular expression /^[0-9a-fA-F]{24}$/")
         return value
@@ -137,6 +149,11 @@ class CreateContractRequest(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if external_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_id is None and "external_id" in self.model_fields_set:
+            _dict['externalId'] = None
+
         # set to None if sales_force_opportunity_id (nullable) is None
         # and model_fields_set contains the field
         if self.sales_force_opportunity_id is None and "sales_force_opportunity_id" in self.model_fields_set:
@@ -182,6 +199,8 @@ class CreateContractRequest(BaseModel):
             "startDate": obj.get("startDate"),
             "customerId": obj.get("customerId"),
             "name": obj.get("name"),
+            "planId": obj.get("planId"),
+            "externalId": obj.get("externalId"),
             "salesForceOpportunityId": obj.get("salesForceOpportunityId"),
             "endDate": obj.get("endDate"),
             "signatureDate": obj.get("signatureDate"),

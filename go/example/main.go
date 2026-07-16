@@ -8,116 +8,194 @@ import (
 	vayu "github.com/vayucode/vayu-sdks/go"
 )
 
+// This example demonstrates the SDK use cases added for the Groundcover onboarding:
+//
+//  1. External IDs on customers/contracts/plans (ENG-7130)
+//  2. Events read path — query-events + get-event-by-ref (migrated to ClickHouse)
+//  3. Invoices filtered by billing status (ENG-7132)
+//  4. Plan-template contract creation + validation hardening (ENG-7126)
+//
+// Auth: set VAYU_ACCESS_TOKEN to a pre-issued access token, or VAYU_API_KEY to an
+// API key / refresh token. Optionally set VAYU_HOST (e.g. https://connect.withvayu.com).
+// Write operations (creating a contract) only run when VAYU_RUN_WRITES=1.
 func main() {
-	apiKey := os.Getenv("VAYU_API_KEY")
-	if apiKey == "" {
-		fmt.Fprintln(os.Stderr, "Set VAYU_API_KEY environment variable")
-		os.Exit(1)
-	}
-
-	v := vayu.NewVayu(apiKey)
+	v := vayu.NewVayu(os.Getenv("VAYU_API_KEY"))
 
 	if host := os.Getenv("VAYU_HOST"); host != "" {
 		v.SetCustomHost(host)
 	}
+	if token := os.Getenv("VAYU_ACCESS_TOKEN"); token != "" {
+		if err := v.SetAccessToken(token); err != nil {
+			fatal("SetAccessToken", err)
+		}
+	} else if os.Getenv("VAYU_API_KEY") == "" {
+		fmt.Fprintln(os.Stderr, "Set VAYU_ACCESS_TOKEN (pre-issued token) or VAYU_API_KEY (API key/refresh token)")
+		os.Exit(1)
+	}
 
-	// --- Customers ---
-	fmt.Println("=== List Customers ===")
-	limit := float32(5)
+	externalIDsExample(v)
+	eventsReadExample(v)
+	invoicesByStatusExample(v)
+	planTemplateContractExample(v)
+
+	fmt.Println("\nDone!")
+}
+
+// 1. External IDs (ENG-7130): look up a customer by its external identifier.
+func externalIDsExample(v *vayu.Vayu) {
+	fmt.Println("=== External IDs: lookup customer by externalId ===")
+	limit := float32(50)
 	customers, err := v.Customers.ListCustomers(&limit, nil)
 	if err != nil {
 		fatal("ListCustomers", err)
 	}
-	fmt.Printf("Found %.0f customers\n", customers.Total)
 
-	fmt.Println("\n=== Create Customer ===")
-	suffix := fmt.Sprintf("%d", time.Now().UnixNano())
-	externalId := fmt.Sprintf("example-%s", suffix)
-	customerName := fmt.Sprintf("SDK Example Customer %s", suffix)
-	created, err := v.Customers.CreateCustomer(vayu.CreateCustomerRequest{
-		Name:       customerName,
-		ExternalId: &externalId,
+	externalId := ""
+	for _, c := range customers.Customers {
+		if c.GetExternalId() != "" {
+			externalId = c.GetExternalId()
+			break
+		}
+	}
+	if externalId == "" {
+		fmt.Println("No customer with an externalId found; skipping lookup.")
+		return
+	}
+
+	fetched, err := v.Customers.GetCustomerByExternalId(externalId)
+	if err != nil {
+		fatal("GetCustomerByExternalId", err)
+	}
+	fmt.Printf("externalId %q -> %s (%s)\n", externalId, fetched.Customer.GetName(), fetched.Customer.GetId())
+}
+
+// 2. Events read path (ClickHouse): query events, then fetch one by its ref.
+func eventsReadExample(v *vayu.Vayu) {
+	fmt.Println("\n=== Events read path: query-events + get-event-by-ref ===")
+	limit := float32(5)
+	result, err := v.Events.QueryEvents(vayu.QueryEventsRequest{
+		StartTime: time.Now().AddDate(-2, 0, 0),
+		EndTime:   time.Now(),
+		Limit:     &limit,
 	})
 	if err != nil {
-		fatal("CreateCustomer", err)
+		fatal("QueryEvents", err)
 	}
-	customerId := created.Customer.Id
-	fmt.Printf("Created customer: %s\n", customerId)
-
-	fmt.Println("\n=== Get Customer ===")
-	fetched, err := v.Customers.GetCustomer(customerId)
-	if err != nil {
-		fatal("GetCustomer", err)
-	}
-	fmt.Printf("Fetched: %s\n", fetched.Customer.Name)
-
-	// --- Events ---
-	fmt.Println("\n=== Send Events ===")
-	ref := fmt.Sprintf("ref-%d", time.Now().UnixMilli())
-	events := []vayu.Event{
-		{
-			Name:          "api_call",
-			Timestamp:     time.Now().UTC(),
-			CustomerAlias: externalId,
-			Ref:           ref,
-			Data: map[string]interface{}{
-				"endpoint": "/users",
-				"method":   "GET",
-			},
-		},
-	}
-	sendResult, err := v.Events.SendEvents(events)
-	if err != nil {
-		fatal("SendEvents", err)
-	}
-	fmt.Printf("Valid events: %d\n", len(sendResult.ValidEvents))
-	fmt.Printf("Invalid events: %d\n", len(sendResult.InvalidEvents))
-
-	// --- Meters ---
-	fmt.Println("\n=== List Meters ===")
-	meters, err := v.Meters.ListMeters(&limit, nil)
-	if err != nil {
-		fatal("ListMeters", err)
-	}
-	fmt.Printf("Found %.0f meters\n", meters.Total)
-	for _, m := range meters.Meters {
-		fmt.Printf("  - %s: %s\n", m.Id, m.Name)
+	fmt.Printf("Queried %d events\n", len(result.Events))
+	if len(result.Events) == 0 {
+		return
 	}
 
-	// --- Contracts ---
-	fmt.Println("\n=== List Contracts ===")
-	contracts, err := v.Contracts.ListContracts(&limit, nil)
-	if err != nil {
-		fatal("ListContracts", err)
-	}
-	fmt.Printf("Found %.0f contracts\n", contracts.Total)
+	ref := result.Events[0].GetRef()
+	fmt.Printf("First event: ref=%s name=%s at %s\n", ref, result.Events[0].GetName(), result.Events[0].GetTimestamp().Format(time.RFC3339))
 
-	// --- Invoices ---
-	fmt.Println("\n=== List Invoices ===")
-	invoices, err := v.Invoices.ListInvoices(&limit, nil)
+	event, err := v.Events.GetEvent(ref)
 	if err != nil {
-		fatal("ListInvoices", err)
+		fmt.Printf("GetEvent(%q) failed (non-fatal): %v\n", ref, err)
+		return
 	}
-	fmt.Printf("Found %.0f invoices\n", invoices.Total)
+	fmt.Printf("Fetched by ref: %s\n", event.Event.GetName())
+}
 
-	// --- Catalog Products (new in latest update-sdks) ---
-	fmt.Println("\n=== List Catalog Products ===")
-	products, err := v.CatalogProducts.ListCatalogProducts(&limit, nil)
-	if err != nil {
-		fatal("ListCatalogProducts", err)
+// 3. Invoices by status (ENG-7132): filter the invoice list by billing status.
+func invoicesByStatusExample(v *vayu.Vayu) {
+	fmt.Println("\n=== Invoices by billing status ===")
+	limit := float32(5)
+	for _, status := range []string{
+		vayu.InvoiceBillingStatusPaid,
+		vayu.InvoiceBillingStatusPendingPayment,
+		vayu.InvoiceBillingStatusOverdue,
+	} {
+		s := status
+		invoices, err := v.Invoices.ListInvoicesWithFilter(vayu.ListInvoicesFilter{
+			Limit:         &limit,
+			BillingStatus: &s,
+		})
+		if err != nil {
+			fatal("ListInvoicesWithFilter", err)
+		}
+		allMatch := true
+		for _, inv := range invoices.Invoices {
+			if string(inv.GetBillingStatus()) != status {
+				allMatch = false
+			}
+		}
+		fmt.Printf("  %-16s fetched %d invoice(s), all match filter: %t\n", status, len(invoices.Invoices), allMatch)
 	}
-	fmt.Printf("Found %.0f catalog products\n", products.Total)
+}
 
-	// --- Cleanup ---
-	fmt.Println("\n=== Delete Customer ===")
-	_, err = v.Customers.DeleteCustomer(customerId)
+// 4. Plan-template contract creation + validation (ENG-7126).
+// Always exercises the validation path (an invalid planId is rejected). A real
+// contract is only created when VAYU_RUN_WRITES=1, and is deleted afterwards.
+func planTemplateContractExample(v *vayu.Vayu) {
+	fmt.Println("\n=== Plan-template contract creation (ENG-7126) ===")
+
+	// Validation: creating from a non-existent plan template must be rejected.
+	missingId := "000000000000000000000000"
+	_, err := v.Contracts.CreateContract(vayu.CreateContractRequest{
+		StartDate:  time.Now(),
+		CustomerId: missingId, // not resolved — the request is rejected first
+		Name:       "validation-check",
+		PlanId:     &missingId, // planId that does not exist
+	})
 	if err != nil {
-		fmt.Printf("DeleteCustomer failed (non-fatal): %v\n", err)
+		fmt.Printf("Invalid plan template correctly rejected: %v\n", err)
 	} else {
-		fmt.Printf("Deleted customer: %s\n", customerId)
+		fmt.Println("WARNING: expected an error for a non-existent plan template")
 	}
 
-	fmt.Println("\nDone!")
+	if os.Getenv("VAYU_RUN_WRITES") != "1" {
+		fmt.Println("Set VAYU_RUN_WRITES=1 to create a real contract from an active plan.")
+		return
+	}
+
+	planId, customerId := findActivePlanAndCustomer(v)
+	if planId == "" || customerId == "" {
+		fmt.Println("No active plan / customer available; skipping real creation.")
+		return
+	}
+
+	name := fmt.Sprintf("SDK plan-template contract %d", time.Now().Unix())
+	created, err := v.Contracts.CreateContract(vayu.CreateContractRequest{
+		StartDate:  time.Now(),
+		CustomerId: customerId,
+		Name:       name,
+		PlanId:     &planId,
+	})
+	if err != nil {
+		fatal("CreateContract(from plan template)", err)
+	}
+	contractId := created.Contract.GetId()
+	fmt.Printf("Created contract %s from plan %s\n", contractId, planId)
+
+	if _, err := v.Contracts.DeleteContract(contractId); err != nil {
+		fmt.Printf("Cleanup DeleteContract failed (non-fatal): %v\n", err)
+	} else {
+		fmt.Printf("Deleted contract %s\n", contractId)
+	}
+}
+
+func findActivePlanAndCustomer(v *vayu.Vayu) (planId string, customerId string) {
+	limit := float32(50)
+	plans, err := v.Plans.ListPlans(&limit, nil)
+	if err != nil {
+		fatal("ListPlans", err)
+	}
+	for _, p := range plans.Plans {
+		if p.GetStatus() == "Active" {
+			planId = p.GetId()
+			break
+		}
+	}
+
+	customers, err := v.Customers.ListCustomers(&limit, nil)
+	if err != nil {
+		fatal("ListCustomers", err)
+	}
+	if len(customers.Customers) > 0 {
+		customerId = customers.Customers[0].GetId()
+	}
+	return planId, customerId
 }
 
 func fatal(op string, err error) {

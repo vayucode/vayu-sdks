@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **start_date** | **datetime** | The start date of the contract | 
 **customer_id** | **str** | The id of the customer that the contract is associated with | 
 **name** | **str** | The name of the contract | 
+**plan_id** | **str** | The id of the plan template to create the contract from. When provided, the contract&#39;s products are derived from the plan template. | [optional] 
+**external_id** | **str** | An external identifier for the contract | [optional] 
 **sales_force_opportunity_id** | **str** | The id of the sales force opportunity that the contract is associated with | [optional] 
 **end_date** | **datetime** | The end date of the contract | [optional] 
 **signature_date** | **datetime** | The signature date of the contract | [optional] 

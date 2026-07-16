@@ -1951,9 +1951,12 @@ export class ObservableInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
+     * @param [billingStatus] Filter invoices by their billing status
+     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
+     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
      */
-    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<HttpInfo<ListInvoicesResponse>> {
-        const requestContextPromise = this.requestFactory.listInvoices(limit, cursor, customerId, _options);
+    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Observable<HttpInfo<ListInvoicesResponse>> {
+        const requestContextPromise = this.requestFactory.listInvoices(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -1977,9 +1980,12 @@ export class ObservableInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
+     * @param [billingStatus] Filter invoices by their billing status
+     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
+     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
      */
-    public listInvoices(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Observable<ListInvoicesResponse> {
-        return this.listInvoicesWithHttpInfo(limit, cursor, customerId, _options).pipe(map((apiResponse: HttpInfo<ListInvoicesResponse>) => apiResponse.data));
+    public listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Observable<ListInvoicesResponse> {
+        return this.listInvoicesWithHttpInfo(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options).pipe(map((apiResponse: HttpInfo<ListInvoicesResponse>) => apiResponse.data));
     }
 
 }

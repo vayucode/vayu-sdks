@@ -1741,6 +1741,27 @@ export interface InvoicesApiListInvoicesRequest {
      * @memberof InvoicesApilistInvoices
      */
     customerId?: string
+    /**
+     * Filter invoices by their billing status
+     * Defaults to: undefined
+     * @type &#39;None&#39; | &#39;Paid&#39; | &#39;Rejected&#39; | &#39;PendingPayment&#39; | &#39;Overdue&#39;
+     * @memberof InvoicesApilistInvoices
+     */
+    billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue'
+    /**
+     * Only include invoices issued on or after this timestamp
+     * Defaults to: undefined
+     * @type Date
+     * @memberof InvoicesApilistInvoices
+     */
+    issuedAtFrom?: Date
+    /**
+     * Only include invoices issued on or before this timestamp
+     * Defaults to: undefined
+     * @type Date
+     * @memberof InvoicesApilistInvoices
+     */
+    issuedAtTo?: Date
 }
 
 export class ObjectInvoicesApi {
@@ -1792,7 +1813,7 @@ export class ObjectInvoicesApi {
      * @param param the request object
      */
     public listInvoicesWithHttpInfo(param: InvoicesApiListInvoicesRequest = {}, options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
-        return this.api.listInvoicesWithHttpInfo(param.limit, param.cursor, param.customerId,  options).toPromise();
+        return this.api.listInvoicesWithHttpInfo(param.limit, param.cursor, param.customerId, param.billingStatus, param.issuedAtFrom, param.issuedAtTo,  options).toPromise();
     }
 
     /**
@@ -1801,7 +1822,7 @@ export class ObjectInvoicesApi {
      * @param param the request object
      */
     public listInvoices(param: InvoicesApiListInvoicesRequest = {}, options?: Configuration): Promise<ListInvoicesResponse> {
-        return this.api.listInvoices(param.limit, param.cursor, param.customerId,  options).toPromise();
+        return this.api.listInvoices(param.limit, param.cursor, param.customerId, param.billingStatus, param.issuedAtFrom, param.issuedAtTo,  options).toPromise();
     }
 
 }

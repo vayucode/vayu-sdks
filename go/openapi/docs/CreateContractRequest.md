@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **StartDate** | **time.Time** | The start date of the contract | 
 **CustomerId** | **string** | The id of the customer that the contract is associated with | 
 **Name** | **string** | The name of the contract | 
+**PlanId** | Pointer to **string** | The id of the plan template to create the contract from. When provided, the contract&#39;s products are derived from the plan template. | [optional] 
+**ExternalId** | Pointer to **NullableString** | An external identifier for the contract | [optional] 
 **SalesForceOpportunityId** | Pointer to **NullableString** | The id of the sales force opportunity that the contract is associated with | [optional] 
 **EndDate** | Pointer to **NullableTime** | The end date of the contract | [optional] 
 **SignatureDate** | Pointer to **NullableTime** | The signature date of the contract | [optional] 
@@ -100,6 +102,66 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
+### GetPlanId
+
+`func (o *CreateContractRequest) GetPlanId() string`
+
+GetPlanId returns the PlanId field if non-nil, zero value otherwise.
+
+### GetPlanIdOk
+
+`func (o *CreateContractRequest) GetPlanIdOk() (*string, bool)`
+
+GetPlanIdOk returns a tuple with the PlanId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPlanId
+
+`func (o *CreateContractRequest) SetPlanId(v string)`
+
+SetPlanId sets PlanId field to given value.
+
+### HasPlanId
+
+`func (o *CreateContractRequest) HasPlanId() bool`
+
+HasPlanId returns a boolean if a field has been set.
+
+### GetExternalId
+
+`func (o *CreateContractRequest) GetExternalId() string`
+
+GetExternalId returns the ExternalId field if non-nil, zero value otherwise.
+
+### GetExternalIdOk
+
+`func (o *CreateContractRequest) GetExternalIdOk() (*string, bool)`
+
+GetExternalIdOk returns a tuple with the ExternalId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalId
+
+`func (o *CreateContractRequest) SetExternalId(v string)`
+
+SetExternalId sets ExternalId field to given value.
+
+### HasExternalId
+
+`func (o *CreateContractRequest) HasExternalId() bool`
+
+HasExternalId returns a boolean if a field has been set.
+
+### SetExternalIdNil
+
+`func (o *CreateContractRequest) SetExternalIdNil(b bool)`
+
+ SetExternalIdNil sets the value for ExternalId to be an explicit nil
+
+### UnsetExternalId
+`func (o *CreateContractRequest) UnsetExternalId()`
+
+UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetSalesForceOpportunityId
 
 `func (o *CreateContractRequest) GetSalesForceOpportunityId() string`

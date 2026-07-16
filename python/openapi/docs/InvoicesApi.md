@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_invoices**
-> ListInvoicesResponse list_invoices(limit=limit, cursor=cursor, customer_id=customer_id)
+> ListInvoicesResponse list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_at_from=issued_at_from, issued_at_to=issued_at_to)
 
 List invoices
 
@@ -214,10 +214,13 @@ with openapi.ApiClient(configuration) as api_client:
     limit = 10 # float |  (optional) (default to 10)
     cursor = 'cursor_example' # str |  (optional)
     customer_id = 'customer_id_example' # str |  (optional)
+    billing_status = 'billing_status_example' # str | Filter invoices by their billing status (optional)
+    issued_at_from = '2013-10-20T19:20:30+01:00' # datetime | Only include invoices issued on or after this timestamp (optional)
+    issued_at_to = '2013-10-20T19:20:30+01:00' # datetime | Only include invoices issued on or before this timestamp (optional)
 
     try:
         # List invoices
-        api_response = api_instance.list_invoices(limit=limit, cursor=cursor, customer_id=customer_id)
+        api_response = api_instance.list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_at_from=issued_at_from, issued_at_to=issued_at_to)
         print("The response of InvoicesApi->list_invoices:\n")
         pprint(api_response)
     except Exception as e:
@@ -234,6 +237,9 @@ Name | Type | Description  | Notes
  **limit** | **float**|  | [optional] [default to 10]
  **cursor** | **str**|  | [optional] 
  **customer_id** | **str**|  | [optional] 
+ **billing_status** | **str**| Filter invoices by their billing status | [optional] 
+ **issued_at_from** | **datetime**| Only include invoices issued on or after this timestamp | [optional] 
+ **issued_at_to** | **datetime**| Only include invoices issued on or before this timestamp | [optional] 
 
 ### Return type
 

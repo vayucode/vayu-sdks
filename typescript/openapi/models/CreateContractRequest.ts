@@ -32,6 +32,14 @@ export class CreateContractRequest {
     */
     'name': string;
     /**
+    * The id of the plan template to create the contract from. When provided, the contract\'s products are derived from the plan template.
+    */
+    'planId'?: string;
+    /**
+    * An external identifier for the contract
+    */
+    'externalId'?: string | null;
+    /**
     * The id of the sales force opportunity that the contract is associated with
     */
     'salesForceOpportunityId'?: string | null;
@@ -98,6 +106,18 @@ export class CreateContractRequest {
         {
             "name": "name",
             "baseName": "name",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "planId",
+            "baseName": "planId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "externalId",
+            "baseName": "externalId",
             "type": "string",
             "format": ""
         },

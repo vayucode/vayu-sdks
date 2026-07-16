@@ -28,6 +28,14 @@ func (a *Authenticator) IsAuthenticated() bool {
 	return a.accessToken != ""
 }
 
+// SetAccessToken installs a pre-issued access token, bypassing the refresh-token
+// login exchange. The token's expiry is read from its JWT `exp` claim so proactive
+// refresh still works if an API key was also provided.
+func (a *Authenticator) SetAccessToken(token string) error {
+	a.accessToken = token
+	return a.extractJWTExpiry()
+}
+
 func (a *Authenticator) AccessToken() string {
 	return a.accessToken
 }

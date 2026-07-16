@@ -42,6 +42,13 @@ func (v *Vayu) SetCustomHost(host string) {
 	v.client.SetCustomHost(host)
 }
 
+// SetAccessToken installs a pre-issued access token so requests authenticate with it
+// directly, instead of exchanging the API key/refresh token via the login endpoint.
+// Useful when a Cognito token is obtained out of band.
+func (v *Vayu) SetAccessToken(token string) error {
+	return v.client.SetAccessToken(token)
+}
+
 // Deprecated: Authentication is now handled automatically. You can remove this call.
 func (v *Vayu) Login() error {
 	return v.client.Login()
@@ -114,6 +121,7 @@ type (
 	DeleteEventsByRefsResponse = api.DeleteEventsByRefsResponse
 	SendEventsResponse         = api.SendEventsResponse
 	EventsDryRunResponse       = api.EventsDryRunResponse
+	QueryEventsRequest         = api.QueryEventsRequest
 	QueryEventsResponse        = api.QueryEventsResponse
 )
 
@@ -122,6 +130,16 @@ type (
 	GetInvoiceResponse           = api.GetInvoiceResponse
 	InvoicePaymentStatusResponse = api.InvoicePaymentStatusResponse
 	ListInvoicesResponse         = api.ListInvoicesResponse
+	ListInvoicesFilter           = api.ListInvoicesFilter
+)
+
+// Invoice billing statuses, for use with ListInvoicesFilter.BillingStatus.
+const (
+	InvoiceBillingStatusNone           = api.InvoiceBillingStatusNone
+	InvoiceBillingStatusPaid           = api.InvoiceBillingStatusPaid
+	InvoiceBillingStatusRejected       = api.InvoiceBillingStatusRejected
+	InvoiceBillingStatusPendingPayment = api.InvoiceBillingStatusPendingPayment
+	InvoiceBillingStatusOverdue        = api.InvoiceBillingStatusOverdue
 )
 
 type (

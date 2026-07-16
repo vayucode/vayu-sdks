@@ -3126,6 +3126,38 @@ paths:
         schema:
           $ref: '#/components/schemas/CustomerId'
         style: form
+      - description: Filter invoices by their billing status
+        explode: true
+        in: query
+        name: billingStatus
+        required: false
+        schema:
+          enum:
+          - None
+          - Paid
+          - Rejected
+          - PendingPayment
+          - Overdue
+          type: string
+        style: form
+      - description: Only include invoices issued on or after this timestamp
+        explode: true
+        in: query
+        name: issuedAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Only include invoices issued on or before this timestamp
+        explode: true
+        in: query
+        name: issuedAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -6055,6 +6087,7 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalId: externalId
         shouldProRateInvoices: true
         products:
         - displayName: displayName
@@ -6142,6 +6175,7 @@ components:
         name: name
         purchaseOrder: purchaseOrder
         autoRenewContract: true
+        planId: planId
         currency: ""
         salesForceOpportunityId: salesForceOpportunityId
         productGroups:
@@ -6338,6 +6372,15 @@ components:
           type: string
         name:
           description: The name of the contract
+          type: string
+        planId:
+          description: "The id of the plan template to create the contract from. When\
+            \ provided, the contract's products are derived from the plan template."
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        externalId:
+          description: An external identifier for the contract
+          nullable: true
           type: string
         salesForceOpportunityId:
           description: The id of the sales force opportunity that the contract is

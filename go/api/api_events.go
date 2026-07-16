@@ -95,7 +95,10 @@ func (e *EventsAPI) QueryEvents(payload QueryEventsRequest) (*QueryEventsRespons
 
 	request = request.StartTime(payload.StartTime)
 	request = request.EndTime(payload.EndTime)
-	request = request.EventName(payload.Name)
+
+	if payload.Name != "" {
+		request = request.EventName(payload.Name)
+	}
 
 	if payload.Limit != nil {
 		request = request.Limit(*payload.Limit)

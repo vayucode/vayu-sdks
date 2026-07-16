@@ -104,9 +104,15 @@ export class InvoicesApiRequestFactory extends BaseAPIRequestFactory {
      * @param limit 
      * @param cursor 
      * @param customerId 
+     * @param billingStatus Filter invoices by their billing status
+     * @param issuedAtFrom Only include invoices issued on or after this timestamp
+     * @param issuedAtTo Only include invoices issued on or before this timestamp
      */
-    public async listInvoices(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<RequestContext> {
+    public async listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
+
+
 
 
 
@@ -131,6 +137,21 @@ export class InvoicesApiRequestFactory extends BaseAPIRequestFactory {
         // Query Params
         if (customerId !== undefined) {
             requestContext.setQueryParam("customerId", ObjectSerializer.serialize(customerId, "string", ""));
+        }
+
+        // Query Params
+        if (billingStatus !== undefined) {
+            requestContext.setQueryParam("billingStatus", ObjectSerializer.serialize(billingStatus, "'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue'", ""));
+        }
+
+        // Query Params
+        if (issuedAtFrom !== undefined) {
+            requestContext.setQueryParam("issuedAtFrom", ObjectSerializer.serialize(issuedAtFrom, "Date", "date-time"));
+        }
+
+        // Query Params
+        if (issuedAtTo !== undefined) {
+            requestContext.setQueryParam("issuedAtTo", ObjectSerializer.serialize(issuedAtTo, "Date", "date-time"));
         }
 
 
