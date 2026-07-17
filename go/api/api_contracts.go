@@ -34,9 +34,6 @@ func NewCreateContractRequest(startDate time.Time, endDate *time.Time, customerI
 	return request
 }
 
-// NewCreateContractFromPlanTemplateRequest builds a request that creates a contract
-// from an existing plan template. The contract's products are derived from the plan
-// identified by planId, so no inline products are required.
 func NewCreateContractFromPlanTemplateRequest(startDate time.Time, customerId string, name string, planId string) *CreateContractRequest {
 	return &openapi.CreateContractRequest{
 		StartDate:  startDate,

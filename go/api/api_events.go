@@ -96,6 +96,8 @@ func (e *EventsAPI) QueryEvents(payload QueryEventsRequest) (*QueryEventsRespons
 	request = request.StartTime(payload.StartTime)
 	request = request.EndTime(payload.EndTime)
 
+	// The API rejects an empty eventName with a misleading "startTime" error, so only
+	// send it when set.
 	if payload.Name != "" {
 		request = request.EventName(payload.Name)
 	}

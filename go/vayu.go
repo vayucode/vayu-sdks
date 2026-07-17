@@ -6,18 +6,18 @@ import (
 )
 
 type Vayu struct {
-	client              *client.VayuClient
-	CatalogProducts     *api.CatalogProductsAPI
+	client               *client.VayuClient
+	CatalogProducts      *api.CatalogProductsAPI
 	CloudUsageSubmission *api.CloudUsageSubmissionAPI
-	Contracts           *api.ContractsAPI
-	CustomerRelations   *api.CustomerRelationsAPI
-	Customers           *api.CustomersAPI
-	Events              *api.EventsAPI
-	Invoices            *api.InvoicesAPI
-	Meters              *api.MetersAPI
-	Plans               *api.PlansAPI
-	Webhooks            *api.WebhooksAPI
-	Credits             *api.CreditsAPI
+	Contracts            *api.ContractsAPI
+	CustomerRelations    *api.CustomerRelationsAPI
+	Customers            *api.CustomersAPI
+	Events               *api.EventsAPI
+	Invoices             *api.InvoicesAPI
+	Meters               *api.MetersAPI
+	Plans                *api.PlansAPI
+	Webhooks             *api.WebhooksAPI
+	Credits              *api.CreditsAPI
 }
 
 func NewVayu(APIKey string) *Vayu {
@@ -42,9 +42,6 @@ func (v *Vayu) SetCustomHost(host string) {
 	v.client.SetCustomHost(host)
 }
 
-// SetAccessToken installs a pre-issued access token so requests authenticate with it
-// directly, instead of exchanging the API key/refresh token via the login endpoint.
-// Useful when a Cognito token is obtained out of band.
 func (v *Vayu) SetAccessToken(token string) error {
 	return v.client.SetAccessToken(token)
 }
@@ -76,18 +73,18 @@ type (
 )
 
 type (
-	CloudUsageResult      = api.CloudUsageResult
+	CloudUsageResult        = api.CloudUsageResult
 	SubmitCloudUsageRequest = api.SubmitCloudUsageRequest
 )
 
 type (
-	Contract                        = api.Contract
-	ListContractsResponse           = api.ListContractsResponse
-	GetContractResponse             = api.GetContractResponse
+	Contract                           = api.Contract
+	ListContractsResponse              = api.ListContractsResponse
+	GetContractResponse                = api.GetContractResponse
 	GetContractByIntegrationIdResponse = api.GetContractByIntegrationIdResponse
-	CreateContractRequest           = api.CreateContractRequest
-	CreateContractResponse          = api.CreateContractResponse
-	DeleteContractResponse          = api.DeleteContractResponse
+	CreateContractRequest              = api.CreateContractRequest
+	CreateContractResponse             = api.CreateContractResponse
+	DeleteContractResponse             = api.DeleteContractResponse
 )
 
 type (
@@ -133,7 +130,6 @@ type (
 	ListInvoicesFilter           = api.ListInvoicesFilter
 )
 
-// Invoice billing statuses, for use with ListInvoicesFilter.BillingStatus.
 const (
 	InvoiceBillingStatusNone           = api.InvoiceBillingStatusNone
 	InvoiceBillingStatusPaid           = api.InvoiceBillingStatusPaid
@@ -166,4 +162,3 @@ type (
 	UpdateMeterResponse = api.UpdateMeterResponse
 	DeleteMeterResponse = api.DeleteMeterResponse
 )
-

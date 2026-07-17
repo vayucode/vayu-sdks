@@ -29,9 +29,6 @@ func NewVayuClient(APIKey string) *VayuClient {
 	return vc
 }
 
-// SetAccessToken installs a pre-issued access token (e.g. a Cognito token obtained
-// out of band) so requests authenticate with it directly instead of exchanging an
-// API key. Returns an error if the token is not a parseable JWT.
 func (vc *VayuClient) SetAccessToken(token string) error {
 	return vc.auth.SetAccessToken(token)
 }
