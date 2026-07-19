@@ -34,6 +34,15 @@ func NewCreateContractRequest(startDate time.Time, endDate *time.Time, customerI
 	return request
 }
 
+func NewCreateContractFromPlanTemplateRequest(startDate time.Time, customerId string, name string, planId string) *CreateContractRequest {
+	return &openapi.CreateContractRequest{
+		StartDate:  startDate,
+		CustomerId: customerId,
+		Name:       name,
+		PlanId:     &planId,
+	}
+}
+
 func (api *ContractsAPI) ListContracts(limit *float32, cursor *string) (*ListContractsResponse, error) {
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()

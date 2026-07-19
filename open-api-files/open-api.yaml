@@ -3657,6 +3657,15 @@ components:
         name:
           type: string
           description: The name of the contract
+        planId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the plan template to create the contract from. When
+            provided, the contract's products are derived from the plan template.
+        externalId:
+          type: string
+          nullable: true
+          description: An external identifier for the contract
         salesForceOpportunityId:
           type: string
           nullable: true
@@ -11256,6 +11265,32 @@ paths:
           required: false
           in: query
           name: customerId
+        - schema:
+            type: string
+            enum:
+              - None
+              - Paid
+              - Rejected
+              - PendingPayment
+              - Overdue
+          required: false
+          in: query
+          name: billingStatus
+          description: Filter invoices by their billing status
+        - schema:
+            type: string
+            format: date-time
+          required: false
+          in: query
+          name: issuedAtFrom
+          description: Only include invoices issued on or after this timestamp
+        - schema:
+            type: string
+            format: date-time
+          required: false
+          in: query
+          name: issuedAtTo
+          description: Only include invoices issued on or before this timestamp
       responses:
         "200":
           $ref: "#/components/responses/ListInvoicesResponse"

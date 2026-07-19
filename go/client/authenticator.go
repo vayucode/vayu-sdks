@@ -28,6 +28,11 @@ func (a *Authenticator) IsAuthenticated() bool {
 	return a.accessToken != ""
 }
 
+func (a *Authenticator) SetAccessToken(token string) error {
+	a.accessToken = token
+	return a.extractJWTExpiry()
+}
+
 func (a *Authenticator) AccessToken() string {
 	return a.accessToken
 }

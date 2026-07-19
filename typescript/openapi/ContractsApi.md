@@ -32,6 +32,8 @@ const request: ContractsApiCreateContractRequest = {
     startDate: new Date('1970-01-01T00:00:00.00Z'),
     customerId: "62ECB020842930cc01FFCCfe",
     name: "name_example",
+    planId: "62ECB020842930cc01FFCCfe",
+    externalId: "externalId_example",
     salesForceOpportunityId: "salesForceOpportunityId_example",
     endDate: new Date('1970-01-01T00:00:00.00Z'),
     signatureDate: new Date('1970-01-01T00:00:00.00Z'),

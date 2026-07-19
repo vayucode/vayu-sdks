@@ -30,14 +30,24 @@ Initialize the Vayu API client.
 
 ### Authentication
 
-#### Login and authenticate
+Authentication is handled automatically — the client logs in with your API key on
+the first request and refreshes the token as needed.
+
+#### Using a pre-issued access token
+
+If you already hold an access token (for example, a Cognito token obtained out of
+band), install it directly instead of exchanging an API key:
 
 ```go
-err := vayu.Login()
-
-if err != nil {
-	panic(err)
+if err := vayu.SetAccessToken("YOUR_ACCESS_TOKEN"); err != nil {
+    panic(err)
 }
+```
+
+#### Targeting a specific host
+
+```go
+vayu.SetCustomHost("https://connect.withvayu.com")
 ```
 
 
@@ -78,21 +88,19 @@ for _, event := range result.ValidEvents {
 To fetch events occurring within a specified timestamp range:
 
 ```go
-limit := float32(10.0)
+limit := float32(10)
 eventsQuery := VayuSDK.QueryEventsRequest{
     StartTime: time.Date(2024, 9, 1, 0, 0, 0, 0, time.UTC),
     EndTime:   time.Date(2024, 9, 30, 23, 59, 59, 999, time.UTC),
     Name:      "api_call",
-    Limit:    &float32(10.0),
+    Limit:     &limit,
 }
 result, err := vayu.Events.QueryEvents(eventsQuery)
-
 if err != nil {
     panic(err)
 }
-
-for _, event := range result {
-    println(event.Name)
+for _, event := range result.Events {
+    println(event.GetName())
 }
 ```
 
@@ -169,23 +177,69 @@ if err != nil {
 println(customer.Id)
 ```
 
-### Contracts
+#### Resolving a Customer by external id
 
-#### Assigning a contract to a customer
-
-In order to assign a contract to a customer you would need to provide the customer Id and the relevant plan
-
-
-    customerId: '1f4cf23x-2c4y-483z-1111-158621f77a21',
-    planId: '4f6cf35x-1234-483z-a0a9-158621f77a21',
+Look a customer up by the external id you assigned it, instead of the Vayu id:
 
 ```go
-	contract, err := vayu.Contracts.CreateContract(VayuSDK.CreateContractRequest{
-		StartDate:  time.Now().UTC(),                       // The start date of the contract
-		EndDate:    nil,                                    // The end date of the contract
-		CustomerId: "1f4cf23x-2c4y-483z-1111-158621f77a21", // The id of the customer that the contract is associated with
-		PlanId:     "4f6cf35x-1234-483z-a0a9-158621f77a21", // The id of the plan that the contract is associated with
-	})
+customer, err := vayu.Customers.GetCustomerByExternalId("customer_12345")
+if err != nil {
+    panic(err)
+}
+println(customer.Customer.GetName())
+```
+
+`GetCustomer`, `UpdateCustomer`, and `DeleteCustomer` also accept an external id in
+place of the Vayu id — the API resolves whichever you pass on the same endpoint
+(note that updates use `PUT`, not `PATCH`):
+
+```go
+externalId := "customer_67890"
+updated, err := vayu.Customers.UpdateCustomer("customer_12345", VayuSDK.UpdateCustomerRequest{
+    ExternalId: &externalId,
+})
+if err != nil {
+    panic(err)
+}
+println(updated.Customer.GetName())
+```
+
+### Contracts
+
+#### Creating a contract from an existing plan (plan template)
+
+Provide the customer id and the id of the plan to base the contract on. The
+contract's products are derived from the plan, so you don't pass inline products.
+
+```go
+planId := "4f6cf35x-1234-483z-a0a9-158621f77a21"
+contract, err := vayu.Contracts.CreateContract(VayuSDK.CreateContractRequest{
+    StartDate:  time.Now().UTC(),                       // The start date of the contract
+    CustomerId: "1f4cf23x-2c4y-483z-1111-158621f77a21", // The customer the contract is for
+    Name:       "Acme 2026",                            // The contract name
+    PlanId:     &planId,                                // Create the contract from this plan
+})
+if err != nil {
+    panic(err)
+}
+println(contract.Contract.GetId())
+```
+
+A plan can back only one live contract at a time. Reusing a plan that is already
+attached to a contract returns a `400` (`PlanAlreadyHasContractError`) — delete the
+existing contract first to free the plan, then create the new one.
+
+#### Getting a contract by external id
+
+`GetContract` accepts either the Vayu contract id or your own external id — the API
+resolves whichever you pass, on the same endpoint.
+
+```go
+contract, err := vayu.Contracts.GetContract("your-external-contract-id")
+if err != nil {
+    panic(err)
+}
+println(contract.Contract.GetName())
 ```
 
 ### Meters
@@ -208,12 +262,36 @@ for _, meter := range meters.Meters {
 }
 ```
 
+### Invoices
+
+#### Listing invoices by billing status
+
+Filter the invoice list by billing status (and, optionally, by customer or
+issue-date range). Billing-status constants are provided for convenience:
+
+```go
+limit := float32(20)
+status := VayuSDK.InvoiceBillingStatusOverdue // None | Paid | Rejected | PendingPayment | Overdue
+invoices, err := vayu.Invoices.ListInvoicesWithFilter(VayuSDK.ListInvoicesFilter{
+    Limit:         &limit,
+    BillingStatus: &status,
+})
+if err != nil {
+    panic(err)
+}
+for _, invoice := range invoices.Invoices {
+    println(invoice.GetId(), string(invoice.GetBillingStatus()))
+}
+```
+
 ## Features
 
 The Vayu API client library provides access to the following features:
 
 - **Auth**
   - `Login()`
+  - `SetAccessToken(token)`
+  - `SetCustomHost(host)`
 - **Events**
   - `Events.SendEvents`
   - `Events.QueryEvents`
@@ -244,6 +322,7 @@ The Vayu API client library provides access to the following features:
 - **Invoices**
   - `Invoices.GetInvoice`
   - `Invoices.ListInvoices`
+  - `Invoices.ListInvoicesWithFilter` (filter by billing status / customer / issue date)
 
 ## Support
 

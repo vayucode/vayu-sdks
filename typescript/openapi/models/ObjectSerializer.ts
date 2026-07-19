@@ -199,7 +199,7 @@ import { ContractStatus } from '../models/ContractStatus';
 import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
 import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResponse';
 import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
-import { CreateContractRequest                 } from '../models/CreateContractRequest';
+import { CreateContractRequest                   } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
 import { CreateCustomFieldRequest   , CreateCustomFieldRequestIntegrationSourceEnum       } from '../models/CreateCustomFieldRequest';
 import { CreateCustomFieldResponse } from '../models/CreateCustomFieldResponse';

@@ -6,18 +6,18 @@ import (
 )
 
 type Vayu struct {
-	client              *client.VayuClient
-	CatalogProducts     *api.CatalogProductsAPI
+	client               *client.VayuClient
+	CatalogProducts      *api.CatalogProductsAPI
 	CloudUsageSubmission *api.CloudUsageSubmissionAPI
-	Contracts           *api.ContractsAPI
-	CustomerRelations   *api.CustomerRelationsAPI
-	Customers           *api.CustomersAPI
-	Events              *api.EventsAPI
-	Invoices            *api.InvoicesAPI
-	Meters              *api.MetersAPI
-	Plans               *api.PlansAPI
-	Webhooks            *api.WebhooksAPI
-	Credits             *api.CreditsAPI
+	Contracts            *api.ContractsAPI
+	CustomerRelations    *api.CustomerRelationsAPI
+	Customers            *api.CustomersAPI
+	Events               *api.EventsAPI
+	Invoices             *api.InvoicesAPI
+	Meters               *api.MetersAPI
+	Plans                *api.PlansAPI
+	Webhooks             *api.WebhooksAPI
+	Credits              *api.CreditsAPI
 }
 
 func NewVayu(APIKey string) *Vayu {
@@ -40,6 +40,10 @@ func NewVayu(APIKey string) *Vayu {
 
 func (v *Vayu) SetCustomHost(host string) {
 	v.client.SetCustomHost(host)
+}
+
+func (v *Vayu) SetAccessToken(token string) error {
+	return v.client.SetAccessToken(token)
 }
 
 // Deprecated: Authentication is now handled automatically. You can remove this call.
@@ -69,18 +73,18 @@ type (
 )
 
 type (
-	CloudUsageResult      = api.CloudUsageResult
+	CloudUsageResult        = api.CloudUsageResult
 	SubmitCloudUsageRequest = api.SubmitCloudUsageRequest
 )
 
 type (
-	Contract                        = api.Contract
-	ListContractsResponse           = api.ListContractsResponse
-	GetContractResponse             = api.GetContractResponse
+	Contract                           = api.Contract
+	ListContractsResponse              = api.ListContractsResponse
+	GetContractResponse                = api.GetContractResponse
 	GetContractByIntegrationIdResponse = api.GetContractByIntegrationIdResponse
-	CreateContractRequest           = api.CreateContractRequest
-	CreateContractResponse          = api.CreateContractResponse
-	DeleteContractResponse          = api.DeleteContractResponse
+	CreateContractRequest              = api.CreateContractRequest
+	CreateContractResponse             = api.CreateContractResponse
+	DeleteContractResponse             = api.DeleteContractResponse
 )
 
 type (
@@ -114,6 +118,7 @@ type (
 	DeleteEventsByRefsResponse = api.DeleteEventsByRefsResponse
 	SendEventsResponse         = api.SendEventsResponse
 	EventsDryRunResponse       = api.EventsDryRunResponse
+	QueryEventsRequest         = api.QueryEventsRequest
 	QueryEventsResponse        = api.QueryEventsResponse
 )
 
@@ -122,6 +127,15 @@ type (
 	GetInvoiceResponse           = api.GetInvoiceResponse
 	InvoicePaymentStatusResponse = api.InvoicePaymentStatusResponse
 	ListInvoicesResponse         = api.ListInvoicesResponse
+	ListInvoicesFilter           = api.ListInvoicesFilter
+)
+
+const (
+	InvoiceBillingStatusNone           = api.InvoiceBillingStatusNone
+	InvoiceBillingStatusPaid           = api.InvoiceBillingStatusPaid
+	InvoiceBillingStatusRejected       = api.InvoiceBillingStatusRejected
+	InvoiceBillingStatusPendingPayment = api.InvoiceBillingStatusPendingPayment
+	InvoiceBillingStatusOverdue        = api.InvoiceBillingStatusOverdue
 )
 
 type (
@@ -148,4 +162,3 @@ type (
 	UpdateMeterResponse = api.UpdateMeterResponse
 	DeleteMeterResponse = api.DeleteMeterResponse
 )
-

@@ -28,6 +28,10 @@ type CreateContractRequest struct {
 	CustomerId string `json:"customerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	// The name of the contract
 	Name string `json:"name"`
+	// The id of the plan template to create the contract from. When provided, the contract's products are derived from the plan template.
+	PlanId *string `json:"planId,omitempty" validate:"regexp=^[0-9a-fA-F]{24}$"`
+	// An external identifier for the contract
+	ExternalId NullableString `json:"externalId,omitempty"`
 	// The id of the sales force opportunity that the contract is associated with
 	SalesForceOpportunityId NullableString `json:"salesForceOpportunityId,omitempty"`
 	// The end date of the contract
@@ -148,6 +152,80 @@ func (o *CreateContractRequest) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *CreateContractRequest) SetName(v string) {
 	o.Name = v
+}
+
+// GetPlanId returns the PlanId field value if set, zero value otherwise.
+func (o *CreateContractRequest) GetPlanId() string {
+	if o == nil || IsNil(o.PlanId) {
+		var ret string
+		return ret
+	}
+	return *o.PlanId
+}
+
+// GetPlanIdOk returns a tuple with the PlanId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateContractRequest) GetPlanIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PlanId) {
+		return nil, false
+	}
+	return o.PlanId, true
+}
+
+// HasPlanId returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasPlanId() bool {
+	if o != nil && !IsNil(o.PlanId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlanId gets a reference to the given string and assigns it to the PlanId field.
+func (o *CreateContractRequest) SetPlanId(v string) {
+	o.PlanId = &v
+}
+
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateContractRequest) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId.Get()
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateContractRequest) GetExternalIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasExternalId() bool {
+	if o != nil && o.ExternalId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
+func (o *CreateContractRequest) SetExternalId(v string) {
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *CreateContractRequest) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *CreateContractRequest) UnsetExternalId() {
+	o.ExternalId.Unset()
 }
 
 // GetSalesForceOpportunityId returns the SalesForceOpportunityId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -624,6 +702,12 @@ func (o CreateContractRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["startDate"] = o.StartDate
 	toSerialize["customerId"] = o.CustomerId
 	toSerialize["name"] = o.Name
+	if !IsNil(o.PlanId) {
+		toSerialize["planId"] = o.PlanId
+	}
+	if o.ExternalId.IsSet() {
+		toSerialize["externalId"] = o.ExternalId.Get()
+	}
 	if o.SalesForceOpportunityId.IsSet() {
 		toSerialize["salesForceOpportunityId"] = o.SalesForceOpportunityId.Get()
 	}
@@ -711,6 +795,8 @@ func (o *CreateContractRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "startDate")
 		delete(additionalProperties, "customerId")
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "planId")
+		delete(additionalProperties, "externalId")
 		delete(additionalProperties, "salesForceOpportunityId")
 		delete(additionalProperties, "endDate")
 		delete(additionalProperties, "signatureDate")

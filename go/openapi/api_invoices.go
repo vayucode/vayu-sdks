@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 )
 
 
@@ -333,6 +334,9 @@ type ApiListInvoicesRequest struct {
 	limit *float32
 	cursor *string
 	customerId *string
+	billingStatus *string
+	issuedAtFrom *time.Time
+	issuedAtTo *time.Time
 }
 
 func (r ApiListInvoicesRequest) Limit(limit float32) ApiListInvoicesRequest {
@@ -347,6 +351,24 @@ func (r ApiListInvoicesRequest) Cursor(cursor string) ApiListInvoicesRequest {
 
 func (r ApiListInvoicesRequest) CustomerId(customerId string) ApiListInvoicesRequest {
 	r.customerId = &customerId
+	return r
+}
+
+// Filter invoices by their billing status
+func (r ApiListInvoicesRequest) BillingStatus(billingStatus string) ApiListInvoicesRequest {
+	r.billingStatus = &billingStatus
+	return r
+}
+
+// Only include invoices issued on or after this timestamp
+func (r ApiListInvoicesRequest) IssuedAtFrom(issuedAtFrom time.Time) ApiListInvoicesRequest {
+	r.issuedAtFrom = &issuedAtFrom
+	return r
+}
+
+// Only include invoices issued on or before this timestamp
+func (r ApiListInvoicesRequest) IssuedAtTo(issuedAtTo time.Time) ApiListInvoicesRequest {
+	r.issuedAtTo = &issuedAtTo
 	return r
 }
 
@@ -401,6 +423,15 @@ func (a *InvoicesAPIService) ListInvoicesExecute(r ApiListInvoicesRequest) (*Lis
 	}
 	if r.customerId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "customerId", r.customerId, "form", "")
+	}
+	if r.billingStatus != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "billingStatus", r.billingStatus, "form", "")
+	}
+	if r.issuedAtFrom != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "issuedAtFrom", r.issuedAtFrom, "form", "")
+	}
+	if r.issuedAtTo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "issuedAtTo", r.issuedAtTo, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

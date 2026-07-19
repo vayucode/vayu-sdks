@@ -29,6 +29,10 @@ func NewVayuClient(APIKey string) *VayuClient {
 	return vc
 }
 
+func (vc *VayuClient) SetAccessToken(token string) error {
+	return vc.auth.SetAccessToken(token)
+}
+
 func (vc *VayuClient) SetCustomHost(host string) {
 	cfg := vc.Client.GetConfig()
 	cfg.Servers = openapi.ServerConfigurations{
