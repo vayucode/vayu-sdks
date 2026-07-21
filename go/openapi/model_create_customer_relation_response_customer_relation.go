@@ -26,6 +26,7 @@ type CreateCustomerRelationResponseCustomerRelation struct {
 	VayuParentCustomerId string `json:"vayuParentCustomerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	// Identifier of the child customer in Vayu.
 	VayuChildCustomerId string `json:"vayuChildCustomerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
+	RelationType CustomerRelationType `json:"relationType"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -38,10 +39,11 @@ type _CreateCustomerRelationResponseCustomerRelation CreateCustomerRelationRespo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCustomerRelationResponseCustomerRelation(vayuParentCustomerId string, vayuChildCustomerId string, id string, createdAt time.Time, updatedAt time.Time) *CreateCustomerRelationResponseCustomerRelation {
+func NewCreateCustomerRelationResponseCustomerRelation(vayuParentCustomerId string, vayuChildCustomerId string, relationType CustomerRelationType, id string, createdAt time.Time, updatedAt time.Time) *CreateCustomerRelationResponseCustomerRelation {
 	this := CreateCustomerRelationResponseCustomerRelation{}
 	this.VayuParentCustomerId = vayuParentCustomerId
 	this.VayuChildCustomerId = vayuChildCustomerId
+	this.RelationType = relationType
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -53,6 +55,8 @@ func NewCreateCustomerRelationResponseCustomerRelation(vayuParentCustomerId stri
 // but it doesn't guarantee that properties required by API are set
 func NewCreateCustomerRelationResponseCustomerRelationWithDefaults() *CreateCustomerRelationResponseCustomerRelation {
 	this := CreateCustomerRelationResponseCustomerRelation{}
+	var relationType CustomerRelationType = CUSTOMERRELATIONTYPE_ACCUMULATE_USAGE
+	this.RelationType = relationType
 	return &this
 }
 
@@ -102,6 +106,30 @@ func (o *CreateCustomerRelationResponseCustomerRelation) GetVayuChildCustomerIdO
 // SetVayuChildCustomerId sets field value
 func (o *CreateCustomerRelationResponseCustomerRelation) SetVayuChildCustomerId(v string) {
 	o.VayuChildCustomerId = v
+}
+
+// GetRelationType returns the RelationType field value
+func (o *CreateCustomerRelationResponseCustomerRelation) GetRelationType() CustomerRelationType {
+	if o == nil {
+		var ret CustomerRelationType
+		return ret
+	}
+
+	return o.RelationType
+}
+
+// GetRelationTypeOk returns a tuple with the RelationType field value
+// and a boolean to check if the value has been set.
+func (o *CreateCustomerRelationResponseCustomerRelation) GetRelationTypeOk() (*CustomerRelationType, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RelationType, true
+}
+
+// SetRelationType sets field value
+func (o *CreateCustomerRelationResponseCustomerRelation) SetRelationType(v CustomerRelationType) {
+	o.RelationType = v
 }
 
 // GetId returns the Id field value
@@ -188,6 +216,7 @@ func (o CreateCustomerRelationResponseCustomerRelation) ToMap() (map[string]inte
 	toSerialize := map[string]interface{}{}
 	toSerialize["vayuParentCustomerId"] = o.VayuParentCustomerId
 	toSerialize["vayuChildCustomerId"] = o.VayuChildCustomerId
+	toSerialize["relationType"] = o.RelationType
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -206,6 +235,7 @@ func (o *CreateCustomerRelationResponseCustomerRelation) UnmarshalJSON(data []by
 	requiredProperties := []string{
 		"vayuParentCustomerId",
 		"vayuChildCustomerId",
+		"relationType",
 		"id",
 		"createdAt",
 		"updatedAt",
@@ -240,6 +270,7 @@ func (o *CreateCustomerRelationResponseCustomerRelation) UnmarshalJSON(data []by
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "vayuParentCustomerId")
 		delete(additionalProperties, "vayuChildCustomerId")
+		delete(additionalProperties, "relationType")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

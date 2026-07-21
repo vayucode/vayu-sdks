@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **CustomerErpId** | Pointer to **NullableString** | The ID of the customer in the ERP system | [optional] 
 **Address** | Pointer to [**NullableAddress**](Address.md) |  | [optional] 
 **SalesForceAccountId** | Pointer to **NullableString** | The ID of the customer in the Salesforce system | [optional] 
+**ExternalIntegration** | Pointer to [**[]CustomerExternalIntegration**](CustomerExternalIntegration.md) | External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry. | [optional] 
 **DueDays** | Pointer to **NullableString** | The due days of the customer | [optional] 
 **Currency** | Pointer to [**NullableCurrency**](Currency.md) |  | [optional] 
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
@@ -443,6 +444,41 @@ HasSalesForceAccountId returns a boolean if a field has been set.
 `func (o *GetCustomerByNameResponseCustomer) UnsetSalesForceAccountId()`
 
 UnsetSalesForceAccountId ensures that no value is present for SalesForceAccountId, not even an explicit nil
+### GetExternalIntegration
+
+`func (o *GetCustomerByNameResponseCustomer) GetExternalIntegration() []CustomerExternalIntegration`
+
+GetExternalIntegration returns the ExternalIntegration field if non-nil, zero value otherwise.
+
+### GetExternalIntegrationOk
+
+`func (o *GetCustomerByNameResponseCustomer) GetExternalIntegrationOk() (*[]CustomerExternalIntegration, bool)`
+
+GetExternalIntegrationOk returns a tuple with the ExternalIntegration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalIntegration
+
+`func (o *GetCustomerByNameResponseCustomer) SetExternalIntegration(v []CustomerExternalIntegration)`
+
+SetExternalIntegration sets ExternalIntegration field to given value.
+
+### HasExternalIntegration
+
+`func (o *GetCustomerByNameResponseCustomer) HasExternalIntegration() bool`
+
+HasExternalIntegration returns a boolean if a field has been set.
+
+### SetExternalIntegrationNil
+
+`func (o *GetCustomerByNameResponseCustomer) SetExternalIntegrationNil(b bool)`
+
+ SetExternalIntegrationNil sets the value for ExternalIntegration to be an explicit nil
+
+### UnsetExternalIntegration
+`func (o *GetCustomerByNameResponseCustomer) UnsetExternalIntegration()`
+
+UnsetExternalIntegration ensures that no value is present for ExternalIntegration, not even an explicit nil
 ### GetDueDays
 
 `func (o *GetCustomerByNameResponseCustomer) GetDueDays() string`

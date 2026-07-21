@@ -58,6 +58,8 @@ type APIClient struct {
 
 	ContractsAPI *ContractsAPIService
 
+	CreditProductsAPI *CreditProductsAPIService
+
 	CreditsAPI *CreditsAPIService
 
 	CustomFieldsAPI *CustomFieldsAPIService
@@ -99,6 +101,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CatalogProductsAPI = (*CatalogProductsAPIService)(&c.common)
 	c.CloudUsageSubmissionAPI = (*CloudUsageSubmissionAPIService)(&c.common)
 	c.ContractsAPI = (*ContractsAPIService)(&c.common)
+	c.CreditProductsAPI = (*CreditProductsAPIService)(&c.common)
 	c.CreditsAPI = (*CreditsAPIService)(&c.common)
 	c.CustomFieldsAPI = (*CustomFieldsAPIService)(&c.common)
 	c.CustomersAPI = (*CustomersAPIService)(&c.common)

@@ -34,6 +34,7 @@ const (
 	INTEGRATIONPROVIDERS_SNOWFLAKE IntegrationProviders = "Snowflake"
 	INTEGRATIONPROVIDERS_CONNACT IntegrationProviders = "Connact"
 	INTEGRATIONPROVIDERS_XERO IntegrationProviders = "Xero"
+	INTEGRATIONPROVIDERS_PADDLE IntegrationProviders = "Paddle"
 )
 
 // All allowed values of IntegrationProviders enum
@@ -51,6 +52,7 @@ var AllowedIntegrationProvidersEnumValues = []IntegrationProviders{
 	"Snowflake",
 	"Connact",
 	"Xero",
+	"Paddle",
 }
 
 func (v *IntegrationProviders) UnmarshalJSON(src []byte) error {

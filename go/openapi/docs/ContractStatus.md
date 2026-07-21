@@ -5,6 +5,8 @@
 
 * `IN_REVIEW` (value: `"InReview"`)
 
+* `SCHEDULED` (value: `"Scheduled"`)
+
 * `ACTIVE` (value: `"Active"`)
 
 * `INACTIVE` (value: `"Inactive"`)

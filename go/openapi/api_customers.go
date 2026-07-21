@@ -804,7 +804,7 @@ func (a *CustomersAPIService) GetCustomerByExternalIdExecute(r ApiGetCustomerByE
 type ApiGetCustomerByIntegrationIdRequest struct {
 	ctx context.Context
 	ApiService *CustomersAPIService
-	integrationType IntegrationType
+	integrationType IntegrationProviders
 	integrationId string
 }
 
@@ -822,7 +822,7 @@ Use this endpoint to get a specific customer using its integration provider and 
  @param integrationId
  @return ApiGetCustomerByIntegrationIdRequest
 */
-func (a *CustomersAPIService) GetCustomerByIntegrationId(ctx context.Context, integrationType IntegrationType, integrationId string) ApiGetCustomerByIntegrationIdRequest {
+func (a *CustomersAPIService) GetCustomerByIntegrationId(ctx context.Context, integrationType IntegrationProviders, integrationId string) ApiGetCustomerByIntegrationIdRequest {
 	return ApiGetCustomerByIntegrationIdRequest{
 		ApiService: a,
 		ctx: ctx,

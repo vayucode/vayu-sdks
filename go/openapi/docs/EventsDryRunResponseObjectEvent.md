@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Data** | Pointer to **map[string]interface{}** |  | [optional] 
 **Ref** | **string** |  | 
 **Name** | **string** |  | 
+**AckId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -164,6 +165,31 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+
+### GetAckId
+
+`func (o *EventsDryRunResponseObjectEvent) GetAckId() string`
+
+GetAckId returns the AckId field if non-nil, zero value otherwise.
+
+### GetAckIdOk
+
+`func (o *EventsDryRunResponseObjectEvent) GetAckIdOk() (*string, bool)`
+
+GetAckIdOk returns a tuple with the AckId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAckId
+
+`func (o *EventsDryRunResponseObjectEvent) SetAckId(v string)`
+
+SetAckId sets AckId field to given value.
+
+### HasAckId
+
+`func (o *EventsDryRunResponseObjectEvent) HasAckId() bool`
+
+HasAckId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

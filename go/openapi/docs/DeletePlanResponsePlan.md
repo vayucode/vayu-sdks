@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | **string** | The name of the plan | 
 **Status** | [**PlanStatus**](PlanStatus.md) |  | 
 **BillingData** | [**PlanBillingData**](PlanBillingData.md) |  | 
+**ExternalId** | Pointer to **NullableString** | A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints. | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -91,6 +92,41 @@ and a boolean to check if the value has been set.
 SetBillingData sets BillingData field to given value.
 
 
+### GetExternalId
+
+`func (o *DeletePlanResponsePlan) GetExternalId() string`
+
+GetExternalId returns the ExternalId field if non-nil, zero value otherwise.
+
+### GetExternalIdOk
+
+`func (o *DeletePlanResponsePlan) GetExternalIdOk() (*string, bool)`
+
+GetExternalIdOk returns a tuple with the ExternalId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalId
+
+`func (o *DeletePlanResponsePlan) SetExternalId(v string)`
+
+SetExternalId sets ExternalId field to given value.
+
+### HasExternalId
+
+`func (o *DeletePlanResponsePlan) HasExternalId() bool`
+
+HasExternalId returns a boolean if a field has been set.
+
+### SetExternalIdNil
+
+`func (o *DeletePlanResponsePlan) SetExternalIdNil(b bool)`
+
+ SetExternalIdNil sets the value for ExternalId to be an explicit nil
+
+### UnsetExternalId
+`func (o *DeletePlanResponsePlan) UnsetExternalId()`
+
+UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetId
 
 `func (o *DeletePlanResponsePlan) GetId() string`

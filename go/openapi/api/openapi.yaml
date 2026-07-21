@@ -875,8 +875,9 @@ paths:
       - contracts
   /contracts:
     get:
-      description: List contracts for the account. Optionally filter by customerId
-        to retrieve contracts for a specific customer.
+      description: "List contracts for the account. Optionally filter by customerId\
+        \ or customerExternalId to retrieve contracts for a specific customer (provide\
+        \ at most one, not both)."
       operationId: listContracts
       parameters:
       - explode: true
@@ -899,6 +900,13 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/CustomerId'
+        style: form
+      - explode: true
+        in: query
+        name: customerExternalId
+        required: false
+        schema:
+          $ref: '#/components/schemas/CustomerExternalId'
         style: form
       responses:
         "200":
@@ -2657,6 +2665,95 @@ paths:
       summary: Deduct credits from customer credit ledger
       tags:
       - credits
+  /credits/top-up:
+    post:
+      description: |-
+        This endpoint creates a one-off invoice that bills a customer for a credit grant.
+            Submit the customer ID and the credit grant (credit product, amount, type and price) in the request
+            body — the same credit grant shape used when defining grants on a contract. The grant's price is
+            charged on the invoice, and the credits are granted to the customer when the invoice is approved.
+      operationId: creditTopUp
+      requestBody:
+        $ref: '#/components/requestBodies/CreditTopUpRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditTopUpResponse'
+          description: RequestSuccess
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitErrorResponse'
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - BearerAuthorizer: []
+      summary: Create a one-off invoice to top up a customer with credits
+      tags:
+      - credits
+  /credit-products:
+    get:
+      description: Retrieve the credit products defined in your account. Use a credit
+        product ID to fund a credit pool (a product creditGrant.creditProductId) or
+        to debit one (a usage product consumesCreditProductIds). Distinct from the
+        credit ledger (GET /credits).
+      operationId: listCreditProducts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCreditProductsResponse'
+          description: RequestSuccess
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitErrorResponse'
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - BearerAuthorizer: []
+      summary: List credit products
+      tags:
+      - credit-products
   /webhook:
     post:
       description: Use this endpoint to subscribe to webhooks and receive event notifications.
@@ -2933,7 +3030,7 @@ paths:
         name: integrationType
         required: true
         schema:
-          $ref: '#/components/schemas/IntegrationType'
+          $ref: '#/components/schemas/IntegrationProviders'
         style: simple
       - explode: false
         in: path
@@ -2996,7 +3093,7 @@ paths:
         name: integrationType
         required: true
         schema:
-          $ref: '#/components/schemas/IntegrationType'
+          $ref: '#/components/schemas/IntegrationProviders'
         style: simple
       - explode: false
         in: path
@@ -3046,6 +3143,120 @@ paths:
       security:
       - BearerAuthorizer: []
       summary: Get contract by integration id
+      tags:
+      - contracts
+  /contracts/{contractId}/terminate:
+    post:
+      description: |-
+        Use this endpoint to terminate a contract.
+            Provide a terminationDate in the request body to schedule the termination for a specific date,
+            or omit it to terminate the contract immediately.
+            The contract's status is set to PendingTermination and its end date is updated accordingly.
+      operationId: terminateContract
+      parameters:
+      - explode: false
+        in: path
+        name: contractId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContractId'
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/TerminateContractRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminateContractResponse'
+          description: RequestSuccess
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitErrorResponse'
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - BearerAuthorizer: []
+      summary: Terminate a contract
+      tags:
+      - contracts
+  /contracts/{contractId}/credits/refresh:
+    post:
+      description: |-
+        Use this endpoint to refresh the credit grants on a contract by creating a new contract phase
+            (a contract revision) that takes effect immediately.
+
+            Provide a list of credit grants to refresh in the request body — each is identified by its credit product
+            (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit
+            grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are
+            refreshed (set to non-prorated).
+
+            If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,
+            the request is rejected because the price cannot be applied unambiguously.
+      operationId: refreshContractCredits
+      parameters:
+      - explode: false
+        in: path
+        name: contractId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ContractId'
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/RefreshContractCreditsRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshContractCreditsResponse'
+          description: RequestSuccess
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitErrorResponse'
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - BearerAuthorizer: []
+      summary: Refresh the credit grants on a contract
       tags:
       - contracts
   /invoices/{invoiceId}/payment-status:
@@ -3126,37 +3337,26 @@ paths:
         schema:
           $ref: '#/components/schemas/CustomerId'
         style: form
-      - description: Filter invoices by their billing status
-        explode: true
+      - explode: true
         in: query
         name: billingStatus
         required: false
         schema:
-          enum:
-          - None
-          - Paid
-          - Rejected
-          - PendingPayment
-          - Overdue
-          type: string
+          $ref: '#/components/schemas/InvoiceBillingStatus'
         style: form
-      - description: Only include invoices issued on or after this timestamp
-        explode: true
+      - explode: true
         in: query
-        name: issuedAtFrom
+        name: issuedAfter
         required: false
         schema:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/IssuedAfter'
         style: form
-      - description: Only include invoices issued on or before this timestamp
-        explode: true
+      - explode: true
         in: query
-        name: issuedAtTo
+        name: issuedBefore
         required: false
         schema:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/IssuedBefore'
         style: form
       responses:
         "200":
@@ -3428,12 +3628,30 @@ components:
           schema:
             $ref: '#/components/schemas/DeductCreditsRequest'
       required: true
+    CreditTopUpRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreditTopUpRequest'
+      required: true
     WebhookSubscribeRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/WebhookSubscribeRequest'
       description: Subscribe to webhooks and receive event notifications.
+      required: true
+    TerminateContractRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TerminateContractRequest'
+      required: true
+    RefreshContractCreditsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshContractCreditsRequest'
       required: true
     SubmitCloudUsageRequest:
       content:
@@ -3726,6 +3944,18 @@ components:
       description: RequestSuccess
     RequestSuccess:
       description: RequestSuccess
+    CreditTopUpResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreditTopUpResponse'
+      description: RequestSuccess
+    ListCreditProductsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListCreditProductsResponse'
+      description: RequestSuccess
     GetCustomerByNameResponse:
       content:
         application/json:
@@ -3763,6 +3993,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ListContractsResponse'
+      description: RequestSuccess
+    TerminateContractResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TerminateContractResponse'
+      description: RequestSuccess
+    RefreshContractCreditsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshContractCreditsResponse'
       description: RequestSuccess
     InvoicePaymentStatusResponse:
       content:
@@ -4115,6 +4357,7 @@ components:
       - Api
       - Salesforce
       - HubSpot
+      - ContractExtraction
       nullable: true
       type: string
     CustomerCloudProviderSettings:
@@ -4160,6 +4403,30 @@ components:
           nullable: true
           type: string
       type: object
+    CustomerExternalIntegration:
+      properties:
+        type:
+          enum:
+          - NetSuite
+          - QuickBooks
+          - Morning
+          - Hubspot
+          - Anrok
+          - Snowflake
+          - Connact
+          - Xero
+          - Salesforce
+          - Paddle
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      - type
+      type: object
     Currency:
       description: The billing currency of the customer
       enum:
@@ -4171,6 +4438,9 @@ components:
       - AUD
       - COP
       - BRL
+      - ARS
+      - INR
+      - MXN
       nullable: true
       type: string
     IntegrationEntityTypes:
@@ -4219,6 +4489,7 @@ components:
           - Anrok
           - Connact
           - Xero
+          - Paddle
           type: string
         integrationEntityType:
           $ref: '#/components/schemas/IntegrationEntityTypes'
@@ -4263,6 +4534,10 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalIntegration:
+        - type: Stripe
+          id: cus_123
+          name: Acme Inc
         externalId: externalId
         source: Stripe
         customerErpId: customerErpId
@@ -4346,6 +4621,19 @@ components:
           description: The ID of the customer in the Salesforce system
           nullable: true
           type: string
+        externalIntegration:
+          description: External integration links for the customer. Each entry links
+            the customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the integration
+            registry.
+          example:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
+          items:
+            $ref: '#/components/schemas/CustomerExternalIntegration'
+          nullable: true
+          type: array
         dueDays:
           description: The due days of the customer
           enum:
@@ -4391,16 +4679,9 @@ components:
     CreateCustomerResponse:
       example:
         customer:
-          overdueAmount: 1.4658129805029452
           aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -4414,17 +4695,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -4432,10 +4729,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -4448,7 +4741,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -4461,16 +4753,9 @@ components:
         total: 2.3021358869347655
         hasMore: true
         customers:
-        - overdueAmount: 1.4658129805029452
-          aliases:
+        - aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -4484,17 +4769,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -4502,10 +4803,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -4518,17 +4815,9 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - overdueAmount: 1.4658129805029452
-          aliases:
+        - aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -4542,17 +4831,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -4560,10 +4865,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -4576,7 +4877,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customers:
           items:
@@ -4596,16 +4896,9 @@ components:
     GetCustomerResponse:
       example:
         customer:
-          overdueAmount: 1.4658129805029452
           aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -4619,17 +4912,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -4637,10 +4946,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -4653,7 +4958,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -4686,6 +4990,10 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalIntegration:
+        - type: Stripe
+          id: cus_123
+          name: Acme Inc
         externalId: externalId
         source: Stripe
         customerErpId: customerErpId
@@ -4769,6 +5077,19 @@ components:
           description: The ID of the customer in the Salesforce system
           nullable: true
           type: string
+        externalIntegration:
+          description: External integration links for the customer. Each entry links
+            the customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the integration
+            registry.
+          example:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
+          items:
+            $ref: '#/components/schemas/CustomerExternalIntegration'
+          nullable: true
+          type: array
         dueDays:
           description: The due days of the customer
           enum:
@@ -4812,16 +5133,9 @@ components:
     UpdateCustomerResponse:
       example:
         customer:
-          overdueAmount: 1.4658129805029452
           aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -4835,17 +5149,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -4853,10 +5183,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -4869,7 +5195,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -4895,6 +5220,10 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
           taxIds:
           - taxIds
@@ -5279,6 +5608,27 @@ components:
         \ 3, 6, 12"
       nullable: true
       type: integer
+    ProductExternalIntegration:
+      example:
+        provider: Paddle
+        externalId: externalId
+      properties:
+        provider:
+          description: The V3 integration provider to link the product to. Currently
+            only Paddle is supported.
+          enum:
+          - Paddle
+          type: string
+        externalId:
+          description: The id of the matching product in the external integration
+            (e.g. the Paddle product id). The product must already exist in the connected
+            integration; it is fetched and linked when the contract is created so
+            that invoices for this product are exported to that integration.
+          type: string
+      required:
+      - externalId
+      - provider
+      type: object
     ExternalOverageStrategy:
       default: IGNORE
       description: The strategy to apply when the overage occurs
@@ -5314,6 +5664,109 @@ components:
         dimension:
           type: string
       type: object
+    ExternalCreditGrant:
+      example:
+        balanceKind: MONETARY
+        schedule: ONE_TIME
+        price: 0.4145608029883936
+        applyAutomatically: true
+        name: name
+        creditProductId: creditProductId
+        externalIntegrations:
+        - provider: Paddle
+          externalId: externalId
+        - provider: Paddle
+          externalId: externalId
+        expirationPolicy: AT_NEXT_GRANT
+        grantAmount: 0.20271230230023218
+        expirationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        name:
+          description: Name of the credit grant. Used as the invoice line-item label
+            when the grant is charged.
+          type: string
+        creditProductId:
+          description: ID of the credit product whose pool this grant funds. A usage
+            product debits the same pool by listing this ID in consumesCreditProductIds.
+            Discover IDs via GET /credit-products.
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        balanceKind:
+          description: "What grantAmount represents: a monetary value in the contract\
+            \ currency (MONETARY) or a quantity of units (UNIT)."
+          enum:
+          - MONETARY
+          - UNIT
+          type: string
+        grantAmount:
+          description: "Amount granted into the pool per grant period — a currency\
+            \ amount when balanceKind is MONETARY (e.g. 500 = $500), or a unit quantity\
+            \ when balanceKind is UNIT."
+          minimum: 0
+          type: number
+        price:
+          description: "Amount charged to the customer for this grant, in the contract\
+            \ currency. Required when balanceKind is UNIT (a unit quantity has no\
+            \ currency value of its own) — e.g. grant 1000 units for a price of 20\
+            \ ($20). Optional when balanceKind is MONETARY: if omitted, the grant\
+            \ is sold at face value (price equals grantAmount)."
+          minimum: 0
+          nullable: true
+          type: number
+        schedule:
+          description: "How often the grant is applied: ONE_TIME grants once at contract\
+            \ start; RECURRING_MONTHLY, RECURRING_QUARTERLY and RECURRING_YEARLY re-grant\
+            \ each corresponding period."
+          enum:
+          - ONE_TIME
+          - RECURRING_MONTHLY
+          - RECURRING_QUARTERLY
+          - RECURRING_YEARLY
+          type: string
+        expirationDate:
+          description: "Explicit date after which unused granted credits expire. Only\
+            \ supported on ONE_TIME grants. For policy-based expiry on recurring grants,\
+            \ use expirationPolicy instead."
+          format: date-time
+          nullable: true
+          type: string
+        expirationPolicy:
+          description: "Controls when unused credits from a grant period expire. AT_NEXT_GRANT:\
+            \ credits expire at the end of each billing period (default for recurring).\
+            \ NEVER: credits never expire (default for ONE_TIME). END_OF_INVOICE:\
+            \ credits expire at the end of the invoice period. END_OF_RENEWAL_PERIOD:\
+            \ credits expire at the end of the contract renewal period. END_OF_CONTRACT:\
+            \ credits expire when the contract ends. AT_NEXT_GRANT and END_OF_INVOICE\
+            \ are not available for ONE_TIME grants."
+          enum:
+          - AT_NEXT_GRANT
+          - NEVER
+          - END_OF_INVOICE
+          - END_OF_RENEWAL_PERIOD
+          - END_OF_CONTRACT
+          type: string
+        applyAutomatically:
+          description: Whether granted credits are applied to usage automatically.
+            Defaults to true.
+          type: boolean
+        externalIntegrations:
+          description: "Links the subscription created for a recurring credit grant\
+            \ to matching products in V3 integrations (e.g. Paddle). The grant's inferred\
+            \ product is linked to each external integration after the contract is\
+            \ created, so invoices for the grant are exported to it. At most one entry\
+            \ per provider. Applies only to credit grants on a contract — ignored\
+            \ on credit top-ups. Currently only Paddle is supported."
+          items:
+            $ref: '#/components/schemas/ProductExternalIntegration'
+          nullable: true
+          type: array
+      required:
+      - balanceKind
+      - creditProductId
+      - grantAmount
+      - name
+      - schedule
+      type: object
     ProductGroup:
       example:
         displayName: displayName
@@ -5321,32 +5774,23 @@ components:
         nsClassId: nsClassId
         description: description
         commitment:
-          price: 0.7386281948385884
+          price: 0.10246457001441578
           overageStrategy: null
           scheduling:
             duration:
               unit: MONTH
               value: 361
             billingDay: 28
-          units: 0.4145608029883936
+          units: 0.12315135367772556
           type: UNITS
         isCalendarAligned: true
         nsClass: nsClass
-        baseAmount: 2.027123023002322
+        baseAmount: 7.386281948385884
         products:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -5358,9 +5802,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -5373,16 +5835,7 @@ components:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -5394,9 +5847,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -5467,6 +5938,7 @@ components:
       description: The status of the contract
       enum:
       - InReview
+      - Scheduled
       - Active
       - Inactive
       - Expired
@@ -5491,21 +5963,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -5517,9 +5982,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -5532,16 +6015,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -5553,9 +6027,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -5579,6 +6071,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -5587,32 +6109,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5624,9 +6137,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5639,16 +6170,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5660,9 +6182,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5677,32 +6217,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5714,9 +6245,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5729,16 +6278,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5750,9 +6290,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5789,21 +6347,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -5815,9 +6366,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -5830,16 +6399,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -5851,9 +6411,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -5878,6 +6456,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -5886,32 +6494,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5923,9 +6522,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5938,16 +6555,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -5959,9 +6567,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -5976,32 +6602,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6013,9 +6630,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6028,16 +6663,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6049,9 +6675,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6088,21 +6732,13 @@ components:
           value: ""
           integrationEntityType: Account
         externalId: externalId
+        isTrial: true
         shouldProRateInvoices: true
         products:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -6114,9 +6750,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -6129,16 +6783,7 @@ components:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -6150,9 +6795,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -6176,6 +6839,35 @@ components:
         purchaseOrder: purchaseOrder
         autoRenewContract: true
         planId: planId
+        creditGrants:
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
         currency: ""
         salesForceOpportunityId: salesForceOpportunityId
         productGroups:
@@ -6184,32 +6876,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6221,9 +6904,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6236,16 +6937,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6257,9 +6949,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6274,32 +6984,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6311,9 +7012,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6326,16 +7045,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6347,9 +7057,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6370,17 +7098,14 @@ components:
           description: The id of the customer that the contract is associated with
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
-        name:
-          description: The name of the contract
-          type: string
         planId:
-          description: "The id of the plan template to create the contract from. When\
-            \ provided, the contract's products are derived from the plan template."
+          description: "The id of an existing plan to attach to this contract. When\
+            \ provided, products/productGroups are ignored and the plan is used as-is.\
+            \ Mutually exclusive with inline product definition."
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
-        externalId:
-          description: An external identifier for the contract
-          nullable: true
+        name:
+          description: The name of the contract. Required when planId is not provided.
           type: string
         salesForceOpportunityId:
           description: The id of the sales force opportunity that the contract is
@@ -6401,6 +7126,14 @@ components:
           description: The products that the contract is associated with
           items:
             $ref: '#/components/schemas/ProductGroup_products_inner'
+          type: array
+        creditGrants:
+          description: Credit grants that fund credit pools for the customer under
+            this contract. Each grant credits a pool identified by its creditProductId;
+            usage products draw down those pools via consumesCreditProductIds.
+          items:
+            $ref: '#/components/schemas/ExternalCreditGrant'
+          nullable: true
           type: array
         productGroups:
           description: "Product groups are list of products that can be grouped as\
@@ -6445,9 +7178,19 @@ components:
           - description: "The currency of the contract. Overrides the customer-level\
               \ currency for all invoices under this contract. If not provided, the\
               \ customer currency or account default (USD) is used."
+        isTrial:
+          description: "Whether the contract is a trial. All invoices under a trial\
+            \ contract are flagged with isTrial: true. If not provided, it defaults\
+            \ to false."
+          type: boolean
+        externalId:
+          description: "A caller-owned external id for the contract. Once set, the\
+            \ contract can be fetched or deleted by passing this value in place of\
+            \ the Vayu id on the /contracts/{contractId} endpoints."
+          nullable: true
+          type: string
       required:
       - customerId
-      - name
       - startDate
       type: object
     CreateContractResponse:
@@ -6467,21 +7210,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6493,9 +7229,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6508,16 +7262,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -6529,9 +7274,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -6555,6 +7318,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -6563,32 +7356,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6600,9 +7384,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6615,16 +7417,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6636,9 +7429,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6653,32 +7464,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6690,9 +7492,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6705,16 +7525,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -6726,9 +7537,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -6970,6 +7799,7 @@ components:
         invoice:
           amount: 1.0246457001441578
           dueDate: 2000-01-23T04:56:07.000+00:00
+          isTrial: true
           billingStatus: None
           lineItems:
           - invoiceId: invoiceId
@@ -7024,8 +7854,17 @@ components:
       required:
       - invoice
       type: object
+    CustomerRelationType:
+      default: accumulateUsage
+      description: Relation type between parent and child customer. Defaults to accumulateUsage.
+      enum:
+      - accumulateUsage
+      - accumulateCharges
+      - erpInvoiceSyncOnBehalfParent
+      type: string
     CreateCustomerRelationRequest:
       example:
+        relationType: accumulateUsage
         vayuChildCustomerId: vayuChildCustomerId
         vayuParentCustomerId: vayuParentCustomerId
       properties:
@@ -7037,13 +7876,17 @@ components:
           description: Identifier of the child customer in Vayu.
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
+        relationType:
+          $ref: '#/components/schemas/CustomerRelationType'
       required:
+      - relationType
       - vayuChildCustomerId
       - vayuParentCustomerId
       type: object
     CreateCustomerRelationResponse:
       example:
         customerRelation:
+          relationType: accumulateUsage
           createdAt: 2000-01-23T04:56:07.000+00:00
           id: id
           vayuChildCustomerId: vayuChildCustomerId
@@ -7058,6 +7901,7 @@ components:
     GetCustomerRelationResponse:
       example:
         customerRelation:
+          relationType: accumulateUsage
           createdAt: 2000-01-23T04:56:07.000+00:00
           id: id
           vayuChildCustomerId: vayuChildCustomerId
@@ -7131,6 +7975,7 @@ components:
         plan:
           createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
+          externalId: externalId
           id: id
           billingData:
             duration: 0.08008281904610115
@@ -7152,6 +7997,7 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           deletedAt: deletedAt
           name: name
+          externalId: externalId
           id: id
           billingData:
             duration: 0.08008281904610115
@@ -7174,6 +8020,7 @@ components:
         plans:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
+          externalId: externalId
           id: id
           billingData:
             duration: 0.08008281904610115
@@ -7185,6 +8032,7 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
+          externalId: externalId
           id: id
           billingData:
             duration: 0.08008281904610115
@@ -7256,6 +8104,7 @@ components:
           - Anrok
           - Connact
           - Xero
+          - Paddle
           type: string
         integrationEntityType:
           allOf:
@@ -7407,6 +8256,7 @@ components:
           - Anrok
           - Connact
           - Xero
+          - Paddle
           type: string
         integrationEntityType:
           allOf:
@@ -7715,6 +8565,7 @@ components:
           instanceValue: ""
         event:
           accountId: accountId
+          ackId: ackId
           customerAlias: customerAlias
           ref: ref
           data:
@@ -7790,6 +8641,7 @@ components:
             instanceValue: ""
           event:
             accountId: accountId
+            ackId: ackId
             customerAlias: customerAlias
             ref: ref
             data:
@@ -7848,6 +8700,7 @@ components:
             instanceValue: ""
           event:
             accountId: accountId
+            ackId: ackId
             customerAlias: customerAlias
             ref: ref
             data:
@@ -7952,6 +8805,27 @@ components:
       required:
       - events
       type: object
+    AcknowledgedEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          ackId:
+            description: Per-event acknowledgment ID confirming Vayu received this
+              event. Use it to demonstrate the event was sent to Vayu.
+            example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+            type: string
+        required:
+        - ackId
+        type: object
+      example:
+        ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+        customerAlias: customer_12345
+        ref: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+        data:
+          key1: processing_duration
+          key2: api_url
+        name: api_call
+        timestamp: 2023-09-13T18:25:43.511Z
     InvalidEvent:
       example:
         event:
@@ -7977,14 +8851,16 @@ components:
     SendEventsResponse:
       example:
         validEvents:
-        - customerAlias: customer_12345
+        - ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          customerAlias: customer_12345
           ref: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
           data:
             key1: processing_duration
             key2: api_url
           name: api_call
           timestamp: 2023-09-13T18:25:43.511Z
-        - customerAlias: customer_12345
+        - ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          customerAlias: customer_12345
           ref: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
           data:
             key1: processing_duration
@@ -8012,10 +8888,10 @@ components:
           error: Event ref already exists.
       properties:
         validEvents:
-          description: An array of events that were successfully processed and sent
-            to the queue.
+          description: "An array of events that were successfully processed and sent\
+            \ to the queue, each with its acknowledgment ID."
           items:
-            $ref: '#/components/schemas/Event'
+            $ref: '#/components/schemas/AcknowledgedEvent'
           type: array
         invalidEvents:
           description: An array of events that failed validation and were not sent
@@ -8222,6 +9098,7 @@ components:
             instanceValue: ""
           event:
             accountId: accountId
+            ackId: ackId
             customerAlias: customerAlias
             ref: ref
             data:
@@ -8280,6 +9157,7 @@ components:
             instanceValue: ""
           event:
             accountId: accountId
+            ackId: ackId
             customerAlias: customerAlias
             ref: ref
             data:
@@ -8387,14 +9265,16 @@ components:
     V2SendEventsResponse:
       example:
         validEvents:
-        - customerAlias: customer_12345
+        - ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          customerAlias: customer_12345
           ref: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
           data:
             key1: processing_duration
             key2: api_url
           name: api_call
           timestamp: 2023-09-13T18:25:43.511Z
-        - customerAlias: customer_12345
+        - ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          customerAlias: customer_12345
           ref: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
           data:
             key1: processing_duration
@@ -8422,10 +9302,10 @@ components:
           error: Event ref already exists.
       properties:
         validEvents:
-          description: An array of events that were successfully processed and sent
-            to the queue.
+          description: "An array of events that were successfully processed and sent\
+            \ to the queue, each with its acknowledgment ID."
           items:
-            $ref: '#/components/schemas/Event'
+            $ref: '#/components/schemas/AcknowledgedEvent'
           type: array
         invalidEvents:
           description: An array of events that failed validation and were not sent
@@ -8607,6 +9487,7 @@ components:
       - Snowflake
       - Connact
       - Xero
+      - Paddle
       type: string
     SyncStatus:
       enum:
@@ -8803,11 +9684,92 @@ components:
       - creditAmount
       - customerId
       type: object
+    CreditTopUpRequest:
+      example:
+        customerId: customerId
+        creditGrant:
+          balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.6027456183070403
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.08008281904610115
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        customerId:
+          description: The ID of the customer to be billed for the credit top-up.
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        creditGrant:
+          $ref: '#/components/schemas/CreditTopUpRequest_creditGrant'
+      required:
+      - creditGrant
+      - customerId
+      type: object
+    CreditTopUpResponse:
+      example:
+        customerId: customerId
+        invoiceId: invoiceId
+      properties:
+        invoiceId:
+          description: The ID of the one-off invoice created for the credit top-up.
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        customerId:
+          description: The ID of the customer the invoice was created for.
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+      required:
+      - customerId
+      - invoiceId
+      type: object
+    ExternalCreditProduct:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          description: "Unique ID of the credit product. Use it as a product creditGrant.creditProductId\
+            \ to fund its pool, or in a usage product's consumesCreditProductIds to\
+            \ debit it."
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        name:
+          description: Human-readable name of the credit product.
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    ListCreditProductsResponse:
+      example:
+        creditProducts:
+        - name: name
+          id: id
+        - name: name
+          id: id
+      properties:
+        creditProducts:
+          description: The credit products defined in your account.
+          items:
+            $ref: '#/components/schemas/ExternalCreditProduct'
+          type: array
+      required:
+      - creditProducts
+      type: object
     NotificationEventType:
       enum:
       - AnonymousCustomer
       - Overage
       - UpcomingRenewal
+      - ContractExpired
       - InvoiceApproved
       - CustomerPortalLinkSent
       - NewCustomerWithoutContract
@@ -8820,12 +9782,20 @@ components:
       - FinalTierExceeded
       - InvoicePaymentStatusChanged
       - InvoiceSendFailed
+      - CreditPoolDepleted
+      - CreditPoolThresholdCrossed
+      - CreditPoolIncreased
+      - PaymentFailed
+      - CustomerCreated
+      - ContractCreated
+      - InvoiceIssueDateArrived
       - PingTest
       type: string
     WebhookSubscribeRequest:
       example:
+        recurringThreshold: 6.027456183070403
         callbackUrl: callbackUrl
-        threshold: 0.08008281904610115
+        threshold: 0.8008281904610115
         eventType: AnonymousCustomer
       properties:
         callbackUrl:
@@ -8833,9 +9803,8 @@ components:
         eventType:
           $ref: '#/components/schemas/NotificationEventType'
         threshold:
-          exclusiveMinimum: true
-          maximum: 1
-          minimum: 0
+          type: number
+        recurringThreshold:
           type: number
       required:
       - callbackUrl
@@ -8844,16 +9813,9 @@ components:
     GetCustomerByNameResponse:
       example:
         customer:
-          overdueAmount: 1.4658129805029452
           aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -8867,17 +9829,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -8885,10 +9863,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -8901,7 +9875,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customer:
           $ref: '#/components/schemas/GetCustomerByNameResponse_customer'
@@ -9019,16 +9992,9 @@ components:
     GetCustomerByIntegrationIdResponse:
       example:
         customer:
-          overdueAmount: 1.4658129805029452
           aliases:
           - aliases
           - aliases
-          address:
-            country: country
-            city: city
-            postalCode: postalCode
-            addressText: addressText
-            state: state
           customFields:
           - integrationSource: NetSuite
             valueType: String
@@ -9042,17 +10008,33 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
-          externalId: externalId
+          externalIntegration:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
           source: Stripe
-          customerErpId: customerErpId
           taxIds:
           - taxIds
           - taxIds
+          legalName: legalName
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          currency: USD
+          totalOutstandingAmount: 0.8008281904610115
+          id: id
+          pendingPaymentAmount: 5.962133916683182
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          overdueAmount: 1.4658129805029452
+          address:
+            country: country
+            city: city
+            postalCode: postalCode
+            addressText: addressText
+            state: state
+          externalId: externalId
+          customerErpId: customerErpId
           dueDays: END_OF_MONTH
           subsidiary: subsidiary
           openAmount: 6.027456183070403
-          legalName: legalName
-          createdAt: 2000-01-23T04:56:07.000+00:00
           taxId: taxId
           salesForceAccountId: salesForceAccountId
           name: name
@@ -9060,10 +10042,6 @@ components:
             cloudProvider: AWS
             customerIdentifier: customerIdentifier
             cloudProviderMarketplaceId: cloudProviderMarketplaceId
-          currency: USD
-          totalOutstandingAmount: 0.8008281904610115
-          id: id
-          pendingPaymentAmount: 5.962133916683182
           paidAmount: 5.637376656633329
           contacts:
           - receiveInvoiceEmail: true
@@ -9076,7 +10054,6 @@ components:
             name: name
             title: title
             email: email
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -9098,21 +10075,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9124,9 +10094,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9139,16 +10127,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9160,9 +10139,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9186,6 +10183,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -9194,32 +10221,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9231,9 +10249,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9246,16 +10282,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9267,9 +10294,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9284,32 +10329,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9321,9 +10357,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9336,16 +10390,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9357,9 +10402,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9397,21 +10460,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9423,9 +10479,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9438,16 +10512,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9459,9 +10524,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9485,6 +10568,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -9493,32 +10606,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9530,9 +10634,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9545,16 +10667,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9566,9 +10679,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9583,32 +10714,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9620,9 +10742,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9635,16 +10775,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9656,9 +10787,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9686,21 +10835,14 @@ components:
             vayuCustomFieldName: vayuCustomFieldName
             value: ""
             integrationEntityType: Account
+          externalId: externalId
+          isTrial: true
           shouldProRateInvoices: true
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9712,9 +10854,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9727,16 +10887,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -9748,9 +10899,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -9774,6 +10943,36 @@ components:
           name: name
           purchaseOrder: purchaseOrder
           autoRenewContract: true
+          planId: planId
+          creditGrants:
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          - balanceKind: MONETARY
+            schedule: ONE_TIME
+            price: 0.4145608029883936
+            applyAutomatically: true
+            name: name
+            creditProductId: creditProductId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
+            expirationPolicy: AT_NEXT_GRANT
+            grantAmount: 0.20271230230023218
+            expirationDate: 2000-01-23T04:56:07.000+00:00
           currency: ""
           salesForceOpportunityId: salesForceOpportunityId
           productGroups:
@@ -9782,32 +10981,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9819,9 +11009,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9834,16 +11042,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9855,9 +11054,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9872,32 +11089,23 @@ components:
             nsClassId: nsClassId
             description: description
             commitment:
-              price: 0.7386281948385884
+              price: 0.10246457001441578
               overageStrategy: null
               scheduling:
                 duration:
                   unit: MONTH
                   value: 361
                 billingDay: 28
-              units: 0.4145608029883936
+              units: 0.12315135367772556
               type: UNITS
             isCalendarAligned: true
             nsClass: nsClass
-            baseAmount: 2.027123023002322
+            baseAmount: 7.386281948385884
             products:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9909,9 +11117,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9924,16 +11150,7 @@ components:
             - displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
-              scheduling:
-                duration:
-                  unit: MONTH
-                  value: 602
-                billingDay: 3
               catalogProductId: catalogProductId
-              cloudProviderSettings:
-                cloudProvider: AWS
-                dimension: dimension
-                cloudProviderMarketplaceId: cloudProviderMarketplaceId
               description: description
               commitment:
                 price: 0.7061401241503109
@@ -9945,9 +11162,27 @@ components:
                   billingDay: 28
                 units: 0.23021358869347652
                 type: UNITS
+              scheduling:
+                duration:
+                  unit: MONTH
+                  value: 602
+                billingDay: 3
+              cloudProviderSettings:
+                cloudProvider: AWS
+                dimension: dimension
+                cloudProviderMarketplaceId: cloudProviderMarketplaceId
+              externalIntegrations:
+              - provider: Paddle
+                externalId: externalId
+              - provider: Paddle
+                externalId: externalId
               isCalendarAligned: true
+              consumesCreditProductIds:
+              - consumesCreditProductIds
+              - consumesCreditProductIds
               paymentTerm: Prepayment
               pricing:
+                issuedSeparately: true
                 price: 0.14658129805029452
                 discount:
                   amount: 0.5962133916683182
@@ -9976,6 +11211,55 @@ components:
       - contracts
       - hasMore
       - total
+      type: object
+    TerminateContractRequest:
+      example:
+        terminationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        terminationDate:
+          description: "The date on which the contract should be terminated. If omitted,\
+            \ the contract is terminated immediately."
+          format: date-time
+          type: string
+      type: object
+    TerminateContractResponse:
+      example:
+        contractId: contractId
+      properties:
+        contractId:
+          description: The identifier of the terminated contract
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+      required:
+      - contractId
+      type: object
+    RefreshContractCreditsRequest:
+      example:
+        grants:
+        - newPrice: 0.08008281904610115
+          grantProductId: grantProductId
+        - newPrice: 0.08008281904610115
+          grantProductId: grantProductId
+      properties:
+        grants:
+          description: "The credit grants to refresh. Each refreshed grant is set\
+            \ to non-prorated (and optionally re-priced), while every other credit\
+            \ grant on the contract is set to prorated. If omitted, all credit grants\
+            \ on the contract are refreshed (set to non-prorated) and none are prorated."
+          items:
+            $ref: '#/components/schemas/RefreshContractCreditsRequest_grants_inner'
+          type: array
+      type: object
+    RefreshContractCreditsResponse:
+      example:
+        contractId: contractId
+      properties:
+        contractId:
+          description: The identifier of the contract whose credit grants were refreshed
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+      required:
+      - contractId
       type: object
     InvoicePaymentStatusResponse:
       example:
@@ -10021,6 +11305,7 @@ components:
         invoices:
         - amount: 1.0246457001441578
           dueDate: 2000-01-23T04:56:07.000+00:00
+          isTrial: true
           billingStatus: None
           lineItems:
           - invoiceId: invoiceId
@@ -10071,6 +11356,7 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - amount: 1.0246457001441578
           dueDate: 2000-01-23T04:56:07.000+00:00
+          isTrial: true
           billingStatus: None
           lineItems:
           - invoiceId: invoiceId
@@ -10380,23 +11666,15 @@ components:
       type: string
     Alias:
       type: string
-    IntegrationType:
-      enum:
-      - Hubspot
-      - Stripe
-      - NetSuite
-      - Salesforce
-      - QuickBooks
-      - Slack
-      - S3
-      - Vayu
-      - Morning
-      - Anrok
-      - Snowflake
-      - Connact
-      - Xero
-      type: string
     IntegrationId:
+      type: string
+    CustomerExternalId:
+      type: string
+    IssuedAfter:
+      nullable: true
+      type: string
+    IssuedBefore:
+      nullable: true
       type: string
     ProductId:
       type: string
@@ -10487,16 +11765,9 @@ components:
       type: object
     CreateCustomerResponse_customer:
       example:
-        overdueAmount: 1.4658129805029452
         aliases:
         - aliases
         - aliases
-        address:
-          country: country
-          city: city
-          postalCode: postalCode
-          addressText: addressText
-          state: state
         customFields:
         - integrationSource: NetSuite
           valueType: String
@@ -10510,17 +11781,33 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
-        externalId: externalId
+        externalIntegration:
+        - type: Stripe
+          id: cus_123
+          name: Acme Inc
         source: Stripe
-        customerErpId: customerErpId
         taxIds:
         - taxIds
         - taxIds
+        legalName: legalName
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        currency: USD
+        totalOutstandingAmount: 0.8008281904610115
+        id: id
+        pendingPaymentAmount: 5.962133916683182
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        overdueAmount: 1.4658129805029452
+        address:
+          country: country
+          city: city
+          postalCode: postalCode
+          addressText: addressText
+          state: state
+        externalId: externalId
+        customerErpId: customerErpId
         dueDays: END_OF_MONTH
         subsidiary: subsidiary
         openAmount: 6.027456183070403
-        legalName: legalName
-        createdAt: 2000-01-23T04:56:07.000+00:00
         taxId: taxId
         salesForceAccountId: salesForceAccountId
         name: name
@@ -10528,10 +11815,6 @@ components:
           cloudProvider: AWS
           customerIdentifier: customerIdentifier
           cloudProviderMarketplaceId: cloudProviderMarketplaceId
-        currency: USD
-        totalOutstandingAmount: 0.8008281904610115
-        id: id
-        pendingPaymentAmount: 5.962133916683182
         paidAmount: 5.637376656633329
         contacts:
         - receiveInvoiceEmail: true
@@ -10544,7 +11827,6 @@ components:
           name: name
           title: title
           email: email
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         name:
           description: The name of the customer
@@ -10596,6 +11878,19 @@ components:
           description: The ID of the customer in the Salesforce system
           nullable: true
           type: string
+        externalIntegration:
+          description: External integration links for the customer. Each entry links
+            the customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the integration
+            registry.
+          example:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
+          items:
+            $ref: '#/components/schemas/CustomerExternalIntegration'
+          nullable: true
+          type: array
         dueDays:
           description: The due days of the customer
           enum:
@@ -10667,6 +11962,10 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalIntegration:
+        - type: Stripe
+          id: cus_123
+          name: Acme Inc
         source: Stripe
         taxIds:
         - taxIds
@@ -10761,6 +12060,19 @@ components:
           description: The ID of the customer in the Salesforce system
           nullable: true
           type: string
+        externalIntegration:
+          description: External integration links for the customer. Each entry links
+            the customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the integration
+            registry.
+          example:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
+          items:
+            $ref: '#/components/schemas/CustomerExternalIntegration'
+          nullable: true
+          type: array
         dueDays:
           description: The due days of the customer
           enum:
@@ -11011,6 +12323,7 @@ components:
       type: object
     ProductGroup_products_inner_pricing_oneOf:
       example:
+        issuedSeparately: true
         price: 0.14658129805029452
         discount:
           amount: 0.5962133916683182
@@ -11030,9 +12343,16 @@ components:
         discount:
           $ref: '#/components/schemas/ProductGroup_products_inner_pricing_oneOf_discount'
         isCreditPurchase:
-          description: "Whether this one-time fee is a credit purchase. When true,\
-            \ the product is treated as a prepaid credit that the customer can use\
-            \ later. Defaults to false."
+          deprecated: true
+          description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit\
+            \ product type and prepayment, but does NOT fund a credit pool. For the\
+            \ credit pool system, use the contract-level creditGrants field instead.\
+            \ Defaults to false."
+          type: boolean
+        issuedSeparately:
+          description: "When true, this product is billed on its own invoice instead\
+            \ of being combined with other products in the same contract. Defaults\
+            \ to false."
           type: boolean
       required:
       - price
@@ -11101,6 +12421,11 @@ components:
           $ref: '#/components/schemas/ProductGroup_products_inner_pricing_oneOf_2_subscriptionCadence'
         discount:
           $ref: '#/components/schemas/ProductGroup_products_inner_pricing_oneOf_discount'
+        issuedSeparately:
+          description: "When true, this product is billed on its own invoice instead\
+            \ of being combined with other products in the same contract. Defaults\
+            \ to false."
+          type: boolean
       required:
       - price
       - subscriptionCadence
@@ -11343,16 +12668,7 @@ components:
         displayName: displayName
         productErpId: productErpId
         nsClassId: nsClassId
-        scheduling:
-          duration:
-            unit: MONTH
-            value: 602
-          billingDay: 3
         catalogProductId: catalogProductId
-        cloudProviderSettings:
-          cloudProvider: AWS
-          dimension: dimension
-          cloudProviderMarketplaceId: cloudProviderMarketplaceId
         description: description
         commitment:
           price: 0.7061401241503109
@@ -11364,9 +12680,27 @@ components:
             billingDay: 28
           units: 0.23021358869347652
           type: UNITS
+        scheduling:
+          duration:
+            unit: MONTH
+            value: 602
+          billingDay: 3
+        cloudProviderSettings:
+          cloudProvider: AWS
+          dimension: dimension
+          cloudProviderMarketplaceId: cloudProviderMarketplaceId
+        externalIntegrations:
+        - provider: Paddle
+          externalId: externalId
+        - provider: Paddle
+          externalId: externalId
         isCalendarAligned: true
+        consumesCreditProductIds:
+        - consumesCreditProductIds
+        - consumesCreditProductIds
         paymentTerm: Prepayment
         pricing:
+          issuedSeparately: true
           price: 0.14658129805029452
           discount:
             amount: 0.5962133916683182
@@ -11405,6 +12739,16 @@ components:
           description: The id of the class of the product in NetSuite ERP
           nullable: true
           type: string
+        externalIntegrations:
+          description: "Links the product to matching products in V3 integrations\
+            \ (e.g. Paddle). For each entry, the product is linked to that external\
+            \ integration after the contract is created, so invoices for this product\
+            \ are exported to it. At most one entry per provider. Currently only Paddle\
+            \ is supported."
+          items:
+            $ref: '#/components/schemas/ProductExternalIntegration'
+          nullable: true
+          type: array
         commitment:
           $ref: '#/components/schemas/ProductGroup_products_inner_commitment'
         paymentTerm:
@@ -11417,6 +12761,17 @@ components:
           type: boolean
         cloudProviderSettings:
           $ref: '#/components/schemas/ProductCloudProviderSettings'
+        consumesCreditProductIds:
+          description: "IDs of credit products whose pools are drawn down when this\
+            \ usage product is invoiced. Each ID matches the creditProductId of a\
+            \ credit grant on the same contract that funds the pool. Pools are drawn\
+            \ in the order listed. If omitted, no credits are applied and the product\
+            \ is billed at full price. Not supported inside productGroups."
+          items:
+            pattern: "^[0-9a-fA-F]{24}$"
+            type: string
+          nullable: true
+          type: array
       required:
       - displayName
       - pricing
@@ -11426,14 +12781,14 @@ components:
       description: The commitment of the product group. units are aggregated for all
         products in the group
       example:
-        price: 0.7386281948385884
+        price: 0.10246457001441578
         overageStrategy: null
         scheduling:
           duration:
             unit: MONTH
             value: 361
           billingDay: 28
-        units: 0.4145608029883936
+        units: 0.12315135367772556
         type: UNITS
       nullable: true
       properties:
@@ -11477,21 +12832,14 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalId: externalId
+        isTrial: true
         shouldProRateInvoices: true
         products:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -11503,9 +12851,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -11518,16 +12884,7 @@ components:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -11539,9 +12896,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -11565,6 +12940,36 @@ components:
         name: name
         purchaseOrder: purchaseOrder
         autoRenewContract: true
+        planId: planId
+        creditGrants:
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
         currency: ""
         salesForceOpportunityId: salesForceOpportunityId
         productGroups:
@@ -11573,32 +12978,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -11610,9 +13006,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -11625,16 +13039,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -11646,9 +13051,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -11663,32 +13086,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -11700,9 +13114,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -11715,16 +13147,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -11736,9 +13159,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -11761,8 +13202,14 @@ components:
           description: The id of the customer that the contract is associated with
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
+        planId:
+          description: "The id of an existing plan to attach to this contract. When\
+            \ provided, products/productGroups are ignored and the plan is used as-is.\
+            \ Mutually exclusive with inline product definition."
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
         name:
-          description: The name of the contract
+          description: The name of the contract. Required when planId is not provided.
           type: string
         salesForceOpportunityId:
           description: The id of the sales force opportunity that the contract is
@@ -11783,6 +13230,14 @@ components:
           description: The products that the contract is associated with
           items:
             $ref: '#/components/schemas/ProductGroup_products_inner'
+          type: array
+        creditGrants:
+          description: Credit grants that fund credit pools for the customer under
+            this contract. Each grant credits a pool identified by its creditProductId;
+            usage products draw down those pools via consumesCreditProductIds.
+          items:
+            $ref: '#/components/schemas/ExternalCreditGrant'
+          nullable: true
           type: array
         productGroups:
           description: "Product groups are list of products that can be grouped as\
@@ -11827,6 +13282,17 @@ components:
           - description: "The currency of the contract. Overrides the customer-level\
               \ currency for all invoices under this contract. If not provided, the\
               \ customer currency or account default (USD) is used."
+        isTrial:
+          description: "Whether the contract is a trial. All invoices under a trial\
+            \ contract are flagged with isTrial: true. If not provided, it defaults\
+            \ to false."
+          type: boolean
+        externalId:
+          description: "A caller-owned external id for the contract. Once set, the\
+            \ contract can be fetched or deleted by passing this value in place of\
+            \ the Vayu id on the /contracts/{contractId} endpoints."
+          nullable: true
+          type: string
         id:
           type: string
         createdAt:
@@ -11839,7 +13305,6 @@ components:
       - createdAt
       - customerId
       - id
-      - name
       - startDate
       - updatedAt
       type: object
@@ -11859,21 +13324,14 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
+        externalId: externalId
+        isTrial: true
         shouldProRateInvoices: true
         products:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -11885,9 +13343,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -11900,16 +13376,7 @@ components:
         - displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
-          scheduling:
-            duration:
-              unit: MONTH
-              value: 602
-            billingDay: 3
           catalogProductId: catalogProductId
-          cloudProviderSettings:
-            cloudProvider: AWS
-            dimension: dimension
-            cloudProviderMarketplaceId: cloudProviderMarketplaceId
           description: description
           commitment:
             price: 0.7061401241503109
@@ -11921,9 +13388,27 @@ components:
               billingDay: 28
             units: 0.23021358869347652
             type: UNITS
+          scheduling:
+            duration:
+              unit: MONTH
+              value: 602
+            billingDay: 3
+          cloudProviderSettings:
+            cloudProvider: AWS
+            dimension: dimension
+            cloudProviderMarketplaceId: cloudProviderMarketplaceId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
           isCalendarAligned: true
+          consumesCreditProductIds:
+          - consumesCreditProductIds
+          - consumesCreditProductIds
           paymentTerm: Prepayment
           pricing:
+            issuedSeparately: true
             price: 0.14658129805029452
             discount:
               amount: 0.5962133916683182
@@ -11948,6 +13433,36 @@ components:
         name: name
         purchaseOrder: purchaseOrder
         autoRenewContract: true
+        planId: planId
+        creditGrants:
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        - balanceKind: MONETARY
+          schedule: ONE_TIME
+          price: 0.4145608029883936
+          applyAutomatically: true
+          name: name
+          creditProductId: creditProductId
+          externalIntegrations:
+          - provider: Paddle
+            externalId: externalId
+          - provider: Paddle
+            externalId: externalId
+          expirationPolicy: AT_NEXT_GRANT
+          grantAmount: 0.20271230230023218
+          expirationDate: 2000-01-23T04:56:07.000+00:00
         currency: ""
         salesForceOpportunityId: salesForceOpportunityId
         productGroups:
@@ -11956,32 +13471,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -11993,9 +13499,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -12008,16 +13532,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -12029,9 +13544,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -12046,32 +13579,23 @@ components:
           nsClassId: nsClassId
           description: description
           commitment:
-            price: 0.7386281948385884
+            price: 0.10246457001441578
             overageStrategy: null
             scheduling:
               duration:
                 unit: MONTH
                 value: 361
               billingDay: 28
-            units: 0.4145608029883936
+            units: 0.12315135367772556
             type: UNITS
           isCalendarAligned: true
           nsClass: nsClass
-          baseAmount: 2.027123023002322
+          baseAmount: 7.386281948385884
           products:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -12083,9 +13607,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -12098,16 +13640,7 @@ components:
           - displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
-            scheduling:
-              duration:
-                unit: MONTH
-                value: 602
-              billingDay: 3
             catalogProductId: catalogProductId
-            cloudProviderSettings:
-              cloudProvider: AWS
-              dimension: dimension
-              cloudProviderMarketplaceId: cloudProviderMarketplaceId
             description: description
             commitment:
               price: 0.7061401241503109
@@ -12119,9 +13652,27 @@ components:
                 billingDay: 28
               units: 0.23021358869347652
               type: UNITS
+            scheduling:
+              duration:
+                unit: MONTH
+                value: 602
+              billingDay: 3
+            cloudProviderSettings:
+              cloudProvider: AWS
+              dimension: dimension
+              cloudProviderMarketplaceId: cloudProviderMarketplaceId
+            externalIntegrations:
+            - provider: Paddle
+              externalId: externalId
+            - provider: Paddle
+              externalId: externalId
             isCalendarAligned: true
+            consumesCreditProductIds:
+            - consumesCreditProductIds
+            - consumesCreditProductIds
             paymentTerm: Prepayment
             pricing:
+              issuedSeparately: true
               price: 0.14658129805029452
               discount:
                 amount: 0.5962133916683182
@@ -12144,8 +13695,14 @@ components:
           description: The id of the customer that the contract is associated with
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
+        planId:
+          description: "The id of an existing plan to attach to this contract. When\
+            \ provided, products/productGroups are ignored and the plan is used as-is.\
+            \ Mutually exclusive with inline product definition."
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
         name:
-          description: The name of the contract
+          description: The name of the contract. Required when planId is not provided.
           type: string
         salesForceOpportunityId:
           description: The id of the sales force opportunity that the contract is
@@ -12166,6 +13723,14 @@ components:
           description: The products that the contract is associated with
           items:
             $ref: '#/components/schemas/ProductGroup_products_inner'
+          type: array
+        creditGrants:
+          description: Credit grants that fund credit pools for the customer under
+            this contract. Each grant credits a pool identified by its creditProductId;
+            usage products draw down those pools via consumesCreditProductIds.
+          items:
+            $ref: '#/components/schemas/ExternalCreditGrant'
+          nullable: true
           type: array
         productGroups:
           description: "Product groups are list of products that can be grouped as\
@@ -12210,6 +13775,17 @@ components:
           - description: "The currency of the contract. Overrides the customer-level\
               \ currency for all invoices under this contract. If not provided, the\
               \ customer currency or account default (USD) is used."
+        isTrial:
+          description: "Whether the contract is a trial. All invoices under a trial\
+            \ contract are flagged with isTrial: true. If not provided, it defaults\
+            \ to false."
+          type: boolean
+        externalId:
+          description: "A caller-owned external id for the contract. Once set, the\
+            \ contract can be fetched or deleted by passing this value in place of\
+            \ the Vayu id on the /contracts/{contractId} endpoints."
+          nullable: true
+          type: string
         id:
           type: string
         createdAt:
@@ -12225,7 +13801,6 @@ components:
       - customerId
       - deletedAt
       - id
-      - name
       - startDate
       - updatedAt
       type: object
@@ -12420,6 +13995,7 @@ components:
       example:
         amount: 1.0246457001441578
         dueDate: 2000-01-23T04:56:07.000+00:00
+        isTrial: true
         billingStatus: None
         lineItems:
         - invoiceId: invoiceId
@@ -12505,6 +14081,9 @@ components:
         amount:
           description: The total amount of the invoice
           type: number
+        isTrial:
+          description: Whether the invoice belongs to a trial contract
+          type: boolean
         id:
           type: string
         createdAt:
@@ -12522,6 +14101,7 @@ components:
       - customerId
       - dueDate
       - id
+      - isTrial
       - lineItems
       - name
       - revenueBreakdown
@@ -12529,6 +14109,7 @@ components:
       type: object
     CreateCustomerRelationResponse_customerRelation:
       example:
+        relationType: accumulateUsage
         createdAt: 2000-01-23T04:56:07.000+00:00
         id: id
         vayuChildCustomerId: vayuChildCustomerId
@@ -12543,6 +14124,8 @@ components:
           description: Identifier of the child customer in Vayu.
           pattern: "^[0-9a-fA-F]{24}$"
           type: string
+        relationType:
+          $ref: '#/components/schemas/CustomerRelationType'
         id:
           type: string
         createdAt:
@@ -12554,6 +14137,7 @@ components:
       required:
       - createdAt
       - id
+      - relationType
       - updatedAt
       - vayuChildCustomerId
       - vayuParentCustomerId
@@ -12562,6 +14146,7 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
+        externalId: externalId
         id: id
         billingData:
           duration: 0.08008281904610115
@@ -12580,6 +14165,12 @@ components:
           $ref: '#/components/schemas/PlanStatus'
         billingData:
           $ref: '#/components/schemas/PlanBillingData'
+        externalId:
+          description: "A caller-owned external id for the plan. Once set, the plan\
+            \ can be fetched or deleted by passing this value in place of the Vayu\
+            \ id on the /plans/{planId} endpoints."
+          nullable: true
+          type: string
         id:
           type: string
         createdAt:
@@ -12601,6 +14192,7 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         deletedAt: deletedAt
         name: name
+        externalId: externalId
         id: id
         billingData:
           duration: 0.08008281904610115
@@ -12619,6 +14211,12 @@ components:
           $ref: '#/components/schemas/PlanStatus'
         billingData:
           $ref: '#/components/schemas/PlanBillingData'
+        externalId:
+          description: "A caller-owned external id for the plan. Once set, the plan\
+            \ can be fetched or deleted by passing this value in place of the Vayu\
+            \ id on the /plans/{planId} endpoints."
+          nullable: true
+          type: string
         id:
           type: string
         createdAt:
@@ -12678,6 +14276,7 @@ components:
           - Anrok
           - Connact
           - Xero
+          - Paddle
           type: string
         integrationEntityType:
           allOf:
@@ -12751,6 +14350,7 @@ components:
           - Anrok
           - Connact
           - Xero
+          - Paddle
           type: string
         integrationEntityType:
           allOf:
@@ -12857,6 +14457,7 @@ components:
     EventsDryRunResponseObject_event:
       example:
         accountId: accountId
+        ackId: ackId
         customerAlias: customerAlias
         ref: ref
         data:
@@ -12881,6 +14482,8 @@ components:
         ref:
           type: string
         name:
+          type: string
+        ackId:
           type: string
       required:
       - accountId
@@ -13282,19 +14885,34 @@ components:
       - group
       - values
       type: object
+    CreditTopUpRequest_creditGrant:
+      allOf:
+      - $ref: '#/components/schemas/ExternalCreditGrant'
+      - description: "The credit grant to bill the customer for — the same shape used\
+          \ for credit grants on a contract (credit product, amount, type and price).\
+          \ Its price is charged on the one-off invoice, and the credits are granted\
+          \ to the customer when that invoice is approved."
+      example:
+        balanceKind: MONETARY
+        schedule: ONE_TIME
+        price: 0.6027456183070403
+        applyAutomatically: true
+        name: name
+        creditProductId: creditProductId
+        externalIntegrations:
+        - provider: Paddle
+          externalId: externalId
+        - provider: Paddle
+          externalId: externalId
+        expirationPolicy: AT_NEXT_GRANT
+        grantAmount: 0.08008281904610115
+        expirationDate: 2000-01-23T04:56:07.000+00:00
     GetCustomerByNameResponse_customer:
       description: The customer matching the provided name
       example:
-        overdueAmount: 1.4658129805029452
         aliases:
         - aliases
         - aliases
-        address:
-          country: country
-          city: city
-          postalCode: postalCode
-          addressText: addressText
-          state: state
         customFields:
         - integrationSource: NetSuite
           valueType: String
@@ -13308,17 +14926,33 @@ components:
           vayuCustomFieldName: vayuCustomFieldName
           value: ""
           integrationEntityType: Account
-        externalId: externalId
+        externalIntegration:
+        - type: Stripe
+          id: cus_123
+          name: Acme Inc
         source: Stripe
-        customerErpId: customerErpId
         taxIds:
         - taxIds
         - taxIds
+        legalName: legalName
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        currency: USD
+        totalOutstandingAmount: 0.8008281904610115
+        id: id
+        pendingPaymentAmount: 5.962133916683182
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        overdueAmount: 1.4658129805029452
+        address:
+          country: country
+          city: city
+          postalCode: postalCode
+          addressText: addressText
+          state: state
+        externalId: externalId
+        customerErpId: customerErpId
         dueDays: END_OF_MONTH
         subsidiary: subsidiary
         openAmount: 6.027456183070403
-        legalName: legalName
-        createdAt: 2000-01-23T04:56:07.000+00:00
         taxId: taxId
         salesForceAccountId: salesForceAccountId
         name: name
@@ -13326,10 +14960,6 @@ components:
           cloudProvider: AWS
           customerIdentifier: customerIdentifier
           cloudProviderMarketplaceId: cloudProviderMarketplaceId
-        currency: USD
-        totalOutstandingAmount: 0.8008281904610115
-        id: id
-        pendingPaymentAmount: 5.962133916683182
         paidAmount: 5.637376656633329
         contacts:
         - receiveInvoiceEmail: true
@@ -13342,7 +14972,6 @@ components:
           name: name
           title: title
           email: email
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         name:
           description: The name of the customer
@@ -13394,6 +15023,19 @@ components:
           description: The ID of the customer in the Salesforce system
           nullable: true
           type: string
+        externalIntegration:
+          description: External integration links for the customer. Each entry links
+            the customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the integration
+            registry.
+          example:
+          - type: Stripe
+            id: cus_123
+            name: Acme Inc
+          items:
+            $ref: '#/components/schemas/CustomerExternalIntegration'
+          nullable: true
+          type: array
         dueDays:
           description: The due days of the customer
           enum:
@@ -13446,6 +15088,27 @@ components:
       - id
       - name
       - updatedAt
+      type: object
+    RefreshContractCreditsRequest_grants_inner:
+      example:
+        newPrice: 0.08008281904610115
+        grantProductId: grantProductId
+      properties:
+        grantProductId:
+          description: The credit product (credit type) id identifying the grant to
+            refresh. Every grant product on the contract for this credit product is
+            set to non-prorated in the new phase.
+          pattern: "^[0-9a-fA-F]{24}$"
+          type: string
+        newPrice:
+          description: "The grant's new price in the refreshed phase. If omitted,\
+            \ the current price is kept. If this credit product matches more than\
+            \ one grant product on the contract, a price cannot be applied unambiguously\
+            \ and the request is rejected."
+          minimum: 0
+          type: number
+      required:
+      - grantProductId
       type: object
     GetProductConsumptionResponse_productConsumption:
       allOf:

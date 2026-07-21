@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
 
 ## ListInvoices
 
-> ListInvoicesResponse ListInvoices(ctx).Limit(limit).Cursor(cursor).CustomerId(customerId).BillingStatus(billingStatus).IssuedAtFrom(issuedAtFrom).IssuedAtTo(issuedAtTo).Execute()
+> ListInvoicesResponse ListInvoices(ctx).Limit(limit).Cursor(cursor).CustomerId(customerId).BillingStatus(billingStatus).IssuedAfter(issuedAfter).IssuedBefore(issuedBefore).Execute()
 
 List invoices
 
@@ -167,7 +167,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-    "time"
 	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
 )
 
@@ -175,13 +174,13 @@ func main() {
 	limit := float32(8.14) // float32 |  (optional) (default to 10)
 	cursor := "cursor_example" // string |  (optional)
 	customerId := "customerId_example" // string |  (optional)
-	billingStatus := "billingStatus_example" // string | Filter invoices by their billing status (optional)
-	issuedAtFrom := time.Now() // time.Time | Only include invoices issued on or after this timestamp (optional)
-	issuedAtTo := time.Now() // time.Time | Only include invoices issued on or before this timestamp (optional)
+	billingStatus := openapiclient.InvoiceBillingStatus("None") // InvoiceBillingStatus |  (optional)
+	issuedAfter := "issuedAfter_example" // string |  (optional)
+	issuedBefore := "issuedBefore_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InvoicesAPI.ListInvoices(context.Background()).Limit(limit).Cursor(cursor).CustomerId(customerId).BillingStatus(billingStatus).IssuedAtFrom(issuedAtFrom).IssuedAtTo(issuedAtTo).Execute()
+	resp, r, err := apiClient.InvoicesAPI.ListInvoices(context.Background()).Limit(limit).Cursor(cursor).CustomerId(customerId).BillingStatus(billingStatus).IssuedAfter(issuedAfter).IssuedBefore(issuedBefore).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InvoicesAPI.ListInvoices``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -205,9 +204,9 @@ Name | Type | Description  | Notes
  **limit** | **float32** |  | [default to 10]
  **cursor** | **string** |  | 
  **customerId** | **string** |  | 
- **billingStatus** | **string** | Filter invoices by their billing status | 
- **issuedAtFrom** | **time.Time** | Only include invoices issued on or after this timestamp | 
- **issuedAtTo** | **time.Time** | Only include invoices issued on or before this timestamp | 
+ **billingStatus** | [**InvoiceBillingStatus**](InvoiceBillingStatus.md) |  | 
+ **issuedAfter** | **string** |  | 
+ **issuedBefore** | **string** |  | 
 
 ### Return type
 

@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **AccountId** | **string** | The id of the account that the invoice is associated with | 
 **LineItems** | [**[]LineItem**](LineItem.md) |  | 
 **Amount** | **float32** | The total amount of the invoice | 
+**IsTrial** | **bool** | Whether the invoice belongs to a trial contract | 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -23,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewGetInvoiceResponseInvoice
 
-`func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, id string, createdAt time.Time, updatedAt time.Time, ) *GetInvoiceResponseInvoice`
+`func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, isTrial bool, id string, createdAt time.Time, updatedAt time.Time, ) *GetInvoiceResponseInvoice`
 
 NewGetInvoiceResponseInvoice instantiates a new GetInvoiceResponseInvoice object
 This constructor will assign default values to properties that have it defined,
@@ -276,6 +277,26 @@ and a boolean to check if the value has been set.
 `func (o *GetInvoiceResponseInvoice) SetAmount(v float32)`
 
 SetAmount sets Amount field to given value.
+
+
+### GetIsTrial
+
+`func (o *GetInvoiceResponseInvoice) GetIsTrial() bool`
+
+GetIsTrial returns the IsTrial field if non-nil, zero value otherwise.
+
+### GetIsTrialOk
+
+`func (o *GetInvoiceResponseInvoice) GetIsTrialOk() (*bool, bool)`
+
+GetIsTrialOk returns a tuple with the IsTrial field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsTrial
+
+`func (o *GetInvoiceResponseInvoice) SetIsTrial(v bool)`
+
+SetIsTrial sets IsTrial field to given value.
 
 
 ### GetId

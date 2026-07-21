@@ -93,6 +93,10 @@ Class | Method | HTTP request | Description
 *ContractsAPI* | [**GetContract**](docs/ContractsAPI.md#getcontract) | **Get** /contracts/{contractId} | Get Contract
 *ContractsAPI* | [**GetContractByIntegrationId**](docs/ContractsAPI.md#getcontractbyintegrationid) | **Get** /contracts/integration/{integrationType}/{integrationId} | Get contract by integration id
 *ContractsAPI* | [**ListContracts**](docs/ContractsAPI.md#listcontracts) | **Get** /contracts | List contracts
+*ContractsAPI* | [**RefreshContractCredits**](docs/ContractsAPI.md#refreshcontractcredits) | **Post** /contracts/{contractId}/credits/refresh | Refresh the credit grants on a contract
+*ContractsAPI* | [**TerminateContract**](docs/ContractsAPI.md#terminatecontract) | **Post** /contracts/{contractId}/terminate | Terminate a contract
+*CreditProductsAPI* | [**ListCreditProducts**](docs/CreditProductsAPI.md#listcreditproducts) | **Get** /credit-products | List credit products
+*CreditsAPI* | [**CreditTopUp**](docs/CreditsAPI.md#credittopup) | **Post** /credits/top-up | Create a one-off invoice to top up a customer with credits
 *CreditsAPI* | [**DeductCredits**](docs/CreditsAPI.md#deductcredits) | **Post** /credits/deduct | Deduct credits from customer credit ledger
 *CreditsAPI* | [**GrantCredits**](docs/CreditsAPI.md#grantcredits) | **Post** /credits/grant | Grant credits to a customer credit ledger
 *CreditsAPI* | [**ListCreditLedgerEntries**](docs/CreditsAPI.md#listcreditledgerentries) | **Get** /credits | Retrieve credit ledger entries for customer.
@@ -146,6 +150,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AcknowledgedEvent](docs/AcknowledgedEvent.md)
  - [Address](docs/Address.md)
  - [AggregationMethod](docs/AggregationMethod.md)
  - [AggregationOperator](docs/AggregationOperator.md)
@@ -175,6 +180,9 @@ Class | Method | HTTP request | Description
  - [CreateMeasurementResponse](docs/CreateMeasurementResponse.md)
  - [CreateMeasurementResponseMeasurement](docs/CreateMeasurementResponseMeasurement.md)
  - [CreditLedgerEntry](docs/CreditLedgerEntry.md)
+ - [CreditTopUpRequest](docs/CreditTopUpRequest.md)
+ - [CreditTopUpRequestCreditGrant](docs/CreditTopUpRequestCreditGrant.md)
+ - [CreditTopUpResponse](docs/CreditTopUpResponse.md)
  - [Criterion](docs/Criterion.md)
  - [CriterionOperator](docs/CriterionOperator.md)
  - [Currency](docs/Currency.md)
@@ -183,6 +191,8 @@ Class | Method | HTTP request | Description
  - [CustomFieldValue](docs/CustomFieldValue.md)
  - [CustomFieldValueTypes](docs/CustomFieldValueTypes.md)
  - [CustomerCloudProviderSettings](docs/CustomerCloudProviderSettings.md)
+ - [CustomerExternalIntegration](docs/CustomerExternalIntegration.md)
+ - [CustomerRelationType](docs/CustomerRelationType.md)
  - [CustomerSource](docs/CustomerSource.md)
  - [DeductCreditsRequest](docs/DeductCreditsRequest.md)
  - [DeleteCatalogProductResponse](docs/DeleteCatalogProductResponse.md)
@@ -210,6 +220,8 @@ Class | Method | HTTP request | Description
  - [EventsDryRunResponseObject](docs/EventsDryRunResponseObject.md)
  - [EventsDryRunResponseObjectEvent](docs/EventsDryRunResponseObjectEvent.md)
  - [EventsDryRunResponseObjectMeterWithValuesInner](docs/EventsDryRunResponseObjectMeterWithValuesInner.md)
+ - [ExternalCreditGrant](docs/ExternalCreditGrant.md)
+ - [ExternalCreditProduct](docs/ExternalCreditProduct.md)
  - [ExternalOverageStrategy](docs/ExternalOverageStrategy.md)
  - [Filter](docs/Filter.md)
  - [FullDayPeriod](docs/FullDayPeriod.md)
@@ -241,7 +253,6 @@ Class | Method | HTTP request | Description
  - [IntegrationEntity](docs/IntegrationEntity.md)
  - [IntegrationEntityTypes](docs/IntegrationEntityTypes.md)
  - [IntegrationProviders](docs/IntegrationProviders.md)
- - [IntegrationType](docs/IntegrationType.md)
  - [InternalServerErrorResponse](docs/InternalServerErrorResponse.md)
  - [InvalidEvent](docs/InvalidEvent.md)
  - [InvoiceBillingStatus](docs/InvoiceBillingStatus.md)
@@ -251,6 +262,7 @@ Class | Method | HTTP request | Description
  - [ListCatalogProductsResponse](docs/ListCatalogProductsResponse.md)
  - [ListContractsResponse](docs/ListContractsResponse.md)
  - [ListCreditLedgerEntriesResponse](docs/ListCreditLedgerEntriesResponse.md)
+ - [ListCreditProductsResponse](docs/ListCreditProductsResponse.md)
  - [ListCustomFieldsResponse](docs/ListCustomFieldsResponse.md)
  - [ListCustomersResponse](docs/ListCustomersResponse.md)
  - [ListInvoicesResponse](docs/ListInvoicesResponse.md)
@@ -271,6 +283,7 @@ Class | Method | HTTP request | Description
  - [PlanStatus](docs/PlanStatus.md)
  - [ProductCloudProviderSettings](docs/ProductCloudProviderSettings.md)
  - [ProductConsumption](docs/ProductConsumption.md)
+ - [ProductExternalIntegration](docs/ProductExternalIntegration.md)
  - [ProductGroup](docs/ProductGroup.md)
  - [ProductGroupCommitment](docs/ProductGroupCommitment.md)
  - [ProductGroupProductsInner](docs/ProductGroupProductsInner.md)
@@ -295,11 +308,16 @@ Class | Method | HTTP request | Description
  - [QueryEventsResponse](docs/QueryEventsResponse.md)
  - [QueryEventsResponseEventsInner](docs/QueryEventsResponseEventsInner.md)
  - [RateLimitErrorResponse](docs/RateLimitErrorResponse.md)
+ - [RefreshContractCreditsRequest](docs/RefreshContractCreditsRequest.md)
+ - [RefreshContractCreditsRequestGrantsInner](docs/RefreshContractCreditsRequestGrantsInner.md)
+ - [RefreshContractCreditsResponse](docs/RefreshContractCreditsResponse.md)
  - [RequestTooLongErrorResponse](docs/RequestTooLongErrorResponse.md)
  - [SendEventsRequest](docs/SendEventsRequest.md)
  - [SendEventsResponse](docs/SendEventsResponse.md)
  - [SubmitCloudUsageRequest](docs/SubmitCloudUsageRequest.md)
  - [SyncStatus](docs/SyncStatus.md)
+ - [TerminateContractRequest](docs/TerminateContractRequest.md)
+ - [TerminateContractResponse](docs/TerminateContractResponse.md)
  - [UnauthorizedErrorResponse](docs/UnauthorizedErrorResponse.md)
  - [UnlimitedDuration](docs/UnlimitedDuration.md)
  - [UpdateCatalogProductRequest](docs/UpdateCatalogProductRequest.md)

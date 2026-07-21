@@ -22,6 +22,7 @@ type ContractStatus string
 // List of ContractStatus
 const (
 	CONTRACTSTATUS_IN_REVIEW ContractStatus = "InReview"
+	CONTRACTSTATUS_SCHEDULED ContractStatus = "Scheduled"
 	CONTRACTSTATUS_ACTIVE ContractStatus = "Active"
 	CONTRACTSTATUS_INACTIVE ContractStatus = "Inactive"
 	CONTRACTSTATUS_EXPIRED ContractStatus = "Expired"
@@ -33,6 +34,7 @@ const (
 // All allowed values of ContractStatus enum
 var AllowedContractStatusEnumValues = []ContractStatus{
 	"InReview",
+	"Scheduled",
 	"Active",
 	"Inactive",
 	"Expired",

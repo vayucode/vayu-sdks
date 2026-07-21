@@ -25,6 +25,7 @@ type CreateCustomerRelationRequest struct {
 	VayuParentCustomerId string `json:"vayuParentCustomerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	// Identifier of the child customer in Vayu.
 	VayuChildCustomerId string `json:"vayuChildCustomerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
+	RelationType CustomerRelationType `json:"relationType"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,10 +35,11 @@ type _CreateCustomerRelationRequest CreateCustomerRelationRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCustomerRelationRequest(vayuParentCustomerId string, vayuChildCustomerId string) *CreateCustomerRelationRequest {
+func NewCreateCustomerRelationRequest(vayuParentCustomerId string, vayuChildCustomerId string, relationType CustomerRelationType) *CreateCustomerRelationRequest {
 	this := CreateCustomerRelationRequest{}
 	this.VayuParentCustomerId = vayuParentCustomerId
 	this.VayuChildCustomerId = vayuChildCustomerId
+	this.RelationType = relationType
 	return &this
 }
 
@@ -46,6 +48,8 @@ func NewCreateCustomerRelationRequest(vayuParentCustomerId string, vayuChildCust
 // but it doesn't guarantee that properties required by API are set
 func NewCreateCustomerRelationRequestWithDefaults() *CreateCustomerRelationRequest {
 	this := CreateCustomerRelationRequest{}
+	var relationType CustomerRelationType = CUSTOMERRELATIONTYPE_ACCUMULATE_USAGE
+	this.RelationType = relationType
 	return &this
 }
 
@@ -97,6 +101,30 @@ func (o *CreateCustomerRelationRequest) SetVayuChildCustomerId(v string) {
 	o.VayuChildCustomerId = v
 }
 
+// GetRelationType returns the RelationType field value
+func (o *CreateCustomerRelationRequest) GetRelationType() CustomerRelationType {
+	if o == nil {
+		var ret CustomerRelationType
+		return ret
+	}
+
+	return o.RelationType
+}
+
+// GetRelationTypeOk returns a tuple with the RelationType field value
+// and a boolean to check if the value has been set.
+func (o *CreateCustomerRelationRequest) GetRelationTypeOk() (*CustomerRelationType, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RelationType, true
+}
+
+// SetRelationType sets field value
+func (o *CreateCustomerRelationRequest) SetRelationType(v CustomerRelationType) {
+	o.RelationType = v
+}
+
 func (o CreateCustomerRelationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -109,6 +137,7 @@ func (o CreateCustomerRelationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["vayuParentCustomerId"] = o.VayuParentCustomerId
 	toSerialize["vayuChildCustomerId"] = o.VayuChildCustomerId
+	toSerialize["relationType"] = o.RelationType
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -124,6 +153,7 @@ func (o *CreateCustomerRelationRequest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"vayuParentCustomerId",
 		"vayuChildCustomerId",
+		"relationType",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -155,6 +185,7 @@ func (o *CreateCustomerRelationRequest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "vayuParentCustomerId")
 		delete(additionalProperties, "vayuChildCustomerId")
+		delete(additionalProperties, "relationType")
 		o.AdditionalProperties = additionalProperties
 	}
 

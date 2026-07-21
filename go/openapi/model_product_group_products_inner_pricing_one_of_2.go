@@ -25,6 +25,8 @@ type ProductGroupProductsInnerPricingOneOf2 struct {
 	Price float32 `json:"price"`
 	SubscriptionCadence ProductGroupProductsInnerPricingOneOf2SubscriptionCadence `json:"subscriptionCadence"`
 	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
+	// When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.
+	IssuedSeparately *bool `json:"issuedSeparately,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -164,6 +166,38 @@ func (o *ProductGroupProductsInnerPricingOneOf2) UnsetDiscount() {
 	o.Discount.Unset()
 }
 
+// GetIssuedSeparately returns the IssuedSeparately field value if set, zero value otherwise.
+func (o *ProductGroupProductsInnerPricingOneOf2) GetIssuedSeparately() bool {
+	if o == nil || IsNil(o.IssuedSeparately) {
+		var ret bool
+		return ret
+	}
+	return *o.IssuedSeparately
+}
+
+// GetIssuedSeparatelyOk returns a tuple with the IssuedSeparately field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductGroupProductsInnerPricingOneOf2) GetIssuedSeparatelyOk() (*bool, bool) {
+	if o == nil || IsNil(o.IssuedSeparately) {
+		return nil, false
+	}
+	return o.IssuedSeparately, true
+}
+
+// HasIssuedSeparately returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf2) HasIssuedSeparately() bool {
+	if o != nil && !IsNil(o.IssuedSeparately) {
+		return true
+	}
+
+	return false
+}
+
+// SetIssuedSeparately gets a reference to the given bool and assigns it to the IssuedSeparately field.
+func (o *ProductGroupProductsInnerPricingOneOf2) SetIssuedSeparately(v bool) {
+	o.IssuedSeparately = &v
+}
+
 func (o ProductGroupProductsInnerPricingOneOf2) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -179,6 +213,9 @@ func (o ProductGroupProductsInnerPricingOneOf2) ToMap() (map[string]interface{},
 	toSerialize["subscriptionCadence"] = o.SubscriptionCadence
 	if o.Discount.IsSet() {
 		toSerialize["discount"] = o.Discount.Get()
+	}
+	if !IsNil(o.IssuedSeparately) {
+		toSerialize["issuedSeparately"] = o.IssuedSeparately
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -229,6 +266,7 @@ func (o *ProductGroupProductsInnerPricingOneOf2) UnmarshalJSON(data []byte) (err
 		delete(additionalProperties, "price")
 		delete(additionalProperties, "subscriptionCadence")
 		delete(additionalProperties, "discount")
+		delete(additionalProperties, "issuedSeparately")
 		o.AdditionalProperties = additionalProperties
 	}
 

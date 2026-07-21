@@ -12,10 +12,12 @@ Name | Type | Description | Notes
 **ProductErpId** | Pointer to **NullableString** | The id of the product in NetSuite ERP | [optional] 
 **NsClass** | Pointer to **NullableString** | The class of the product in NetSuite ERP | [optional] 
 **NsClassId** | Pointer to **NullableString** | The id of the class of the product in NetSuite ERP | [optional] 
+**ExternalIntegrations** | Pointer to [**[]ProductExternalIntegration**](ProductExternalIntegration.md) | Links the product to matching products in V3 integrations (e.g. Paddle). For each entry, the product is linked to that external integration after the contract is created, so invoices for this product are exported to it. At most one entry per provider. Currently only Paddle is supported. | [optional] 
 **Commitment** | Pointer to [**NullableProductGroupProductsInnerCommitment**](ProductGroupProductsInnerCommitment.md) |  | [optional] 
 **PaymentTerm** | Pointer to [**NullablePaymentTerm**](PaymentTerm.md) |  | [optional] 
 **IsCalendarAligned** | Pointer to **bool** | Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned. This field is ignored if the product is part of a ProductGroup. | [optional] 
 **CloudProviderSettings** | Pointer to [**NullableProductCloudProviderSettings**](ProductCloudProviderSettings.md) |  | [optional] 
+**ConsumesCreditProductIds** | Pointer to **[]string** | IDs of credit products whose pools are drawn down when this usage product is invoiced. Each ID matches the creditProductId of a credit grant on the same contract that funds the pool. Pools are drawn in the order listed. If omitted, no credits are applied and the product is billed at full price. Not supported inside productGroups. | [optional] 
 
 ## Methods
 
@@ -271,6 +273,41 @@ HasNsClassId returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInner) UnsetNsClassId()`
 
 UnsetNsClassId ensures that no value is present for NsClassId, not even an explicit nil
+### GetExternalIntegrations
+
+`func (o *ProductGroupProductsInner) GetExternalIntegrations() []ProductExternalIntegration`
+
+GetExternalIntegrations returns the ExternalIntegrations field if non-nil, zero value otherwise.
+
+### GetExternalIntegrationsOk
+
+`func (o *ProductGroupProductsInner) GetExternalIntegrationsOk() (*[]ProductExternalIntegration, bool)`
+
+GetExternalIntegrationsOk returns a tuple with the ExternalIntegrations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalIntegrations
+
+`func (o *ProductGroupProductsInner) SetExternalIntegrations(v []ProductExternalIntegration)`
+
+SetExternalIntegrations sets ExternalIntegrations field to given value.
+
+### HasExternalIntegrations
+
+`func (o *ProductGroupProductsInner) HasExternalIntegrations() bool`
+
+HasExternalIntegrations returns a boolean if a field has been set.
+
+### SetExternalIntegrationsNil
+
+`func (o *ProductGroupProductsInner) SetExternalIntegrationsNil(b bool)`
+
+ SetExternalIntegrationsNil sets the value for ExternalIntegrations to be an explicit nil
+
+### UnsetExternalIntegrations
+`func (o *ProductGroupProductsInner) UnsetExternalIntegrations()`
+
+UnsetExternalIntegrations ensures that no value is present for ExternalIntegrations, not even an explicit nil
 ### GetCommitment
 
 `func (o *ProductGroupProductsInner) GetCommitment() ProductGroupProductsInnerCommitment`
@@ -401,6 +438,41 @@ HasCloudProviderSettings returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInner) UnsetCloudProviderSettings()`
 
 UnsetCloudProviderSettings ensures that no value is present for CloudProviderSettings, not even an explicit nil
+### GetConsumesCreditProductIds
+
+`func (o *ProductGroupProductsInner) GetConsumesCreditProductIds() []string`
+
+GetConsumesCreditProductIds returns the ConsumesCreditProductIds field if non-nil, zero value otherwise.
+
+### GetConsumesCreditProductIdsOk
+
+`func (o *ProductGroupProductsInner) GetConsumesCreditProductIdsOk() (*[]string, bool)`
+
+GetConsumesCreditProductIdsOk returns a tuple with the ConsumesCreditProductIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConsumesCreditProductIds
+
+`func (o *ProductGroupProductsInner) SetConsumesCreditProductIds(v []string)`
+
+SetConsumesCreditProductIds sets ConsumesCreditProductIds field to given value.
+
+### HasConsumesCreditProductIds
+
+`func (o *ProductGroupProductsInner) HasConsumesCreditProductIds() bool`
+
+HasConsumesCreditProductIds returns a boolean if a field has been set.
+
+### SetConsumesCreditProductIdsNil
+
+`func (o *ProductGroupProductsInner) SetConsumesCreditProductIdsNil(b bool)`
+
+ SetConsumesCreditProductIdsNil sets the value for ConsumesCreditProductIds to be an explicit nil
+
+### UnsetConsumesCreditProductIds
+`func (o *ProductGroupProductsInner) UnsetConsumesCreditProductIds()`
+
+UnsetConsumesCreditProductIds ensures that no value is present for ConsumesCreditProductIds, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

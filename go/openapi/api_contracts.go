@@ -494,7 +494,7 @@ func (a *ContractsAPIService) GetContractExecute(r ApiGetContractRequest) (*GetC
 type ApiGetContractByIntegrationIdRequest struct {
 	ctx context.Context
 	ApiService *ContractsAPIService
-	integrationType IntegrationType
+	integrationType IntegrationProviders
 	integrationId string
 }
 
@@ -512,7 +512,7 @@ Use this endpoint to get a specific contract using its integration provider and 
  @param integrationId
  @return ApiGetContractByIntegrationIdRequest
 */
-func (a *ContractsAPIService) GetContractByIntegrationId(ctx context.Context, integrationType IntegrationType, integrationId string) ApiGetContractByIntegrationIdRequest {
+func (a *ContractsAPIService) GetContractByIntegrationId(ctx context.Context, integrationType IntegrationProviders, integrationId string) ApiGetContractByIntegrationIdRequest {
 	return ApiGetContractByIntegrationIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -658,6 +658,7 @@ type ApiListContractsRequest struct {
 	limit *float32
 	cursor *string
 	customerId *string
+	customerExternalId *string
 }
 
 func (r ApiListContractsRequest) Limit(limit float32) ApiListContractsRequest {
@@ -675,6 +676,11 @@ func (r ApiListContractsRequest) CustomerId(customerId string) ApiListContractsR
 	return r
 }
 
+func (r ApiListContractsRequest) CustomerExternalId(customerExternalId string) ApiListContractsRequest {
+	r.customerExternalId = &customerExternalId
+	return r
+}
+
 func (r ApiListContractsRequest) Execute() (*ListContractsResponse, *http.Response, error) {
 	return r.ApiService.ListContractsExecute(r)
 }
@@ -682,7 +688,7 @@ func (r ApiListContractsRequest) Execute() (*ListContractsResponse, *http.Respon
 /*
 ListContracts List contracts
 
-List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListContractsRequest
@@ -727,6 +733,9 @@ func (a *ContractsAPIService) ListContractsExecute(r ApiListContractsRequest) (*
 	if r.customerId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "customerId", r.customerId, "form", "")
 	}
+	if r.customerExternalId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customerExternalId", r.customerExternalId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -744,6 +753,332 @@ func (a *ContractsAPIService) ListContractsExecute(r ApiListContractsRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ValidationErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v UnauthorizedErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v InternalServerErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRefreshContractCreditsRequest struct {
+	ctx context.Context
+	ApiService *ContractsAPIService
+	refreshContractCreditsRequest *RefreshContractCreditsRequest
+	contractId string
+}
+
+func (r ApiRefreshContractCreditsRequest) RefreshContractCreditsRequest(refreshContractCreditsRequest RefreshContractCreditsRequest) ApiRefreshContractCreditsRequest {
+	r.refreshContractCreditsRequest = &refreshContractCreditsRequest
+	return r
+}
+
+func (r ApiRefreshContractCreditsRequest) Execute() (*RefreshContractCreditsResponse, *http.Response, error) {
+	return r.ApiService.RefreshContractCreditsExecute(r)
+}
+
+/*
+RefreshContractCredits Refresh the credit grants on a contract
+
+Use this endpoint to refresh the credit grants on a contract by creating a new contract phase
+    (a contract revision) that takes effect immediately.
+
+    Provide a list of credit grants to refresh in the request body — each is identified by its credit product
+    (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit
+    grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are
+    refreshed (set to non-prorated).
+
+    If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,
+    the request is rejected because the price cannot be applied unambiguously.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param contractId
+ @return ApiRefreshContractCreditsRequest
+*/
+func (a *ContractsAPIService) RefreshContractCredits(ctx context.Context, contractId string) ApiRefreshContractCreditsRequest {
+	return ApiRefreshContractCreditsRequest{
+		ApiService: a,
+		ctx: ctx,
+		contractId: contractId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshContractCreditsResponse
+func (a *ContractsAPIService) RefreshContractCreditsExecute(r ApiRefreshContractCreditsRequest) (*RefreshContractCreditsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshContractCreditsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ContractsAPIService.RefreshContractCredits")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/contracts/{contractId}/credits/refresh"
+	localVarPath = strings.Replace(localVarPath, "{"+"contractId"+"}", url.PathEscape(parameterValueToString(r.contractId, "contractId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.refreshContractCreditsRequest == nil {
+		return localVarReturnValue, nil, reportError("refreshContractCreditsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshContractCreditsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ValidationErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v UnauthorizedErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v InternalServerErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTerminateContractRequest struct {
+	ctx context.Context
+	ApiService *ContractsAPIService
+	terminateContractRequest *TerminateContractRequest
+	contractId string
+}
+
+func (r ApiTerminateContractRequest) TerminateContractRequest(terminateContractRequest TerminateContractRequest) ApiTerminateContractRequest {
+	r.terminateContractRequest = &terminateContractRequest
+	return r
+}
+
+func (r ApiTerminateContractRequest) Execute() (*TerminateContractResponse, *http.Response, error) {
+	return r.ApiService.TerminateContractExecute(r)
+}
+
+/*
+TerminateContract Terminate a contract
+
+Use this endpoint to terminate a contract.
+    Provide a terminationDate in the request body to schedule the termination for a specific date,
+    or omit it to terminate the contract immediately.
+    The contract's status is set to PendingTermination and its end date is updated accordingly.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param contractId
+ @return ApiTerminateContractRequest
+*/
+func (a *ContractsAPIService) TerminateContract(ctx context.Context, contractId string) ApiTerminateContractRequest {
+	return ApiTerminateContractRequest{
+		ApiService: a,
+		ctx: ctx,
+		contractId: contractId,
+	}
+}
+
+// Execute executes the request
+//  @return TerminateContractResponse
+func (a *ContractsAPIService) TerminateContractExecute(r ApiTerminateContractRequest) (*TerminateContractResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TerminateContractResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ContractsAPIService.TerminateContract")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/contracts/{contractId}/terminate"
+	localVarPath = strings.Replace(localVarPath, "{"+"contractId"+"}", url.PathEscape(parameterValueToString(r.contractId, "contractId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.terminateContractRequest == nil {
+		return localVarReturnValue, nil, reportError("terminateContractRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.terminateContractRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

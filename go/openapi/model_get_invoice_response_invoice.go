@@ -39,6 +39,8 @@ type GetInvoiceResponseInvoice struct {
 	LineItems []LineItem `json:"lineItems"`
 	// The total amount of the invoice
 	Amount float32 `json:"amount"`
+	// Whether the invoice belongs to a trial contract
+	IsTrial bool `json:"isTrial"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -51,7 +53,7 @@ type _GetInvoiceResponseInvoice GetInvoiceResponseInvoice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
+func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, isTrial bool, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
 	this := GetInvoiceResponseInvoice{}
 	this.CustomerId = customerId
 	this.Name = name
@@ -62,6 +64,7 @@ func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle F
 	this.AccountId = accountId
 	this.LineItems = lineItems
 	this.Amount = amount
+	this.IsTrial = isTrial
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -358,6 +361,30 @@ func (o *GetInvoiceResponseInvoice) SetAmount(v float32) {
 	o.Amount = v
 }
 
+// GetIsTrial returns the IsTrial field value
+func (o *GetInvoiceResponseInvoice) GetIsTrial() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsTrial
+}
+
+// GetIsTrialOk returns a tuple with the IsTrial field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetIsTrialOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsTrial, true
+}
+
+// SetIsTrial sets field value
+func (o *GetInvoiceResponseInvoice) SetIsTrial(v bool) {
+	o.IsTrial = v
+}
+
 // GetId returns the Id field value
 func (o *GetInvoiceResponseInvoice) GetId() string {
 	if o == nil {
@@ -455,6 +482,7 @@ func (o GetInvoiceResponseInvoice) ToMap() (map[string]interface{}, error) {
 	toSerialize["accountId"] = o.AccountId
 	toSerialize["lineItems"] = o.LineItems
 	toSerialize["amount"] = o.Amount
+	toSerialize["isTrial"] = o.IsTrial
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -480,6 +508,7 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 		"accountId",
 		"lineItems",
 		"amount",
+		"isTrial",
 		"id",
 		"createdAt",
 		"updatedAt",
@@ -523,6 +552,7 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "accountId")
 		delete(additionalProperties, "lineItems")
 		delete(additionalProperties, "amount")
+		delete(additionalProperties, "isTrial")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

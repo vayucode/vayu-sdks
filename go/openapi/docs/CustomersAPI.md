@@ -106,7 +106,7 @@ import (
 )
 
 func main() {
-	createCustomerRelationRequest := *openapiclient.NewCreateCustomerRelationRequest("VayuParentCustomerId_example", "VayuChildCustomerId_example") // CreateCustomerRelationRequest | 
+	createCustomerRelationRequest := *openapiclient.NewCreateCustomerRelationRequest("VayuParentCustomerId_example", "VayuChildCustomerId_example", openapiclient.CustomerRelationType("accumulateUsage")) // CreateCustomerRelationRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -382,7 +382,7 @@ import (
 )
 
 func main() {
-	integrationType := openapiclient.IntegrationType("Hubspot") // IntegrationType | 
+	integrationType := openapiclient.IntegrationProviders("Hubspot") // IntegrationProviders | 
 	integrationId := "integrationId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -403,7 +403,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**integrationType** | [**IntegrationType**](.md) |  | 
+**integrationType** | [**IntegrationProviders**](.md) |  | 
 **integrationId** | **string** |  | 
 
 ### Other Parameters

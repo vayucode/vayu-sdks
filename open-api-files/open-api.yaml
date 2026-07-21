@@ -178,6 +178,12 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/DeductCreditsRequest"
+    CreditTopUpRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreditTopUpRequest"
     WebhookSubscribeRequest:
       required: true
       description: Subscribe to webhooks and receive event notifications.
@@ -185,6 +191,18 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/WebhookSubscribeRequest"
+    TerminateContractRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TerminateContractRequest"
+    RefreshContractCreditsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshContractCreditsRequest"
     SubmitCloudUsageRequest:
       required: true
       content:
@@ -476,6 +494,18 @@ components:
             $ref: "#/components/schemas/ListCreditLedgerEntriesResponse"
     RequestSuccess:
       description: RequestSuccess
+    CreditTopUpResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreditTopUpResponse"
+    ListCreditProductsResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListCreditProductsResponse"
     GetCustomerByNameResponse:
       description: response contains the customer matching the provided name
       content:
@@ -512,6 +542,18 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ListContractsResponse"
+    TerminateContractResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TerminateContractResponse"
+    RefreshContractCreditsResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshContractCreditsResponse"
     InvoicePaymentStatusResponse:
       description: Invoice payment status information including payment status,
         amounts, and dates.
@@ -903,6 +945,7 @@ components:
         - Api
         - Salesforce
         - HubSpot
+        - ContractExtraction
       description: The source of the customer
     CustomerCloudProviderSettings:
       type: object
@@ -937,6 +980,30 @@ components:
           type: string
           nullable: true
       description: The address of the customer
+    CustomerExternalIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - NetSuite
+            - QuickBooks
+            - Morning
+            - Hubspot
+            - Anrok
+            - Snowflake
+            - Connact
+            - Xero
+            - Salesforce
+            - Paddle
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - type
+        - id
+        - name
     Currency:
       type: string
       nullable: true
@@ -949,6 +1016,9 @@ components:
         - AUD
         - COP
         - BRL
+        - ARS
+        - INR
+        - MXN
       description: The billing currency of the customer
     IntegrationEntityTypes:
       type: string
@@ -988,6 +1058,7 @@ components:
             - Anrok
             - Connact
             - Xero
+            - Paddle
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           $ref: "#/components/schemas/IntegrationEntityTypes"
@@ -1058,6 +1129,19 @@ components:
           type: string
           nullable: true
           description: The ID of the customer in the Salesforce system
+        externalIntegration:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/CustomerExternalIntegration"
+          description: External integration links for the customer. Each entry links the
+            customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the
+            integration registry.
+          example:
+            - type: Stripe
+              id: cus_123
+              name: Acme Inc
         dueDays:
           type: string
           nullable: true
@@ -1155,6 +1239,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -1267,6 +1364,19 @@ components:
                 type: string
                 nullable: true
                 description: The ID of the customer in the Salesforce system
+              externalIntegration:
+                type: array
+                nullable: true
+                items:
+                  $ref: "#/components/schemas/CustomerExternalIntegration"
+                description: External integration links for the customer. Each entry links the
+                  customer to an external provider entity by its id. Stripe
+                  entries are saved on the customer; other providers are linked
+                  via the integration registry.
+                example:
+                  - type: Stripe
+                    id: cus_123
+                    name: Acme Inc
               dueDays:
                 type: string
                 nullable: true
@@ -1385,6 +1495,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -1492,6 +1615,19 @@ components:
           type: string
           nullable: true
           description: The ID of the customer in the Salesforce system
+        externalIntegration:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/CustomerExternalIntegration"
+          description: External integration links for the customer. Each entry links the
+            customer to an external provider entity by its id. Stripe entries
+            are saved on the customer; other providers are linked via the
+            integration registry.
+          example:
+            - type: Stripe
+              id: cus_123
+              name: Acme Inc
         dueDays:
           type: string
           nullable: true
@@ -1588,6 +1724,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -1698,6 +1847,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -2012,6 +2174,25 @@ components:
       type: integer
       nullable: true
       description: "Usage reset is represented in months and must be one of: 1, 2, 3, 6, 12"
+    ProductExternalIntegration:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+            - Paddle
+          description: The V3 integration provider to link the product to. Currently only
+            Paddle is supported.
+        externalId:
+          type: string
+          description: The id of the matching product in the external integration (e.g.
+            the Paddle product id). The product must already exist in the
+            connected integration; it is fetched and linked when the contract is
+            created so that invoices for this product are exported to that
+            integration.
+      required:
+        - provider
+        - externalId
     ExternalOverageStrategy:
       type: string
       nullable: true
@@ -2044,6 +2225,96 @@ components:
         dimension:
           type: string
       description: Cloud provider settings for the product
+    ExternalCreditGrant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the credit grant. Used as the invoice line-item label when
+            the grant is charged.
+        creditProductId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: ID of the credit product whose pool this grant funds. A usage
+            product debits the same pool by listing this ID in
+            consumesCreditProductIds. Discover IDs via GET /credit-products.
+        balanceKind:
+          type: string
+          enum:
+            - MONETARY
+            - UNIT
+          description: "What grantAmount represents: a monetary value in the contract
+            currency (MONETARY) or a quantity of units (UNIT)."
+        grantAmount:
+          type: number
+          minimum: 0
+          description: Amount granted into the pool per grant period — a currency amount
+            when balanceKind is MONETARY (e.g. 500 = $500), or a unit quantity
+            when balanceKind is UNIT.
+        price:
+          type: number
+          nullable: true
+          minimum: 0
+          description: "Amount charged to the customer for this grant, in the contract
+            currency. Required when balanceKind is UNIT (a unit quantity has no
+            currency value of its own) — e.g. grant 1000 units for a price of 20
+            ($20). Optional when balanceKind is MONETARY: if omitted, the grant
+            is sold at face value (price equals grantAmount)."
+        schedule:
+          type: string
+          enum:
+            - ONE_TIME
+            - RECURRING_MONTHLY
+            - RECURRING_QUARTERLY
+            - RECURRING_YEARLY
+          description: "How often the grant is applied: ONE_TIME grants once at contract
+            start; RECURRING_MONTHLY, RECURRING_QUARTERLY and RECURRING_YEARLY
+            re-grant each corresponding period."
+        expirationDate:
+          type: string
+          nullable: true
+          description: Explicit date after which unused granted credits expire. Only
+            supported on ONE_TIME grants. For policy-based expiry on recurring
+            grants, use expirationPolicy instead.
+          format: date-time
+        expirationPolicy:
+          type: string
+          enum:
+            - AT_NEXT_GRANT
+            - NEVER
+            - END_OF_INVOICE
+            - END_OF_RENEWAL_PERIOD
+            - END_OF_CONTRACT
+          description: "Controls when unused credits from a grant period expire.
+            AT_NEXT_GRANT: credits expire at the end of each billing period
+            (default for recurring). NEVER: credits never expire (default for
+            ONE_TIME). END_OF_INVOICE: credits expire at the end of the invoice
+            period. END_OF_RENEWAL_PERIOD: credits expire at the end of the
+            contract renewal period. END_OF_CONTRACT: credits expire when the
+            contract ends. AT_NEXT_GRANT and END_OF_INVOICE are not available
+            for ONE_TIME grants."
+        applyAutomatically:
+          type: boolean
+          description: Whether granted credits are applied to usage automatically.
+            Defaults to true.
+        externalIntegrations:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ProductExternalIntegration"
+          description: Links the subscription created for a recurring credit grant to
+            matching products in V3 integrations (e.g. Paddle). The grant's
+            inferred product is linked to each external integration after the
+            contract is created, so invoices for the grant are exported to it.
+            At most one entry per provider. Applies only to credit grants on a
+            contract — ignored on credit top-ups. Currently only Paddle is
+            supported.
+      required:
+        - name
+        - creditProductId
+        - balanceKind
+        - grantAmount
+        - schedule
     ProductGroup:
       type: object
       properties:
@@ -2152,9 +2423,17 @@ components:
                         description: An optional discount to apply to this product
                       isCreditPurchase:
                         type: boolean
-                        description: Whether this one-time fee is a credit purchase. When true, the
-                          product is treated as a prepaid credit that the
-                          customer can use later. Defaults to false.
+                        description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                          product type and prepayment, but does NOT fund a
+                          credit pool. For the credit pool system, use the
+                          contract-level creditGrants field instead. Defaults to
+                          false."
+                        deprecated: true
+                      issuedSeparately:
+                        type: boolean
+                        description: When true, this product is billed on its own invoice instead of
+                          being combined with other products in the same
+                          contract. Defaults to false.
                     required:
                       - type
                       - price
@@ -2272,6 +2551,11 @@ components:
                           - type
                           - amount
                         description: An optional discount to apply to this product
+                      issuedSeparately:
+                        type: boolean
+                        description: When true, this product is billed on its own invoice instead of
+                          being combined with other products in the same
+                          contract. Defaults to false.
                     required:
                       - type
                       - price
@@ -2420,6 +2704,16 @@ components:
                 type: string
                 nullable: true
                 description: The id of the class of the product in NetSuite ERP
+              externalIntegrations:
+                type: array
+                nullable: true
+                items:
+                  $ref: "#/components/schemas/ProductExternalIntegration"
+                description: Links the product to matching products in V3 integrations (e.g.
+                  Paddle). For each entry, the product is linked to that
+                  external integration after the contract is created, so
+                  invoices for this product are exported to it. At most one
+                  entry per provider. Currently only Paddle is supported.
               commitment:
                 type: object
                 nullable: true
@@ -2492,6 +2786,18 @@ components:
                   ProductGroup.
               cloudProviderSettings:
                 $ref: "#/components/schemas/ProductCloudProviderSettings"
+              consumesCreditProductIds:
+                type: array
+                nullable: true
+                items:
+                  type: string
+                  pattern: ^[0-9a-fA-F]{24}$
+                description: IDs of credit products whose pools are drawn down when this usage
+                  product is invoiced. Each ID matches the creditProductId of a
+                  credit grant on the same contract that funds the pool. Pools
+                  are drawn in the order listed. If omitted, no credits are
+                  applied and the product is billed at full price. Not supported
+                  inside productGroups.
             required:
               - displayName
               - scheduling
@@ -2587,6 +2893,7 @@ components:
       type: string
       enum:
         - InReview
+        - Scheduled
         - Active
         - Inactive
         - Expired
@@ -2608,9 +2915,15 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of an existing plan to attach to this contract. When
+                provided, products/productGroups are ignored and the plan is
+                used as-is. Mutually exclusive with inline product definition.
             name:
               type: string
-              description: The name of the contract
+              description: The name of the contract. Required when planId is not provided.
             salesForceOpportunityId:
               type: string
               nullable: true
@@ -2712,9 +3025,17 @@ components:
                             description: An optional discount to apply to this product
                           isCreditPurchase:
                             type: boolean
-                            description: Whether this one-time fee is a credit purchase. When true, the
-                              product is treated as a prepaid credit that the
-                              customer can use later. Defaults to false.
+                            description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                              product type and prepayment, but does NOT fund a
+                              credit pool. For the credit pool system, use the
+                              contract-level creditGrants field instead.
+                              Defaults to false."
+                            deprecated: true
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -2832,6 +3153,11 @@ components:
                               - type
                               - amount
                             description: An optional discount to apply to this product
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -2980,6 +3306,16 @@ components:
                     type: string
                     nullable: true
                     description: The id of the class of the product in NetSuite ERP
+                  externalIntegrations:
+                    type: array
+                    nullable: true
+                    items:
+                      $ref: "#/components/schemas/ProductExternalIntegration"
+                    description: Links the product to matching products in V3 integrations (e.g.
+                      Paddle). For each entry, the product is linked to that
+                      external integration after the contract is created, so
+                      invoices for this product are exported to it. At most one
+                      entry per provider. Currently only Paddle is supported.
                   commitment:
                     type: object
                     nullable: true
@@ -3052,11 +3388,32 @@ components:
                       ProductGroup.
                   cloudProviderSettings:
                     $ref: "#/components/schemas/ProductCloudProviderSettings"
+                  consumesCreditProductIds:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      pattern: ^[0-9a-fA-F]{24}$
+                    description: IDs of credit products whose pools are drawn down when this usage
+                      product is invoiced. Each ID matches the creditProductId
+                      of a credit grant on the same contract that funds the
+                      pool. Pools are drawn in the order listed. If omitted, no
+                      credits are applied and the product is billed at full
+                      price. Not supported inside productGroups.
                 required:
                   - displayName
                   - scheduling
                   - pricing
               description: The products that the contract is associated with
+            creditGrants:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/ExternalCreditGrant"
+              description: Credit grants that fund credit pools for the customer under this
+                contract. Each grant credits a pool identified by its
+                creditProductId; usage products draw down those pools via
+                consumesCreditProductIds.
             productGroups:
               type: array
               items:
@@ -3100,6 +3457,17 @@ components:
                 - description: The currency of the contract. Overrides the customer-level currency
                     for all invoices under this contract. If not provided, the
                     customer currency or account default (USD) is used.
+            isTrial:
+              type: boolean
+              description: "Whether the contract is a trial. All invoices under a trial
+                contract are flagged with isTrial: true. If not provided, it
+                defaults to false."
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the contract. Once set, the contract
+                can be fetched or deleted by passing this value in place of the
+                Vayu id on the /contracts/{contractId} endpoints.
             id:
               type: string
             createdAt:
@@ -3111,7 +3479,6 @@ components:
           required:
             - startDate
             - customerId
-            - name
             - id
             - createdAt
             - updatedAt
@@ -3131,9 +3498,15 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of an existing plan to attach to this contract. When
+                provided, products/productGroups are ignored and the plan is
+                used as-is. Mutually exclusive with inline product definition.
             name:
               type: string
-              description: The name of the contract
+              description: The name of the contract. Required when planId is not provided.
             salesForceOpportunityId:
               type: string
               nullable: true
@@ -3235,9 +3608,17 @@ components:
                             description: An optional discount to apply to this product
                           isCreditPurchase:
                             type: boolean
-                            description: Whether this one-time fee is a credit purchase. When true, the
-                              product is treated as a prepaid credit that the
-                              customer can use later. Defaults to false.
+                            description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                              product type and prepayment, but does NOT fund a
+                              credit pool. For the credit pool system, use the
+                              contract-level creditGrants field instead.
+                              Defaults to false."
+                            deprecated: true
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -3355,6 +3736,11 @@ components:
                               - type
                               - amount
                             description: An optional discount to apply to this product
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -3503,6 +3889,16 @@ components:
                     type: string
                     nullable: true
                     description: The id of the class of the product in NetSuite ERP
+                  externalIntegrations:
+                    type: array
+                    nullable: true
+                    items:
+                      $ref: "#/components/schemas/ProductExternalIntegration"
+                    description: Links the product to matching products in V3 integrations (e.g.
+                      Paddle). For each entry, the product is linked to that
+                      external integration after the contract is created, so
+                      invoices for this product are exported to it. At most one
+                      entry per provider. Currently only Paddle is supported.
                   commitment:
                     type: object
                     nullable: true
@@ -3575,11 +3971,32 @@ components:
                       ProductGroup.
                   cloudProviderSettings:
                     $ref: "#/components/schemas/ProductCloudProviderSettings"
+                  consumesCreditProductIds:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      pattern: ^[0-9a-fA-F]{24}$
+                    description: IDs of credit products whose pools are drawn down when this usage
+                      product is invoiced. Each ID matches the creditProductId
+                      of a credit grant on the same contract that funds the
+                      pool. Pools are drawn in the order listed. If omitted, no
+                      credits are applied and the product is billed at full
+                      price. Not supported inside productGroups.
                 required:
                   - displayName
                   - scheduling
                   - pricing
               description: The products that the contract is associated with
+            creditGrants:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/ExternalCreditGrant"
+              description: Credit grants that fund credit pools for the customer under this
+                contract. Each grant credits a pool identified by its
+                creditProductId; usage products draw down those pools via
+                consumesCreditProductIds.
             productGroups:
               type: array
               items:
@@ -3623,6 +4040,17 @@ components:
                 - description: The currency of the contract. Overrides the customer-level currency
                     for all invoices under this contract. If not provided, the
                     customer currency or account default (USD) is used.
+            isTrial:
+              type: boolean
+              description: "Whether the contract is a trial. All invoices under a trial
+                contract are flagged with isTrial: true. If not provided, it
+                defaults to false."
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the contract. Once set, the contract
+                can be fetched or deleted by passing this value in place of the
+                Vayu id on the /contracts/{contractId} endpoints.
             id:
               type: string
             createdAt:
@@ -3636,7 +4064,6 @@ components:
           required:
             - startDate
             - customerId
-            - name
             - id
             - createdAt
             - updatedAt
@@ -3654,18 +4081,15 @@ components:
           type: string
           pattern: ^[0-9a-fA-F]{24}$
           description: The id of the customer that the contract is associated with
-        name:
-          type: string
-          description: The name of the contract
         planId:
           type: string
           pattern: ^[0-9a-fA-F]{24}$
-          description: The id of the plan template to create the contract from. When
-            provided, the contract's products are derived from the plan template.
-        externalId:
+          description: The id of an existing plan to attach to this contract. When
+            provided, products/productGroups are ignored and the plan is used
+            as-is. Mutually exclusive with inline product definition.
+        name:
           type: string
-          nullable: true
-          description: An external identifier for the contract
+          description: The name of the contract. Required when planId is not provided.
         salesForceOpportunityId:
           type: string
           nullable: true
@@ -3767,9 +4191,17 @@ components:
                         description: An optional discount to apply to this product
                       isCreditPurchase:
                         type: boolean
-                        description: Whether this one-time fee is a credit purchase. When true, the
-                          product is treated as a prepaid credit that the
-                          customer can use later. Defaults to false.
+                        description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                          product type and prepayment, but does NOT fund a
+                          credit pool. For the credit pool system, use the
+                          contract-level creditGrants field instead. Defaults to
+                          false."
+                        deprecated: true
+                      issuedSeparately:
+                        type: boolean
+                        description: When true, this product is billed on its own invoice instead of
+                          being combined with other products in the same
+                          contract. Defaults to false.
                     required:
                       - type
                       - price
@@ -3887,6 +4319,11 @@ components:
                           - type
                           - amount
                         description: An optional discount to apply to this product
+                      issuedSeparately:
+                        type: boolean
+                        description: When true, this product is billed on its own invoice instead of
+                          being combined with other products in the same
+                          contract. Defaults to false.
                     required:
                       - type
                       - price
@@ -4035,6 +4472,16 @@ components:
                 type: string
                 nullable: true
                 description: The id of the class of the product in NetSuite ERP
+              externalIntegrations:
+                type: array
+                nullable: true
+                items:
+                  $ref: "#/components/schemas/ProductExternalIntegration"
+                description: Links the product to matching products in V3 integrations (e.g.
+                  Paddle). For each entry, the product is linked to that
+                  external integration after the contract is created, so
+                  invoices for this product are exported to it. At most one
+                  entry per provider. Currently only Paddle is supported.
               commitment:
                 type: object
                 nullable: true
@@ -4107,11 +4554,32 @@ components:
                   ProductGroup.
               cloudProviderSettings:
                 $ref: "#/components/schemas/ProductCloudProviderSettings"
+              consumesCreditProductIds:
+                type: array
+                nullable: true
+                items:
+                  type: string
+                  pattern: ^[0-9a-fA-F]{24}$
+                description: IDs of credit products whose pools are drawn down when this usage
+                  product is invoiced. Each ID matches the creditProductId of a
+                  credit grant on the same contract that funds the pool. Pools
+                  are drawn in the order listed. If omitted, no credits are
+                  applied and the product is billed at full price. Not supported
+                  inside productGroups.
             required:
               - displayName
               - scheduling
               - pricing
           description: The products that the contract is associated with
+        creditGrants:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ExternalCreditGrant"
+          description: Credit grants that fund credit pools for the customer under this
+            contract. Each grant credits a pool identified by its
+            creditProductId; usage products draw down those pools via
+            consumesCreditProductIds.
         productGroups:
           type: array
           items:
@@ -4155,10 +4623,20 @@ components:
             - description: The currency of the contract. Overrides the customer-level currency
                 for all invoices under this contract. If not provided, the
                 customer currency or account default (USD) is used.
+        isTrial:
+          type: boolean
+          description: "Whether the contract is a trial. All invoices under a trial
+            contract are flagged with isTrial: true. If not provided, it
+            defaults to false."
+        externalId:
+          type: string
+          nullable: true
+          description: A caller-owned external id for the contract. Once set, the contract
+            can be fetched or deleted by passing this value in place of the Vayu
+            id on the /contracts/{contractId} endpoints.
       required:
         - startDate
         - customerId
-        - name
     CreateContractResponse:
       type: object
       properties:
@@ -4173,9 +4651,15 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of an existing plan to attach to this contract. When
+                provided, products/productGroups are ignored and the plan is
+                used as-is. Mutually exclusive with inline product definition.
             name:
               type: string
-              description: The name of the contract
+              description: The name of the contract. Required when planId is not provided.
             salesForceOpportunityId:
               type: string
               nullable: true
@@ -4277,9 +4761,17 @@ components:
                             description: An optional discount to apply to this product
                           isCreditPurchase:
                             type: boolean
-                            description: Whether this one-time fee is a credit purchase. When true, the
-                              product is treated as a prepaid credit that the
-                              customer can use later. Defaults to false.
+                            description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                              product type and prepayment, but does NOT fund a
+                              credit pool. For the credit pool system, use the
+                              contract-level creditGrants field instead.
+                              Defaults to false."
+                            deprecated: true
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -4397,6 +4889,11 @@ components:
                               - type
                               - amount
                             description: An optional discount to apply to this product
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -4545,6 +5042,16 @@ components:
                     type: string
                     nullable: true
                     description: The id of the class of the product in NetSuite ERP
+                  externalIntegrations:
+                    type: array
+                    nullable: true
+                    items:
+                      $ref: "#/components/schemas/ProductExternalIntegration"
+                    description: Links the product to matching products in V3 integrations (e.g.
+                      Paddle). For each entry, the product is linked to that
+                      external integration after the contract is created, so
+                      invoices for this product are exported to it. At most one
+                      entry per provider. Currently only Paddle is supported.
                   commitment:
                     type: object
                     nullable: true
@@ -4617,11 +5124,32 @@ components:
                       ProductGroup.
                   cloudProviderSettings:
                     $ref: "#/components/schemas/ProductCloudProviderSettings"
+                  consumesCreditProductIds:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      pattern: ^[0-9a-fA-F]{24}$
+                    description: IDs of credit products whose pools are drawn down when this usage
+                      product is invoiced. Each ID matches the creditProductId
+                      of a credit grant on the same contract that funds the
+                      pool. Pools are drawn in the order listed. If omitted, no
+                      credits are applied and the product is billed at full
+                      price. Not supported inside productGroups.
                 required:
                   - displayName
                   - scheduling
                   - pricing
               description: The products that the contract is associated with
+            creditGrants:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/ExternalCreditGrant"
+              description: Credit grants that fund credit pools for the customer under this
+                contract. Each grant credits a pool identified by its
+                creditProductId; usage products draw down those pools via
+                consumesCreditProductIds.
             productGroups:
               type: array
               items:
@@ -4665,6 +5193,17 @@ components:
                 - description: The currency of the contract. Overrides the customer-level currency
                     for all invoices under this contract. If not provided, the
                     customer currency or account default (USD) is used.
+            isTrial:
+              type: boolean
+              description: "Whether the contract is a trial. All invoices under a trial
+                contract are flagged with isTrial: true. If not provided, it
+                defaults to false."
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the contract. Once set, the contract
+                can be fetched or deleted by passing this value in place of the
+                Vayu id on the /contracts/{contractId} endpoints.
             id:
               type: string
             createdAt:
@@ -4676,7 +5215,6 @@ components:
           required:
             - startDate
             - customerId
-            - name
             - id
             - createdAt
             - updatedAt
@@ -5106,6 +5644,9 @@ components:
             amount:
               type: number
               description: The total amount of the invoice
+            isTrial:
+              type: boolean
+              description: Whether the invoice belongs to a trial contract
             id:
               type: string
             createdAt:
@@ -5124,11 +5665,21 @@ components:
             - accountId
             - lineItems
             - amount
+            - isTrial
             - id
             - createdAt
             - updatedAt
       required:
         - invoice
+    CustomerRelationType:
+      type: string
+      enum:
+        - accumulateUsage
+        - accumulateCharges
+        - erpInvoiceSyncOnBehalfParent
+      default: accumulateUsage
+      description: Relation type between parent and child customer. Defaults to
+        accumulateUsage.
     CreateCustomerRelationRequest:
       type: object
       properties:
@@ -5140,9 +5691,12 @@ components:
           type: string
           pattern: ^[0-9a-fA-F]{24}$
           description: Identifier of the child customer in Vayu.
+        relationType:
+          $ref: "#/components/schemas/CustomerRelationType"
       required:
         - vayuParentCustomerId
         - vayuChildCustomerId
+        - relationType
     CreateCustomerRelationResponse:
       type: object
       properties:
@@ -5157,6 +5711,8 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: Identifier of the child customer in Vayu.
+            relationType:
+              $ref: "#/components/schemas/CustomerRelationType"
             id:
               type: string
             createdAt:
@@ -5168,6 +5724,7 @@ components:
           required:
             - vayuParentCustomerId
             - vayuChildCustomerId
+            - relationType
             - id
             - createdAt
             - updatedAt
@@ -5187,6 +5744,8 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: Identifier of the child customer in Vayu.
+            relationType:
+              $ref: "#/components/schemas/CustomerRelationType"
             id:
               type: string
             createdAt:
@@ -5198,6 +5757,7 @@ components:
           required:
             - vayuParentCustomerId
             - vayuChildCustomerId
+            - relationType
             - id
             - createdAt
             - updatedAt
@@ -5268,6 +5828,12 @@ components:
               $ref: "#/components/schemas/PlanStatus"
             billingData:
               $ref: "#/components/schemas/PlanBillingData"
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the plan. Once set, the plan can be
+                fetched or deleted by passing this value in place of the Vayu id
+                on the /plans/{planId} endpoints.
             id:
               type: string
             createdAt:
@@ -5299,6 +5865,12 @@ components:
               $ref: "#/components/schemas/PlanStatus"
             billingData:
               $ref: "#/components/schemas/PlanBillingData"
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the plan. Once set, the plan can be
+                fetched or deleted by passing this value in place of the Vayu id
+                on the /plans/{planId} endpoints.
             id:
               type: string
             createdAt:
@@ -5335,6 +5907,12 @@ components:
                 $ref: "#/components/schemas/PlanStatus"
               billingData:
                 $ref: "#/components/schemas/PlanBillingData"
+              externalId:
+                type: string
+                nullable: true
+                description: A caller-owned external id for the plan. Once set, the plan can be
+                  fetched or deleted by passing this value in place of the Vayu
+                  id on the /plans/{planId} endpoints.
               id:
                 type: string
               createdAt:
@@ -5394,6 +5972,7 @@ components:
             - Anrok
             - Connact
             - Xero
+            - Paddle
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           allOf:
@@ -5443,6 +6022,7 @@ components:
                 - Anrok
                 - Connact
                 - Xero
+                - Paddle
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -5507,6 +6087,7 @@ components:
                   - Anrok
                   - Connact
                   - Xero
+                  - Paddle
                 description: The integration provider (e.g., "Salesforce", "HubSpot")
               integrationEntityType:
                 allOf:
@@ -5577,6 +6158,7 @@ components:
                 - Anrok
                 - Connact
                 - Xero
+                - Paddle
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -5636,6 +6218,7 @@ components:
             - Anrok
             - Connact
             - Xero
+            - Paddle
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           allOf:
@@ -5682,6 +6265,7 @@ components:
                 - Anrok
                 - Connact
                 - Xero
+                - Paddle
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -5744,6 +6328,7 @@ components:
                 - Anrok
                 - Connact
                 - Xero
+                - Paddle
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -5973,6 +6558,8 @@ components:
               type: string
             name:
               type: string
+            ackId:
+              type: string
           required:
             - timestamp
             - customerAlias
@@ -6089,6 +6676,18 @@ components:
           maxItems: 1000
       required:
         - events
+    AcknowledgedEvent:
+      allOf:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          properties:
+            ackId:
+              type: string
+              description: Per-event acknowledgment ID confirming Vayu received this event.
+                Use it to demonstrate the event was sent to Vayu.
+              example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          required:
+            - ackId
     InvalidEvent:
       type: object
       properties:
@@ -6107,9 +6706,9 @@ components:
         validEvents:
           type: array
           items:
-            $ref: "#/components/schemas/Event"
+            $ref: "#/components/schemas/AcknowledgedEvent"
           description: An array of events that were successfully processed and sent to the
-            queue.
+            queue, each with its acknowledgment ID.
         invalidEvents:
           type: array
           items:
@@ -6429,9 +7028,9 @@ components:
         validEvents:
           type: array
           items:
-            $ref: "#/components/schemas/Event"
+            $ref: "#/components/schemas/AcknowledgedEvent"
           description: An array of events that were successfully processed and sent to the
-            queue.
+            queue, each with its acknowledgment ID.
         invalidEvents:
           type: array
           items:
@@ -6744,6 +7343,7 @@ components:
         - Snowflake
         - Connact
         - Xero
+        - Paddle
     SyncStatus:
       type: string
       enum:
@@ -6845,12 +7445,70 @@ components:
       required:
         - creditAmount
         - customerId
+    CreditTopUpRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The ID of the customer to be billed for the credit top-up.
+        creditGrant:
+          allOf:
+            - $ref: "#/components/schemas/ExternalCreditGrant"
+            - description: The credit grant to bill the customer for — the same shape used for
+                credit grants on a contract (credit product, amount, type and
+                price). Its price is charged on the one-off invoice, and the
+                credits are granted to the customer when that invoice is
+                approved.
+      required:
+        - customerId
+        - creditGrant
+    CreditTopUpResponse:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The ID of the one-off invoice created for the credit top-up.
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The ID of the customer the invoice was created for.
+      required:
+        - invoiceId
+        - customerId
+    ExternalCreditProduct:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: Unique ID of the credit product. Use it as a product
+            creditGrant.creditProductId to fund its pool, or in a usage
+            product's consumesCreditProductIds to debit it.
+        name:
+          type: string
+          description: Human-readable name of the credit product.
+      required:
+        - id
+        - name
+    ListCreditProductsResponse:
+      type: object
+      properties:
+        creditProducts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExternalCreditProduct"
+          description: The credit products defined in your account.
+      required:
+        - creditProducts
     NotificationEventType:
       type: string
       enum:
         - AnonymousCustomer
         - Overage
         - UpcomingRenewal
+        - ContractExpired
         - InvoiceApproved
         - CustomerPortalLinkSent
         - NewCustomerWithoutContract
@@ -6863,6 +7521,13 @@ components:
         - FinalTierExceeded
         - InvoicePaymentStatusChanged
         - InvoiceSendFailed
+        - CreditPoolDepleted
+        - CreditPoolThresholdCrossed
+        - CreditPoolIncreased
+        - PaymentFailed
+        - CustomerCreated
+        - ContractCreated
+        - InvoiceIssueDateArrived
         - PingTest
     WebhookSubscribeRequest:
       type: object
@@ -6873,9 +7538,8 @@ components:
           $ref: "#/components/schemas/NotificationEventType"
         threshold:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
-          maximum: 1
+        recurringThreshold:
+          type: number
       required:
         - callbackUrl
         - eventType
@@ -6935,6 +7599,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -7109,6 +7786,19 @@ components:
               type: string
               nullable: true
               description: The ID of the customer in the Salesforce system
+            externalIntegration:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomerExternalIntegration"
+              description: External integration links for the customer. Each entry links the
+                customer to an external provider entity by its id. Stripe
+                entries are saved on the customer; other providers are linked
+                via the integration registry.
+              example:
+                - type: Stripe
+                  id: cus_123
+                  name: Acme Inc
             dueDays:
               type: string
               nullable: true
@@ -7175,9 +7865,15 @@ components:
               type: string
               pattern: ^[0-9a-fA-F]{24}$
               description: The id of the customer that the contract is associated with
+            planId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of an existing plan to attach to this contract. When
+                provided, products/productGroups are ignored and the plan is
+                used as-is. Mutually exclusive with inline product definition.
             name:
               type: string
-              description: The name of the contract
+              description: The name of the contract. Required when planId is not provided.
             salesForceOpportunityId:
               type: string
               nullable: true
@@ -7279,9 +7975,17 @@ components:
                             description: An optional discount to apply to this product
                           isCreditPurchase:
                             type: boolean
-                            description: Whether this one-time fee is a credit purchase. When true, the
-                              product is treated as a prepaid credit that the
-                              customer can use later. Defaults to false.
+                            description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                              product type and prepayment, but does NOT fund a
+                              credit pool. For the credit pool system, use the
+                              contract-level creditGrants field instead.
+                              Defaults to false."
+                            deprecated: true
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -7399,6 +8103,11 @@ components:
                               - type
                               - amount
                             description: An optional discount to apply to this product
+                          issuedSeparately:
+                            type: boolean
+                            description: When true, this product is billed on its own invoice instead of
+                              being combined with other products in the same
+                              contract. Defaults to false.
                         required:
                           - type
                           - price
@@ -7547,6 +8256,16 @@ components:
                     type: string
                     nullable: true
                     description: The id of the class of the product in NetSuite ERP
+                  externalIntegrations:
+                    type: array
+                    nullable: true
+                    items:
+                      $ref: "#/components/schemas/ProductExternalIntegration"
+                    description: Links the product to matching products in V3 integrations (e.g.
+                      Paddle). For each entry, the product is linked to that
+                      external integration after the contract is created, so
+                      invoices for this product are exported to it. At most one
+                      entry per provider. Currently only Paddle is supported.
                   commitment:
                     type: object
                     nullable: true
@@ -7619,11 +8338,32 @@ components:
                       ProductGroup.
                   cloudProviderSettings:
                     $ref: "#/components/schemas/ProductCloudProviderSettings"
+                  consumesCreditProductIds:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      pattern: ^[0-9a-fA-F]{24}$
+                    description: IDs of credit products whose pools are drawn down when this usage
+                      product is invoiced. Each ID matches the creditProductId
+                      of a credit grant on the same contract that funds the
+                      pool. Pools are drawn in the order listed. If omitted, no
+                      credits are applied and the product is billed at full
+                      price. Not supported inside productGroups.
                 required:
                   - displayName
                   - scheduling
                   - pricing
               description: The products that the contract is associated with
+            creditGrants:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/ExternalCreditGrant"
+              description: Credit grants that fund credit pools for the customer under this
+                contract. Each grant credits a pool identified by its
+                creditProductId; usage products draw down those pools via
+                consumesCreditProductIds.
             productGroups:
               type: array
               items:
@@ -7667,6 +8407,17 @@ components:
                 - description: The currency of the contract. Overrides the customer-level currency
                     for all invoices under this contract. If not provided, the
                     customer currency or account default (USD) is used.
+            isTrial:
+              type: boolean
+              description: "Whether the contract is a trial. All invoices under a trial
+                contract are flagged with isTrial: true. If not provided, it
+                defaults to false."
+            externalId:
+              type: string
+              nullable: true
+              description: A caller-owned external id for the contract. Once set, the contract
+                can be fetched or deleted by passing this value in place of the
+                Vayu id on the /contracts/{contractId} endpoints.
             id:
               type: string
             createdAt:
@@ -7678,7 +8429,6 @@ components:
           required:
             - startDate
             - customerId
-            - name
             - id
             - createdAt
             - updatedAt
@@ -7698,9 +8448,15 @@ components:
                 type: string
                 pattern: ^[0-9a-fA-F]{24}$
                 description: The id of the customer that the contract is associated with
+              planId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The id of an existing plan to attach to this contract. When
+                  provided, products/productGroups are ignored and the plan is
+                  used as-is. Mutually exclusive with inline product definition.
               name:
                 type: string
-                description: The name of the contract
+                description: The name of the contract. Required when planId is not provided.
               salesForceOpportunityId:
                 type: string
                 nullable: true
@@ -7802,9 +8558,17 @@ components:
                               description: An optional discount to apply to this product
                             isCreditPurchase:
                               type: boolean
-                              description: Whether this one-time fee is a credit purchase. When true, the
-                                product is treated as a prepaid credit that the
-                                customer can use later. Defaults to false.
+                              description: "Deprecated. Legacy prepaid-credit marker: sets a fixed Credit
+                                product type and prepayment, but does NOT fund a
+                                credit pool. For the credit pool system, use the
+                                contract-level creditGrants field instead.
+                                Defaults to false."
+                              deprecated: true
+                            issuedSeparately:
+                              type: boolean
+                              description: When true, this product is billed on its own invoice instead of
+                                being combined with other products in the same
+                                contract. Defaults to false.
                           required:
                             - type
                             - price
@@ -7922,6 +8686,11 @@ components:
                                 - type
                                 - amount
                               description: An optional discount to apply to this product
+                            issuedSeparately:
+                              type: boolean
+                              description: When true, this product is billed on its own invoice instead of
+                                being combined with other products in the same
+                                contract. Defaults to false.
                           required:
                             - type
                             - price
@@ -8070,6 +8839,17 @@ components:
                       type: string
                       nullable: true
                       description: The id of the class of the product in NetSuite ERP
+                    externalIntegrations:
+                      type: array
+                      nullable: true
+                      items:
+                        $ref: "#/components/schemas/ProductExternalIntegration"
+                      description: Links the product to matching products in V3 integrations (e.g.
+                        Paddle). For each entry, the product is linked to that
+                        external integration after the contract is created, so
+                        invoices for this product are exported to it. At most
+                        one entry per provider. Currently only Paddle is
+                        supported.
                     commitment:
                       type: object
                       nullable: true
@@ -8142,11 +8922,32 @@ components:
                         a ProductGroup.
                     cloudProviderSettings:
                       $ref: "#/components/schemas/ProductCloudProviderSettings"
+                    consumesCreditProductIds:
+                      type: array
+                      nullable: true
+                      items:
+                        type: string
+                        pattern: ^[0-9a-fA-F]{24}$
+                      description: IDs of credit products whose pools are drawn down when this usage
+                        product is invoiced. Each ID matches the creditProductId
+                        of a credit grant on the same contract that funds the
+                        pool. Pools are drawn in the order listed. If omitted,
+                        no credits are applied and the product is billed at full
+                        price. Not supported inside productGroups.
                   required:
                     - displayName
                     - scheduling
                     - pricing
                 description: The products that the contract is associated with
+              creditGrants:
+                type: array
+                nullable: true
+                items:
+                  $ref: "#/components/schemas/ExternalCreditGrant"
+                description: Credit grants that fund credit pools for the customer under this
+                  contract. Each grant credits a pool identified by its
+                  creditProductId; usage products draw down those pools via
+                  consumesCreditProductIds.
               productGroups:
                 type: array
                 items:
@@ -8190,6 +8991,17 @@ components:
                   - description: The currency of the contract. Overrides the customer-level currency
                       for all invoices under this contract. If not provided, the
                       customer currency or account default (USD) is used.
+              isTrial:
+                type: boolean
+                description: "Whether the contract is a trial. All invoices under a trial
+                  contract are flagged with isTrial: true. If not provided, it
+                  defaults to false."
+              externalId:
+                type: string
+                nullable: true
+                description: A caller-owned external id for the contract. Once set, the contract
+                  can be fetched or deleted by passing this value in place of
+                  the Vayu id on the /contracts/{contractId} endpoints.
               id:
                 type: string
               createdAt:
@@ -8201,7 +9013,6 @@ components:
             required:
               - startDate
               - customerId
-              - name
               - id
               - createdAt
               - updatedAt
@@ -8215,6 +9026,60 @@ components:
         - contracts
         - total
         - hasMore
+    TerminateContractRequest:
+      type: object
+      properties:
+        terminationDate:
+          type: string
+          description: The date on which the contract should be terminated. If omitted,
+            the contract is terminated immediately.
+          format: date-time
+    TerminateContractResponse:
+      type: object
+      properties:
+        contractId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The identifier of the terminated contract
+      required:
+        - contractId
+    RefreshContractCreditsRequest:
+      type: object
+      properties:
+        grants:
+          type: array
+          items:
+            type: object
+            properties:
+              grantProductId:
+                type: string
+                pattern: ^[0-9a-fA-F]{24}$
+                description: The credit product (credit type) id identifying the grant to
+                  refresh. Every grant product on the contract for this credit
+                  product is set to non-prorated in the new phase.
+              newPrice:
+                type: number
+                minimum: 0
+                description: The grant's new price in the refreshed phase. If omitted, the
+                  current price is kept. If this credit product matches more
+                  than one grant product on the contract, a price cannot be
+                  applied unambiguously and the request is rejected.
+            required:
+              - grantProductId
+          description: The credit grants to refresh. Each refreshed grant is set to
+            non-prorated (and optionally re-priced), while every other credit
+            grant on the contract is set to prorated. If omitted, all credit
+            grants on the contract are refreshed (set to non-prorated) and none
+            are prorated.
+    RefreshContractCreditsResponse:
+      type: object
+      properties:
+        contractId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The identifier of the contract whose credit grants were refreshed
+      required:
+        - contractId
     InvoicePaymentStatusResponse:
       type: object
       properties:
@@ -8308,6 +9173,9 @@ components:
               amount:
                 type: number
                 description: The total amount of the invoice
+              isTrial:
+                type: boolean
+                description: Whether the invoice belongs to a trial contract
               id:
                 type: string
               createdAt:
@@ -8326,6 +9194,7 @@ components:
               - accountId
               - lineItems
               - amount
+              - isTrial
               - id
               - createdAt
               - updatedAt
@@ -8509,24 +9378,16 @@ components:
       type: string
     Alias:
       type: string
-    IntegrationType:
-      type: string
-      enum:
-        - Hubspot
-        - Stripe
-        - NetSuite
-        - Salesforce
-        - QuickBooks
-        - Slack
-        - S3
-        - Vayu
-        - Morning
-        - Anrok
-        - Snowflake
-        - Connact
-        - Xero
     IntegrationId:
       type: string
+    CustomerExternalId:
+      type: string
+    IssuedAfter:
+      type: string
+      nullable: true
+    IssuedBefore:
+      type: string
+      nullable: true
     ProductId:
       type: string
 paths:
@@ -9314,8 +10175,9 @@ paths:
       tags:
         - contracts
       operationId: listContracts
-      description: List contracts for the account. Optionally filter by customerId to
-        retrieve contracts for a specific customer.
+      description: List contracts for the account. Optionally filter by customerId or
+        customerExternalId to retrieve contracts for a specific customer
+        (provide at most one, not both).
       summary: List contracts
       security:
         - BearerAuthorizer: []
@@ -9335,6 +10197,11 @@ paths:
           required: false
           in: query
           name: customerId
+        - schema:
+            $ref: "#/components/schemas/CustomerExternalId"
+          required: false
+          in: query
+          name: customerExternalId
       responses:
         "200":
           $ref: "#/components/responses/ListContractsResponse"
@@ -10850,6 +11717,88 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InternalServerErrorResponse"
+  /credits/top-up:
+    post:
+      tags:
+        - credits
+      operationId: creditTopUp
+      description: >-
+        This endpoint creates a one-off invoice that bills a customer for a
+        credit grant.
+            Submit the customer ID and the credit grant (credit product, amount, type and price) in the request
+            body — the same credit grant shape used when defining grants on a contract. The grant's price is
+            charged on the invoice, and the credits are granted to the customer when the invoice is approved.
+      summary: Create a one-off invoice to top up a customer with credits
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/CreditTopUpRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/CreditTopUpResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /credit-products:
+    get:
+      tags:
+        - credit-products
+      operationId: listCreditProducts
+      description: Retrieve the credit products defined in your account. Use a credit
+        product ID to fund a credit pool (a product creditGrant.creditProductId)
+        or to debit one (a usage product consumesCreditProductIds). Distinct
+        from the credit ledger (GET /credits).
+      summary: List credit products
+      security:
+        - BearerAuthorizer: []
+      responses:
+        "200":
+          $ref: "#/components/responses/ListCreditProductsResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
   /webhook:
     post:
       tags:
@@ -11099,7 +12048,7 @@ paths:
         - BearerAuthorizer: []
       parameters:
         - schema:
-            $ref: "#/components/schemas/IntegrationType"
+            $ref: "#/components/schemas/IntegrationProviders"
           required: true
           in: path
           name: integrationType
@@ -11153,7 +12102,7 @@ paths:
         - BearerAuthorizer: []
       parameters:
         - schema:
-            $ref: "#/components/schemas/IntegrationType"
+            $ref: "#/components/schemas/IntegrationProviders"
           required: true
           in: path
           name: integrationType
@@ -11183,6 +12132,109 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /contracts/{contractId}/terminate:
+    post:
+      tags:
+        - contracts
+      operationId: terminateContract
+      description: >-
+        Use this endpoint to terminate a contract.
+            Provide a terminationDate in the request body to schedule the termination for a specific date,
+            or omit it to terminate the contract immediately.
+            The contract's status is set to PendingTermination and its end date is updated accordingly.
+      summary: Terminate a contract
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/TerminateContractRequest"
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ContractId"
+          required: true
+          in: path
+          name: contractId
+      responses:
+        "200":
+          $ref: "#/components/responses/TerminateContractResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /contracts/{contractId}/credits/refresh:
+    post:
+      tags:
+        - contracts
+      operationId: refreshContractCredits
+      description: >-
+        Use this endpoint to refresh the credit grants on a contract by creating
+        a new contract phase
+            (a contract revision) that takes effect immediately.
+
+            Provide a list of credit grants to refresh in the request body — each is identified by its credit product
+            (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit
+            grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are
+            refreshed (set to non-prorated).
+
+            If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,
+            the request is rejected because the price cannot be applied unambiguously.
+      summary: Refresh the credit grants on a contract
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/RefreshContractCreditsRequest"
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/ContractId"
+          required: true
+          in: path
+          name: contractId
+      responses:
+        "200":
+          $ref: "#/components/responses/RefreshContractCreditsResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
         "429":
           description: Too Many Requests
           content:
@@ -11266,31 +12318,20 @@ paths:
           in: query
           name: customerId
         - schema:
-            type: string
-            enum:
-              - None
-              - Paid
-              - Rejected
-              - PendingPayment
-              - Overdue
+            $ref: "#/components/schemas/InvoiceBillingStatus"
           required: false
           in: query
           name: billingStatus
-          description: Filter invoices by their billing status
         - schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/IssuedAfter"
           required: false
           in: query
-          name: issuedAtFrom
-          description: Only include invoices issued on or after this timestamp
+          name: issuedAfter
         - schema:
-            type: string
-            format: date-time
+            $ref: "#/components/schemas/IssuedBefore"
           required: false
           in: query
-          name: issuedAtTo
-          description: Only include invoices issued on or before this timestamp
+          name: issuedBefore
       responses:
         "200":
           $ref: "#/components/responses/ListInvoicesResponse"

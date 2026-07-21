@@ -44,6 +44,8 @@ type GetCustomerByNameResponseCustomer struct {
 	Address NullableAddress `json:"address,omitempty"`
 	// The ID of the customer in the Salesforce system
 	SalesForceAccountId NullableString `json:"salesForceAccountId,omitempty"`
+	// External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.
+	ExternalIntegration []CustomerExternalIntegration `json:"externalIntegration,omitempty"`
 	// The due days of the customer
 	DueDays NullableString `json:"dueDays,omitempty"`
 	Currency NullableCurrency `json:"currency,omitempty"`
@@ -542,6 +544,39 @@ func (o *GetCustomerByNameResponseCustomer) UnsetSalesForceAccountId() {
 	o.SalesForceAccountId.Unset()
 }
 
+// GetExternalIntegration returns the ExternalIntegration field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetCustomerByNameResponseCustomer) GetExternalIntegration() []CustomerExternalIntegration {
+	if o == nil {
+		var ret []CustomerExternalIntegration
+		return ret
+	}
+	return o.ExternalIntegration
+}
+
+// GetExternalIntegrationOk returns a tuple with the ExternalIntegration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetCustomerByNameResponseCustomer) GetExternalIntegrationOk() ([]CustomerExternalIntegration, bool) {
+	if o == nil || IsNil(o.ExternalIntegration) {
+		return nil, false
+	}
+	return o.ExternalIntegration, true
+}
+
+// HasExternalIntegration returns a boolean if a field has been set.
+func (o *GetCustomerByNameResponseCustomer) HasExternalIntegration() bool {
+	if o != nil && !IsNil(o.ExternalIntegration) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalIntegration gets a reference to the given []CustomerExternalIntegration and assigns it to the ExternalIntegration field.
+func (o *GetCustomerByNameResponseCustomer) SetExternalIntegration(v []CustomerExternalIntegration) {
+	o.ExternalIntegration = v
+}
+
 // GetDueDays returns the DueDays field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetCustomerByNameResponseCustomer) GetDueDays() string {
 	if o == nil || IsNil(o.DueDays.Get()) {
@@ -977,6 +1012,9 @@ func (o GetCustomerByNameResponseCustomer) ToMap() (map[string]interface{}, erro
 	if o.SalesForceAccountId.IsSet() {
 		toSerialize["salesForceAccountId"] = o.SalesForceAccountId.Get()
 	}
+	if o.ExternalIntegration != nil {
+		toSerialize["externalIntegration"] = o.ExternalIntegration
+	}
 	if o.DueDays.IsSet() {
 		toSerialize["dueDays"] = o.DueDays.Get()
 	}
@@ -1065,6 +1103,7 @@ func (o *GetCustomerByNameResponseCustomer) UnmarshalJSON(data []byte) (err erro
 		delete(additionalProperties, "customerErpId")
 		delete(additionalProperties, "address")
 		delete(additionalProperties, "salesForceAccountId")
+		delete(additionalProperties, "externalIntegration")
 		delete(additionalProperties, "dueDays")
 		delete(additionalProperties, "currency")
 		delete(additionalProperties, "customFields")

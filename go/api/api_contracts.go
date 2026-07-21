@@ -25,7 +25,7 @@ func NewContractsAPI(client *client.VayuClient) *ContractsAPI {
 	}
 }
 func NewCreateContractRequest(startDate time.Time, endDate *time.Time, customerId string, name string) *CreateContractRequest {
-	request := &openapi.CreateContractRequest{StartDate: startDate, CustomerId: customerId, Name: name}
+	request := &openapi.CreateContractRequest{StartDate: startDate, CustomerId: customerId, Name: &name}
 
 	if endDate != nil {
 		request.SetEndDate(*endDate)
@@ -38,7 +38,7 @@ func NewCreateContractFromPlanTemplateRequest(startDate time.Time, customerId st
 	return &openapi.CreateContractRequest{
 		StartDate:  startDate,
 		CustomerId: customerId,
-		Name:       name,
+		Name:       &name,
 		PlanId:     &planId,
 	}
 }

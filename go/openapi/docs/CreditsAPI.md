@@ -4,10 +4,77 @@ All URIs are relative to *https://connect.withvayu.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreditTopUp**](CreditsAPI.md#CreditTopUp) | **Post** /credits/top-up | Create a one-off invoice to top up a customer with credits
 [**DeductCredits**](CreditsAPI.md#DeductCredits) | **Post** /credits/deduct | Deduct credits from customer credit ledger
 [**GrantCredits**](CreditsAPI.md#GrantCredits) | **Post** /credits/grant | Grant credits to a customer credit ledger
 [**ListCreditLedgerEntries**](CreditsAPI.md#ListCreditLedgerEntries) | **Get** /credits | Retrieve credit ledger entries for customer.
 
+
+
+## CreditTopUp
+
+> CreditTopUpResponse CreditTopUp(ctx).CreditTopUpRequest(creditTopUpRequest).Execute()
+
+Create a one-off invoice to top up a customer with credits
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	creditTopUpRequest := *openapiclient.NewCreditTopUpRequest("CustomerId_example", *openapiclient.NewCreditTopUpRequestCreditGrant("Name_example", "CreditProductId_example", "BalanceKind_example", float32(123), "Schedule_example")) // CreditTopUpRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CreditsAPI.CreditTopUp(context.Background()).CreditTopUpRequest(creditTopUpRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CreditsAPI.CreditTopUp``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreditTopUp`: CreditTopUpResponse
+	fmt.Fprintf(os.Stdout, "Response from `CreditsAPI.CreditTopUp`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreditTopUpRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **creditTopUpRequest** | [**CreditTopUpRequest**](CreditTopUpRequest.md) |  | 
+
+### Return type
+
+[**CreditTopUpResponse**](CreditTopUpResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## DeductCredits
