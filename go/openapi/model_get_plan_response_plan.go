@@ -26,6 +26,8 @@ type GetPlanResponsePlan struct {
 	Name string `json:"name"`
 	Status PlanStatus `json:"status"`
 	BillingData PlanBillingData `json:"billingData"`
+	// A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints.
+	ExternalId NullableString `json:"externalId,omitempty"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -129,6 +131,48 @@ func (o *GetPlanResponsePlan) SetBillingData(v PlanBillingData) {
 	o.BillingData = v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetPlanResponsePlan) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId.Get()
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetPlanResponsePlan) GetExternalIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *GetPlanResponsePlan) HasExternalId() bool {
+	if o != nil && o.ExternalId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
+func (o *GetPlanResponsePlan) SetExternalId(v string) {
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *GetPlanResponsePlan) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *GetPlanResponsePlan) UnsetExternalId() {
+	o.ExternalId.Unset()
+}
+
 // GetId returns the Id field value
 func (o *GetPlanResponsePlan) GetId() string {
 	if o == nil {
@@ -214,6 +258,9 @@ func (o GetPlanResponsePlan) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["status"] = o.Status
 	toSerialize["billingData"] = o.BillingData
+	if o.ExternalId.IsSet() {
+		toSerialize["externalId"] = o.ExternalId.Get()
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -268,6 +315,7 @@ func (o *GetPlanResponsePlan) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "status")
 		delete(additionalProperties, "billingData")
+		delete(additionalProperties, "externalId")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

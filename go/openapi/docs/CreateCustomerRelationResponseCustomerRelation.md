@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VayuParentCustomerId** | **string** | Identifier of the parent customer in Vayu. | 
 **VayuChildCustomerId** | **string** | Identifier of the child customer in Vayu. | 
+**RelationType** | [**CustomerRelationType**](CustomerRelationType.md) |  | [default to CUSTOMERRELATIONTYPE_ACCUMULATE_USAGE]
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -14,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewCreateCustomerRelationResponseCustomerRelation
 
-`func NewCreateCustomerRelationResponseCustomerRelation(vayuParentCustomerId string, vayuChildCustomerId string, id string, createdAt time.Time, updatedAt time.Time, ) *CreateCustomerRelationResponseCustomerRelation`
+`func NewCreateCustomerRelationResponseCustomerRelation(vayuParentCustomerId string, vayuChildCustomerId string, relationType CustomerRelationType, id string, createdAt time.Time, updatedAt time.Time, ) *CreateCustomerRelationResponseCustomerRelation`
 
 NewCreateCustomerRelationResponseCustomerRelation instantiates a new CreateCustomerRelationResponseCustomerRelation object
 This constructor will assign default values to properties that have it defined,
@@ -67,6 +68,26 @@ and a boolean to check if the value has been set.
 `func (o *CreateCustomerRelationResponseCustomerRelation) SetVayuChildCustomerId(v string)`
 
 SetVayuChildCustomerId sets VayuChildCustomerId field to given value.
+
+
+### GetRelationType
+
+`func (o *CreateCustomerRelationResponseCustomerRelation) GetRelationType() CustomerRelationType`
+
+GetRelationType returns the RelationType field if non-nil, zero value otherwise.
+
+### GetRelationTypeOk
+
+`func (o *CreateCustomerRelationResponseCustomerRelation) GetRelationTypeOk() (*CustomerRelationType, bool)`
+
+GetRelationTypeOk returns a tuple with the RelationType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRelationType
+
+`func (o *CreateCustomerRelationResponseCustomerRelation) SetRelationType(v CustomerRelationType)`
+
+SetRelationType sets RelationType field to given value.
 
 
 ### GetId

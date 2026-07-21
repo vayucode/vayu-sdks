@@ -9,6 +9,8 @@ Method | HTTP request | Description
 [**GetContract**](ContractsAPI.md#GetContract) | **Get** /contracts/{contractId} | Get Contract
 [**GetContractByIntegrationId**](ContractsAPI.md#GetContractByIntegrationId) | **Get** /contracts/integration/{integrationType}/{integrationId} | Get contract by integration id
 [**ListContracts**](ContractsAPI.md#ListContracts) | **Get** /contracts | List contracts
+[**RefreshContractCredits**](ContractsAPI.md#RefreshContractCredits) | **Post** /contracts/{contractId}/credits/refresh | Refresh the credit grants on a contract
+[**TerminateContract**](ContractsAPI.md#TerminateContract) | **Post** /contracts/{contractId}/terminate | Terminate a contract
 
 
 
@@ -34,7 +36,7 @@ import (
 )
 
 func main() {
-	createContractRequest := *openapiclient.NewCreateContractRequest(time.Now(), "CustomerId_example", "Name_example") // CreateContractRequest | 
+	createContractRequest := *openapiclient.NewCreateContractRequest(time.Now(), "CustomerId_example") // CreateContractRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -240,7 +242,7 @@ import (
 )
 
 func main() {
-	integrationType := openapiclient.IntegrationType("Hubspot") // IntegrationType | 
+	integrationType := openapiclient.IntegrationProviders("Hubspot") // IntegrationProviders | 
 	integrationId := "integrationId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -261,7 +263,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**integrationType** | [**IntegrationType**](.md) |  | 
+**integrationType** | [**IntegrationProviders**](.md) |  | 
 **integrationId** | **string** |  | 
 
 ### Other Parameters
@@ -294,7 +296,7 @@ Name | Type | Description  | Notes
 
 ## ListContracts
 
-> ListContractsResponse ListContracts(ctx).Limit(limit).Cursor(cursor).CustomerId(customerId).Execute()
+> ListContractsResponse ListContracts(ctx).Limit(limit).Cursor(cursor).CustomerId(customerId).CustomerExternalId(customerExternalId).Execute()
 
 List contracts
 
@@ -316,10 +318,11 @@ func main() {
 	limit := float32(8.14) // float32 |  (optional) (default to 10)
 	cursor := "cursor_example" // string |  (optional)
 	customerId := "customerId_example" // string |  (optional)
+	customerExternalId := "customerExternalId_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContractsAPI.ListContracts(context.Background()).Limit(limit).Cursor(cursor).CustomerId(customerId).Execute()
+	resp, r, err := apiClient.ContractsAPI.ListContracts(context.Background()).Limit(limit).Cursor(cursor).CustomerId(customerId).CustomerExternalId(customerExternalId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContractsAPI.ListContracts``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -343,6 +346,7 @@ Name | Type | Description  | Notes
  **limit** | **float32** |  | [default to 10]
  **cursor** | **string** |  | 
  **customerId** | **string** |  | 
+ **customerExternalId** | **string** |  | 
 
 ### Return type
 
@@ -355,6 +359,150 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RefreshContractCredits
+
+> RefreshContractCreditsResponse RefreshContractCredits(ctx, contractId).RefreshContractCreditsRequest(refreshContractCreditsRequest).Execute()
+
+Refresh the credit grants on a contract
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	refreshContractCreditsRequest := *openapiclient.NewRefreshContractCreditsRequest() // RefreshContractCreditsRequest | 
+	contractId := "contractId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContractsAPI.RefreshContractCredits(context.Background(), contractId).RefreshContractCreditsRequest(refreshContractCreditsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContractsAPI.RefreshContractCredits``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RefreshContractCredits`: RefreshContractCreditsResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContractsAPI.RefreshContractCredits`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**contractId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRefreshContractCreditsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **refreshContractCreditsRequest** | [**RefreshContractCreditsRequest**](RefreshContractCreditsRequest.md) |  | 
+
+
+### Return type
+
+[**RefreshContractCreditsResponse**](RefreshContractCreditsResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TerminateContract
+
+> TerminateContractResponse TerminateContract(ctx, contractId).TerminateContractRequest(terminateContractRequest).Execute()
+
+Terminate a contract
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	terminateContractRequest := *openapiclient.NewTerminateContractRequest() // TerminateContractRequest | 
+	contractId := "contractId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContractsAPI.TerminateContract(context.Background(), contractId).TerminateContractRequest(terminateContractRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContractsAPI.TerminateContract``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TerminateContract`: TerminateContractResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContractsAPI.TerminateContract`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**contractId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTerminateContractRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **terminateContractRequest** | [**TerminateContractRequest**](TerminateContractRequest.md) |  | 
+
+
+### Return type
+
+[**TerminateContractResponse**](TerminateContractResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -24,6 +24,7 @@ type WebhookSubscribeRequest struct {
 	CallbackUrl string `json:"callbackUrl"`
 	EventType NotificationEventType `json:"eventType"`
 	Threshold *float32 `json:"threshold,omitempty"`
+	RecurringThreshold *float32 `json:"recurringThreshold,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -128,6 +129,38 @@ func (o *WebhookSubscribeRequest) SetThreshold(v float32) {
 	o.Threshold = &v
 }
 
+// GetRecurringThreshold returns the RecurringThreshold field value if set, zero value otherwise.
+func (o *WebhookSubscribeRequest) GetRecurringThreshold() float32 {
+	if o == nil || IsNil(o.RecurringThreshold) {
+		var ret float32
+		return ret
+	}
+	return *o.RecurringThreshold
+}
+
+// GetRecurringThresholdOk returns a tuple with the RecurringThreshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WebhookSubscribeRequest) GetRecurringThresholdOk() (*float32, bool) {
+	if o == nil || IsNil(o.RecurringThreshold) {
+		return nil, false
+	}
+	return o.RecurringThreshold, true
+}
+
+// HasRecurringThreshold returns a boolean if a field has been set.
+func (o *WebhookSubscribeRequest) HasRecurringThreshold() bool {
+	if o != nil && !IsNil(o.RecurringThreshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecurringThreshold gets a reference to the given float32 and assigns it to the RecurringThreshold field.
+func (o *WebhookSubscribeRequest) SetRecurringThreshold(v float32) {
+	o.RecurringThreshold = &v
+}
+
 func (o WebhookSubscribeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -142,6 +175,9 @@ func (o WebhookSubscribeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["eventType"] = o.EventType
 	if !IsNil(o.Threshold) {
 		toSerialize["threshold"] = o.Threshold
+	}
+	if !IsNil(o.RecurringThreshold) {
+		toSerialize["recurringThreshold"] = o.RecurringThreshold
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -190,6 +226,7 @@ func (o *WebhookSubscribeRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "callbackUrl")
 		delete(additionalProperties, "eventType")
 		delete(additionalProperties, "threshold")
+		delete(additionalProperties, "recurringThreshold")
 		o.AdditionalProperties = additionalProperties
 	}
 

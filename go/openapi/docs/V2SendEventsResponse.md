@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ValidEvents** | [**[]Event**](Event.md) | An array of events that were successfully processed and sent to the queue. | 
+**ValidEvents** | [**[]AcknowledgedEvent**](AcknowledgedEvent.md) | An array of events that were successfully processed and sent to the queue, each with its acknowledgment ID. | 
 **InvalidEvents** | [**[]InvalidEvent**](InvalidEvent.md) | An array of events that failed validation and were not sent to the queue. Each object contains the event and the error message. | 
 
 ## Methods
 
 ### NewV2SendEventsResponse
 
-`func NewV2SendEventsResponse(validEvents []Event, invalidEvents []InvalidEvent, ) *V2SendEventsResponse`
+`func NewV2SendEventsResponse(validEvents []AcknowledgedEvent, invalidEvents []InvalidEvent, ) *V2SendEventsResponse`
 
 NewV2SendEventsResponse instantiates a new V2SendEventsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetValidEvents
 
-`func (o *V2SendEventsResponse) GetValidEvents() []Event`
+`func (o *V2SendEventsResponse) GetValidEvents() []AcknowledgedEvent`
 
 GetValidEvents returns the ValidEvents field if non-nil, zero value otherwise.
 
 ### GetValidEventsOk
 
-`func (o *V2SendEventsResponse) GetValidEventsOk() (*[]Event, bool)`
+`func (o *V2SendEventsResponse) GetValidEventsOk() (*[]AcknowledgedEvent, bool)`
 
 GetValidEventsOk returns a tuple with the ValidEvents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValidEvents
 
-`func (o *V2SendEventsResponse) SetValidEvents(v []Event)`
+`func (o *V2SendEventsResponse) SetValidEvents(v []AcknowledgedEvent)`
 
 SetValidEvents sets ValidEvents field to given value.
 

@@ -26,12 +26,10 @@ type CreateContractRequest struct {
 	StartDate time.Time `json:"startDate"`
 	// The id of the customer that the contract is associated with
 	CustomerId string `json:"customerId" validate:"regexp=^[0-9a-fA-F]{24}$"`
-	// The name of the contract
-	Name string `json:"name"`
-	// The id of the plan template to create the contract from. When provided, the contract's products are derived from the plan template.
+	// The id of an existing plan to attach to this contract. When provided, products/productGroups are ignored and the plan is used as-is. Mutually exclusive with inline product definition.
 	PlanId *string `json:"planId,omitempty" validate:"regexp=^[0-9a-fA-F]{24}$"`
-	// An external identifier for the contract
-	ExternalId NullableString `json:"externalId,omitempty"`
+	// The name of the contract. Required when planId is not provided.
+	Name *string `json:"name,omitempty"`
 	// The id of the sales force opportunity that the contract is associated with
 	SalesForceOpportunityId NullableString `json:"salesForceOpportunityId,omitempty"`
 	// The end date of the contract
@@ -40,6 +38,8 @@ type CreateContractRequest struct {
 	SignatureDate NullableTime `json:"signatureDate,omitempty"`
 	// The products that the contract is associated with
 	Products []ProductGroupProductsInner `json:"products,omitempty"`
+	// Credit grants that fund credit pools for the customer under this contract. Each grant credits a pool identified by its creditProductId; usage products draw down those pools via consumesCreditProductIds.
+	CreditGrants []ExternalCreditGrant `json:"creditGrants,omitempty"`
 	// Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.
 	ProductGroups []ProductGroup `json:"productGroups,omitempty"`
 	// The name of the account manager of the contract
@@ -57,6 +57,10 @@ type CreateContractRequest struct {
 	// The purchase order number of the contract
 	PurchaseOrder *string `json:"purchaseOrder,omitempty"`
 	Currency *Currency `json:"currency,omitempty"`
+	// Whether the contract is a trial. All invoices under a trial contract are flagged with isTrial: true. If not provided, it defaults to false.
+	IsTrial *bool `json:"isTrial,omitempty"`
+	// A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints.
+	ExternalId NullableString `json:"externalId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -66,11 +70,10 @@ type _CreateContractRequest CreateContractRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateContractRequest(startDate time.Time, customerId string, name string) *CreateContractRequest {
+func NewCreateContractRequest(startDate time.Time, customerId string) *CreateContractRequest {
 	this := CreateContractRequest{}
 	this.StartDate = startDate
 	this.CustomerId = customerId
-	this.Name = name
 	return &this
 }
 
@@ -130,30 +133,6 @@ func (o *CreateContractRequest) SetCustomerId(v string) {
 	o.CustomerId = v
 }
 
-// GetName returns the Name field value
-func (o *CreateContractRequest) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *CreateContractRequest) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *CreateContractRequest) SetName(v string) {
-	o.Name = v
-}
-
 // GetPlanId returns the PlanId field value if set, zero value otherwise.
 func (o *CreateContractRequest) GetPlanId() string {
 	if o == nil || IsNil(o.PlanId) {
@@ -186,46 +165,36 @@ func (o *CreateContractRequest) SetPlanId(v string) {
 	o.PlanId = &v
 }
 
-// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CreateContractRequest) GetExternalId() string {
-	if o == nil || IsNil(o.ExternalId.Get()) {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *CreateContractRequest) GetName() string {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-	return *o.ExternalId.Get()
+	return *o.Name
 }
 
-// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CreateContractRequest) GetExternalIdOk() (*string, bool) {
-	if o == nil {
+func (o *CreateContractRequest) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return o.ExternalId.Get(), o.ExternalId.IsSet()
+	return o.Name, true
 }
 
-// HasExternalId returns a boolean if a field has been set.
-func (o *CreateContractRequest) HasExternalId() bool {
-	if o != nil && o.ExternalId.IsSet() {
+// HasName returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
 	return false
 }
 
-// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
-func (o *CreateContractRequest) SetExternalId(v string) {
-	o.ExternalId.Set(&v)
-}
-// SetExternalIdNil sets the value for ExternalId to be an explicit nil
-func (o *CreateContractRequest) SetExternalIdNil() {
-	o.ExternalId.Set(nil)
-}
-
-// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
-func (o *CreateContractRequest) UnsetExternalId() {
-	o.ExternalId.Unset()
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *CreateContractRequest) SetName(v string) {
+	o.Name = &v
 }
 
 // GetSalesForceOpportunityId returns the SalesForceOpportunityId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -384,6 +353,39 @@ func (o *CreateContractRequest) HasProducts() bool {
 // SetProducts gets a reference to the given []ProductGroupProductsInner and assigns it to the Products field.
 func (o *CreateContractRequest) SetProducts(v []ProductGroupProductsInner) {
 	o.Products = v
+}
+
+// GetCreditGrants returns the CreditGrants field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateContractRequest) GetCreditGrants() []ExternalCreditGrant {
+	if o == nil {
+		var ret []ExternalCreditGrant
+		return ret
+	}
+	return o.CreditGrants
+}
+
+// GetCreditGrantsOk returns a tuple with the CreditGrants field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateContractRequest) GetCreditGrantsOk() ([]ExternalCreditGrant, bool) {
+	if o == nil || IsNil(o.CreditGrants) {
+		return nil, false
+	}
+	return o.CreditGrants, true
+}
+
+// HasCreditGrants returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasCreditGrants() bool {
+	if o != nil && !IsNil(o.CreditGrants) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreditGrants gets a reference to the given []ExternalCreditGrant and assigns it to the CreditGrants field.
+func (o *CreateContractRequest) SetCreditGrants(v []ExternalCreditGrant) {
+	o.CreditGrants = v
 }
 
 // GetProductGroups returns the ProductGroups field value if set, zero value otherwise.
@@ -689,6 +691,80 @@ func (o *CreateContractRequest) SetCurrency(v Currency) {
 	o.Currency = &v
 }
 
+// GetIsTrial returns the IsTrial field value if set, zero value otherwise.
+func (o *CreateContractRequest) GetIsTrial() bool {
+	if o == nil || IsNil(o.IsTrial) {
+		var ret bool
+		return ret
+	}
+	return *o.IsTrial
+}
+
+// GetIsTrialOk returns a tuple with the IsTrial field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateContractRequest) GetIsTrialOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsTrial) {
+		return nil, false
+	}
+	return o.IsTrial, true
+}
+
+// HasIsTrial returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasIsTrial() bool {
+	if o != nil && !IsNil(o.IsTrial) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsTrial gets a reference to the given bool and assigns it to the IsTrial field.
+func (o *CreateContractRequest) SetIsTrial(v bool) {
+	o.IsTrial = &v
+}
+
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateContractRequest) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId.Get()
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateContractRequest) GetExternalIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *CreateContractRequest) HasExternalId() bool {
+	if o != nil && o.ExternalId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
+func (o *CreateContractRequest) SetExternalId(v string) {
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *CreateContractRequest) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *CreateContractRequest) UnsetExternalId() {
+	o.ExternalId.Unset()
+}
+
 func (o CreateContractRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -701,12 +777,11 @@ func (o CreateContractRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["startDate"] = o.StartDate
 	toSerialize["customerId"] = o.CustomerId
-	toSerialize["name"] = o.Name
 	if !IsNil(o.PlanId) {
 		toSerialize["planId"] = o.PlanId
 	}
-	if o.ExternalId.IsSet() {
-		toSerialize["externalId"] = o.ExternalId.Get()
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
 	if o.SalesForceOpportunityId.IsSet() {
 		toSerialize["salesForceOpportunityId"] = o.SalesForceOpportunityId.Get()
@@ -719,6 +794,9 @@ func (o CreateContractRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Products) {
 		toSerialize["products"] = o.Products
+	}
+	if o.CreditGrants != nil {
+		toSerialize["creditGrants"] = o.CreditGrants
 	}
 	if !IsNil(o.ProductGroups) {
 		toSerialize["productGroups"] = o.ProductGroups
@@ -747,6 +825,12 @@ func (o CreateContractRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
 	}
+	if !IsNil(o.IsTrial) {
+		toSerialize["isTrial"] = o.IsTrial
+	}
+	if o.ExternalId.IsSet() {
+		toSerialize["externalId"] = o.ExternalId.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -762,7 +846,6 @@ func (o *CreateContractRequest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"startDate",
 		"customerId",
-		"name",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -794,13 +877,13 @@ func (o *CreateContractRequest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "startDate")
 		delete(additionalProperties, "customerId")
-		delete(additionalProperties, "name")
 		delete(additionalProperties, "planId")
-		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "name")
 		delete(additionalProperties, "salesForceOpportunityId")
 		delete(additionalProperties, "endDate")
 		delete(additionalProperties, "signatureDate")
 		delete(additionalProperties, "products")
+		delete(additionalProperties, "creditGrants")
 		delete(additionalProperties, "productGroups")
 		delete(additionalProperties, "accountManager")
 		delete(additionalProperties, "shouldProRateInvoices")
@@ -810,6 +893,8 @@ func (o *CreateContractRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "status")
 		delete(additionalProperties, "purchaseOrder")
 		delete(additionalProperties, "currency")
+		delete(additionalProperties, "isTrial")
+		delete(additionalProperties, "externalId")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -24,8 +24,11 @@ type ProductGroupProductsInnerPricingOneOf struct {
 	Type string `json:"type"`
 	Price float32 `json:"price"`
 	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
-	// Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.
+	// Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false.
+	// Deprecated
 	IsCreditPurchase *bool `json:"isCreditPurchase,omitempty"`
+	// When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.
+	IssuedSeparately *bool `json:"issuedSeparately,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -141,6 +144,7 @@ func (o *ProductGroupProductsInnerPricingOneOf) UnsetDiscount() {
 }
 
 // GetIsCreditPurchase returns the IsCreditPurchase field value if set, zero value otherwise.
+// Deprecated
 func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchase() bool {
 	if o == nil || IsNil(o.IsCreditPurchase) {
 		var ret bool
@@ -151,6 +155,7 @@ func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchase() bool {
 
 // GetIsCreditPurchaseOk returns a tuple with the IsCreditPurchase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ProductGroupProductsInnerPricingOneOf) GetIsCreditPurchaseOk() (*bool, bool) {
 	if o == nil || IsNil(o.IsCreditPurchase) {
 		return nil, false
@@ -168,8 +173,41 @@ func (o *ProductGroupProductsInnerPricingOneOf) HasIsCreditPurchase() bool {
 }
 
 // SetIsCreditPurchase gets a reference to the given bool and assigns it to the IsCreditPurchase field.
+// Deprecated
 func (o *ProductGroupProductsInnerPricingOneOf) SetIsCreditPurchase(v bool) {
 	o.IsCreditPurchase = &v
+}
+
+// GetIssuedSeparately returns the IssuedSeparately field value if set, zero value otherwise.
+func (o *ProductGroupProductsInnerPricingOneOf) GetIssuedSeparately() bool {
+	if o == nil || IsNil(o.IssuedSeparately) {
+		var ret bool
+		return ret
+	}
+	return *o.IssuedSeparately
+}
+
+// GetIssuedSeparatelyOk returns a tuple with the IssuedSeparately field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductGroupProductsInnerPricingOneOf) GetIssuedSeparatelyOk() (*bool, bool) {
+	if o == nil || IsNil(o.IssuedSeparately) {
+		return nil, false
+	}
+	return o.IssuedSeparately, true
+}
+
+// HasIssuedSeparately returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf) HasIssuedSeparately() bool {
+	if o != nil && !IsNil(o.IssuedSeparately) {
+		return true
+	}
+
+	return false
+}
+
+// SetIssuedSeparately gets a reference to the given bool and assigns it to the IssuedSeparately field.
+func (o *ProductGroupProductsInnerPricingOneOf) SetIssuedSeparately(v bool) {
+	o.IssuedSeparately = &v
 }
 
 func (o ProductGroupProductsInnerPricingOneOf) MarshalJSON() ([]byte, error) {
@@ -189,6 +227,9 @@ func (o ProductGroupProductsInnerPricingOneOf) ToMap() (map[string]interface{}, 
 	}
 	if !IsNil(o.IsCreditPurchase) {
 		toSerialize["isCreditPurchase"] = o.IsCreditPurchase
+	}
+	if !IsNil(o.IssuedSeparately) {
+		toSerialize["issuedSeparately"] = o.IssuedSeparately
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -238,6 +279,7 @@ func (o *ProductGroupProductsInnerPricingOneOf) UnmarshalJSON(data []byte) (err 
 		delete(additionalProperties, "price")
 		delete(additionalProperties, "discount")
 		delete(additionalProperties, "isCreditPurchase")
+		delete(additionalProperties, "issuedSeparately")
 		o.AdditionalProperties = additionalProperties
 	}
 

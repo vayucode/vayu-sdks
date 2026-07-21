@@ -21,8 +21,8 @@ var _ MappedNullable = &SendEventsResponse{}
 
 // SendEventsResponse struct for SendEventsResponse
 type SendEventsResponse struct {
-	// An array of events that were successfully processed and sent to the queue.
-	ValidEvents []Event `json:"validEvents"`
+	// An array of events that were successfully processed and sent to the queue, each with its acknowledgment ID.
+	ValidEvents []AcknowledgedEvent `json:"validEvents"`
 	// An array of events that failed validation and were not sent to the queue. Each object contains the event and the error message.
 	InvalidEvents []InvalidEvent `json:"invalidEvents"`
 	AdditionalProperties map[string]interface{}
@@ -34,7 +34,7 @@ type _SendEventsResponse SendEventsResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSendEventsResponse(validEvents []Event, invalidEvents []InvalidEvent) *SendEventsResponse {
+func NewSendEventsResponse(validEvents []AcknowledgedEvent, invalidEvents []InvalidEvent) *SendEventsResponse {
 	this := SendEventsResponse{}
 	this.ValidEvents = validEvents
 	this.InvalidEvents = invalidEvents
@@ -50,9 +50,9 @@ func NewSendEventsResponseWithDefaults() *SendEventsResponse {
 }
 
 // GetValidEvents returns the ValidEvents field value
-func (o *SendEventsResponse) GetValidEvents() []Event {
+func (o *SendEventsResponse) GetValidEvents() []AcknowledgedEvent {
 	if o == nil {
-		var ret []Event
+		var ret []AcknowledgedEvent
 		return ret
 	}
 
@@ -61,7 +61,7 @@ func (o *SendEventsResponse) GetValidEvents() []Event {
 
 // GetValidEventsOk returns a tuple with the ValidEvents field value
 // and a boolean to check if the value has been set.
-func (o *SendEventsResponse) GetValidEventsOk() ([]Event, bool) {
+func (o *SendEventsResponse) GetValidEventsOk() ([]AcknowledgedEvent, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +69,7 @@ func (o *SendEventsResponse) GetValidEventsOk() ([]Event, bool) {
 }
 
 // SetValidEvents sets field value
-func (o *SendEventsResponse) SetValidEvents(v []Event) {
+func (o *SendEventsResponse) SetValidEvents(v []AcknowledgedEvent) {
 	o.ValidEvents = v
 }
 

@@ -26,6 +26,7 @@ const (
 	CUSTOMERSOURCE_API CustomerSource = "Api"
 	CUSTOMERSOURCE_SALESFORCE CustomerSource = "Salesforce"
 	CUSTOMERSOURCE_HUB_SPOT CustomerSource = "HubSpot"
+	CUSTOMERSOURCE_CONTRACT_EXTRACTION CustomerSource = "ContractExtraction"
 )
 
 // All allowed values of CustomerSource enum
@@ -35,6 +36,7 @@ var AllowedCustomerSourceEnumValues = []CustomerSource{
 	"Api",
 	"Salesforce",
 	"HubSpot",
+	"ContractExtraction",
 }
 
 func (v *CustomerSource) UnmarshalJSON(src []byte) error {

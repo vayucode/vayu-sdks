@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Price** | **float32** |  | 
 **SubscriptionCadence** | [**ProductGroupProductsInnerPricingOneOf2SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.md) |  | 
 **Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
+**IssuedSeparately** | Pointer to **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
 
 ## Methods
 
@@ -123,6 +124,31 @@ HasDiscount returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInnerPricingOneOf2) UnsetDiscount()`
 
 UnsetDiscount ensures that no value is present for Discount, not even an explicit nil
+### GetIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetIssuedSeparately() bool`
+
+GetIssuedSeparately returns the IssuedSeparately field if non-nil, zero value otherwise.
+
+### GetIssuedSeparatelyOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetIssuedSeparatelyOk() (*bool, bool)`
+
+GetIssuedSeparatelyOk returns a tuple with the IssuedSeparately field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) SetIssuedSeparately(v bool)`
+
+SetIssuedSeparately sets IssuedSeparately field to given value.
+
+### HasIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) HasIssuedSeparately() bool`
+
+HasIssuedSeparately returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

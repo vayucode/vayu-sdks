@@ -12,11 +12,12 @@ type CustomersAPI struct {
 type Customer = openapi.CreateCustomerResponseCustomer
 type Address = openapi.Address
 type Contact = openapi.Contact
-type IntegrationType = openapi.IntegrationType
+type IntegrationType = openapi.IntegrationProviders
 type ListCustomersResponse = openapi.ListCustomersResponse
 type GetCustomerResponse = openapi.GetCustomerResponse
 type GetCustomerByNameResponse = openapi.GetCustomerByNameResponse
 type GetCustomerByIntegrationIdResponse = openapi.GetCustomerByIntegrationIdResponse
+type CustomerExternalIntegration = openapi.CustomerExternalIntegration
 type CreateCustomerRequest = openapi.CreateCustomerRequest
 type CreateCustomerResponse = openapi.CreateCustomerResponse
 type UpdateCustomerRequest = openapi.UpdateCustomerRequest
@@ -63,6 +64,14 @@ func NewCreateCustomerRequest(name string, externalId *string, aliases []string,
 	}
 
 	return request
+}
+
+func NewCustomerExternalIntegration(integrationType IntegrationType, id string, name string) CustomerExternalIntegration {
+	return openapi.CustomerExternalIntegration{Type: string(integrationType), Id: id, Name: name}
+}
+
+func NewStripeCustomerIntegration(stripeCustomerId string, name string) CustomerExternalIntegration {
+	return NewCustomerExternalIntegration(openapi.INTEGRATIONPROVIDERS_STRIPE, stripeCustomerId, name)
 }
 
 func NewUpdateCustomerRequest(name *string, externalId *string, aliases []string, address *Address) *UpdateCustomerRequest {

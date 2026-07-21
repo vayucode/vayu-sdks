@@ -20,6 +20,10 @@ type Vayu struct {
 	Credits              *api.CreditsAPI
 }
 
+func NewStripeCustomerIntegration(stripeCustomerId string, name string) CustomerExternalIntegration {
+	return api.NewStripeCustomerIntegration(stripeCustomerId, name)
+}
+
 func NewVayu(APIKey string) *Vayu {
 	vayuClient := client.NewVayuClient(APIKey)
 	return &Vayu{
@@ -96,6 +100,7 @@ type (
 
 type (
 	IntegrationType                    = api.IntegrationType
+	CustomerExternalIntegration        = api.CustomerExternalIntegration
 	Customer                           = api.Customer
 	Address                            = api.Address
 	Contact                            = api.Contact

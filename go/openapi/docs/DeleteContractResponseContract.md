@@ -6,11 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **StartDate** | **time.Time** | The start date of the contract | 
 **CustomerId** | **string** | The id of the customer that the contract is associated with | 
-**Name** | **string** | The name of the contract | 
+**PlanId** | Pointer to **string** | The id of an existing plan to attach to this contract. When provided, products/productGroups are ignored and the plan is used as-is. Mutually exclusive with inline product definition. | [optional] 
+**Name** | Pointer to **string** | The name of the contract. Required when planId is not provided. | [optional] 
 **SalesForceOpportunityId** | Pointer to **NullableString** | The id of the sales force opportunity that the contract is associated with | [optional] 
 **EndDate** | Pointer to **NullableTime** | The end date of the contract | [optional] 
 **SignatureDate** | Pointer to **NullableTime** | The signature date of the contract | [optional] 
 **Products** | Pointer to [**[]ProductGroupProductsInner**](ProductGroupProductsInner.md) | The products that the contract is associated with | [optional] 
+**CreditGrants** | Pointer to [**[]ExternalCreditGrant**](ExternalCreditGrant.md) | Credit grants that fund credit pools for the customer under this contract. Each grant credits a pool identified by its creditProductId; usage products draw down those pools via consumesCreditProductIds. | [optional] 
 **ProductGroups** | Pointer to [**[]ProductGroup**](ProductGroup.md) | Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc. | [optional] 
 **AccountManager** | Pointer to **NullableString** | The name of the account manager of the contract | [optional] 
 **ShouldProRateInvoices** | Pointer to **bool** | Whether to pro rate the invoices for the contract. If not provided, it will default to false | [optional] 
@@ -20,6 +22,8 @@ Name | Type | Description | Notes
 **Status** | Pointer to [**ContractStatus**](ContractStatus.md) |  | [optional] 
 **PurchaseOrder** | Pointer to **string** | The purchase order number of the contract | [optional] 
 **Currency** | Pointer to [**Currency**](Currency.md) |  | [optional] 
+**IsTrial** | Pointer to **bool** | Whether the contract is a trial. All invoices under a trial contract are flagged with isTrial: true. If not provided, it defaults to false. | [optional] 
+**ExternalId** | Pointer to **NullableString** | A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints. | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -29,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewDeleteContractResponseContract
 
-`func NewDeleteContractResponseContract(startDate time.Time, customerId string, name string, id string, createdAt time.Time, updatedAt time.Time, deletedAt string, ) *DeleteContractResponseContract`
+`func NewDeleteContractResponseContract(startDate time.Time, customerId string, id string, createdAt time.Time, updatedAt time.Time, deletedAt string, ) *DeleteContractResponseContract`
 
 NewDeleteContractResponseContract instantiates a new DeleteContractResponseContract object
 This constructor will assign default values to properties that have it defined,
@@ -84,6 +88,31 @@ and a boolean to check if the value has been set.
 SetCustomerId sets CustomerId field to given value.
 
 
+### GetPlanId
+
+`func (o *DeleteContractResponseContract) GetPlanId() string`
+
+GetPlanId returns the PlanId field if non-nil, zero value otherwise.
+
+### GetPlanIdOk
+
+`func (o *DeleteContractResponseContract) GetPlanIdOk() (*string, bool)`
+
+GetPlanIdOk returns a tuple with the PlanId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPlanId
+
+`func (o *DeleteContractResponseContract) SetPlanId(v string)`
+
+SetPlanId sets PlanId field to given value.
+
+### HasPlanId
+
+`func (o *DeleteContractResponseContract) HasPlanId() bool`
+
+HasPlanId returns a boolean if a field has been set.
+
 ### GetName
 
 `func (o *DeleteContractResponseContract) GetName() string`
@@ -103,6 +132,11 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+### HasName
+
+`func (o *DeleteContractResponseContract) HasName() bool`
+
+HasName returns a boolean if a field has been set.
 
 ### GetSalesForceOpportunityId
 
@@ -234,6 +268,41 @@ SetProducts sets Products field to given value.
 
 HasProducts returns a boolean if a field has been set.
 
+### GetCreditGrants
+
+`func (o *DeleteContractResponseContract) GetCreditGrants() []ExternalCreditGrant`
+
+GetCreditGrants returns the CreditGrants field if non-nil, zero value otherwise.
+
+### GetCreditGrantsOk
+
+`func (o *DeleteContractResponseContract) GetCreditGrantsOk() (*[]ExternalCreditGrant, bool)`
+
+GetCreditGrantsOk returns a tuple with the CreditGrants field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreditGrants
+
+`func (o *DeleteContractResponseContract) SetCreditGrants(v []ExternalCreditGrant)`
+
+SetCreditGrants sets CreditGrants field to given value.
+
+### HasCreditGrants
+
+`func (o *DeleteContractResponseContract) HasCreditGrants() bool`
+
+HasCreditGrants returns a boolean if a field has been set.
+
+### SetCreditGrantsNil
+
+`func (o *DeleteContractResponseContract) SetCreditGrantsNil(b bool)`
+
+ SetCreditGrantsNil sets the value for CreditGrants to be an explicit nil
+
+### UnsetCreditGrants
+`func (o *DeleteContractResponseContract) UnsetCreditGrants()`
+
+UnsetCreditGrants ensures that no value is present for CreditGrants, not even an explicit nil
 ### GetProductGroups
 
 `func (o *DeleteContractResponseContract) GetProductGroups() []ProductGroup`
@@ -489,6 +558,66 @@ SetCurrency sets Currency field to given value.
 
 HasCurrency returns a boolean if a field has been set.
 
+### GetIsTrial
+
+`func (o *DeleteContractResponseContract) GetIsTrial() bool`
+
+GetIsTrial returns the IsTrial field if non-nil, zero value otherwise.
+
+### GetIsTrialOk
+
+`func (o *DeleteContractResponseContract) GetIsTrialOk() (*bool, bool)`
+
+GetIsTrialOk returns a tuple with the IsTrial field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsTrial
+
+`func (o *DeleteContractResponseContract) SetIsTrial(v bool)`
+
+SetIsTrial sets IsTrial field to given value.
+
+### HasIsTrial
+
+`func (o *DeleteContractResponseContract) HasIsTrial() bool`
+
+HasIsTrial returns a boolean if a field has been set.
+
+### GetExternalId
+
+`func (o *DeleteContractResponseContract) GetExternalId() string`
+
+GetExternalId returns the ExternalId field if non-nil, zero value otherwise.
+
+### GetExternalIdOk
+
+`func (o *DeleteContractResponseContract) GetExternalIdOk() (*string, bool)`
+
+GetExternalIdOk returns a tuple with the ExternalId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalId
+
+`func (o *DeleteContractResponseContract) SetExternalId(v string)`
+
+SetExternalId sets ExternalId field to given value.
+
+### HasExternalId
+
+`func (o *DeleteContractResponseContract) HasExternalId() bool`
+
+HasExternalId returns a boolean if a field has been set.
+
+### SetExternalIdNil
+
+`func (o *DeleteContractResponseContract) SetExternalIdNil(b bool)`
+
+ SetExternalIdNil sets the value for ExternalId to be an explicit nil
+
+### UnsetExternalId
+`func (o *DeleteContractResponseContract) UnsetExternalId()`
+
+UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetId
 
 `func (o *DeleteContractResponseContract) GetId() string`

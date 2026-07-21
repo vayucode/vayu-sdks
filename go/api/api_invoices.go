@@ -72,13 +72,13 @@ func (api *InvoicesAPI) ListInvoicesWithFilter(filter ListInvoicesFilter) (*List
 		request = request.CustomerId(*filter.CustomerId)
 	}
 	if filter.BillingStatus != nil {
-		request = request.BillingStatus(*filter.BillingStatus)
+		request = request.BillingStatus(openapi.InvoiceBillingStatus(*filter.BillingStatus))
 	}
 	if filter.IssuedAtFrom != nil {
-		request = request.IssuedAtFrom(*filter.IssuedAtFrom)
+		request = request.IssuedAfter(filter.IssuedAtFrom.Format(time.RFC3339))
 	}
 	if filter.IssuedAtTo != nil {
-		request = request.IssuedAtTo(*filter.IssuedAtTo)
+		request = request.IssuedBefore(filter.IssuedAtTo.Format(time.RFC3339))
 	}
 	response, _, err := request.Execute()
 

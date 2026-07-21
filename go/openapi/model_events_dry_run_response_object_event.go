@@ -28,6 +28,7 @@ type EventsDryRunResponseObjectEvent struct {
 	Data map[string]interface{} `json:"data,omitempty"`
 	Ref string `json:"ref"`
 	Name string `json:"name"`
+	AckId *string `json:"ackId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -208,6 +209,38 @@ func (o *EventsDryRunResponseObjectEvent) SetName(v string) {
 	o.Name = v
 }
 
+// GetAckId returns the AckId field value if set, zero value otherwise.
+func (o *EventsDryRunResponseObjectEvent) GetAckId() string {
+	if o == nil || IsNil(o.AckId) {
+		var ret string
+		return ret
+	}
+	return *o.AckId
+}
+
+// GetAckIdOk returns a tuple with the AckId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EventsDryRunResponseObjectEvent) GetAckIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AckId) {
+		return nil, false
+	}
+	return o.AckId, true
+}
+
+// HasAckId returns a boolean if a field has been set.
+func (o *EventsDryRunResponseObjectEvent) HasAckId() bool {
+	if o != nil && !IsNil(o.AckId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAckId gets a reference to the given string and assigns it to the AckId field.
+func (o *EventsDryRunResponseObjectEvent) SetAckId(v string) {
+	o.AckId = &v
+}
+
 func (o EventsDryRunResponseObjectEvent) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -226,6 +259,9 @@ func (o EventsDryRunResponseObjectEvent) ToMap() (map[string]interface{}, error)
 	}
 	toSerialize["ref"] = o.Ref
 	toSerialize["name"] = o.Name
+	if !IsNil(o.AckId) {
+		toSerialize["ackId"] = o.AckId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -279,6 +315,7 @@ func (o *EventsDryRunResponseObjectEvent) UnmarshalJSON(data []byte) (err error)
 		delete(additionalProperties, "data")
 		delete(additionalProperties, "ref")
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "ackId")
 		o.AdditionalProperties = additionalProperties
 	}
 

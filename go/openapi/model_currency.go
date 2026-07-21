@@ -29,6 +29,9 @@ const (
 	CURRENCY_AUD Currency = "AUD"
 	CURRENCY_COP Currency = "COP"
 	CURRENCY_BRL Currency = "BRL"
+	CURRENCY_ARS Currency = "ARS"
+	CURRENCY_INR Currency = "INR"
+	CURRENCY_MXN Currency = "MXN"
 )
 
 // All allowed values of Currency enum
@@ -41,6 +44,9 @@ var AllowedCurrencyEnumValues = []Currency{
 	"AUD",
 	"COP",
 	"BRL",
+	"ARS",
+	"INR",
+	"MXN",
 }
 
 func (v *Currency) UnmarshalJSON(src []byte) error {

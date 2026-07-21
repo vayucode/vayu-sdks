@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
 **Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
-**IsCreditPurchase** | Pointer to **bool** | Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false. | [optional] 
+**IsCreditPurchase** | Pointer to **bool** | Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false. | [optional] 
+**IssuedSeparately** | Pointer to **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetIsCreditPurchase sets IsCreditPurchase field to given value.
 `func (o *ProductGroupProductsInnerPricingOneOf) HasIsCreditPurchase() bool`
 
 HasIsCreditPurchase returns a boolean if a field has been set.
+
+### GetIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetIssuedSeparately() bool`
+
+GetIssuedSeparately returns the IssuedSeparately field if non-nil, zero value otherwise.
+
+### GetIssuedSeparatelyOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf) GetIssuedSeparatelyOk() (*bool, bool)`
+
+GetIssuedSeparatelyOk returns a tuple with the IssuedSeparately field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf) SetIssuedSeparately(v bool)`
+
+SetIssuedSeparately sets IssuedSeparately field to given value.
+
+### HasIssuedSeparately
+
+`func (o *ProductGroupProductsInnerPricingOneOf) HasIssuedSeparately() bool`
+
+HasIssuedSeparately returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

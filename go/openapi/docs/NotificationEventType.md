@@ -9,6 +9,8 @@
 
 * `UPCOMING_RENEWAL` (value: `"UpcomingRenewal"`)
 
+* `CONTRACT_EXPIRED` (value: `"ContractExpired"`)
+
 * `INVOICE_APPROVED` (value: `"InvoiceApproved"`)
 
 * `CUSTOMER_PORTAL_LINK_SENT` (value: `"CustomerPortalLinkSent"`)
@@ -32,6 +34,20 @@
 * `INVOICE_PAYMENT_STATUS_CHANGED` (value: `"InvoicePaymentStatusChanged"`)
 
 * `INVOICE_SEND_FAILED` (value: `"InvoiceSendFailed"`)
+
+* `CREDIT_POOL_DEPLETED` (value: `"CreditPoolDepleted"`)
+
+* `CREDIT_POOL_THRESHOLD_CROSSED` (value: `"CreditPoolThresholdCrossed"`)
+
+* `CREDIT_POOL_INCREASED` (value: `"CreditPoolIncreased"`)
+
+* `PAYMENT_FAILED` (value: `"PaymentFailed"`)
+
+* `CUSTOMER_CREATED` (value: `"CustomerCreated"`)
+
+* `CONTRACT_CREATED` (value: `"ContractCreated"`)
+
+* `INVOICE_ISSUE_DATE_ARRIVED` (value: `"InvoiceIssueDateArrived"`)
 
 * `PING_TEST` (value: `"PingTest"`)
 

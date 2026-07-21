@@ -6,6 +6,7 @@ import (
 	"time"
 
 	vayu "github.com/vayucode/vayu-sdks/go"
+	"github.com/vayucode/vayu-sdks/go/openapi"
 )
 
 // This example demonstrates the SDK use cases added for the Groundcover onboarding:
@@ -34,6 +35,7 @@ func main() {
 	}
 
 	externalIDsExample(v)
+	stripeCustomerExample(v)
 	eventsReadExample(v)
 	invoicesByStatusExample(v)
 	planTemplateContractExample(v)
@@ -42,6 +44,37 @@ func main() {
 }
 
 // 1. External IDs (ENG-7130): look up a customer by its external identifier.
+// 5. Stripe customer link (ENG-7128): create a customer already linked to a
+// Stripe customer id, then resolve it back through the integration lookup.
+func stripeCustomerExample(v *vayu.Vayu) {
+	fmt.Println("\n=== Stripe customer link (ENG-7128) ===")
+
+	if os.Getenv("VAYU_RUN_WRITES") != "1" {
+		fmt.Println("Set VAYU_RUN_WRITES=1 to create a Stripe-linked customer.")
+		return
+	}
+
+	stripeCustomerId := "cus_123"
+	name := "Acme Inc"
+
+	created, err := v.Customers.CreateCustomer(vayu.CreateCustomerRequest{
+		Name: name,
+		ExternalIntegration: []vayu.CustomerExternalIntegration{
+			vayu.NewStripeCustomerIntegration(stripeCustomerId, name),
+		},
+	})
+	if err != nil {
+		fatal("CreateCustomer(with Stripe link)", err)
+	}
+	fmt.Printf("Created customer %s linked to Stripe %s\n", created.Customer.GetId(), stripeCustomerId)
+
+	found, err := v.Customers.GetCustomerByIntegrationId(openapi.INTEGRATIONPROVIDERS_STRIPE, stripeCustomerId)
+	if err != nil {
+		fatal("GetCustomerByIntegrationId(Stripe)", err)
+	}
+	fmt.Printf("Resolved Stripe %s back to customer %s\n", stripeCustomerId, found.Customer.GetId())
+}
+
 func externalIDsExample(v *vayu.Vayu) {
 	fmt.Println("=== External IDs: lookup customer by externalId ===")
 	limit := float32(50)
@@ -132,10 +165,11 @@ func planTemplateContractExample(v *vayu.Vayu) {
 
 	// Validation: creating from a non-existent plan template must be rejected.
 	missingId := "000000000000000000000000"
+	validationName := "validation-check"
 	_, err := v.Contracts.CreateContract(vayu.CreateContractRequest{
 		StartDate:  time.Now(),
 		CustomerId: missingId, // not resolved — the request is rejected first
-		Name:       "validation-check",
+		Name:       &validationName,
 		PlanId:     &missingId, // planId that does not exist
 	})
 	if err != nil {
@@ -159,7 +193,7 @@ func planTemplateContractExample(v *vayu.Vayu) {
 	created, err := v.Contracts.CreateContract(vayu.CreateContractRequest{
 		StartDate:  time.Now(),
 		CustomerId: customerId,
-		Name:       name,
+		Name:       &name,
 		PlanId:     &planId,
 	})
 	if err != nil {

@@ -24,6 +24,7 @@ const (
 	NOTIFICATIONEVENTTYPE_ANONYMOUS_CUSTOMER NotificationEventType = "AnonymousCustomer"
 	NOTIFICATIONEVENTTYPE_OVERAGE NotificationEventType = "Overage"
 	NOTIFICATIONEVENTTYPE_UPCOMING_RENEWAL NotificationEventType = "UpcomingRenewal"
+	NOTIFICATIONEVENTTYPE_CONTRACT_EXPIRED NotificationEventType = "ContractExpired"
 	NOTIFICATIONEVENTTYPE_INVOICE_APPROVED NotificationEventType = "InvoiceApproved"
 	NOTIFICATIONEVENTTYPE_CUSTOMER_PORTAL_LINK_SENT NotificationEventType = "CustomerPortalLinkSent"
 	NOTIFICATIONEVENTTYPE_NEW_CUSTOMER_WITHOUT_CONTRACT NotificationEventType = "NewCustomerWithoutContract"
@@ -36,6 +37,13 @@ const (
 	NOTIFICATIONEVENTTYPE_FINAL_TIER_EXCEEDED NotificationEventType = "FinalTierExceeded"
 	NOTIFICATIONEVENTTYPE_INVOICE_PAYMENT_STATUS_CHANGED NotificationEventType = "InvoicePaymentStatusChanged"
 	NOTIFICATIONEVENTTYPE_INVOICE_SEND_FAILED NotificationEventType = "InvoiceSendFailed"
+	NOTIFICATIONEVENTTYPE_CREDIT_POOL_DEPLETED NotificationEventType = "CreditPoolDepleted"
+	NOTIFICATIONEVENTTYPE_CREDIT_POOL_THRESHOLD_CROSSED NotificationEventType = "CreditPoolThresholdCrossed"
+	NOTIFICATIONEVENTTYPE_CREDIT_POOL_INCREASED NotificationEventType = "CreditPoolIncreased"
+	NOTIFICATIONEVENTTYPE_PAYMENT_FAILED NotificationEventType = "PaymentFailed"
+	NOTIFICATIONEVENTTYPE_CUSTOMER_CREATED NotificationEventType = "CustomerCreated"
+	NOTIFICATIONEVENTTYPE_CONTRACT_CREATED NotificationEventType = "ContractCreated"
+	NOTIFICATIONEVENTTYPE_INVOICE_ISSUE_DATE_ARRIVED NotificationEventType = "InvoiceIssueDateArrived"
 	NOTIFICATIONEVENTTYPE_PING_TEST NotificationEventType = "PingTest"
 )
 
@@ -44,6 +52,7 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"AnonymousCustomer",
 	"Overage",
 	"UpcomingRenewal",
+	"ContractExpired",
 	"InvoiceApproved",
 	"CustomerPortalLinkSent",
 	"NewCustomerWithoutContract",
@@ -56,6 +65,13 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"FinalTierExceeded",
 	"InvoicePaymentStatusChanged",
 	"InvoiceSendFailed",
+	"CreditPoolDepleted",
+	"CreditPoolThresholdCrossed",
+	"CreditPoolIncreased",
+	"PaymentFailed",
+	"CustomerCreated",
+	"ContractCreated",
+	"InvoiceIssueDateArrived",
 	"PingTest",
 }
 

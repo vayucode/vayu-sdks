@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VayuParentCustomerId** | **string** | Identifier of the parent customer in Vayu. | 
 **VayuChildCustomerId** | **string** | Identifier of the child customer in Vayu. | 
+**RelationType** | [**CustomerRelationType**](CustomerRelationType.md) |  | [default to CUSTOMERRELATIONTYPE_ACCUMULATE_USAGE]
 
 ## Methods
 
 ### NewCreateCustomerRelationRequest
 
-`func NewCreateCustomerRelationRequest(vayuParentCustomerId string, vayuChildCustomerId string, ) *CreateCustomerRelationRequest`
+`func NewCreateCustomerRelationRequest(vayuParentCustomerId string, vayuChildCustomerId string, relationType CustomerRelationType, ) *CreateCustomerRelationRequest`
 
 NewCreateCustomerRelationRequest instantiates a new CreateCustomerRelationRequest object
 This constructor will assign default values to properties that have it defined,
@@ -64,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *CreateCustomerRelationRequest) SetVayuChildCustomerId(v string)`
 
 SetVayuChildCustomerId sets VayuChildCustomerId field to given value.
+
+
+### GetRelationType
+
+`func (o *CreateCustomerRelationRequest) GetRelationType() CustomerRelationType`
+
+GetRelationType returns the RelationType field if non-nil, zero value otherwise.
+
+### GetRelationTypeOk
+
+`func (o *CreateCustomerRelationRequest) GetRelationTypeOk() (*CustomerRelationType, bool)`
+
+GetRelationTypeOk returns a tuple with the RelationType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRelationType
+
+`func (o *CreateCustomerRelationRequest) SetRelationType(v CustomerRelationType)`
+
+SetRelationType sets RelationType field to given value.
 
 
 

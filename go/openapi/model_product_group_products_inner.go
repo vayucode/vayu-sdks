@@ -35,11 +35,15 @@ type ProductGroupProductsInner struct {
 	NsClass NullableString `json:"nsClass,omitempty"`
 	// The id of the class of the product in NetSuite ERP
 	NsClassId NullableString `json:"nsClassId,omitempty"`
+	// Links the product to matching products in V3 integrations (e.g. Paddle). For each entry, the product is linked to that external integration after the contract is created, so invoices for this product are exported to it. At most one entry per provider. Currently only Paddle is supported.
+	ExternalIntegrations []ProductExternalIntegration `json:"externalIntegrations,omitempty"`
 	Commitment NullableProductGroupProductsInnerCommitment `json:"commitment,omitempty"`
 	PaymentTerm NullablePaymentTerm `json:"paymentTerm,omitempty"`
 	// Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned. This field is ignored if the product is part of a ProductGroup.
 	IsCalendarAligned *bool `json:"isCalendarAligned,omitempty"`
 	CloudProviderSettings NullableProductCloudProviderSettings `json:"cloudProviderSettings,omitempty"`
+	// IDs of credit products whose pools are drawn down when this usage product is invoiced. Each ID matches the creditProductId of a credit grant on the same contract that funds the pool. Pools are drawn in the order listed. If omitted, no credits are applied and the product is billed at full price. Not supported inside productGroups.
+	ConsumesCreditProductIds []string `json:"consumesCreditProductIds,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -347,6 +351,39 @@ func (o *ProductGroupProductsInner) UnsetNsClassId() {
 	o.NsClassId.Unset()
 }
 
+// GetExternalIntegrations returns the ExternalIntegrations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInner) GetExternalIntegrations() []ProductExternalIntegration {
+	if o == nil {
+		var ret []ProductExternalIntegration
+		return ret
+	}
+	return o.ExternalIntegrations
+}
+
+// GetExternalIntegrationsOk returns a tuple with the ExternalIntegrations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInner) GetExternalIntegrationsOk() ([]ProductExternalIntegration, bool) {
+	if o == nil || IsNil(o.ExternalIntegrations) {
+		return nil, false
+	}
+	return o.ExternalIntegrations, true
+}
+
+// HasExternalIntegrations returns a boolean if a field has been set.
+func (o *ProductGroupProductsInner) HasExternalIntegrations() bool {
+	if o != nil && !IsNil(o.ExternalIntegrations) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalIntegrations gets a reference to the given []ProductExternalIntegration and assigns it to the ExternalIntegrations field.
+func (o *ProductGroupProductsInner) SetExternalIntegrations(v []ProductExternalIntegration) {
+	o.ExternalIntegrations = v
+}
+
 // GetCommitment returns the Commitment field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ProductGroupProductsInner) GetCommitment() ProductGroupProductsInnerCommitment {
 	if o == nil || IsNil(o.Commitment.Get()) {
@@ -505,6 +542,39 @@ func (o *ProductGroupProductsInner) UnsetCloudProviderSettings() {
 	o.CloudProviderSettings.Unset()
 }
 
+// GetConsumesCreditProductIds returns the ConsumesCreditProductIds field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInner) GetConsumesCreditProductIds() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.ConsumesCreditProductIds
+}
+
+// GetConsumesCreditProductIdsOk returns a tuple with the ConsumesCreditProductIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInner) GetConsumesCreditProductIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.ConsumesCreditProductIds) {
+		return nil, false
+	}
+	return o.ConsumesCreditProductIds, true
+}
+
+// HasConsumesCreditProductIds returns a boolean if a field has been set.
+func (o *ProductGroupProductsInner) HasConsumesCreditProductIds() bool {
+	if o != nil && !IsNil(o.ConsumesCreditProductIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetConsumesCreditProductIds gets a reference to the given []string and assigns it to the ConsumesCreditProductIds field.
+func (o *ProductGroupProductsInner) SetConsumesCreditProductIds(v []string) {
+	o.ConsumesCreditProductIds = v
+}
+
 func (o ProductGroupProductsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -533,6 +603,9 @@ func (o ProductGroupProductsInner) ToMap() (map[string]interface{}, error) {
 	if o.NsClassId.IsSet() {
 		toSerialize["nsClassId"] = o.NsClassId.Get()
 	}
+	if o.ExternalIntegrations != nil {
+		toSerialize["externalIntegrations"] = o.ExternalIntegrations
+	}
 	if o.Commitment.IsSet() {
 		toSerialize["commitment"] = o.Commitment.Get()
 	}
@@ -544,6 +617,9 @@ func (o ProductGroupProductsInner) ToMap() (map[string]interface{}, error) {
 	}
 	if o.CloudProviderSettings.IsSet() {
 		toSerialize["cloudProviderSettings"] = o.CloudProviderSettings.Get()
+	}
+	if o.ConsumesCreditProductIds != nil {
+		toSerialize["consumesCreditProductIds"] = o.ConsumesCreditProductIds
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -598,10 +674,12 @@ func (o *ProductGroupProductsInner) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "productErpId")
 		delete(additionalProperties, "nsClass")
 		delete(additionalProperties, "nsClassId")
+		delete(additionalProperties, "externalIntegrations")
 		delete(additionalProperties, "commitment")
 		delete(additionalProperties, "paymentTerm")
 		delete(additionalProperties, "isCalendarAligned")
 		delete(additionalProperties, "cloudProviderSettings")
+		delete(additionalProperties, "consumesCreditProductIds")
 		o.AdditionalProperties = additionalProperties
 	}
 
