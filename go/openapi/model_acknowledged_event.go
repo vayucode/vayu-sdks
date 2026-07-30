@@ -31,7 +31,7 @@ type AcknowledgedEvent struct {
 	// A universally unique identifier (UUID) or other form of high-entropy string serving as an immutable reference for each event entry.
 	Ref string `json:"ref"`
 	// A schema-less JSON object encapsulating miscellaneous attributes and metrics associated with the event.
-	Data map[string]map[string]interface{} `json:"data,omitempty"`
+	Data map[string]interface{} `json:"data,omitempty"`
 	// Per-event acknowledgment ID confirming Vayu received this event. Use it to demonstrate the event was sent to Vayu.
 	AckId string `json:"ackId"`
 	AdditionalProperties map[string]interface{}
@@ -158,9 +158,9 @@ func (o *AcknowledgedEvent) SetRef(v string) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AcknowledgedEvent) GetData() map[string]map[string]interface{} {
+func (o *AcknowledgedEvent) GetData() map[string]interface{} {
 	if o == nil {
-		var ret map[string]map[string]interface{}
+		var ret map[string]interface{}
 		return ret
 	}
 	return o.Data
@@ -169,9 +169,9 @@ func (o *AcknowledgedEvent) GetData() map[string]map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AcknowledgedEvent) GetDataOk() (map[string]map[string]interface{}, bool) {
+func (o *AcknowledgedEvent) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Data) {
-		return map[string]map[string]interface{}{}, false
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
@@ -185,8 +185,8 @@ func (o *AcknowledgedEvent) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given map[string]map[string]interface{} and assigns it to the Data field.
-func (o *AcknowledgedEvent) SetData(v map[string]map[string]interface{}) {
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *AcknowledgedEvent) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 

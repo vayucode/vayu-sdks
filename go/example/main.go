@@ -36,6 +36,7 @@ func main() {
 
 	externalIDsExample(v)
 	stripeCustomerExample(v)
+	sendEventsExample(v)
 	eventsReadExample(v)
 	invoicesByStatusExample(v)
 	planTemplateContractExample(v)
@@ -100,6 +101,41 @@ func externalIDsExample(v *vayu.Vayu) {
 		fatal("GetCustomerByExternalId", err)
 	}
 	fmt.Printf("externalId %q -> %s (%s)\n", externalId, fetched.Customer.GetName(), fetched.Customer.GetId())
+}
+
+// Events write path: submit an event whose data holds plain string/number
+// values and decode the acknowledged response (regression check for the
+// v0.3.9 map-of-maps AcknowledgedEvent.data typing bug).
+func sendEventsExample(v *vayu.Vayu) {
+	fmt.Println("\n=== Events write path: send-events (data with string values) ===")
+
+	if os.Getenv("VAYU_RUN_WRITES") != "1" {
+		fmt.Println("Set VAYU_RUN_WRITES=1 to submit a test event.")
+		return
+	}
+
+	ref := fmt.Sprintf("sdk-example-%d", time.Now().UnixNano())
+	result, err := v.Events.SendEvents([]vayu.Event{
+		{
+			Name:          "sdk_example_event",
+			Timestamp:     time.Now(),
+			CustomerAlias: "sdk-example-customer",
+			Ref:           ref,
+			Data: map[string]interface{}{
+				"api_url":     "https://example.com/v1/resource",
+				"duration_ms": 123,
+				"cached":      false,
+			},
+		},
+	})
+	if err != nil {
+		fatal("SendEvents", err)
+	}
+
+	fmt.Printf("Accepted %d event(s), rejected %d\n", len(result.ValidEvents), len(result.InvalidEvents))
+	for _, ev := range result.ValidEvents {
+		fmt.Printf("ref=%s ackId=%s data.api_url=%v\n", ev.GetRef(), ev.GetAckId(), ev.Data["api_url"])
+	}
 }
 
 // 2. Events read path (ClickHouse): query events, then fetch one by its ref.

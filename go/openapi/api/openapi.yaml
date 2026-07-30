@@ -8806,17 +8806,6 @@ components:
       - events
       type: object
     AcknowledgedEvent:
-      allOf:
-      - $ref: '#/components/schemas/Event'
-      - properties:
-          ackId:
-            description: Per-event acknowledgment ID confirming Vayu received this
-              event. Use it to demonstrate the event was sent to Vayu.
-            example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
-            type: string
-        required:
-        - ackId
-        type: object
       example:
         ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
         customerAlias: customer_12345
@@ -8826,6 +8815,53 @@ components:
           key2: api_url
         name: api_call
         timestamp: 2023-09-13T18:25:43.511Z
+      properties:
+        name:
+          description: "The distinctive label assigned to an event, serving as a critical\
+            \ identifier for categorizing and pricing events within the system's backend\
+            \ infrastructure."
+          example: api_call
+          type: string
+        timestamp:
+          description: The temporal marker denoting the exact moment of event occurrence.
+            The timestamp is formatted as an ISO 8601 string and is expressed in Coordinated
+            Universal Time (UTC). i.e. YYYY-MM-DDTHH:MM:SS.SSSZ
+          example: 2023-09-13T18:25:43.511Z
+          format: date-time
+          type: string
+        customerAlias:
+          description: A pseudonymous or otherwise obfuscated identifier uniquely
+            assigned to each customer.
+          example: customer_12345
+          minLength: 1
+          type: string
+        ref:
+          description: A universally unique identifier (UUID) or other form of high-entropy
+            string serving as an immutable reference for each event entry.
+          example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+          type: string
+        data:
+          additionalProperties:
+            nullable: true
+          description: A schema-less JSON object encapsulating miscellaneous attributes
+            and metrics associated with the event.
+          example:
+            key1: processing_duration
+            key2: api_url
+          nullable: true
+          type: object
+        ackId:
+          description: Per-event acknowledgment ID confirming Vayu received this event.
+            Use it to demonstrate the event was sent to Vayu.
+          example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          type: string
+      required:
+      - ackId
+      - customerAlias
+      - name
+      - ref
+      - timestamp
+      type: object
     InvalidEvent:
       example:
         event:

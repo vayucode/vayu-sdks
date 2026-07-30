@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Timestamp** | **time.Time** | The temporal marker denoting the exact moment of event occurrence. The timestamp is formatted as an ISO 8601 string and is expressed in Coordinated Universal Time (UTC). i.e. YYYY-MM-DDTHH:MM:SS.SSSZ | 
 **CustomerAlias** | **string** | A pseudonymous or otherwise obfuscated identifier uniquely assigned to each customer. | 
 **Ref** | **string** | A universally unique identifier (UUID) or other form of high-entropy string serving as an immutable reference for each event entry. | 
-**Data** | Pointer to **map[string]map[string]interface{}** | A schema-less JSON object encapsulating miscellaneous attributes and metrics associated with the event. | [optional] 
+**Data** | Pointer to **map[string]interface{}** | A schema-less JSON object encapsulating miscellaneous attributes and metrics associated with the event. | [optional] 
 **AckId** | **string** | Per-event acknowledgment ID confirming Vayu received this event. Use it to demonstrate the event was sent to Vayu. | 
 
 ## Methods
@@ -112,20 +112,20 @@ SetRef sets Ref field to given value.
 
 ### GetData
 
-`func (o *AcknowledgedEvent) GetData() map[string]map[string]interface{}`
+`func (o *AcknowledgedEvent) GetData() map[string]interface{}`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *AcknowledgedEvent) GetDataOk() (*map[string]map[string]interface{}, bool)`
+`func (o *AcknowledgedEvent) GetDataOk() (*map[string]interface{}, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *AcknowledgedEvent) SetData(v map[string]map[string]interface{})`
+`func (o *AcknowledgedEvent) SetData(v map[string]interface{})`
 
 SetData sets Data field to given value.
 
