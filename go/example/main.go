@@ -103,9 +103,7 @@ func externalIDsExample(v *vayu.Vayu) {
 	fmt.Printf("externalId %q -> %s (%s)\n", externalId, fetched.Customer.GetName(), fetched.Customer.GetId())
 }
 
-// Events write path: submit an event whose data holds plain string/number
-// values and decode the acknowledged response (regression check for the
-// v0.3.9 map-of-maps AcknowledgedEvent.data typing bug).
+// Events write path: submit an event with scalar data values and decode the acknowledged response.
 func sendEventsExample(v *vayu.Vayu) {
 	fmt.Println("\n=== Events write path: send-events (data with string values) ===")
 
