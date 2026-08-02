@@ -17,6 +17,7 @@ export class WebhookSubscribeRequest {
     'callbackUrl': string;
     'eventType': NotificationEventType;
     'threshold'?: number;
+    'recurringThreshold'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -38,6 +39,12 @@ export class WebhookSubscribeRequest {
         {
             "name": "threshold",
             "baseName": "threshold",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "recurringThreshold",
+            "baseName": "recurringThreshold",
             "type": "number",
             "format": ""
         }    ];

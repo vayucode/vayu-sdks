@@ -20,5 +20,6 @@ export enum CustomerSource {
     VayuEventsApi = 'VayuEventsApi',
     Api = 'Api',
     Salesforce = 'Salesforce',
-    HubSpot = 'HubSpot'
+    HubSpot = 'HubSpot',
+    ContractExtraction = 'ContractExtraction'
 }

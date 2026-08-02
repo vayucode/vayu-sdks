@@ -15,6 +15,7 @@
 
 
 # import models into model package
+from openapi.models.acknowledged_event import AcknowledgedEvent
 from openapi.models.address import Address
 from openapi.models.aggregation_method import AggregationMethod
 from openapi.models.aggregation_operator import AggregationOperator
@@ -44,6 +45,9 @@ from openapi.models.create_measurement_request_usage_date import CreateMeasureme
 from openapi.models.create_measurement_response import CreateMeasurementResponse
 from openapi.models.create_measurement_response_measurement import CreateMeasurementResponseMeasurement
 from openapi.models.credit_ledger_entry import CreditLedgerEntry
+from openapi.models.credit_top_up_request import CreditTopUpRequest
+from openapi.models.credit_top_up_request_credit_grant import CreditTopUpRequestCreditGrant
+from openapi.models.credit_top_up_response import CreditTopUpResponse
 from openapi.models.criterion import Criterion
 from openapi.models.criterion_operator import CriterionOperator
 from openapi.models.currency import Currency
@@ -52,7 +56,10 @@ from openapi.models.custom_field_entities import CustomFieldEntities
 from openapi.models.custom_field_value import CustomFieldValue
 from openapi.models.custom_field_value_types import CustomFieldValueTypes
 from openapi.models.customer_cloud_provider_settings import CustomerCloudProviderSettings
+from openapi.models.customer_external_integration import CustomerExternalIntegration
+from openapi.models.customer_relation_type import CustomerRelationType
 from openapi.models.customer_source import CustomerSource
+from openapi.models.customer_status import CustomerStatus
 from openapi.models.deduct_credits_request import DeductCreditsRequest
 from openapi.models.delete_catalog_product_response import DeleteCatalogProductResponse
 from openapi.models.delete_catalog_product_response_catalog_product import DeleteCatalogProductResponseCatalogProduct
@@ -79,6 +86,8 @@ from openapi.models.events_dry_run_response import EventsDryRunResponse
 from openapi.models.events_dry_run_response_object import EventsDryRunResponseObject
 from openapi.models.events_dry_run_response_object_event import EventsDryRunResponseObjectEvent
 from openapi.models.events_dry_run_response_object_meter_with_values_inner import EventsDryRunResponseObjectMeterWithValuesInner
+from openapi.models.external_credit_grant import ExternalCreditGrant
+from openapi.models.external_credit_product import ExternalCreditProduct
 from openapi.models.external_overage_strategy import ExternalOverageStrategy
 from openapi.models.filter import Filter
 from openapi.models.full_day_period import FullDayPeriod
@@ -110,7 +119,6 @@ from openapi.models.grant_credits_request import GrantCreditsRequest
 from openapi.models.integration_entity import IntegrationEntity
 from openapi.models.integration_entity_types import IntegrationEntityTypes
 from openapi.models.integration_providers import IntegrationProviders
-from openapi.models.integration_type import IntegrationType
 from openapi.models.internal_server_error_response import InternalServerErrorResponse
 from openapi.models.invalid_event import InvalidEvent
 from openapi.models.invoice_billing_status import InvoiceBillingStatus
@@ -120,6 +128,7 @@ from openapi.models.line_item_revenue_breakdown import LineItemRevenueBreakdown
 from openapi.models.list_catalog_products_response import ListCatalogProductsResponse
 from openapi.models.list_contracts_response import ListContractsResponse
 from openapi.models.list_credit_ledger_entries_response import ListCreditLedgerEntriesResponse
+from openapi.models.list_credit_products_response import ListCreditProductsResponse
 from openapi.models.list_custom_fields_response import ListCustomFieldsResponse
 from openapi.models.list_customers_response import ListCustomersResponse
 from openapi.models.list_invoices_response import ListInvoicesResponse
@@ -140,6 +149,7 @@ from openapi.models.plan_duration import PlanDuration
 from openapi.models.plan_status import PlanStatus
 from openapi.models.product_cloud_provider_settings import ProductCloudProviderSettings
 from openapi.models.product_consumption import ProductConsumption
+from openapi.models.product_external_integration import ProductExternalIntegration
 from openapi.models.product_group import ProductGroup
 from openapi.models.product_group_commitment import ProductGroupCommitment
 from openapi.models.product_group_products_inner import ProductGroupProductsInner
@@ -164,11 +174,16 @@ from openapi.models.product_group_products_inner_scheduling_duration import Prod
 from openapi.models.query_events_response import QueryEventsResponse
 from openapi.models.query_events_response_events_inner import QueryEventsResponseEventsInner
 from openapi.models.rate_limit_error_response import RateLimitErrorResponse
+from openapi.models.refresh_contract_credits_request import RefreshContractCreditsRequest
+from openapi.models.refresh_contract_credits_request_grants_inner import RefreshContractCreditsRequestGrantsInner
+from openapi.models.refresh_contract_credits_response import RefreshContractCreditsResponse
 from openapi.models.request_too_long_error_response import RequestTooLongErrorResponse
 from openapi.models.send_events_request import SendEventsRequest
 from openapi.models.send_events_response import SendEventsResponse
 from openapi.models.submit_cloud_usage_request import SubmitCloudUsageRequest
 from openapi.models.sync_status import SyncStatus
+from openapi.models.terminate_contract_request import TerminateContractRequest
+from openapi.models.terminate_contract_response import TerminateContractResponse
 from openapi.models.unauthorized_error_response import UnauthorizedErrorResponse
 from openapi.models.unlimited_duration import UnlimitedDuration
 from openapi.models.update_catalog_product_request import UpdateCatalogProductRequest

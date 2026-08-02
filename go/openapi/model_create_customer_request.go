@@ -32,6 +32,7 @@ type CreateCustomerRequest struct {
 	LegalName NullableString `json:"legalName,omitempty"`
 	// The tax IDs of the customer
 	TaxIds []string `json:"taxIds,omitempty"`
+	Status *CustomerStatus `json:"status,omitempty"`
 	// The tax ID of the customer (deprecated, use taxIds instead)
 	// Deprecated
 	TaxId NullableString `json:"taxId,omitempty"`
@@ -290,6 +291,38 @@ func (o *CreateCustomerRequest) HasTaxIds() bool {
 // SetTaxIds gets a reference to the given []string and assigns it to the TaxIds field.
 func (o *CreateCustomerRequest) SetTaxIds(v []string) {
 	o.TaxIds = v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *CreateCustomerRequest) GetStatus() CustomerStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret CustomerStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCustomerRequest) GetStatusOk() (*CustomerStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given CustomerStatus and assigns it to the Status field.
+func (o *CreateCustomerRequest) SetStatus(v CustomerStatus) {
+	o.Status = &v
 }
 
 // GetTaxId returns the TaxId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -915,6 +948,9 @@ func (o CreateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	if o.TaxIds != nil {
 		toSerialize["taxIds"] = o.TaxIds
 	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	if o.TaxId.IsSet() {
 		toSerialize["taxId"] = o.TaxId.Get()
 	}
@@ -1012,6 +1048,7 @@ func (o *CreateCustomerRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "source")
 		delete(additionalProperties, "legalName")
 		delete(additionalProperties, "taxIds")
+		delete(additionalProperties, "status")
 		delete(additionalProperties, "taxId")
 		delete(additionalProperties, "cloudProviderSettings")
 		delete(additionalProperties, "externalId")

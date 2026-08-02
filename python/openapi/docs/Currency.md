@@ -20,6 +20,12 @@ The billing currency of the customer
 
 * `BRL` (value: `'BRL'`)
 
+* `ARS` (value: `'ARS'`)
+
+* `INR` (value: `'INR'`)
+
+* `MXN` (value: `'MXN'`)
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

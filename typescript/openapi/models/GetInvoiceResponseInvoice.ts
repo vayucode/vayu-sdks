@@ -47,6 +47,10 @@ export class GetInvoiceResponseInvoice {
     * The total amount of the invoice
     */
     'amount': number;
+    /**
+    * Whether the invoice belongs to a trial contract
+    */
+    'isTrial': boolean;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -120,6 +124,12 @@ export class GetInvoiceResponseInvoice {
             "name": "amount",
             "baseName": "amount",
             "type": "number",
+            "format": ""
+        },
+        {
+            "name": "isTrial",
+            "baseName": "isTrial",
+            "type": "boolean",
             "format": ""
         },
         {

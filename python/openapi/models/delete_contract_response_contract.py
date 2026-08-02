@@ -25,6 +25,7 @@ from typing_extensions import Annotated
 from openapi.models.contract_status import ContractStatus
 from openapi.models.custom_field import CustomField
 from openapi.models.custom_field_value import CustomFieldValue
+from openapi.models.external_credit_grant import ExternalCreditGrant
 from openapi.models.product_group import ProductGroup
 from openapi.models.product_group_products_inner import ProductGroupProductsInner
 from typing import Optional, Set
@@ -36,11 +37,13 @@ class DeleteContractResponseContract(BaseModel):
     """ # noqa: E501
     start_date: datetime = Field(description="The start date of the contract", alias="startDate")
     customer_id: Annotated[str, Field(strict=True)] = Field(description="The id of the customer that the contract is associated with", alias="customerId")
-    name: StrictStr = Field(description="The name of the contract")
+    plan_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="The id of an existing plan to attach to this contract. When provided, products/productGroups are ignored and the plan is used as-is. Mutually exclusive with inline product definition.", alias="planId")
+    name: Optional[StrictStr] = Field(default=None, description="The name of the contract. Required when planId is not provided.")
     sales_force_opportunity_id: Optional[StrictStr] = Field(default=None, description="The id of the sales force opportunity that the contract is associated with", alias="salesForceOpportunityId")
     end_date: Optional[datetime] = Field(default=None, description="The end date of the contract", alias="endDate")
     signature_date: Optional[datetime] = Field(default=None, description="The signature date of the contract", alias="signatureDate")
     products: Optional[List[ProductGroupProductsInner]] = Field(default=None, description="The products that the contract is associated with")
+    credit_grants: Optional[List[ExternalCreditGrant]] = Field(default=None, description="Credit grants that fund credit pools for the customer under this contract. Each grant credits a pool identified by its creditProductId; usage products draw down those pools via consumesCreditProductIds.", alias="creditGrants")
     product_groups: Optional[List[ProductGroup]] = Field(default=None, description="Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.", alias="productGroups")
     account_manager: Optional[StrictStr] = Field(default=None, description="The name of the account manager of the contract", alias="accountManager")
     should_pro_rate_invoices: Optional[StrictBool] = Field(default=None, description="Whether to pro rate the invoices for the contract. If not provided, it will default to false", alias="shouldProRateInvoices")
@@ -50,16 +53,28 @@ class DeleteContractResponseContract(BaseModel):
     status: Optional[ContractStatus] = None
     purchase_order: Optional[StrictStr] = Field(default=None, description="The purchase order number of the contract", alias="purchaseOrder")
     currency: Optional[Any] = None
+    is_trial: Optional[StrictBool] = Field(default=None, description="Whether the contract is a trial. All invoices under a trial contract are flagged with isTrial: true. If not provided, it defaults to false.", alias="isTrial")
+    external_id: Optional[StrictStr] = Field(default=None, description="A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints.", alias="externalId")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     deleted_at: StrictStr = Field(alias="deletedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["startDate", "customerId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "purchaseOrder", "currency", "id", "createdAt", "updatedAt", "deletedAt"]
+    __properties: ClassVar[List[str]] = ["startDate", "customerId", "planId", "name", "salesForceOpportunityId", "endDate", "signatureDate", "products", "creditGrants", "productGroups", "accountManager", "shouldProRateInvoices", "autoRenewContract", "customFields", "customFieldValues", "status", "purchaseOrder", "currency", "isTrial", "externalId", "id", "createdAt", "updatedAt", "deletedAt"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if not re.match(r"^[0-9a-fA-F]{24}$", value):
+            raise ValueError(r"must validate the regular expression /^[0-9a-fA-F]{24}$/")
+        return value
+
+    @field_validator('plan_id')
+    def plan_id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"^[0-9a-fA-F]{24}$", value):
             raise ValueError(r"must validate the regular expression /^[0-9a-fA-F]{24}$/")
         return value
@@ -112,6 +127,13 @@ class DeleteContractResponseContract(BaseModel):
                 if _item_products:
                     _items.append(_item_products.to_dict())
             _dict['products'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in credit_grants (list)
+        _items = []
+        if self.credit_grants:
+            for _item_credit_grants in self.credit_grants:
+                if _item_credit_grants:
+                    _items.append(_item_credit_grants.to_dict())
+            _dict['creditGrants'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in product_groups (list)
         _items = []
         if self.product_groups:
@@ -156,6 +178,11 @@ class DeleteContractResponseContract(BaseModel):
         if self.signature_date is None and "signature_date" in self.model_fields_set:
             _dict['signatureDate'] = None
 
+        # set to None if credit_grants (nullable) is None
+        # and model_fields_set contains the field
+        if self.credit_grants is None and "credit_grants" in self.model_fields_set:
+            _dict['creditGrants'] = None
+
         # set to None if account_manager (nullable) is None
         # and model_fields_set contains the field
         if self.account_manager is None and "account_manager" in self.model_fields_set:
@@ -171,6 +198,11 @@ class DeleteContractResponseContract(BaseModel):
         if self.custom_field_values is None and "custom_field_values" in self.model_fields_set:
             _dict['customFieldValues'] = None
 
+        # set to None if external_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_id is None and "external_id" in self.model_fields_set:
+            _dict['externalId'] = None
+
         return _dict
 
     @classmethod
@@ -185,11 +217,13 @@ class DeleteContractResponseContract(BaseModel):
         _obj = cls.model_validate({
             "startDate": obj.get("startDate"),
             "customerId": obj.get("customerId"),
+            "planId": obj.get("planId"),
             "name": obj.get("name"),
             "salesForceOpportunityId": obj.get("salesForceOpportunityId"),
             "endDate": obj.get("endDate"),
             "signatureDate": obj.get("signatureDate"),
             "products": [ProductGroupProductsInner.from_dict(_item) for _item in obj["products"]] if obj.get("products") is not None else None,
+            "creditGrants": [ExternalCreditGrant.from_dict(_item) for _item in obj["creditGrants"]] if obj.get("creditGrants") is not None else None,
             "productGroups": [ProductGroup.from_dict(_item) for _item in obj["productGroups"]] if obj.get("productGroups") is not None else None,
             "accountManager": obj.get("accountManager"),
             "shouldProRateInvoices": obj.get("shouldProRateInvoices"),
@@ -199,6 +233,8 @@ class DeleteContractResponseContract(BaseModel):
             "status": obj.get("status"),
             "purchaseOrder": obj.get("purchaseOrder"),
             "currency": Currency.from_dict(obj["currency"]) if obj.get("currency") is not None else None,
+            "isTrial": obj.get("isTrial"),
+            "externalId": obj.get("externalId"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),

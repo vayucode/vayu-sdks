@@ -27,6 +27,8 @@ type ProductGroupProductsInnerPricingOneOf2 struct {
 	Discount NullableProductGroupProductsInnerPricingOneOfDiscount `json:"discount,omitempty"`
 	// When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.
 	IssuedSeparately *bool `json:"issuedSeparately,omitempty"`
+	// The number of seats for this subscription product.
+	Seats *int32 `json:"seats,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -198,6 +200,38 @@ func (o *ProductGroupProductsInnerPricingOneOf2) SetIssuedSeparately(v bool) {
 	o.IssuedSeparately = &v
 }
 
+// GetSeats returns the Seats field value if set, zero value otherwise.
+func (o *ProductGroupProductsInnerPricingOneOf2) GetSeats() int32 {
+	if o == nil || IsNil(o.Seats) {
+		var ret int32
+		return ret
+	}
+	return *o.Seats
+}
+
+// GetSeatsOk returns a tuple with the Seats field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductGroupProductsInnerPricingOneOf2) GetSeatsOk() (*int32, bool) {
+	if o == nil || IsNil(o.Seats) {
+		return nil, false
+	}
+	return o.Seats, true
+}
+
+// HasSeats returns a boolean if a field has been set.
+func (o *ProductGroupProductsInnerPricingOneOf2) HasSeats() bool {
+	if o != nil && !IsNil(o.Seats) {
+		return true
+	}
+
+	return false
+}
+
+// SetSeats gets a reference to the given int32 and assigns it to the Seats field.
+func (o *ProductGroupProductsInnerPricingOneOf2) SetSeats(v int32) {
+	o.Seats = &v
+}
+
 func (o ProductGroupProductsInnerPricingOneOf2) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -216,6 +250,9 @@ func (o ProductGroupProductsInnerPricingOneOf2) ToMap() (map[string]interface{},
 	}
 	if !IsNil(o.IssuedSeparately) {
 		toSerialize["issuedSeparately"] = o.IssuedSeparately
+	}
+	if !IsNil(o.Seats) {
+		toSerialize["seats"] = o.Seats
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -267,6 +304,7 @@ func (o *ProductGroupProductsInnerPricingOneOf2) UnmarshalJSON(data []byte) (err
 		delete(additionalProperties, "subscriptionCadence")
 		delete(additionalProperties, "discount")
 		delete(additionalProperties, "issuedSeparately")
+		delete(additionalProperties, "seats")
 		o.AdditionalProperties = additionalProperties
 	}
 

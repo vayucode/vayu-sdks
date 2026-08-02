@@ -298,6 +298,13 @@ paths:
       parameters:
       - explode: true
         in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/CustomerStatus'
+        style: form
+      - explode: true
+        in: query
         name: limit
         required: false
         schema:
@@ -4197,6 +4204,7 @@ components:
       type: object
     CreateCatalogProductRequest:
       example:
+        disableDescription: true
         name: name
         description: description
         externalId: externalId
@@ -4208,6 +4216,10 @@ components:
         description:
           description: The description of the catalog product
           type: string
+        disableDescription:
+          description: Whether to disable the default description on generated line
+            items
+          type: boolean
         externalId:
           description: The external ID of the catalog product
           type: string
@@ -4217,6 +4229,7 @@ components:
     CreateCatalogProductResponse:
       example:
         catalogProduct:
+          disableDescription: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
           description: description
@@ -4235,13 +4248,15 @@ components:
         total: 0.8008281904610115
         hasMore: true
         catalogProducts:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - disableDescription: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
           description: description
           externalId: externalId
           id: id
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - disableDescription: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
           description: description
           externalId: externalId
@@ -4266,6 +4281,7 @@ components:
     GetCatalogProductResponse:
       example:
         catalogProduct:
+          disableDescription: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
           description: description
@@ -4281,6 +4297,7 @@ components:
     UpdateCatalogProductRequest:
       additionalProperties: false
       example:
+        disableDescription: true
         name: name
         description: description
         externalId: externalId
@@ -4292,6 +4309,10 @@ components:
         description:
           description: The description of the catalog product
           type: string
+        disableDescription:
+          description: Whether to disable the default description on generated line
+            items
+          type: boolean
         externalId:
           description: The external ID of the catalog product
           type: string
@@ -4299,6 +4320,7 @@ components:
     UpdateCatalogProductResponse:
       example:
         catalogProduct:
+          disableDescription: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
           description: description
@@ -4314,6 +4336,7 @@ components:
     DeleteCatalogProductResponse:
       example:
         catalogProduct:
+          disableDescription: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           deletedAt: deletedAt
           name: name
@@ -4360,6 +4383,15 @@ components:
       - ContractExtraction
       nullable: true
       type: string
+    CustomerStatus:
+      description: The lifecycle status of the customer. Defaults to Active when omitted
+        on creation.
+      enum:
+      - Active
+      - Inactive
+      - Suspended
+      - Trial
+      type: string
     CustomerCloudProviderSettings:
       description: Cloud provider settings for the customer
       example:
@@ -4382,12 +4414,16 @@ components:
       example:
         country: country
         city: city
+        countryCode: countryCode
         postalCode: postalCode
         addressText: addressText
         state: state
       nullable: true
       properties:
         country:
+          nullable: true
+          type: string
+        countryCode:
           nullable: true
           type: string
         city:
@@ -4518,6 +4554,7 @@ components:
         address:
           country: country
           city: city
+          countryCode: countryCode
           postalCode: postalCode
           addressText: addressText
           state: state
@@ -4570,6 +4607,7 @@ components:
           name: name
           title: title
           email: email
+        status: Active
       properties:
         name:
           description: The name of the customer
@@ -4601,6 +4639,8 @@ components:
             type: string
           nullable: true
           type: array
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
         taxId:
           deprecated: true
           description: "The tax ID of the customer (deprecated, use taxIds instead)"
@@ -4644,6 +4684,7 @@ components:
           - 45_DAYS
           - 60_DAYS
           - 90_DAYS
+          - 180_DAYS
           nullable: true
           type: string
         currency:
@@ -4714,6 +4755,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -4741,6 +4783,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -4788,6 +4831,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -4815,6 +4859,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
         - aliases:
           - aliases
           - aliases
@@ -4850,6 +4895,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -4877,6 +4923,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customers:
           items:
@@ -4931,6 +4978,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -4958,6 +5006,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -4974,6 +5023,7 @@ components:
         address:
           country: country
           city: city
+          countryCode: countryCode
           postalCode: postalCode
           addressText: addressText
           state: state
@@ -5026,6 +5076,7 @@ components:
           name: name
           title: title
           email: email
+        status: Active
       properties:
         name:
           description: The name of the customer
@@ -5057,6 +5108,8 @@ components:
             type: string
           nullable: true
           type: array
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
         taxId:
           deprecated: true
           description: "The tax ID of the customer (deprecated, use taxIds instead)"
@@ -5100,6 +5153,7 @@ components:
           - 45_DAYS
           - 60_DAYS
           - 90_DAYS
+          - 180_DAYS
           nullable: true
           type: string
         currency:
@@ -5168,6 +5222,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -5195,6 +5250,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -5239,6 +5295,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -5267,6 +5324,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/DeleteCustomerResponse_customer'
@@ -5787,7 +5845,8 @@ components:
         nsClass: nsClass
         baseAmount: 7.386281948385884
         products:
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -5832,7 +5891,8 @@ components:
             type: ONE_TIME
             isCreditPurchase: true
           nsClass: nsClass
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -5967,7 +6027,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6012,7 +6073,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6122,7 +6184,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6167,7 +6230,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6230,7 +6294,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6275,7 +6340,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6351,7 +6417,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6396,7 +6463,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6507,7 +6575,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6552,7 +6621,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6615,7 +6685,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6660,7 +6731,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -6735,7 +6807,8 @@ components:
         isTrial: true
         shouldProRateInvoices: true
         products:
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -6780,7 +6853,8 @@ components:
             type: ONE_TIME
             isCreditPurchase: true
           nsClass: nsClass
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -6889,7 +6963,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6934,7 +7009,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -6997,7 +7073,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -7042,7 +7119,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -7214,7 +7292,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -7259,7 +7338,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -7369,7 +7449,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -7414,7 +7495,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -7477,7 +7559,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -7522,7 +7605,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -8332,14 +8416,24 @@ components:
       type: object
     LoginResponse:
       example:
+        expiresIn: 0
         accessToken: accessToken
+        expiresAt: expiresAt
       properties:
         accessToken:
           description: The new access token to be used for subsequent API calls. It
             is set to expire every hour.
           type: string
+        expiresIn:
+          description: The lifetime of the access token in seconds.
+          type: integer
+        expiresAt:
+          description: "The expiration time of the access token, in ISO 8601 format."
+          type: string
       required:
       - accessToken
+      - expiresAt
+      - expiresIn
       type: object
     DeleteEventsByRefsRequest:
       example:
@@ -8806,6 +8900,17 @@ components:
       - events
       type: object
     AcknowledgedEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          ackId:
+            description: Per-event acknowledgment ID confirming Vayu received this
+              event. Use it to demonstrate the event was sent to Vayu.
+            example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+            type: string
+        required:
+        - ackId
+        type: object
       example:
         ackId: 01J5A3B7K9QRSTUV2WXYZ4DEFG
         customerAlias: customer_12345
@@ -8815,53 +8920,6 @@ components:
           key2: api_url
         name: api_call
         timestamp: 2023-09-13T18:25:43.511Z
-      properties:
-        name:
-          description: "The distinctive label assigned to an event, serving as a critical\
-            \ identifier for categorizing and pricing events within the system's backend\
-            \ infrastructure."
-          example: api_call
-          type: string
-        timestamp:
-          description: The temporal marker denoting the exact moment of event occurrence.
-            The timestamp is formatted as an ISO 8601 string and is expressed in Coordinated
-            Universal Time (UTC). i.e. YYYY-MM-DDTHH:MM:SS.SSSZ
-          example: 2023-09-13T18:25:43.511Z
-          format: date-time
-          type: string
-        customerAlias:
-          description: A pseudonymous or otherwise obfuscated identifier uniquely
-            assigned to each customer.
-          example: customer_12345
-          minLength: 1
-          type: string
-        ref:
-          description: A universally unique identifier (UUID) or other form of high-entropy
-            string serving as an immutable reference for each event entry.
-          example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
-          type: string
-        data:
-          additionalProperties:
-            nullable: true
-          description: A schema-less JSON object encapsulating miscellaneous attributes
-            and metrics associated with the event.
-          example:
-            key1: processing_duration
-            key2: api_url
-          nullable: true
-          type: object
-        ackId:
-          description: Per-event acknowledgment ID confirming Vayu received this event.
-            Use it to demonstrate the event was sent to Vayu.
-          example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
-          type: string
-      required:
-      - ackId
-      - customerAlias
-      - name
-      - ref
-      - timestamp
-      type: object
     InvalidEvent:
       example:
         event:
@@ -9825,6 +9883,7 @@ components:
       - CustomerCreated
       - ContractCreated
       - InvoiceIssueDateArrived
+      - MeteringHealthDegraded
       - PingTest
       type: string
     WebhookSubscribeRequest:
@@ -9884,6 +9943,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -9911,6 +9971,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/GetCustomerByNameResponse_customer'
@@ -10063,6 +10124,7 @@ components:
           address:
             country: country
             city: city
+            countryCode: countryCode
             postalCode: postalCode
             addressText: addressText
             state: state
@@ -10090,6 +10152,7 @@ components:
             name: name
             title: title
             email: email
+          status: Active
       properties:
         customer:
           $ref: '#/components/schemas/CreateCustomerResponse_customer'
@@ -10115,7 +10178,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -10160,7 +10224,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -10270,7 +10335,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10315,7 +10381,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10378,7 +10445,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10423,7 +10491,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10500,7 +10569,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -10545,7 +10615,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -10655,7 +10726,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10700,7 +10772,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10763,7 +10836,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10808,7 +10882,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -10875,7 +10950,8 @@ components:
           isTrial: true
           shouldProRateInvoices: true
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -10920,7 +10996,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -11030,7 +11107,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -11075,7 +11153,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -11138,7 +11217,8 @@ components:
             nsClass: nsClass
             baseAmount: 7.386281948385884
             products:
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -11183,7 +11263,8 @@ components:
                 type: ONE_TIME
                 isCreditPurchase: true
               nsClass: nsClass
-            - displayName: displayName
+            - disableDescription: true
+              displayName: displayName
               productErpId: productErpId
               nsClassId: nsClassId
               catalogProductId: catalogProductId
@@ -11731,6 +11812,7 @@ components:
       type: object
     CreateCatalogProductResponse_catalogProduct:
       example:
+        disableDescription: true
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
         description: description
@@ -11745,6 +11827,10 @@ components:
         description:
           description: The description of the catalog product
           type: string
+        disableDescription:
+          description: Whether to disable the default description on generated line
+            items
+          type: boolean
         externalId:
           description: The external ID of the catalog product
           type: string
@@ -11764,6 +11850,7 @@ components:
       type: object
     DeleteCatalogProductResponse_catalogProduct:
       example:
+        disableDescription: true
         createdAt: 2000-01-23T04:56:07.000+00:00
         deletedAt: deletedAt
         name: name
@@ -11779,6 +11866,10 @@ components:
         description:
           description: The description of the catalog product
           type: string
+        disableDescription:
+          description: Whether to disable the default description on generated line
+            items
+          type: boolean
         externalId:
           description: The external ID of the catalog product
           type: string
@@ -11836,6 +11927,7 @@ components:
         address:
           country: country
           city: city
+          countryCode: countryCode
           postalCode: postalCode
           addressText: addressText
           state: state
@@ -11863,6 +11955,7 @@ components:
           name: name
           title: title
           email: email
+        status: Active
       properties:
         name:
           description: The name of the customer
@@ -11894,6 +11987,8 @@ components:
             type: string
           nullable: true
           type: array
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
         taxId:
           deprecated: true
           description: "The tax ID of the customer (deprecated, use taxIds instead)"
@@ -11937,6 +12032,7 @@ components:
           - 45_DAYS
           - 60_DAYS
           - 90_DAYS
+          - 180_DAYS
           nullable: true
           type: string
         currency:
@@ -12017,6 +12113,7 @@ components:
         address:
           country: country
           city: city
+          countryCode: countryCode
           postalCode: postalCode
           addressText: addressText
           state: state
@@ -12045,6 +12142,7 @@ components:
           name: name
           title: title
           email: email
+        status: Active
       properties:
         name:
           description: The name of the customer
@@ -12076,6 +12174,8 @@ components:
             type: string
           nullable: true
           type: array
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
         taxId:
           deprecated: true
           description: "The tax ID of the customer (deprecated, use taxIds instead)"
@@ -12119,6 +12219,7 @@ components:
           - 45_DAYS
           - 60_DAYS
           - 90_DAYS
+          - 180_DAYS
           nullable: true
           type: string
         currency:
@@ -12462,6 +12563,10 @@ components:
             \ of being combined with other products in the same contract. Defaults\
             \ to false."
           type: boolean
+        seats:
+          description: The number of seats for this subscription product.
+          minimum: 0
+          type: integer
       required:
       - price
       - subscriptionCadence
@@ -12701,6 +12806,7 @@ components:
       type: object
     ProductGroup_products_inner:
       example:
+        disableDescription: true
         displayName: displayName
         productErpId: productErpId
         nsClassId: nsClassId
@@ -12754,6 +12860,11 @@ components:
           description: The description of the product
           nullable: true
           type: string
+        disableDescription:
+          description: Whether to disable the default description on generated line
+            items
+          nullable: true
+          type: boolean
         scheduling:
           $ref: '#/components/schemas/ProductGroup_products_inner_scheduling'
         pricing:
@@ -12872,7 +12983,8 @@ components:
         isTrial: true
         shouldProRateInvoices: true
         products:
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -12917,7 +13029,8 @@ components:
             type: ONE_TIME
             isCreditPurchase: true
           nsClass: nsClass
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -13027,7 +13140,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13072,7 +13186,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13135,7 +13250,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13180,7 +13296,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13364,7 +13481,8 @@ components:
         isTrial: true
         shouldProRateInvoices: true
         products:
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -13409,7 +13527,8 @@ components:
             type: ONE_TIME
             isCreditPurchase: true
           nsClass: nsClass
-        - displayName: displayName
+        - disableDescription: true
+          displayName: displayName
           productErpId: productErpId
           nsClassId: nsClassId
           catalogProductId: catalogProductId
@@ -13520,7 +13639,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13565,7 +13685,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13628,7 +13749,8 @@ components:
           nsClass: nsClass
           baseAmount: 7.386281948385884
           products:
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -13673,7 +13795,8 @@ components:
               type: ONE_TIME
               isCreditPurchase: true
             nsClass: nsClass
-          - displayName: displayName
+          - disableDescription: true
+            displayName: displayName
             productErpId: productErpId
             nsClassId: nsClassId
             catalogProductId: catalogProductId
@@ -14981,6 +15104,7 @@ components:
         address:
           country: country
           city: city
+          countryCode: countryCode
           postalCode: postalCode
           addressText: addressText
           state: state
@@ -15008,6 +15132,7 @@ components:
           name: name
           title: title
           email: email
+        status: Active
       properties:
         name:
           description: The name of the customer
@@ -15039,6 +15164,8 @@ components:
             type: string
           nullable: true
           type: array
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
         taxId:
           deprecated: true
           description: "The tax ID of the customer (deprecated, use taxIds instead)"
@@ -15082,6 +15209,7 @@ components:
           - 45_DAYS
           - 60_DAYS
           - 90_DAYS
+          - 180_DAYS
           nullable: true
           type: string
         currency:

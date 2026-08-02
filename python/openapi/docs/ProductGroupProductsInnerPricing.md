@@ -9,9 +9,11 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **price** | **float** |  | 
 **discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
-**is_credit_purchase** | **bool** | Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false. | [optional] 
+**is_credit_purchase** | **bool** | Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false. | [optional] 
+**issued_separately** | **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
 **installments** | **int** | The number of installments to spread the deduction over | [optional] 
 **subscription_cadence** | [**ProductGroupProductsInnerPricingOneOf3SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md) |  | 
+**seats** | **int** | The number of seats for this subscription product. | [optional] 
 **tiers** | [**List[ProductGroupProductsInnerPricingOneOf3TiersInner]**](ProductGroupProductsInnerPricingOneOf3TiersInner.md) |  | 
 **auto_upgrade** | **bool** |  | [optional] 
 **prorate** | **bool** |  | [optional] 

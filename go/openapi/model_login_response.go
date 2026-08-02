@@ -23,6 +23,10 @@ var _ MappedNullable = &LoginResponse{}
 type LoginResponse struct {
 	// The new access token to be used for subsequent API calls. It is set to expire every hour.
 	AccessToken string `json:"accessToken"`
+	// The lifetime of the access token in seconds.
+	ExpiresIn int32 `json:"expiresIn"`
+	// The expiration time of the access token, in ISO 8601 format.
+	ExpiresAt string `json:"expiresAt"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -32,9 +36,11 @@ type _LoginResponse LoginResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLoginResponse(accessToken string) *LoginResponse {
+func NewLoginResponse(accessToken string, expiresIn int32, expiresAt string) *LoginResponse {
 	this := LoginResponse{}
 	this.AccessToken = accessToken
+	this.ExpiresIn = expiresIn
+	this.ExpiresAt = expiresAt
 	return &this
 }
 
@@ -70,6 +76,54 @@ func (o *LoginResponse) SetAccessToken(v string) {
 	o.AccessToken = v
 }
 
+// GetExpiresIn returns the ExpiresIn field value
+func (o *LoginResponse) GetExpiresIn() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.ExpiresIn
+}
+
+// GetExpiresInOk returns a tuple with the ExpiresIn field value
+// and a boolean to check if the value has been set.
+func (o *LoginResponse) GetExpiresInOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExpiresIn, true
+}
+
+// SetExpiresIn sets field value
+func (o *LoginResponse) SetExpiresIn(v int32) {
+	o.ExpiresIn = v
+}
+
+// GetExpiresAt returns the ExpiresAt field value
+func (o *LoginResponse) GetExpiresAt() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ExpiresAt
+}
+
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value
+// and a boolean to check if the value has been set.
+func (o *LoginResponse) GetExpiresAtOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExpiresAt, true
+}
+
+// SetExpiresAt sets field value
+func (o *LoginResponse) SetExpiresAt(v string) {
+	o.ExpiresAt = v
+}
+
 func (o LoginResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -81,6 +135,8 @@ func (o LoginResponse) MarshalJSON() ([]byte, error) {
 func (o LoginResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["accessToken"] = o.AccessToken
+	toSerialize["expiresIn"] = o.ExpiresIn
+	toSerialize["expiresAt"] = o.ExpiresAt
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -95,6 +151,8 @@ func (o *LoginResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"accessToken",
+		"expiresIn",
+		"expiresAt",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -125,6 +183,8 @@ func (o *LoginResponse) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "accessToken")
+		delete(additionalProperties, "expiresIn")
+		delete(additionalProperties, "expiresAt")
 		o.AdditionalProperties = additionalProperties
 	}
 

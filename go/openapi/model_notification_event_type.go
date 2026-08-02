@@ -44,6 +44,7 @@ const (
 	NOTIFICATIONEVENTTYPE_CUSTOMER_CREATED NotificationEventType = "CustomerCreated"
 	NOTIFICATIONEVENTTYPE_CONTRACT_CREATED NotificationEventType = "ContractCreated"
 	NOTIFICATIONEVENTTYPE_INVOICE_ISSUE_DATE_ARRIVED NotificationEventType = "InvoiceIssueDateArrived"
+	NOTIFICATIONEVENTTYPE_METERING_HEALTH_DEGRADED NotificationEventType = "MeteringHealthDegraded"
 	NOTIFICATIONEVENTTYPE_PING_TEST NotificationEventType = "PingTest"
 )
 
@@ -72,6 +73,7 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"CustomerCreated",
 	"ContractCreated",
 	"InvoiceIssueDateArrived",
+	"MeteringHealthDegraded",
 	"PingTest",
 }
 

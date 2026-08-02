@@ -25,6 +25,8 @@ type CreateCatalogProductRequest struct {
 	Name string `json:"name"`
 	// The description of the catalog product
 	Description *string `json:"description,omitempty"`
+	// Whether to disable the default description on generated line items
+	DisableDescription *bool `json:"disableDescription,omitempty"`
 	// The external ID of the catalog product
 	ExternalId *string `json:"externalId,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -106,6 +108,38 @@ func (o *CreateCatalogProductRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetDisableDescription returns the DisableDescription field value if set, zero value otherwise.
+func (o *CreateCatalogProductRequest) GetDisableDescription() bool {
+	if o == nil || IsNil(o.DisableDescription) {
+		var ret bool
+		return ret
+	}
+	return *o.DisableDescription
+}
+
+// GetDisableDescriptionOk returns a tuple with the DisableDescription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCatalogProductRequest) GetDisableDescriptionOk() (*bool, bool) {
+	if o == nil || IsNil(o.DisableDescription) {
+		return nil, false
+	}
+	return o.DisableDescription, true
+}
+
+// HasDisableDescription returns a boolean if a field has been set.
+func (o *CreateCatalogProductRequest) HasDisableDescription() bool {
+	if o != nil && !IsNil(o.DisableDescription) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableDescription gets a reference to the given bool and assigns it to the DisableDescription field.
+func (o *CreateCatalogProductRequest) SetDisableDescription(v bool) {
+	o.DisableDescription = &v
+}
+
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *CreateCatalogProductRequest) GetExternalId() string {
 	if o == nil || IsNil(o.ExternalId) {
@@ -151,6 +185,9 @@ func (o CreateCatalogProductRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.DisableDescription) {
+		toSerialize["disableDescription"] = o.DisableDescription
 	}
 	if !IsNil(o.ExternalId) {
 		toSerialize["externalId"] = o.ExternalId
@@ -200,6 +237,7 @@ func (o *CreateCatalogProductRequest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "description")
+		delete(additionalProperties, "disableDescription")
 		delete(additionalProperties, "externalId")
 		o.AdditionalProperties = additionalProperties
 	}

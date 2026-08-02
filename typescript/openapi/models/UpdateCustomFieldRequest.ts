@@ -115,6 +115,7 @@ export enum UpdateCustomFieldRequestIntegrationSourceEnum {
     Snowflake = 'Snowflake',
     Anrok = 'Anrok',
     Connact = 'Connact',
-    Xero = 'Xero'
+    Xero = 'Xero',
+    Paddle = 'Paddle'
 }
 

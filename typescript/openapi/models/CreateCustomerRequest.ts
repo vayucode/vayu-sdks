@@ -15,7 +15,9 @@ import { Contact } from '../models/Contact';
 import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
 import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomerExternalIntegration } from '../models/CustomerExternalIntegration';
 import { CustomerSource } from '../models/CustomerSource';
+import { CustomerStatus } from '../models/CustomerStatus';
 import { HttpFile } from '../http/http';
 
 export class CreateCustomerRequest {
@@ -40,6 +42,7 @@ export class CreateCustomerRequest {
     * The tax IDs of the customer
     */
     'taxIds'?: Array<string> | null;
+    'status'?: CustomerStatus;
     /**
     * The tax ID of the customer (deprecated, use taxIds instead)
     */
@@ -58,6 +61,10 @@ export class CreateCustomerRequest {
     * The ID of the customer in the Salesforce system
     */
     'salesForceAccountId'?: string | null;
+    /**
+    * External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.
+    */
+    'externalIntegration'?: Array<CustomerExternalIntegration> | null;
     /**
     * The due days of the customer
     */
@@ -134,6 +141,12 @@ export class CreateCustomerRequest {
             "format": ""
         },
         {
+            "name": "status",
+            "baseName": "status",
+            "type": "CustomerStatus",
+            "format": ""
+        },
+        {
             "name": "taxId",
             "baseName": "taxId",
             "type": "string",
@@ -167,6 +180,12 @@ export class CreateCustomerRequest {
             "name": "salesForceAccountId",
             "baseName": "salesForceAccountId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "externalIntegration",
+            "baseName": "externalIntegration",
+            "type": "Array<CustomerExternalIntegration>",
             "format": ""
         },
         {
@@ -239,6 +258,7 @@ export enum CreateCustomerRequestDueDaysEnum {
     _30Days = '30_DAYS',
     _45Days = '45_DAYS',
     _60Days = '60_DAYS',
-    _90Days = '90_DAYS'
+    _90Days = '90_DAYS',
+    _180Days = '180_DAYS'
 }
 

@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_invoices**
-> ListInvoicesResponse list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_at_from=issued_at_from, issued_at_to=issued_at_to)
+> ListInvoicesResponse list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_after=issued_after, issued_before=issued_before)
 
 List invoices
 
@@ -187,6 +187,7 @@ List invoices for the account. Optionally filter by customerId to retrieve invoi
 
 ```python
 import openapi
+from openapi.models.invoice_billing_status import InvoiceBillingStatus
 from openapi.models.list_invoices_response import ListInvoicesResponse
 from openapi.rest import ApiException
 from pprint import pprint
@@ -214,13 +215,13 @@ with openapi.ApiClient(configuration) as api_client:
     limit = 10 # float |  (optional) (default to 10)
     cursor = 'cursor_example' # str |  (optional)
     customer_id = 'customer_id_example' # str |  (optional)
-    billing_status = 'billing_status_example' # str | Filter invoices by their billing status (optional)
-    issued_at_from = '2013-10-20T19:20:30+01:00' # datetime | Only include invoices issued on or after this timestamp (optional)
-    issued_at_to = '2013-10-20T19:20:30+01:00' # datetime | Only include invoices issued on or before this timestamp (optional)
+    billing_status = openapi.InvoiceBillingStatus() # InvoiceBillingStatus |  (optional)
+    issued_after = 'issued_after_example' # str |  (optional)
+    issued_before = 'issued_before_example' # str |  (optional)
 
     try:
         # List invoices
-        api_response = api_instance.list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_at_from=issued_at_from, issued_at_to=issued_at_to)
+        api_response = api_instance.list_invoices(limit=limit, cursor=cursor, customer_id=customer_id, billing_status=billing_status, issued_after=issued_after, issued_before=issued_before)
         print("The response of InvoicesApi->list_invoices:\n")
         pprint(api_response)
     except Exception as e:
@@ -237,9 +238,9 @@ Name | Type | Description  | Notes
  **limit** | **float**|  | [optional] [default to 10]
  **cursor** | **str**|  | [optional] 
  **customer_id** | **str**|  | [optional] 
- **billing_status** | **str**| Filter invoices by their billing status | [optional] 
- **issued_at_from** | **datetime**| Only include invoices issued on or after this timestamp | [optional] 
- **issued_at_to** | **datetime**| Only include invoices issued on or before this timestamp | [optional] 
+ **billing_status** | [**InvoiceBillingStatus**](.md)|  | [optional] 
+ **issued_after** | **str**|  | [optional] 
+ **issued_before** | **str**|  | [optional] 
 
 ### Return type
 

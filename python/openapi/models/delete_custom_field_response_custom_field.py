@@ -51,8 +51,8 @@ class DeleteCustomFieldResponseCustomField(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['NetSuite', 'QuickBooks', 'Stripe', 'Salesforce', 'Hubspot', 'Vayu', 'Slack', 'S3', 'Morning', 'Snowflake', 'Anrok', 'Connact', 'Xero']):
-            raise ValueError("must be one of enum values ('NetSuite', 'QuickBooks', 'Stripe', 'Salesforce', 'Hubspot', 'Vayu', 'Slack', 'S3', 'Morning', 'Snowflake', 'Anrok', 'Connact', 'Xero')")
+        if value not in set(['NetSuite', 'QuickBooks', 'Stripe', 'Salesforce', 'Hubspot', 'Vayu', 'Slack', 'S3', 'Morning', 'Snowflake', 'Anrok', 'Connact', 'Xero', 'Paddle']):
+            raise ValueError("must be one of enum values ('NetSuite', 'QuickBooks', 'Stripe', 'Salesforce', 'Hubspot', 'Vayu', 'Slack', 'S3', 'Morning', 'Snowflake', 'Anrok', 'Connact', 'Xero', 'Paddle')")
         return value
 
     model_config = ConfigDict(

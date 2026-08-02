@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,8 +28,10 @@ class LoginResponse(BaseModel):
     LoginResponse
     """ # noqa: E501
     access_token: StrictStr = Field(description="The new access token to be used for subsequent API calls. It is set to expire every hour.", alias="accessToken")
+    expires_in: StrictInt = Field(description="The lifetime of the access token in seconds.", alias="expiresIn")
+    expires_at: StrictStr = Field(description="The expiration time of the access token, in ISO 8601 format.", alias="expiresAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["accessToken"]
+    __properties: ClassVar[List[str]] = ["accessToken", "expiresIn", "expiresAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,7 +91,9 @@ class LoginResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "accessToken": obj.get("accessToken")
+            "accessToken": obj.get("accessToken"),
+            "expiresIn": obj.get("expiresIn"),
+            "expiresAt": obj.get("expiresAt")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

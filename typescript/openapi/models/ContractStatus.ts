@@ -17,6 +17,7 @@ import { HttpFile } from '../http/http';
 */
 export enum ContractStatus {
     InReview = 'InReview',
+    Scheduled = 'Scheduled',
     Active = 'Active',
     Inactive = 'Inactive',
     Expired = 'Expired',

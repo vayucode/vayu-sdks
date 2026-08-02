@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.full_day_period import FullDayPeriod
@@ -45,11 +45,12 @@ class GetInvoiceResponseInvoice(BaseModel):
     account_id: StrictStr = Field(description="The id of the account that the invoice is associated with", alias="accountId")
     line_items: List[LineItem] = Field(alias="lineItems")
     amount: Union[StrictFloat, StrictInt] = Field(description="The total amount of the invoice")
+    is_trial: StrictBool = Field(description="Whether the invoice belongs to a trial contract", alias="isTrial")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["customerId", "contractId", "name", "billingCycle", "revenueBreakdown", "billingStatus", "paymentInfo", "dueDate", "accountId", "lineItems", "amount", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["customerId", "contractId", "name", "billingCycle", "revenueBreakdown", "billingStatus", "paymentInfo", "dueDate", "accountId", "lineItems", "amount", "isTrial", "id", "createdAt", "updatedAt"]
 
     @field_validator('customer_id')
     def customer_id_validate_regular_expression(cls, value):
@@ -158,6 +159,7 @@ class GetInvoiceResponseInvoice(BaseModel):
             "accountId": obj.get("accountId"),
             "lineItems": [LineItem.from_dict(_item) for _item in obj["lineItems"]] if obj.get("lineItems") is not None else None,
             "amount": obj.get("amount"),
+            "isTrial": obj.get("isTrial"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")

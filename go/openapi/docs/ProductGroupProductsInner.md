@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DisplayName** | **string** | The display name of the product | 
 **Description** | Pointer to **NullableString** | The description of the product | [optional] 
+**DisableDescription** | Pointer to **NullableBool** | Whether to disable the default description on generated line items | [optional] 
 **Scheduling** | [**ProductGroupProductsInnerScheduling**](ProductGroupProductsInnerScheduling.md) |  | 
 **Pricing** | [**ProductGroupProductsInnerPricing**](ProductGroupProductsInnerPricing.md) |  | 
 **CatalogProductId** | Pointer to **NullableString** | The id of the a product from the catalog to connect the contract product to | [optional] 
@@ -93,6 +94,41 @@ HasDescription returns a boolean if a field has been set.
 `func (o *ProductGroupProductsInner) UnsetDescription()`
 
 UnsetDescription ensures that no value is present for Description, not even an explicit nil
+### GetDisableDescription
+
+`func (o *ProductGroupProductsInner) GetDisableDescription() bool`
+
+GetDisableDescription returns the DisableDescription field if non-nil, zero value otherwise.
+
+### GetDisableDescriptionOk
+
+`func (o *ProductGroupProductsInner) GetDisableDescriptionOk() (*bool, bool)`
+
+GetDisableDescriptionOk returns a tuple with the DisableDescription field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisableDescription
+
+`func (o *ProductGroupProductsInner) SetDisableDescription(v bool)`
+
+SetDisableDescription sets DisableDescription field to given value.
+
+### HasDisableDescription
+
+`func (o *ProductGroupProductsInner) HasDisableDescription() bool`
+
+HasDisableDescription returns a boolean if a field has been set.
+
+### SetDisableDescriptionNil
+
+`func (o *ProductGroupProductsInner) SetDisableDescriptionNil(b bool)`
+
+ SetDisableDescriptionNil sets the value for DisableDescription to be an explicit nil
+
+### UnsetDisableDescription
+`func (o *ProductGroupProductsInner) UnsetDisableDescription()`
+
+UnsetDisableDescription ensures that no value is present for DisableDescription, not even an explicit nil
 ### GetScheduling
 
 `func (o *ProductGroupProductsInner) GetScheduling() ProductGroupProductsInnerScheduling`

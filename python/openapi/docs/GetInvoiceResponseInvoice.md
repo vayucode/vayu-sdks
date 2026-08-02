@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **account_id** | **str** | The id of the account that the invoice is associated with | 
 **line_items** | [**List[LineItem]**](LineItem.md) |  | 
 **amount** | **float** | The total amount of the invoice | 
+**is_trial** | **bool** | Whether the invoice belongs to a trial contract | 
 **id** | **str** |  | 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 

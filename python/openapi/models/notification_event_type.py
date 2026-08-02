@@ -30,6 +30,7 @@ class NotificationEventType(str, Enum):
     ANONYMOUSCUSTOMER = 'AnonymousCustomer'
     OVERAGE = 'Overage'
     UPCOMINGRENEWAL = 'UpcomingRenewal'
+    CONTRACTEXPIRED = 'ContractExpired'
     INVOICEAPPROVED = 'InvoiceApproved'
     CUSTOMERPORTALLINKSENT = 'CustomerPortalLinkSent'
     NEWCUSTOMERWITHOUTCONTRACT = 'NewCustomerWithoutContract'
@@ -42,6 +43,14 @@ class NotificationEventType(str, Enum):
     FINALTIEREXCEEDED = 'FinalTierExceeded'
     INVOICEPAYMENTSTATUSCHANGED = 'InvoicePaymentStatusChanged'
     INVOICESENDFAILED = 'InvoiceSendFailed'
+    CREDITPOOLDEPLETED = 'CreditPoolDepleted'
+    CREDITPOOLTHRESHOLDCROSSED = 'CreditPoolThresholdCrossed'
+    CREDITPOOLINCREASED = 'CreditPoolIncreased'
+    PAYMENTFAILED = 'PaymentFailed'
+    CUSTOMERCREATED = 'CustomerCreated'
+    CONTRACTCREATED = 'ContractCreated'
+    INVOICEISSUEDATEARRIVED = 'InvoiceIssueDateArrived'
+    METERINGHEALTHDEGRADED = 'MeteringHealthDegraded'
     PINGTEST = 'PingTest'
 
     @classmethod

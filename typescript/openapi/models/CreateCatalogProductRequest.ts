@@ -22,6 +22,10 @@ export class CreateCatalogProductRequest {
     */
     'description'?: string;
     /**
+    * Whether to disable the default description on generated line items
+    */
+    'disableDescription'?: boolean;
+    /**
     * The external ID of the catalog product
     */
     'externalId'?: string;
@@ -41,6 +45,12 @@ export class CreateCatalogProductRequest {
             "name": "description",
             "baseName": "description",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "disableDescription",
+            "baseName": "disableDescription",
+            "type": "boolean",
             "format": ""
         },
         {

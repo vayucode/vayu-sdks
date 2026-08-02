@@ -50,6 +50,7 @@ const request: CustomersApiCreateCustomerRequest = {
     source: "Stripe",
     legalName: "legalName_example",
     taxIds: [],
+    status: "Active",
     taxId: "taxId_example",
     cloudProviderSettings: {
       cloudProvider: "AWS",
@@ -60,12 +61,20 @@ const request: CustomersApiCreateCustomerRequest = {
     customerErpId: "customerErpId_example",
     address: {
       country: "country_example",
+      countryCode: "countryCode_example",
       city: "city_example",
       addressText: "addressText_example",
       state: "state_example",
       postalCode: "postalCode_example",
     },
     salesForceAccountId: "salesForceAccountId_example",
+    externalIntegration: [
+      {
+        type: "NetSuite",
+        id: "id_example",
+        name: "name_example",
+      },
+    ],
     dueDays: "END_OF_MONTH",
     currency: "USD",
     customFields: [
@@ -144,6 +153,7 @@ const request: CustomersApiCreateCustomerRelationRequest = {
   createCustomerRelationRequest: {
     vayuParentCustomerId: "62ECB020842930cc01FFCCfe",
     vayuChildCustomerId: "62ECB020842930cc01FFCCfe",
+    relationType: "accumulateUsage",
   },
 };
 
@@ -389,7 +399,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integrationType** | **IntegrationType** |  | defaults to undefined
+ **integrationType** | **IntegrationProviders** |  | defaults to undefined
  **integrationId** | [**string**] |  | defaults to undefined
 
 
@@ -668,6 +678,8 @@ const apiInstance = new CustomersApi(configuration);
 
 const request: CustomersApiListCustomersRequest = {
   
+  status: "Active",
+  
   limit: 10,
   
   cursor: "cursor_example",
@@ -682,6 +694,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **status** | **CustomerStatus** |  | (optional) defaults to undefined
  **limit** | [**number**] |  | (optional) defaults to 10
  **cursor** | [**string**] |  | (optional) defaults to undefined
 
@@ -743,6 +756,7 @@ const request: CustomersApiUpdateCustomerRequest = {
     source: "Stripe",
     legalName: "legalName_example",
     taxIds: [],
+    status: "Active",
     taxId: "taxId_example",
     cloudProviderSettings: {
       cloudProvider: "AWS",
@@ -753,12 +767,20 @@ const request: CustomersApiUpdateCustomerRequest = {
     customerErpId: "customerErpId_example",
     address: {
       country: "country_example",
+      countryCode: "countryCode_example",
       city: "city_example",
       addressText: "addressText_example",
       state: "state_example",
       postalCode: "postalCode_example",
     },
     salesForceAccountId: "salesForceAccountId_example",
+    externalIntegration: [
+      {
+        type: "NetSuite",
+        id: "id_example",
+        name: "name_example",
+      },
+    ],
     dueDays: "END_OF_MONTH",
     currency: "USD",
     customFields: [

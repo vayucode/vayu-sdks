@@ -14,6 +14,7 @@ import { ContractStatus } from '../models/ContractStatus';
 import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
 import { CustomFieldValue } from '../models/CustomFieldValue';
+import { ExternalCreditGrant } from '../models/ExternalCreditGrant';
 import { ProductGroup } from '../models/ProductGroup';
 import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
 import { HttpFile } from '../http/http';
@@ -28,17 +29,13 @@ export class CreateContractRequest {
     */
     'customerId': string;
     /**
-    * The name of the contract
-    */
-    'name': string;
-    /**
-    * The id of the plan template to create the contract from. When provided, the contract\'s products are derived from the plan template.
+    * The id of an existing plan to attach to this contract. When provided, products/productGroups are ignored and the plan is used as-is. Mutually exclusive with inline product definition.
     */
     'planId'?: string;
     /**
-    * An external identifier for the contract
+    * The name of the contract. Required when planId is not provided.
     */
-    'externalId'?: string | null;
+    'name'?: string;
     /**
     * The id of the sales force opportunity that the contract is associated with
     */
@@ -55,6 +52,10 @@ export class CreateContractRequest {
     * The products that the contract is associated with
     */
     'products'?: Array<ProductGroupProductsInner>;
+    /**
+    * Credit grants that fund credit pools for the customer under this contract. Each grant credits a pool identified by its creditProductId; usage products draw down those pools via consumesCreditProductIds.
+    */
+    'creditGrants'?: Array<ExternalCreditGrant> | null;
     /**
     * Product groups are list of products that can be grouped as a single line item with shared settings like ERP settings, commitment settings, etc.
     */
@@ -85,6 +86,14 @@ export class CreateContractRequest {
     */
     'purchaseOrder'?: string;
     'currency'?: Currency;
+    /**
+    * Whether the contract is a trial. All invoices under a trial contract are flagged with isTrial: true. If not provided, it defaults to false.
+    */
+    'isTrial'?: boolean;
+    /**
+    * A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints.
+    */
+    'externalId'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -104,20 +113,14 @@ export class CreateContractRequest {
             "format": ""
         },
         {
-            "name": "name",
-            "baseName": "name",
-            "type": "string",
-            "format": ""
-        },
-        {
             "name": "planId",
             "baseName": "planId",
             "type": "string",
             "format": ""
         },
         {
-            "name": "externalId",
-            "baseName": "externalId",
+            "name": "name",
+            "baseName": "name",
             "type": "string",
             "format": ""
         },
@@ -143,6 +146,12 @@ export class CreateContractRequest {
             "name": "products",
             "baseName": "products",
             "type": "Array<ProductGroupProductsInner>",
+            "format": ""
+        },
+        {
+            "name": "creditGrants",
+            "baseName": "creditGrants",
+            "type": "Array<ExternalCreditGrant>",
             "format": ""
         },
         {
@@ -197,6 +206,18 @@ export class CreateContractRequest {
             "name": "currency",
             "baseName": "currency",
             "type": "Currency",
+            "format": ""
+        },
+        {
+            "name": "isTrial",
+            "baseName": "isTrial",
+            "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "externalId",
+            "baseName": "externalId",
+            "type": "string",
             "format": ""
         }    ];
 

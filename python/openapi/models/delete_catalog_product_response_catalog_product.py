@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -31,13 +31,14 @@ class DeleteCatalogProductResponseCatalogProduct(BaseModel):
     """ # noqa: E501
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the catalog product")
     description: Optional[StrictStr] = Field(default=None, description="The description of the catalog product")
+    disable_description: Optional[StrictBool] = Field(default=None, description="Whether to disable the default description on generated line items", alias="disableDescription")
     external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     deleted_at: StrictStr = Field(alias="deletedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "description", "externalId", "id", "createdAt", "updatedAt", "deletedAt"]
+    __properties: ClassVar[List[str]] = ["name", "description", "disableDescription", "externalId", "id", "createdAt", "updatedAt", "deletedAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,6 +100,7 @@ class DeleteCatalogProductResponseCatalogProduct(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "disableDescription": obj.get("disableDescription"),
             "externalId": obj.get("externalId"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),

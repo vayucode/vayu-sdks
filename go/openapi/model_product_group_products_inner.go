@@ -25,6 +25,8 @@ type ProductGroupProductsInner struct {
 	DisplayName string `json:"displayName"`
 	// The description of the product
 	Description NullableString `json:"description,omitempty"`
+	// Whether to disable the default description on generated line items
+	DisableDescription NullableBool `json:"disableDescription,omitempty"`
 	Scheduling ProductGroupProductsInnerScheduling `json:"scheduling"`
 	Pricing ProductGroupProductsInnerPricing `json:"pricing"`
 	// The id of the a product from the catalog to connect the contract product to
@@ -133,6 +135,48 @@ func (o *ProductGroupProductsInner) SetDescriptionNil() {
 // UnsetDescription ensures that no value is present for Description, not even an explicit nil
 func (o *ProductGroupProductsInner) UnsetDescription() {
 	o.Description.Unset()
+}
+
+// GetDisableDescription returns the DisableDescription field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProductGroupProductsInner) GetDisableDescription() bool {
+	if o == nil || IsNil(o.DisableDescription.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.DisableDescription.Get()
+}
+
+// GetDisableDescriptionOk returns a tuple with the DisableDescription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProductGroupProductsInner) GetDisableDescriptionOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DisableDescription.Get(), o.DisableDescription.IsSet()
+}
+
+// HasDisableDescription returns a boolean if a field has been set.
+func (o *ProductGroupProductsInner) HasDisableDescription() bool {
+	if o != nil && o.DisableDescription.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableDescription gets a reference to the given NullableBool and assigns it to the DisableDescription field.
+func (o *ProductGroupProductsInner) SetDisableDescription(v bool) {
+	o.DisableDescription.Set(&v)
+}
+// SetDisableDescriptionNil sets the value for DisableDescription to be an explicit nil
+func (o *ProductGroupProductsInner) SetDisableDescriptionNil() {
+	o.DisableDescription.Set(nil)
+}
+
+// UnsetDisableDescription ensures that no value is present for DisableDescription, not even an explicit nil
+func (o *ProductGroupProductsInner) UnsetDisableDescription() {
+	o.DisableDescription.Unset()
 }
 
 // GetScheduling returns the Scheduling field value
@@ -589,6 +633,9 @@ func (o ProductGroupProductsInner) ToMap() (map[string]interface{}, error) {
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
 	}
+	if o.DisableDescription.IsSet() {
+		toSerialize["disableDescription"] = o.DisableDescription.Get()
+	}
 	toSerialize["scheduling"] = o.Scheduling
 	toSerialize["pricing"] = o.Pricing
 	if o.CatalogProductId.IsSet() {
@@ -668,6 +715,7 @@ func (o *ProductGroupProductsInner) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "displayName")
 		delete(additionalProperties, "description")
+		delete(additionalProperties, "disableDescription")
 		delete(additionalProperties, "scheduling")
 		delete(additionalProperties, "pricing")
 		delete(additionalProperties, "catalogProductId")

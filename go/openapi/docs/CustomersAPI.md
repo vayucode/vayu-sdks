@@ -716,7 +716,7 @@ Name | Type | Description  | Notes
 
 ## ListCustomers
 
-> ListCustomersResponse ListCustomers(ctx).Limit(limit).Cursor(cursor).Execute()
+> ListCustomersResponse ListCustomers(ctx).Status(status).Limit(limit).Cursor(cursor).Execute()
 
 List Customers
 
@@ -735,12 +735,13 @@ import (
 )
 
 func main() {
+	status := openapiclient.CustomerStatus("Active") // CustomerStatus |  (optional)
 	limit := float32(8.14) // float32 |  (optional) (default to 10)
 	cursor := "cursor_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CustomersAPI.ListCustomers(context.Background()).Limit(limit).Cursor(cursor).Execute()
+	resp, r, err := apiClient.CustomersAPI.ListCustomers(context.Background()).Status(status).Limit(limit).Cursor(cursor).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CustomersAPI.ListCustomers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -761,6 +762,7 @@ Other parameters are passed through a pointer to a apiListCustomersRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **status** | [**CustomerStatus**](CustomerStatus.md) |  | 
  **limit** | **float32** |  | [default to 10]
  **cursor** | **string** |  | 
 

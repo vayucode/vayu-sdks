@@ -1593,8 +1593,14 @@ func (a *CustomersAPIService) GetCustomerRelationExecute(r ApiGetCustomerRelatio
 type ApiListCustomersRequest struct {
 	ctx context.Context
 	ApiService *CustomersAPIService
+	status *CustomerStatus
 	limit *float32
 	cursor *string
+}
+
+func (r ApiListCustomersRequest) Status(status CustomerStatus) ApiListCustomersRequest {
+	r.status = &status
+	return r
 }
 
 func (r ApiListCustomersRequest) Limit(limit float32) ApiListCustomersRequest {
@@ -1647,6 +1653,9 @@ func (a *CustomersAPIService) ListCustomersExecute(r ApiListCustomersRequest) (*
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	} else {
