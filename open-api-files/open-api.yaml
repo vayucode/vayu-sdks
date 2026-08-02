@@ -734,6 +734,9 @@ components:
         description:
           type: string
           description: The description of the catalog product
+        disableDescription:
+          type: boolean
+          description: Whether to disable the default description on generated line items
         externalId:
           type: string
           description: The external ID of the catalog product
@@ -752,6 +755,9 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
@@ -785,6 +791,9 @@ components:
               description:
                 type: string
                 description: The description of the catalog product
+              disableDescription:
+                type: boolean
+                description: Whether to disable the default description on generated line items
               externalId:
                 type: string
                 description: The external ID of the catalog product
@@ -824,6 +833,9 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
@@ -852,6 +864,9 @@ components:
         description:
           type: string
           description: The description of the catalog product
+        disableDescription:
+          type: boolean
+          description: Whether to disable the default description on generated line items
         externalId:
           type: string
           description: The external ID of the catalog product
@@ -869,6 +884,9 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
@@ -900,6 +918,9 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
@@ -947,6 +968,15 @@ components:
         - HubSpot
         - ContractExtraction
       description: The source of the customer
+    CustomerStatus:
+      type: string
+      enum:
+        - Active
+        - Inactive
+        - Suspended
+        - Trial
+      description: The lifecycle status of the customer. Defaults to Active when
+        omitted on creation.
     CustomerCloudProviderSettings:
       type: object
       nullable: true
@@ -965,6 +995,9 @@ components:
       nullable: true
       properties:
         country:
+          type: string
+          nullable: true
+        countryCode:
           type: string
           nullable: true
         city:
@@ -1109,6 +1142,8 @@ components:
             type: string
           default: []
           description: The tax IDs of the customer
+        status:
+          $ref: "#/components/schemas/CustomerStatus"
         taxId:
           type: string
           nullable: true
@@ -1153,6 +1188,7 @@ components:
             - 45_DAYS
             - 60_DAYS
             - 90_DAYS
+            - 180_DAYS
           description: The due days of the customer
         currency:
           $ref: "#/components/schemas/Currency"
@@ -1219,6 +1255,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -1263,6 +1301,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -1344,6 +1383,8 @@ components:
                   type: string
                 default: []
                 description: The tax IDs of the customer
+              status:
+                $ref: "#/components/schemas/CustomerStatus"
               taxId:
                 type: string
                 nullable: true
@@ -1388,6 +1429,7 @@ components:
                   - 45_DAYS
                   - 60_DAYS
                   - 90_DAYS
+                  - 180_DAYS
                 description: The due days of the customer
               currency:
                 $ref: "#/components/schemas/Currency"
@@ -1475,6 +1517,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -1519,6 +1563,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -1595,6 +1640,8 @@ components:
             type: string
           default: []
           description: The tax IDs of the customer
+        status:
+          $ref: "#/components/schemas/CustomerStatus"
         taxId:
           type: string
           nullable: true
@@ -1639,6 +1686,7 @@ components:
             - 45_DAYS
             - 60_DAYS
             - 90_DAYS
+            - 180_DAYS
           description: The due days of the customer
         currency:
           $ref: "#/components/schemas/Currency"
@@ -1704,6 +1752,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -1748,6 +1798,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -1827,6 +1878,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -1871,6 +1924,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -2349,6 +2403,10 @@ components:
                 type: string
                 nullable: true
                 description: The description of the product
+              disableDescription:
+                type: boolean
+                nullable: true
+                description: Whether to disable the default description on generated line items
               scheduling:
                 type: object
                 properties:
@@ -2556,6 +2614,10 @@ components:
                         description: When true, this product is billed on its own invoice instead of
                           being combined with other products in the same
                           contract. Defaults to false.
+                      seats:
+                        type: integer
+                        minimum: 0
+                        description: The number of seats for this subscription product.
                     required:
                       - type
                       - price
@@ -2951,6 +3013,10 @@ components:
                     type: string
                     nullable: true
                     description: The description of the product
+                  disableDescription:
+                    type: boolean
+                    nullable: true
+                    description: Whether to disable the default description on generated line items
                   scheduling:
                     type: object
                     properties:
@@ -3158,6 +3224,10 @@ components:
                             description: When true, this product is billed on its own invoice instead of
                               being combined with other products in the same
                               contract. Defaults to false.
+                          seats:
+                            type: integer
+                            minimum: 0
+                            description: The number of seats for this subscription product.
                         required:
                           - type
                           - price
@@ -3534,6 +3604,10 @@ components:
                     type: string
                     nullable: true
                     description: The description of the product
+                  disableDescription:
+                    type: boolean
+                    nullable: true
+                    description: Whether to disable the default description on generated line items
                   scheduling:
                     type: object
                     properties:
@@ -3741,6 +3815,10 @@ components:
                             description: When true, this product is billed on its own invoice instead of
                               being combined with other products in the same
                               contract. Defaults to false.
+                          seats:
+                            type: integer
+                            minimum: 0
+                            description: The number of seats for this subscription product.
                         required:
                           - type
                           - price
@@ -4117,6 +4195,10 @@ components:
                 type: string
                 nullable: true
                 description: The description of the product
+              disableDescription:
+                type: boolean
+                nullable: true
+                description: Whether to disable the default description on generated line items
               scheduling:
                 type: object
                 properties:
@@ -4324,6 +4406,10 @@ components:
                         description: When true, this product is billed on its own invoice instead of
                           being combined with other products in the same
                           contract. Defaults to false.
+                      seats:
+                        type: integer
+                        minimum: 0
+                        description: The number of seats for this subscription product.
                     required:
                       - type
                       - price
@@ -4687,6 +4773,10 @@ components:
                     type: string
                     nullable: true
                     description: The description of the product
+                  disableDescription:
+                    type: boolean
+                    nullable: true
+                    description: Whether to disable the default description on generated line items
                   scheduling:
                     type: object
                     properties:
@@ -4894,6 +4984,10 @@ components:
                             description: When true, this product is billed on its own invoice instead of
                               being combined with other products in the same
                               contract. Defaults to false.
+                          seats:
+                            type: integer
+                            minimum: 0
+                            description: The number of seats for this subscription product.
                         required:
                           - type
                           - price
@@ -6381,8 +6475,16 @@ components:
           type: string
           description: The new access token to be used for subsequent API calls. It is set
             to expire every hour.
+        expiresIn:
+          type: integer
+          description: The lifetime of the access token in seconds.
+        expiresAt:
+          type: string
+          description: The expiration time of the access token, in ISO 8601 format.
       required:
         - accessToken
+        - expiresIn
+        - expiresAt
     DeleteEventsByRefsRequest:
       type: object
       properties:
@@ -6677,54 +6779,17 @@ components:
       required:
         - events
     AcknowledgedEvent:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The distinctive label assigned to an event, serving as a critical
-            identifier for categorizing and pricing events within the system's
-            backend infrastructure.
-          example: api_call
-        timestamp:
-          type: string
-          description: The temporal marker denoting the exact moment of event occurrence.
-            The timestamp is formatted as an ISO 8601 string and is expressed in
-            Coordinated Universal Time (UTC). i.e. YYYY-MM-DDTHH:MM:SS.SSSZ
-          format: date-time
-          example: 2023-09-13T18:25:43.511Z
-        customerAlias:
-          type: string
-          minLength: 1
-          description: A pseudonymous or otherwise obfuscated identifier uniquely assigned
-            to each customer.
-          example: customer_12345
-        ref:
-          type: string
-          description: A universally unique identifier (UUID) or other form of
-            high-entropy string serving as an immutable reference for each event
-            entry.
-          example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
-        data:
-          type: object
-          nullable: true
-          additionalProperties:
-            nullable: true
-          description: A schema-less JSON object encapsulating miscellaneous attributes
-            and metrics associated with the event.
-          example:
-            key1: processing_duration
-            key2: api_url
-        ackId:
-          type: string
-          description: Per-event acknowledgment ID confirming Vayu received this event.
-            Use it to demonstrate the event was sent to Vayu.
-          example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
-      required:
-        - name
-        - timestamp
-        - customerAlias
-        - ref
-        - ackId
+      allOf:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          properties:
+            ackId:
+              type: string
+              description: Per-event acknowledgment ID confirming Vayu received this event.
+                Use it to demonstrate the event was sent to Vayu.
+              example: 01J5A3B7K9QRSTUV2WXYZ4DEFG
+          required:
+            - ackId
     InvalidEvent:
       type: object
       properties:
@@ -7565,6 +7630,7 @@ components:
         - CustomerCreated
         - ContractCreated
         - InvoiceIssueDateArrived
+        - MeteringHealthDegraded
         - PingTest
     WebhookSubscribeRequest:
       type: object
@@ -7616,6 +7682,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -7660,6 +7728,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -7803,6 +7872,8 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            status:
+              $ref: "#/components/schemas/CustomerStatus"
             taxId:
               type: string
               nullable: true
@@ -7847,6 +7918,7 @@ components:
                 - 45_DAYS
                 - 60_DAYS
                 - 90_DAYS
+                - 180_DAYS
               description: The due days of the customer
             currency:
               $ref: "#/components/schemas/Currency"
@@ -7938,6 +8010,10 @@ components:
                     type: string
                     nullable: true
                     description: The description of the product
+                  disableDescription:
+                    type: boolean
+                    nullable: true
+                    description: Whether to disable the default description on generated line items
                   scheduling:
                     type: object
                     properties:
@@ -8145,6 +8221,10 @@ components:
                             description: When true, this product is billed on its own invoice instead of
                               being combined with other products in the same
                               contract. Defaults to false.
+                          seats:
+                            type: integer
+                            minimum: 0
+                            description: The number of seats for this subscription product.
                         required:
                           - type
                           - price
@@ -8521,6 +8601,10 @@ components:
                       type: string
                       nullable: true
                       description: The description of the product
+                    disableDescription:
+                      type: boolean
+                      nullable: true
+                      description: Whether to disable the default description on generated line items
                     scheduling:
                       type: object
                       properties:
@@ -8728,6 +8812,10 @@ components:
                               description: When true, this product is billed on its own invoice instead of
                                 being combined with other products in the same
                                 contract. Defaults to false.
+                            seats:
+                              type: integer
+                              minimum: 0
+                              description: The number of seats for this subscription product.
                           required:
                             - type
                             - price
@@ -9703,6 +9791,11 @@ paths:
       security:
         - BearerAuthorizer: []
       parameters:
+        - schema:
+            $ref: "#/components/schemas/CustomerStatus"
+          required: false
+          in: query
+          name: status
         - schema:
             $ref: "#/components/schemas/Limit"
           required: false

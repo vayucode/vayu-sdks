@@ -21,6 +21,7 @@ var _ MappedNullable = &Address{}
 // Address The address of the customer
 type Address struct {
 	Country NullableString `json:"country,omitempty"`
+	CountryCode NullableString `json:"countryCode,omitempty"`
 	City NullableString `json:"city,omitempty"`
 	AddressText NullableString `json:"addressText,omitempty"`
 	State NullableString `json:"state,omitempty"`
@@ -87,6 +88,48 @@ func (o *Address) SetCountryNil() {
 // UnsetCountry ensures that no value is present for Country, not even an explicit nil
 func (o *Address) UnsetCountry() {
 	o.Country.Unset()
+}
+
+// GetCountryCode returns the CountryCode field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Address) GetCountryCode() string {
+	if o == nil || IsNil(o.CountryCode.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CountryCode.Get()
+}
+
+// GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Address) GetCountryCodeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CountryCode.Get(), o.CountryCode.IsSet()
+}
+
+// HasCountryCode returns a boolean if a field has been set.
+func (o *Address) HasCountryCode() bool {
+	if o != nil && o.CountryCode.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCountryCode gets a reference to the given NullableString and assigns it to the CountryCode field.
+func (o *Address) SetCountryCode(v string) {
+	o.CountryCode.Set(&v)
+}
+// SetCountryCodeNil sets the value for CountryCode to be an explicit nil
+func (o *Address) SetCountryCodeNil() {
+	o.CountryCode.Set(nil)
+}
+
+// UnsetCountryCode ensures that no value is present for CountryCode, not even an explicit nil
+func (o *Address) UnsetCountryCode() {
+	o.CountryCode.Unset()
 }
 
 // GetCity returns the City field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -270,6 +313,9 @@ func (o Address) ToMap() (map[string]interface{}, error) {
 	if o.Country.IsSet() {
 		toSerialize["country"] = o.Country.Get()
 	}
+	if o.CountryCode.IsSet() {
+		toSerialize["countryCode"] = o.CountryCode.Get()
+	}
 	if o.City.IsSet() {
 		toSerialize["city"] = o.City.Get()
 	}
@@ -305,6 +351,7 @@ func (o *Address) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "country")
+		delete(additionalProperties, "countryCode")
 		delete(additionalProperties, "city")
 		delete(additionalProperties, "addressText")
 		delete(additionalProperties, "state")

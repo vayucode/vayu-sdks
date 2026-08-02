@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **IssuedSeparately** | Pointer to **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
 **Installments** | Pointer to **int32** | The number of installments to spread the deduction over | [optional] 
 **SubscriptionCadence** | [**NullableProductGroupProductsInnerPricingOneOf3SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md) |  | 
+**Seats** | Pointer to **int32** | The number of seats for this subscription product. | [optional] 
 **Tiers** | [**[]ProductGroupProductsInnerPricingOneOf3TiersInner**](ProductGroupProductsInnerPricingOneOf3TiersInner.md) |  | 
 **AutoUpgrade** | Pointer to **NullableBool** |  | [optional] 
 **Prorate** | Pointer to **NullableBool** |  | [optional] 
@@ -220,6 +221,31 @@ SetSubscriptionCadence sets SubscriptionCadence field to given value.
 `func (o *ProductGroupProductsInnerPricing) UnsetSubscriptionCadence()`
 
 UnsetSubscriptionCadence ensures that no value is present for SubscriptionCadence, not even an explicit nil
+### GetSeats
+
+`func (o *ProductGroupProductsInnerPricing) GetSeats() int32`
+
+GetSeats returns the Seats field if non-nil, zero value otherwise.
+
+### GetSeatsOk
+
+`func (o *ProductGroupProductsInnerPricing) GetSeatsOk() (*int32, bool)`
+
+GetSeatsOk returns a tuple with the Seats field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeats
+
+`func (o *ProductGroupProductsInnerPricing) SetSeats(v int32)`
+
+SetSeats sets Seats field to given value.
+
+### HasSeats
+
+`func (o *ProductGroupProductsInnerPricing) HasSeats() bool`
+
+HasSeats returns a boolean if a field has been set.
+
 ### GetTiers
 
 `func (o *ProductGroupProductsInnerPricing) GetTiers() []ProductGroupProductsInnerPricingOneOf3TiersInner`

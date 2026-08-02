@@ -49,6 +49,8 @@
 
 * `INVOICE_ISSUE_DATE_ARRIVED` (value: `"InvoiceIssueDateArrived"`)
 
+* `METERING_HEALTH_DEGRADED` (value: `"MeteringHealthDegraded"`)
+
 * `PING_TEST` (value: `"PingTest"`)
 
 

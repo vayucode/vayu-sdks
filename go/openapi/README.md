@@ -194,6 +194,7 @@ Class | Method | HTTP request | Description
  - [CustomerExternalIntegration](docs/CustomerExternalIntegration.md)
  - [CustomerRelationType](docs/CustomerRelationType.md)
  - [CustomerSource](docs/CustomerSource.md)
+ - [CustomerStatus](docs/CustomerStatus.md)
  - [DeductCreditsRequest](docs/DeductCreditsRequest.md)
  - [DeleteCatalogProductResponse](docs/DeleteCatalogProductResponse.md)
  - [DeleteCatalogProductResponseCatalogProduct](docs/DeleteCatalogProductResponseCatalogProduct.md)

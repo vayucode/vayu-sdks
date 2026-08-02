@@ -105,6 +105,7 @@ type (
 	Address                            = api.Address
 	Contact                            = api.Contact
 	ListCustomersResponse              = api.ListCustomersResponse
+	ListCustomersFilter                = api.ListCustomersFilter
 	GetCustomerResponse                = api.GetCustomerResponse
 	GetCustomerByNameResponse          = api.GetCustomerByNameResponse
 	GetCustomerByIntegrationIdResponse = api.GetCustomerByIntegrationIdResponse
@@ -141,6 +142,13 @@ const (
 	InvoiceBillingStatusRejected       = api.InvoiceBillingStatusRejected
 	InvoiceBillingStatusPendingPayment = api.InvoiceBillingStatusPendingPayment
 	InvoiceBillingStatusOverdue        = api.InvoiceBillingStatusOverdue
+)
+
+const (
+	CustomerStatusActive    = api.CustomerStatusActive
+	CustomerStatusInactive  = api.CustomerStatusInactive
+	CustomerStatusSuspended = api.CustomerStatusSuspended
+	CustomerStatusTrial     = api.CustomerStatusTrial
 )
 
 type (

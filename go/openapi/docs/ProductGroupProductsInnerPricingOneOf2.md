@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **SubscriptionCadence** | [**ProductGroupProductsInnerPricingOneOf2SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.md) |  | 
 **Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 **IssuedSeparately** | Pointer to **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
+**Seats** | Pointer to **int32** | The number of seats for this subscription product. | [optional] 
 
 ## Methods
 
@@ -148,6 +149,31 @@ SetIssuedSeparately sets IssuedSeparately field to given value.
 `func (o *ProductGroupProductsInnerPricingOneOf2) HasIssuedSeparately() bool`
 
 HasIssuedSeparately returns a boolean if a field has been set.
+
+### GetSeats
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetSeats() int32`
+
+GetSeats returns the Seats field if non-nil, zero value otherwise.
+
+### GetSeatsOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) GetSeatsOk() (*int32, bool)`
+
+GetSeatsOk returns a tuple with the Seats field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeats
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) SetSeats(v int32)`
+
+SetSeats sets Seats field to given value.
+
+### HasSeats
+
+`func (o *ProductGroupProductsInnerPricingOneOf2) HasSeats() bool`
+
+HasSeats returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

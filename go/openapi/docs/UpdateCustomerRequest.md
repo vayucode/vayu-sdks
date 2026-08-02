@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Source** | Pointer to [**NullableCustomerSource**](CustomerSource.md) |  | [optional] 
 **LegalName** | Pointer to **NullableString** | The legal name of the customer | [optional] 
 **TaxIds** | Pointer to **[]string** | The tax IDs of the customer | [optional] [default to []]
+**Status** | Pointer to [**CustomerStatus**](CustomerStatus.md) |  | [optional] 
 **TaxId** | Pointer to **NullableString** | The tax ID of the customer (deprecated, use taxIds instead) | [optional] 
 **CloudProviderSettings** | Pointer to [**NullableCustomerCloudProviderSettings**](CustomerCloudProviderSettings.md) |  | [optional] 
 **ExternalId** | Pointer to **string** | The external ID of the customer | [optional] 
@@ -246,6 +247,31 @@ HasTaxIds returns a boolean if a field has been set.
 `func (o *UpdateCustomerRequest) UnsetTaxIds()`
 
 UnsetTaxIds ensures that no value is present for TaxIds, not even an explicit nil
+### GetStatus
+
+`func (o *UpdateCustomerRequest) GetStatus() CustomerStatus`
+
+GetStatus returns the Status field if non-nil, zero value otherwise.
+
+### GetStatusOk
+
+`func (o *UpdateCustomerRequest) GetStatusOk() (*CustomerStatus, bool)`
+
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatus
+
+`func (o *UpdateCustomerRequest) SetStatus(v CustomerStatus)`
+
+SetStatus sets Status field to given value.
+
+### HasStatus
+
+`func (o *UpdateCustomerRequest) HasStatus() bool`
+
+HasStatus returns a boolean if a field has been set.
+
 ### GetTaxId
 
 `func (o *UpdateCustomerRequest) GetTaxId() string`

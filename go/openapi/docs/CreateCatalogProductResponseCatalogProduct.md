@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The name of the catalog product | 
 **Description** | Pointer to **string** | The description of the catalog product | [optional] 
+**DisableDescription** | Pointer to **bool** | Whether to disable the default description on generated line items | [optional] 
 **ExternalId** | Pointer to **string** | The external ID of the catalog product | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -74,6 +75,31 @@ SetDescription sets Description field to given value.
 `func (o *CreateCatalogProductResponseCatalogProduct) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
+
+### GetDisableDescription
+
+`func (o *CreateCatalogProductResponseCatalogProduct) GetDisableDescription() bool`
+
+GetDisableDescription returns the DisableDescription field if non-nil, zero value otherwise.
+
+### GetDisableDescriptionOk
+
+`func (o *CreateCatalogProductResponseCatalogProduct) GetDisableDescriptionOk() (*bool, bool)`
+
+GetDisableDescriptionOk returns a tuple with the DisableDescription field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisableDescription
+
+`func (o *CreateCatalogProductResponseCatalogProduct) SetDisableDescription(v bool)`
+
+SetDisableDescription sets DisableDescription field to given value.
+
+### HasDisableDescription
+
+`func (o *CreateCatalogProductResponseCatalogProduct) HasDisableDescription() bool`
+
+HasDisableDescription returns a boolean if a field has been set.
 
 ### GetExternalId
 

@@ -24,6 +24,19 @@ type UpdateCustomerRequest = openapi.UpdateCustomerRequest
 type UpdateCustomerResponse = openapi.UpdateCustomerResponse
 type DeleteCustomerResponse = openapi.DeleteCustomerResponse
 
+const (
+	CustomerStatusActive    = "Active"
+	CustomerStatusInactive  = "Inactive"
+	CustomerStatusSuspended = "Suspended"
+	CustomerStatusTrial     = "Trial"
+)
+
+type ListCustomersFilter struct {
+	Limit  *float32
+	Cursor *string
+	Status *string
+}
+
 func NewCustomersAPI(client *client.VayuClient) *CustomersAPI {
 	return &CustomersAPI{
 		vayuClient: client,
@@ -85,17 +98,25 @@ func NewUpdateCustomerRequest(name *string, externalId *string, aliases []string
 }
 
 func (api *CustomersAPI) ListCustomers(limit *float32, cursor *string) (*ListCustomersResponse, error) {
+	return api.ListCustomersWithFilter(ListCustomersFilter{Limit: limit, Cursor: cursor})
+}
+
+func (api *CustomersAPI) ListCustomersWithFilter(filter ListCustomersFilter) (*ListCustomersResponse, error) {
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()
 
 	request := api.vayuClient.Client.CustomersAPI.ListCustomers(ctx)
 
-	if limit != nil {
-		request = request.Limit(*limit)
+	if filter.Limit != nil {
+		request = request.Limit(*filter.Limit)
 	}
 
-	if cursor != nil {
-		request = request.Cursor(*cursor)
+	if filter.Cursor != nil {
+		request = request.Cursor(*filter.Cursor)
+	}
+
+	if filter.Status != nil {
+		request = request.Status(openapi.CustomerStatus(*filter.Status))
 	}
 
 	response, _, err := request.Execute()

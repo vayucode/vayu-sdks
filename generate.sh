@@ -41,7 +41,7 @@ rm -rf "$SCRIPT_DIR/go/openapi/.openapi-generator" \
 
 # Fix any remaining placeholder import paths
 find "$SCRIPT_DIR/go/openapi" -name '*.go' -exec \
-  sed -i 's|github.com/GIT_USER_ID/GIT_REPO_ID|github.com/vayucode/vayu-sdks/go|g' {} +
+  perl -pi -e 's|github.com/GIT_USER_ID/GIT_REPO_ID|github.com/vayucode/vayu-sdks/go|g' {} +
 
 echo ""
 echo "=== Generating Python client ==="

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Country** | Pointer to **NullableString** |  | [optional] 
+**CountryCode** | Pointer to **NullableString** |  | [optional] 
 **City** | Pointer to **NullableString** |  | [optional] 
 **AddressText** | Pointer to **NullableString** |  | [optional] 
 **State** | Pointer to **NullableString** |  | [optional] 
@@ -64,6 +65,41 @@ HasCountry returns a boolean if a field has been set.
 `func (o *Address) UnsetCountry()`
 
 UnsetCountry ensures that no value is present for Country, not even an explicit nil
+### GetCountryCode
+
+`func (o *Address) GetCountryCode() string`
+
+GetCountryCode returns the CountryCode field if non-nil, zero value otherwise.
+
+### GetCountryCodeOk
+
+`func (o *Address) GetCountryCodeOk() (*string, bool)`
+
+GetCountryCodeOk returns a tuple with the CountryCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountryCode
+
+`func (o *Address) SetCountryCode(v string)`
+
+SetCountryCode sets CountryCode field to given value.
+
+### HasCountryCode
+
+`func (o *Address) HasCountryCode() bool`
+
+HasCountryCode returns a boolean if a field has been set.
+
+### SetCountryCodeNil
+
+`func (o *Address) SetCountryCodeNil(b bool)`
+
+ SetCountryCodeNil sets the value for CountryCode to be an explicit nil
+
+### UnsetCountryCode
+`func (o *Address) UnsetCountryCode()`
+
+UnsetCountryCode ensures that no value is present for CountryCode, not even an explicit nil
 ### GetCity
 
 `func (o *Address) GetCity() string`
