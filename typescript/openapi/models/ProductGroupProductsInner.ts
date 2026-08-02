@@ -12,7 +12,6 @@
 
 import { PaymentTerm } from '../models/PaymentTerm';
 import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
-import { ProductExternalIntegration } from '../models/ProductExternalIntegration';
 import { ProductGroupProductsInnerCommitment } from '../models/ProductGroupProductsInnerCommitment';
 import { ProductGroupProductsInnerPricing } from '../models/ProductGroupProductsInnerPricing';
 import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProductsInnerScheduling';
@@ -27,10 +26,6 @@ export class ProductGroupProductsInner {
     * The description of the product
     */
     'description'?: string | null;
-    /**
-    * Whether to disable the default description on generated line items
-    */
-    'disableDescription'?: boolean | null;
     'scheduling': ProductGroupProductsInnerScheduling;
     'pricing': ProductGroupProductsInnerPricing;
     /**
@@ -49,10 +44,6 @@ export class ProductGroupProductsInner {
     * The id of the class of the product in NetSuite ERP
     */
     'nsClassId'?: string | null;
-    /**
-    * Links the product to matching products in V3 integrations (e.g. Paddle). For each entry, the product is linked to that external integration after the contract is created, so invoices for this product are exported to it. At most one entry per provider. Currently only Paddle is supported.
-    */
-    'externalIntegrations'?: Array<ProductExternalIntegration> | null;
     'commitment'?: ProductGroupProductsInnerCommitment | null;
     'paymentTerm'?: PaymentTerm | null;
     /**
@@ -60,10 +51,6 @@ export class ProductGroupProductsInner {
     */
     'isCalendarAligned'?: boolean;
     'cloudProviderSettings'?: ProductCloudProviderSettings | null;
-    /**
-    * IDs of credit products whose pools are drawn down when this usage product is invoiced. Each ID matches the creditProductId of a credit grant on the same contract that funds the pool. Pools are drawn in the order listed. If omitted, no credits are applied and the product is billed at full price. Not supported inside productGroups.
-    */
-    'consumesCreditProductIds'?: Array<string> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -80,12 +67,6 @@ export class ProductGroupProductsInner {
             "name": "description",
             "baseName": "description",
             "type": "string",
-            "format": ""
-        },
-        {
-            "name": "disableDescription",
-            "baseName": "disableDescription",
-            "type": "boolean",
             "format": ""
         },
         {
@@ -125,12 +106,6 @@ export class ProductGroupProductsInner {
             "format": ""
         },
         {
-            "name": "externalIntegrations",
-            "baseName": "externalIntegrations",
-            "type": "Array<ProductExternalIntegration>",
-            "format": ""
-        },
-        {
             "name": "commitment",
             "baseName": "commitment",
             "type": "ProductGroupProductsInnerCommitment",
@@ -152,12 +127,6 @@ export class ProductGroupProductsInner {
             "name": "cloudProviderSettings",
             "baseName": "cloudProviderSettings",
             "type": "ProductCloudProviderSettings",
-            "format": ""
-        },
-        {
-            "name": "consumesCreditProductIds",
-            "baseName": "consumesCreditProductIds",
-            "type": "Array<string>",
             "format": ""
         }    ];
 

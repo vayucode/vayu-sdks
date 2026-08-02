@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 
-import { AcknowledgedEvent } from '../models/AcknowledgedEvent';
+import { Event } from '../models/Event';
 import { InvalidEvent } from '../models/InvalidEvent';
 import { HttpFile } from '../http/http';
 
 export class SendEventsResponse {
     /**
-    * An array of events that were successfully processed and sent to the queue, each with its acknowledgment ID.
+    * An array of events that were successfully processed and sent to the queue.
     */
-    'validEvents': Array<AcknowledgedEvent>;
+    'validEvents': Array<Event>;
     /**
     * An array of events that failed validation and were not sent to the queue. Each object contains the event and the error message.
     */
@@ -32,7 +32,7 @@ export class SendEventsResponse {
         {
             "name": "validEvents",
             "baseName": "validEvents",
-            "type": "Array<AcknowledgedEvent>",
+            "type": "Array<Event>",
             "format": ""
         },
         {

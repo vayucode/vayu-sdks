@@ -16,7 +16,6 @@ export enum NotificationEventType {
     AnonymousCustomer = 'AnonymousCustomer',
     Overage = 'Overage',
     UpcomingRenewal = 'UpcomingRenewal',
-    ContractExpired = 'ContractExpired',
     InvoiceApproved = 'InvoiceApproved',
     CustomerPortalLinkSent = 'CustomerPortalLinkSent',
     NewCustomerWithoutContract = 'NewCustomerWithoutContract',
@@ -29,13 +28,5 @@ export enum NotificationEventType {
     FinalTierExceeded = 'FinalTierExceeded',
     InvoicePaymentStatusChanged = 'InvoicePaymentStatusChanged',
     InvoiceSendFailed = 'InvoiceSendFailed',
-    CreditPoolDepleted = 'CreditPoolDepleted',
-    CreditPoolThresholdCrossed = 'CreditPoolThresholdCrossed',
-    CreditPoolIncreased = 'CreditPoolIncreased',
-    PaymentFailed = 'PaymentFailed',
-    CustomerCreated = 'CustomerCreated',
-    ContractCreated = 'ContractCreated',
-    InvoiceIssueDateArrived = 'InvoiceIssueDateArrived',
-    MeteringHealthDegraded = 'MeteringHealthDegraded',
     PingTest = 'PingTest'
 }

@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | The name of the catalog product | [optional] 
 **description** | **str** | The description of the catalog product | [optional] 
-**disable_description** | **bool** | Whether to disable the default description on generated line items | [optional] 
 **external_id** | **str** | The external ID of the catalog product | [optional] 
 
 ## Example

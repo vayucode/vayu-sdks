@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **name** | **str** | The name of the plan | 
 **status** | [**PlanStatus**](PlanStatus.md) |  | 
 **billing_data** | [**PlanBillingData**](PlanBillingData.md) |  | 
-**external_id** | **str** | A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints. | [optional] 
 **id** | **str** |  | 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 

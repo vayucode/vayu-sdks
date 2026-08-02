@@ -20,7 +20,7 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from openapi.models.plan_billing_data import PlanBillingData
 from openapi.models.plan_status import PlanStatus
@@ -34,12 +34,11 @@ class GetPlanResponsePlan(BaseModel):
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the plan")
     status: PlanStatus
     billing_data: PlanBillingData = Field(alias="billingData")
-    external_id: Optional[StrictStr] = Field(default=None, description="A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints.", alias="externalId")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "status", "billingData", "externalId", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["name", "status", "billingData", "id", "createdAt", "updatedAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,11 +89,6 @@ class GetPlanResponsePlan(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if external_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.external_id is None and "external_id" in self.model_fields_set:
-            _dict['externalId'] = None
-
         return _dict
 
     @classmethod
@@ -110,7 +104,6 @@ class GetPlanResponsePlan(BaseModel):
             "name": obj.get("name"),
             "status": obj.get("status"),
             "billingData": PlanBillingData.from_dict(obj["billingData"]) if obj.get("billingData") is not None else None,
-            "externalId": obj.get("externalId"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")

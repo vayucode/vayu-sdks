@@ -21,10 +21,6 @@ export class DeletePlanResponsePlan {
     'name': string;
     'status': PlanStatus;
     'billingData': PlanBillingData;
-    /**
-    * A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints.
-    */
-    'externalId'?: string | null;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -51,12 +47,6 @@ export class DeletePlanResponsePlan {
             "name": "billingData",
             "baseName": "billingData",
             "type": "PlanBillingData",
-            "format": ""
-        },
-        {
-            "name": "externalId",
-            "baseName": "externalId",
-            "type": "string",
             "format": ""
         },
         {

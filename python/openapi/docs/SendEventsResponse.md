@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**valid_events** | [**List[AcknowledgedEvent]**](AcknowledgedEvent.md) | An array of events that were successfully processed and sent to the queue, each with its acknowledgment ID. | 
+**valid_events** | [**List[Event]**](Event.md) | An array of events that were successfully processed and sent to the queue. | 
 **invalid_events** | [**List[InvalidEvent]**](InvalidEvent.md) | An array of events that failed validation and were not sent to the queue. Each object contains the event and the error message. | 
 
 ## Example

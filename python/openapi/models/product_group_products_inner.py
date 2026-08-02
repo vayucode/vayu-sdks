@@ -18,12 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from openapi.models.payment_term import PaymentTerm
 from openapi.models.product_cloud_provider_settings import ProductCloudProviderSettings
-from openapi.models.product_external_integration import ProductExternalIntegration
 from openapi.models.product_group_products_inner_commitment import ProductGroupProductsInnerCommitment
 from openapi.models.product_group_products_inner_pricing import ProductGroupProductsInnerPricing
 from openapi.models.product_group_products_inner_scheduling import ProductGroupProductsInnerScheduling
@@ -36,21 +34,18 @@ class ProductGroupProductsInner(BaseModel):
     """ # noqa: E501
     display_name: StrictStr = Field(description="The display name of the product", alias="displayName")
     description: Optional[StrictStr] = Field(default=None, description="The description of the product")
-    disable_description: Optional[StrictBool] = Field(default=None, description="Whether to disable the default description on generated line items", alias="disableDescription")
     scheduling: ProductGroupProductsInnerScheduling
     pricing: ProductGroupProductsInnerPricing
     catalog_product_id: Optional[StrictStr] = Field(default=None, description="The id of the a product from the catalog to connect the contract product to", alias="catalogProductId")
     product_erp_id: Optional[StrictStr] = Field(default=None, description="The id of the product in NetSuite ERP", alias="productErpId")
     ns_class: Optional[StrictStr] = Field(default=None, description="The class of the product in NetSuite ERP", alias="nsClass")
     ns_class_id: Optional[StrictStr] = Field(default=None, description="The id of the class of the product in NetSuite ERP", alias="nsClassId")
-    external_integrations: Optional[List[ProductExternalIntegration]] = Field(default=None, description="Links the product to matching products in V3 integrations (e.g. Paddle). For each entry, the product is linked to that external integration after the contract is created, so invoices for this product are exported to it. At most one entry per provider. Currently only Paddle is supported.", alias="externalIntegrations")
     commitment: Optional[ProductGroupProductsInnerCommitment] = None
     payment_term: Optional[PaymentTerm] = Field(default=None, alias="paymentTerm")
     is_calendar_aligned: Optional[StrictBool] = Field(default=None, description="Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned. This field is ignored if the product is part of a ProductGroup.", alias="isCalendarAligned")
     cloud_provider_settings: Optional[ProductCloudProviderSettings] = Field(default=None, alias="cloudProviderSettings")
-    consumes_credit_product_ids: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="IDs of credit products whose pools are drawn down when this usage product is invoiced. Each ID matches the creditProductId of a credit grant on the same contract that funds the pool. Pools are drawn in the order listed. If omitted, no credits are applied and the product is billed at full price. Not supported inside productGroups.", alias="consumesCreditProductIds")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["displayName", "description", "disableDescription", "scheduling", "pricing", "catalogProductId", "productErpId", "nsClass", "nsClassId", "externalIntegrations", "commitment", "paymentTerm", "isCalendarAligned", "cloudProviderSettings", "consumesCreditProductIds"]
+    __properties: ClassVar[List[str]] = ["displayName", "description", "scheduling", "pricing", "catalogProductId", "productErpId", "nsClass", "nsClassId", "commitment", "paymentTerm", "isCalendarAligned", "cloudProviderSettings"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,13 +94,6 @@ class ProductGroupProductsInner(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of pricing
         if self.pricing:
             _dict['pricing'] = self.pricing.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in external_integrations (list)
-        _items = []
-        if self.external_integrations:
-            for _item_external_integrations in self.external_integrations:
-                if _item_external_integrations:
-                    _items.append(_item_external_integrations.to_dict())
-            _dict['externalIntegrations'] = _items
         # override the default output from pydantic by calling `to_dict()` of commitment
         if self.commitment:
             _dict['commitment'] = self.commitment.to_dict()
@@ -121,11 +109,6 @@ class ProductGroupProductsInner(BaseModel):
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
-
-        # set to None if disable_description (nullable) is None
-        # and model_fields_set contains the field
-        if self.disable_description is None and "disable_description" in self.model_fields_set:
-            _dict['disableDescription'] = None
 
         # set to None if catalog_product_id (nullable) is None
         # and model_fields_set contains the field
@@ -147,11 +130,6 @@ class ProductGroupProductsInner(BaseModel):
         if self.ns_class_id is None and "ns_class_id" in self.model_fields_set:
             _dict['nsClassId'] = None
 
-        # set to None if external_integrations (nullable) is None
-        # and model_fields_set contains the field
-        if self.external_integrations is None and "external_integrations" in self.model_fields_set:
-            _dict['externalIntegrations'] = None
-
         # set to None if commitment (nullable) is None
         # and model_fields_set contains the field
         if self.commitment is None and "commitment" in self.model_fields_set:
@@ -167,11 +145,6 @@ class ProductGroupProductsInner(BaseModel):
         if self.cloud_provider_settings is None and "cloud_provider_settings" in self.model_fields_set:
             _dict['cloudProviderSettings'] = None
 
-        # set to None if consumes_credit_product_ids (nullable) is None
-        # and model_fields_set contains the field
-        if self.consumes_credit_product_ids is None and "consumes_credit_product_ids" in self.model_fields_set:
-            _dict['consumesCreditProductIds'] = None
-
         return _dict
 
     @classmethod
@@ -186,19 +159,16 @@ class ProductGroupProductsInner(BaseModel):
         _obj = cls.model_validate({
             "displayName": obj.get("displayName"),
             "description": obj.get("description"),
-            "disableDescription": obj.get("disableDescription"),
             "scheduling": ProductGroupProductsInnerScheduling.from_dict(obj["scheduling"]) if obj.get("scheduling") is not None else None,
             "pricing": ProductGroupProductsInnerPricing.from_dict(obj["pricing"]) if obj.get("pricing") is not None else None,
             "catalogProductId": obj.get("catalogProductId"),
             "productErpId": obj.get("productErpId"),
             "nsClass": obj.get("nsClass"),
             "nsClassId": obj.get("nsClassId"),
-            "externalIntegrations": [ProductExternalIntegration.from_dict(_item) for _item in obj["externalIntegrations"]] if obj.get("externalIntegrations") is not None else None,
             "commitment": ProductGroupProductsInnerCommitment.from_dict(obj["commitment"]) if obj.get("commitment") is not None else None,
             "paymentTerm": obj.get("paymentTerm"),
             "isCalendarAligned": obj.get("isCalendarAligned"),
-            "cloudProviderSettings": ProductCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None,
-            "consumesCreditProductIds": obj.get("consumesCreditProductIds")
+            "cloudProviderSettings": ProductCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

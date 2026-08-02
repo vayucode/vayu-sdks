@@ -4,71 +4,10 @@ All URIs are relative to *https://connect.withvayu.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**creditTopUp**](CreditsApi.md#creditTopUp) | **POST** /credits/top-up | Create a one-off invoice to top up a customer with credits
 [**deductCredits**](CreditsApi.md#deductCredits) | **POST** /credits/deduct | Deduct credits from customer credit ledger
 [**grantCredits**](CreditsApi.md#grantCredits) | **POST** /credits/grant | Grant credits to a customer credit ledger
 [**listCreditLedgerEntries**](CreditsApi.md#listCreditLedgerEntries) | **GET** /credits | Retrieve credit ledger entries for customer.
 
-
-# **creditTopUp**
-> CreditTopUpResponse creditTopUp(creditTopUpRequest)
-
-This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant\'s price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
-
-### Example
-
-
-```typescript
-import { createConfiguration, CreditsApi } from '';
-import type { CreditsApiCreditTopUpRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new CreditsApi(configuration);
-
-const request: CreditsApiCreditTopUpRequest = {
-  
-  creditTopUpRequest: {
-    customerId: "62ECB020842930cc01FFCCfe",
-    creditGrant: null,
-  },
-};
-
-const data = await apiInstance.creditTopUp(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **creditTopUpRequest** | **CreditTopUpRequest**|  |
-
-
-### Return type
-
-**CreditTopUpResponse**
-
-### Authorization
-
-[BearerAuthorizer](README.md#BearerAuthorizer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | RequestSuccess |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**429** | Too Many Requests |  -  |
-**500** | Internal Server Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **deductCredits**
 > void deductCredits(deductCreditsRequest)

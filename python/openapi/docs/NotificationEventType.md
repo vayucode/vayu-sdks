@@ -9,8 +9,6 @@
 
 * `UPCOMINGRENEWAL` (value: `'UpcomingRenewal'`)
 
-* `CONTRACTEXPIRED` (value: `'ContractExpired'`)
-
 * `INVOICEAPPROVED` (value: `'InvoiceApproved'`)
 
 * `CUSTOMERPORTALLINKSENT` (value: `'CustomerPortalLinkSent'`)
@@ -34,22 +32,6 @@
 * `INVOICEPAYMENTSTATUSCHANGED` (value: `'InvoicePaymentStatusChanged'`)
 
 * `INVOICESENDFAILED` (value: `'InvoiceSendFailed'`)
-
-* `CREDITPOOLDEPLETED` (value: `'CreditPoolDepleted'`)
-
-* `CREDITPOOLTHRESHOLDCROSSED` (value: `'CreditPoolThresholdCrossed'`)
-
-* `CREDITPOOLINCREASED` (value: `'CreditPoolIncreased'`)
-
-* `PAYMENTFAILED` (value: `'PaymentFailed'`)
-
-* `CUSTOMERCREATED` (value: `'CustomerCreated'`)
-
-* `CONTRACTCREATED` (value: `'ContractCreated'`)
-
-* `INVOICEISSUEDATEARRIVED` (value: `'InvoiceIssueDateArrived'`)
-
-* `METERINGHEALTHDEGRADED` (value: `'MeteringHealthDegraded'`)
 
 * `PINGTEST` (value: `'PingTest'`)
 

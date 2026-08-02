@@ -23,8 +23,5 @@ export enum Currency {
     Cad = 'CAD',
     Aud = 'AUD',
     Cop = 'COP',
-    Brl = 'BRL',
-    Ars = 'ARS',
-    Inr = 'INR',
-    Mxn = 'MXN'
+    Brl = 'BRL'
 }

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -30,9 +30,8 @@ class UpdateCatalogProductRequest(BaseModel):
     """ # noqa: E501
     name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="The name of the catalog product")
     description: Optional[StrictStr] = Field(default=None, description="The description of the catalog product")
-    disable_description: Optional[StrictBool] = Field(default=None, description="Whether to disable the default description on generated line items", alias="disableDescription")
     external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
-    __properties: ClassVar[List[str]] = ["name", "description", "disableDescription", "externalId"]
+    __properties: ClassVar[List[str]] = ["name", "description", "externalId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,7 +86,6 @@ class UpdateCatalogProductRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "disableDescription": obj.get("disableDescription"),
             "externalId": obj.get("externalId")
         })
         return _obj

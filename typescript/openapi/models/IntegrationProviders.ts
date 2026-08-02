@@ -25,6 +25,5 @@ export enum IntegrationProviders {
     Anrok = 'Anrok',
     Snowflake = 'Snowflake',
     Connact = 'Connact',
-    Xero = 'Xero',
-    Paddle = 'Paddle'
+    Xero = 'Xero'
 }

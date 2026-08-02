@@ -35,9 +35,8 @@ class EventsDryRunResponseObjectEvent(BaseModel):
     data: Optional[Dict[str, Any]] = None
     ref: StrictStr
     name: StrictStr
-    ack_id: Optional[StrictStr] = Field(default=None, alias="ackId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["timestamp", "customerAlias", "accountId", "data", "ref", "name", "ackId"]
+    __properties: ClassVar[List[str]] = ["timestamp", "customerAlias", "accountId", "data", "ref", "name"]
 
     @field_validator('account_id')
     def account_id_validate_regular_expression(cls, value):
@@ -114,8 +113,7 @@ class EventsDryRunResponseObjectEvent(BaseModel):
             "accountId": obj.get("accountId"),
             "data": obj.get("data"),
             "ref": obj.get("ref"),
-            "name": obj.get("name"),
-            "ackId": obj.get("ackId")
+            "name": obj.get("name")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

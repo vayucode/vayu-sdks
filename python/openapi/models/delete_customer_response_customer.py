@@ -26,9 +26,7 @@ from openapi.models.contact import Contact
 from openapi.models.currency import Currency
 from openapi.models.custom_field import CustomField
 from openapi.models.customer_cloud_provider_settings import CustomerCloudProviderSettings
-from openapi.models.customer_external_integration import CustomerExternalIntegration
 from openapi.models.customer_source import CustomerSource
-from openapi.models.customer_status import CustomerStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -42,14 +40,12 @@ class DeleteCustomerResponseCustomer(BaseModel):
     source: Optional[CustomerSource] = None
     legal_name: Optional[StrictStr] = Field(default=None, description="The legal name of the customer", alias="legalName")
     tax_ids: Optional[List[StrictStr]] = Field(default=None, description="The tax IDs of the customer", alias="taxIds")
-    status: Optional[CustomerStatus] = None
     tax_id: Optional[StrictStr] = Field(default=None, description="The tax ID of the customer (deprecated, use taxIds instead)", alias="taxId")
     cloud_provider_settings: Optional[CustomerCloudProviderSettings] = Field(default=None, alias="cloudProviderSettings")
     external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the customer", alias="externalId")
     customer_erp_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the ERP system", alias="customerErpId")
     address: Optional[Address] = None
     sales_force_account_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the Salesforce system", alias="salesForceAccountId")
-    external_integration: Optional[List[CustomerExternalIntegration]] = Field(default=None, description="External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.", alias="externalIntegration")
     due_days: Optional[StrictStr] = Field(default=None, description="The due days of the customer", alias="dueDays")
     currency: Optional[Currency] = None
     custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
@@ -64,7 +60,7 @@ class DeleteCustomerResponseCustomer(BaseModel):
     updated_at: datetime = Field(alias="updatedAt")
     deleted_at: StrictStr = Field(alias="deletedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "status", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "externalIntegration", "dueDays", "currency", "customFields", "subsidiary", "totalOutstandingAmount", "openAmount", "overdueAmount", "pendingPaymentAmount", "paidAmount", "id", "createdAt", "updatedAt", "deletedAt"]
+    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "dueDays", "currency", "customFields", "subsidiary", "totalOutstandingAmount", "openAmount", "overdueAmount", "pendingPaymentAmount", "paidAmount", "id", "createdAt", "updatedAt", "deletedAt"]
 
     @field_validator('due_days')
     def due_days_validate_enum(cls, value):
@@ -72,8 +68,8 @@ class DeleteCustomerResponseCustomer(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS', '180_DAYS']):
-            raise ValueError("must be one of enum values ('END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS', '180_DAYS')")
+        if value not in set(['END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS']):
+            raise ValueError("must be one of enum values ('END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS')")
         return value
 
     model_config = ConfigDict(
@@ -130,13 +126,6 @@ class DeleteCustomerResponseCustomer(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in external_integration (list)
-        _items = []
-        if self.external_integration:
-            for _item_external_integration in self.external_integration:
-                if _item_external_integration:
-                    _items.append(_item_external_integration.to_dict())
-            _dict['externalIntegration'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in custom_fields (list)
         _items = []
         if self.custom_fields:
@@ -199,11 +188,6 @@ class DeleteCustomerResponseCustomer(BaseModel):
         if self.sales_force_account_id is None and "sales_force_account_id" in self.model_fields_set:
             _dict['salesForceAccountId'] = None
 
-        # set to None if external_integration (nullable) is None
-        # and model_fields_set contains the field
-        if self.external_integration is None and "external_integration" in self.model_fields_set:
-            _dict['externalIntegration'] = None
-
         # set to None if due_days (nullable) is None
         # and model_fields_set contains the field
         if self.due_days is None and "due_days" in self.model_fields_set:
@@ -242,14 +226,12 @@ class DeleteCustomerResponseCustomer(BaseModel):
             "source": obj.get("source"),
             "legalName": obj.get("legalName"),
             "taxIds": obj.get("taxIds"),
-            "status": obj.get("status"),
             "taxId": obj.get("taxId"),
             "cloudProviderSettings": CustomerCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None,
             "externalId": obj.get("externalId"),
             "customerErpId": obj.get("customerErpId"),
             "address": Address.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "salesForceAccountId": obj.get("salesForceAccountId"),
-            "externalIntegration": [CustomerExternalIntegration.from_dict(_item) for _item in obj["externalIntegration"]] if obj.get("externalIntegration") is not None else None,
             "dueDays": obj.get("dueDays"),
             "currency": obj.get("currency"),
             "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,

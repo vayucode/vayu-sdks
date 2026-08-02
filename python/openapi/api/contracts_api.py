@@ -25,12 +25,8 @@ from openapi.models.create_contract_response import CreateContractResponse
 from openapi.models.delete_contract_response import DeleteContractResponse
 from openapi.models.get_contract_by_integration_id_response import GetContractByIntegrationIdResponse
 from openapi.models.get_contract_response import GetContractResponse
-from openapi.models.integration_providers import IntegrationProviders
+from openapi.models.integration_type import IntegrationType
 from openapi.models.list_contracts_response import ListContractsResponse
-from openapi.models.refresh_contract_credits_request import RefreshContractCreditsRequest
-from openapi.models.refresh_contract_credits_response import RefreshContractCreditsResponse
-from openapi.models.terminate_contract_request import TerminateContractRequest
-from openapi.models.terminate_contract_response import TerminateContractResponse
 
 from openapi.api_client import ApiClient, RequestSerialized
 from openapi.api_response import ApiResponse
@@ -891,7 +887,7 @@ class ContractsApi:
     @validate_call
     def get_contract_by_integration_id(
         self,
-        integration_type: IntegrationProviders,
+        integration_type: IntegrationType,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -911,7 +907,7 @@ class ContractsApi:
         Use this endpoint to get a specific contract using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationProviders
+        :type integration_type: IntegrationType
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -967,7 +963,7 @@ class ContractsApi:
     @validate_call
     def get_contract_by_integration_id_with_http_info(
         self,
-        integration_type: IntegrationProviders,
+        integration_type: IntegrationType,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -987,7 +983,7 @@ class ContractsApi:
         Use this endpoint to get a specific contract using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationProviders
+        :type integration_type: IntegrationType
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1043,7 +1039,7 @@ class ContractsApi:
     @validate_call
     def get_contract_by_integration_id_without_preload_content(
         self,
-        integration_type: IntegrationProviders,
+        integration_type: IntegrationType,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1063,7 +1059,7 @@ class ContractsApi:
         Use this endpoint to get a specific contract using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationProviders
+        :type integration_type: IntegrationType
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1185,7 +1181,6 @@ class ContractsApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        customer_external_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1201,7 +1196,7 @@ class ContractsApi:
     ) -> ListContractsResponse:
         """List contracts
 
-        List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
@@ -1209,8 +1204,6 @@ class ContractsApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param customer_external_id:
-        :type customer_external_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1237,7 +1230,6 @@ class ContractsApi:
             limit=limit,
             cursor=cursor,
             customer_id=customer_id,
-            customer_external_id=customer_external_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1268,7 +1260,6 @@ class ContractsApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        customer_external_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1284,7 +1275,7 @@ class ContractsApi:
     ) -> ApiResponse[ListContractsResponse]:
         """List contracts
 
-        List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
@@ -1292,8 +1283,6 @@ class ContractsApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param customer_external_id:
-        :type customer_external_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1320,7 +1309,6 @@ class ContractsApi:
             limit=limit,
             cursor=cursor,
             customer_id=customer_id,
-            customer_external_id=customer_external_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1351,7 +1339,6 @@ class ContractsApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        customer_external_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1367,7 +1354,7 @@ class ContractsApi:
     ) -> RESTResponseType:
         """List contracts
 
-        List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
+        List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
 
         :param limit:
         :type limit: float
@@ -1375,8 +1362,6 @@ class ContractsApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param customer_external_id:
-        :type customer_external_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1403,7 +1388,6 @@ class ContractsApi:
             limit=limit,
             cursor=cursor,
             customer_id=customer_id,
-            customer_external_id=customer_external_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1429,7 +1413,6 @@ class ContractsApi:
         limit,
         cursor,
         customer_id,
-        customer_external_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1464,10 +1447,6 @@ class ContractsApi:
             
             _query_params.append(('customerId', customer_id))
             
-        if customer_external_id is not None:
-            
-            _query_params.append(('customerExternalId', customer_external_id))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -1490,608 +1469,6 @@ class ContractsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/contracts',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def refresh_contract_credits(
-        self,
-        refresh_contract_credits_request: RefreshContractCreditsRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RefreshContractCreditsResponse:
-        """Refresh the credit grants on a contract
-
-        Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
-
-        :param refresh_contract_credits_request: (required)
-        :type refresh_contract_credits_request: RefreshContractCreditsRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._refresh_contract_credits_serialize(
-            refresh_contract_credits_request=refresh_contract_credits_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshContractCreditsResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def refresh_contract_credits_with_http_info(
-        self,
-        refresh_contract_credits_request: RefreshContractCreditsRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RefreshContractCreditsResponse]:
-        """Refresh the credit grants on a contract
-
-        Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
-
-        :param refresh_contract_credits_request: (required)
-        :type refresh_contract_credits_request: RefreshContractCreditsRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._refresh_contract_credits_serialize(
-            refresh_contract_credits_request=refresh_contract_credits_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshContractCreditsResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def refresh_contract_credits_without_preload_content(
-        self,
-        refresh_contract_credits_request: RefreshContractCreditsRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Refresh the credit grants on a contract
-
-        Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
-
-        :param refresh_contract_credits_request: (required)
-        :type refresh_contract_credits_request: RefreshContractCreditsRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._refresh_contract_credits_serialize(
-            refresh_contract_credits_request=refresh_contract_credits_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshContractCreditsResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _refresh_contract_credits_serialize(
-        self,
-        refresh_contract_credits_request,
-        contract_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if contract_id is not None:
-            _path_params['contractId'] = contract_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if refresh_contract_credits_request is not None:
-            _body_params = refresh_contract_credits_request
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'BearerAuthorizer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/contracts/{contractId}/credits/refresh',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def terminate_contract(
-        self,
-        terminate_contract_request: TerminateContractRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TerminateContractResponse:
-        """Terminate a contract
-
-        Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract's status is set to PendingTermination and its end date is updated accordingly.
-
-        :param terminate_contract_request: (required)
-        :type terminate_contract_request: TerminateContractRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._terminate_contract_serialize(
-            terminate_contract_request=terminate_contract_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TerminateContractResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def terminate_contract_with_http_info(
-        self,
-        terminate_contract_request: TerminateContractRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TerminateContractResponse]:
-        """Terminate a contract
-
-        Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract's status is set to PendingTermination and its end date is updated accordingly.
-
-        :param terminate_contract_request: (required)
-        :type terminate_contract_request: TerminateContractRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._terminate_contract_serialize(
-            terminate_contract_request=terminate_contract_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TerminateContractResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def terminate_contract_without_preload_content(
-        self,
-        terminate_contract_request: TerminateContractRequest,
-        contract_id: Annotated[str, Field(strict=True)],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Terminate a contract
-
-        Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract's status is set to PendingTermination and its end date is updated accordingly.
-
-        :param terminate_contract_request: (required)
-        :type terminate_contract_request: TerminateContractRequest
-        :param contract_id: (required)
-        :type contract_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._terminate_contract_serialize(
-            terminate_contract_request=terminate_contract_request,
-            contract_id=contract_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TerminateContractResponse",
-            '400': "ValidationErrorResponse",
-            '401': "UnauthorizedErrorResponse",
-            '429': "RateLimitErrorResponse",
-            '500': "InternalServerErrorResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _terminate_contract_serialize(
-        self,
-        terminate_contract_request,
-        contract_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if contract_id is not None:
-            _path_params['contractId'] = contract_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if terminate_contract_request is not None:
-            _body_params = terminate_contract_request
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'BearerAuthorizer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/contracts/{contractId}/terminate',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

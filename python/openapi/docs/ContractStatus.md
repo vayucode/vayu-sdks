@@ -6,8 +6,6 @@ The status of the contract
 
 * `INREVIEW` (value: `'InReview'`)
 
-* `SCHEDULED` (value: `'Scheduled'`)
-
 * `ACTIVE` (value: `'Active'`)
 
 * `INACTIVE` (value: `'Inactive'`)

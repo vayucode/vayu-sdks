@@ -17,11 +17,11 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from datetime import datetime
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional, Union
 from typing_extensions import Annotated
 from openapi.models.get_invoice_response import GetInvoiceResponse
-from openapi.models.invoice_billing_status import InvoiceBillingStatus
 from openapi.models.invoice_payment_status_response import InvoicePaymentStatusResponse
 from openapi.models.list_invoices_response import ListInvoicesResponse
 
@@ -598,9 +598,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Optional[InvoiceBillingStatus] = None,
-        issued_after: Optional[StrictStr] = None,
-        issued_before: Optional[StrictStr] = None,
+        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
+        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
+        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -624,12 +624,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status:
-        :type billing_status: InvoiceBillingStatus
-        :param issued_after:
-        :type issued_after: str
-        :param issued_before:
-        :type issued_before: str
+        :param billing_status: Filter invoices by their billing status
+        :type billing_status: str
+        :param issued_at_from: Only include invoices issued on or after this timestamp
+        :type issued_at_from: datetime
+        :param issued_at_to: Only include invoices issued on or before this timestamp
+        :type issued_at_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -657,8 +657,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_after=issued_after,
-            issued_before=issued_before,
+            issued_at_from=issued_at_from,
+            issued_at_to=issued_at_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -689,9 +689,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Optional[InvoiceBillingStatus] = None,
-        issued_after: Optional[StrictStr] = None,
-        issued_before: Optional[StrictStr] = None,
+        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
+        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
+        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -715,12 +715,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status:
-        :type billing_status: InvoiceBillingStatus
-        :param issued_after:
-        :type issued_after: str
-        :param issued_before:
-        :type issued_before: str
+        :param billing_status: Filter invoices by their billing status
+        :type billing_status: str
+        :param issued_at_from: Only include invoices issued on or after this timestamp
+        :type issued_at_from: datetime
+        :param issued_at_to: Only include invoices issued on or before this timestamp
+        :type issued_at_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -748,8 +748,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_after=issued_after,
-            issued_before=issued_before,
+            issued_at_from=issued_at_from,
+            issued_at_to=issued_at_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -780,9 +780,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Optional[InvoiceBillingStatus] = None,
-        issued_after: Optional[StrictStr] = None,
-        issued_before: Optional[StrictStr] = None,
+        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
+        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
+        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -806,12 +806,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status:
-        :type billing_status: InvoiceBillingStatus
-        :param issued_after:
-        :type issued_after: str
-        :param issued_before:
-        :type issued_before: str
+        :param billing_status: Filter invoices by their billing status
+        :type billing_status: str
+        :param issued_at_from: Only include invoices issued on or after this timestamp
+        :type issued_at_from: datetime
+        :param issued_at_to: Only include invoices issued on or before this timestamp
+        :type issued_at_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -839,8 +839,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_after=issued_after,
-            issued_before=issued_before,
+            issued_at_from=issued_at_from,
+            issued_at_to=issued_at_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -867,8 +867,8 @@ class InvoicesApi:
         cursor,
         customer_id,
         billing_status,
-        issued_after,
-        issued_before,
+        issued_at_from,
+        issued_at_to,
         _request_auth,
         _content_type,
         _headers,
@@ -905,15 +905,33 @@ class InvoicesApi:
             
         if billing_status is not None:
             
-            _query_params.append(('billingStatus', billing_status.value))
+            _query_params.append(('billingStatus', billing_status))
             
-        if issued_after is not None:
+        if issued_at_from is not None:
+            if isinstance(issued_at_from, datetime):
+                _query_params.append(
+                    (
+                        'issuedAtFrom',
+                        issued_at_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('issuedAtFrom', issued_at_from))
             
-            _query_params.append(('issuedAfter', issued_after))
-            
-        if issued_before is not None:
-            
-            _query_params.append(('issuedBefore', issued_before))
+        if issued_at_to is not None:
+            if isinstance(issued_at_to, datetime):
+                _query_params.append(
+                    (
+                        'issuedAtTo',
+                        issued_at_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('issuedAtTo', issued_at_to))
             
         # process the header parameters
         # process the form parameters

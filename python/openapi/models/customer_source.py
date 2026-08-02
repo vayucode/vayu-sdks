@@ -32,7 +32,6 @@ class CustomerSource(str, Enum):
     API = 'Api'
     SALESFORCE = 'Salesforce'
     HUBSPOT = 'HubSpot'
-    CONTRACTEXTRACTION = 'ContractExtraction'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

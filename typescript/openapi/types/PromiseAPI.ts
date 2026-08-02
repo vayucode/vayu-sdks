@@ -1,7 +1,6 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
-import { AcknowledgedEvent } from '../models/AcknowledgedEvent';
 import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
@@ -31,9 +30,6 @@ import { CreateMeasurementRequestUsageDate } from '../models/CreateMeasurementRe
 import { CreateMeasurementResponse } from '../models/CreateMeasurementResponse';
 import { CreateMeasurementResponseMeasurement } from '../models/CreateMeasurementResponseMeasurement';
 import { CreditLedgerEntry } from '../models/CreditLedgerEntry';
-import { CreditTopUpRequest } from '../models/CreditTopUpRequest';
-import { CreditTopUpRequestCreditGrant } from '../models/CreditTopUpRequestCreditGrant';
-import { CreditTopUpResponse } from '../models/CreditTopUpResponse';
 import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
 import { Currency } from '../models/Currency';
@@ -42,10 +38,7 @@ import { CustomFieldEntities } from '../models/CustomFieldEntities';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
 import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
-import { CustomerExternalIntegration } from '../models/CustomerExternalIntegration';
-import { CustomerRelationType } from '../models/CustomerRelationType';
 import { CustomerSource } from '../models/CustomerSource';
-import { CustomerStatus } from '../models/CustomerStatus';
 import { DeductCreditsRequest } from '../models/DeductCreditsRequest';
 import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResponse';
 import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
@@ -72,8 +65,6 @@ import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { EventsDryRunResponseObject } from '../models/EventsDryRunResponseObject';
 import { EventsDryRunResponseObjectEvent } from '../models/EventsDryRunResponseObjectEvent';
 import { EventsDryRunResponseObjectMeterWithValuesInner } from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
-import { ExternalCreditGrant } from '../models/ExternalCreditGrant';
-import { ExternalCreditProduct } from '../models/ExternalCreditProduct';
 import { ExternalOverageStrategy } from '../models/ExternalOverageStrategy';
 import { Filter } from '../models/Filter';
 import { FullDayPeriod } from '../models/FullDayPeriod';
@@ -105,6 +96,7 @@ import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
 import { IntegrationEntity } from '../models/IntegrationEntity';
 import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
 import { IntegrationProviders } from '../models/IntegrationProviders';
+import { IntegrationType } from '../models/IntegrationType';
 import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { InvalidEvent } from '../models/InvalidEvent';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
@@ -114,7 +106,6 @@ import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
 import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
-import { ListCreditProductsResponse } from '../models/ListCreditProductsResponse';
 import { ListCustomFieldsResponse } from '../models/ListCustomFieldsResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
@@ -135,7 +126,6 @@ import { PlanDuration } from '../models/PlanDuration';
 import { PlanStatus } from '../models/PlanStatus';
 import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
-import { ProductExternalIntegration } from '../models/ProductExternalIntegration';
 import { ProductGroup } from '../models/ProductGroup';
 import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
 import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
@@ -160,16 +150,11 @@ import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGr
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
 import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
-import { RefreshContractCreditsRequest } from '../models/RefreshContractCreditsRequest';
-import { RefreshContractCreditsRequestGrantsInner } from '../models/RefreshContractCreditsRequestGrantsInner';
-import { RefreshContractCreditsResponse } from '../models/RefreshContractCreditsResponse';
 import { RequestTooLongErrorResponse } from '../models/RequestTooLongErrorResponse';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
 import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
 import { SyncStatus } from '../models/SyncStatus';
-import { TerminateContractRequest } from '../models/TerminateContractRequest';
-import { TerminateContractResponse } from '../models/TerminateContractResponse';
 import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
 import { UnlimitedDuration } from '../models/UnlimitedDuration';
 import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
@@ -484,7 +469,7 @@ export class PromiseContractsApi {
      * @param integrationType
      * @param integrationId
      */
-    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetContractByIntegrationIdResponse>> {
+    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetContractByIntegrationIdResponse>> {
         const result = this.api.getContractByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -495,115 +480,32 @@ export class PromiseContractsApi {
      * @param integrationType
      * @param integrationId
      */
-    public getContractByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetContractByIntegrationIdResponse> {
+    public getContractByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetContractByIntegrationIdResponse> {
         const result = this.api.getContractByIntegrationId(integrationType, integrationId, _options);
         return result.toPromise();
     }
 
     /**
-     * List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
      * List contracts
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [customerExternalId]
      */
-    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, customerExternalId?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
-        const result = this.api.listContractsWithHttpInfo(limit, cursor, customerId, customerExternalId, _options);
+    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
+        const result = this.api.listContractsWithHttpInfo(limit, cursor, customerId, _options);
         return result.toPromise();
     }
 
     /**
-     * List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
+     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
      * List contracts
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [customerExternalId]
      */
-    public listContracts(limit?: number, cursor?: string, customerId?: string, customerExternalId?: string, _options?: Configuration): Promise<ListContractsResponse> {
-        const result = this.api.listContracts(limit, cursor, customerId, customerExternalId, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
-     * Refresh the credit grants on a contract
-     * @param refreshContractCreditsRequest
-     * @param contractId
-     */
-    public refreshContractCreditsWithHttpInfo(refreshContractCreditsRequest: RefreshContractCreditsRequest, contractId: string, _options?: Configuration): Promise<HttpInfo<RefreshContractCreditsResponse>> {
-        const result = this.api.refreshContractCreditsWithHttpInfo(refreshContractCreditsRequest, contractId, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
-     * Refresh the credit grants on a contract
-     * @param refreshContractCreditsRequest
-     * @param contractId
-     */
-    public refreshContractCredits(refreshContractCreditsRequest: RefreshContractCreditsRequest, contractId: string, _options?: Configuration): Promise<RefreshContractCreditsResponse> {
-        const result = this.api.refreshContractCredits(refreshContractCreditsRequest, contractId, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract\'s status is set to PendingTermination and its end date is updated accordingly.
-     * Terminate a contract
-     * @param terminateContractRequest
-     * @param contractId
-     */
-    public terminateContractWithHttpInfo(terminateContractRequest: TerminateContractRequest, contractId: string, _options?: Configuration): Promise<HttpInfo<TerminateContractResponse>> {
-        const result = this.api.terminateContractWithHttpInfo(terminateContractRequest, contractId, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract\'s status is set to PendingTermination and its end date is updated accordingly.
-     * Terminate a contract
-     * @param terminateContractRequest
-     * @param contractId
-     */
-    public terminateContract(terminateContractRequest: TerminateContractRequest, contractId: string, _options?: Configuration): Promise<TerminateContractResponse> {
-        const result = this.api.terminateContract(terminateContractRequest, contractId, _options);
-        return result.toPromise();
-    }
-
-
-}
-
-
-
-import { ObservableCreditProductsApi } from './ObservableAPI';
-
-import { CreditProductsApiRequestFactory, CreditProductsApiResponseProcessor} from "../apis/CreditProductsApi";
-export class PromiseCreditProductsApi {
-    private api: ObservableCreditProductsApi
-
-    public constructor(
-        configuration: Configuration,
-        requestFactory?: CreditProductsApiRequestFactory,
-        responseProcessor?: CreditProductsApiResponseProcessor
-    ) {
-        this.api = new ObservableCreditProductsApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * Retrieve the credit products defined in your account. Use a credit product ID to fund a credit pool (a product creditGrant.creditProductId) or to debit one (a usage product consumesCreditProductIds). Distinct from the credit ledger (GET /credits).
-     * List credit products
-     */
-    public listCreditProductsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<ListCreditProductsResponse>> {
-        const result = this.api.listCreditProductsWithHttpInfo(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * Retrieve the credit products defined in your account. Use a credit product ID to fund a credit pool (a product creditGrant.creditProductId) or to debit one (a usage product consumesCreditProductIds). Distinct from the credit ledger (GET /credits).
-     * List credit products
-     */
-    public listCreditProducts(_options?: Configuration): Promise<ListCreditProductsResponse> {
-        const result = this.api.listCreditProducts(_options);
+    public listContracts(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<ListContractsResponse> {
+        const result = this.api.listContracts(limit, cursor, customerId, _options);
         return result.toPromise();
     }
 
@@ -624,26 +526,6 @@ export class PromiseCreditsApi {
         responseProcessor?: CreditsApiResponseProcessor
     ) {
         this.api = new ObservableCreditsApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant\'s price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
-     * Create a one-off invoice to top up a customer with credits
-     * @param creditTopUpRequest
-     */
-    public creditTopUpWithHttpInfo(creditTopUpRequest: CreditTopUpRequest, _options?: Configuration): Promise<HttpInfo<CreditTopUpResponse>> {
-        const result = this.api.creditTopUpWithHttpInfo(creditTopUpRequest, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant\'s price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
-     * Create a one-off invoice to top up a customer with credits
-     * @param creditTopUpRequest
-     */
-    public creditTopUp(creditTopUpRequest: CreditTopUpRequest, _options?: Configuration): Promise<CreditTopUpResponse> {
-        const result = this.api.creditTopUp(creditTopUpRequest, _options);
-        return result.toPromise();
     }
 
     /**
@@ -958,7 +840,7 @@ export class PromiseCustomersApi {
      * @param integrationType
      * @param integrationId
      */
-    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByIntegrationIdResponse>> {
+    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByIntegrationIdResponse>> {
         const result = this.api.getCustomerByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -969,7 +851,7 @@ export class PromiseCustomersApi {
      * @param integrationType
      * @param integrationId
      */
-    public getCustomerByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetCustomerByIntegrationIdResponse> {
+    public getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetCustomerByIntegrationIdResponse> {
         const result = this.api.getCustomerByIntegrationId(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -1057,24 +939,22 @@ export class PromiseCustomersApi {
     /**
      * Get a list of Customers.
      * List Customers
-     * @param [status]
      * @param [limit]
      * @param [cursor]
      */
-    public listCustomersWithHttpInfo(status?: CustomerStatus, limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCustomersResponse>> {
-        const result = this.api.listCustomersWithHttpInfo(status, limit, cursor, _options);
+    public listCustomersWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCustomersResponse>> {
+        const result = this.api.listCustomersWithHttpInfo(limit, cursor, _options);
         return result.toPromise();
     }
 
     /**
      * Get a list of Customers.
      * List Customers
-     * @param [status]
      * @param [limit]
      * @param [cursor]
      */
-    public listCustomers(status?: CustomerStatus, limit?: number, cursor?: string, _options?: Configuration): Promise<ListCustomersResponse> {
-        const result = this.api.listCustomers(status, limit, cursor, _options);
+    public listCustomers(limit?: number, cursor?: string, _options?: Configuration): Promise<ListCustomersResponse> {
+        const result = this.api.listCustomers(limit, cursor, _options);
         return result.toPromise();
     }
 
@@ -1464,12 +1344,12 @@ export class PromiseInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [billingStatus]
-     * @param [issuedAfter]
-     * @param [issuedBefore]
+     * @param [billingStatus] Filter invoices by their billing status
+     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
+     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
      */
-    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, billingStatus?: InvoiceBillingStatus, issuedAfter?: string, issuedBefore?: string, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
-        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, customerId, billingStatus, issuedAfter, issuedBefore, _options);
+    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
+        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options);
         return result.toPromise();
     }
 
@@ -1479,12 +1359,12 @@ export class PromiseInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [billingStatus]
-     * @param [issuedAfter]
-     * @param [issuedBefore]
+     * @param [billingStatus] Filter invoices by their billing status
+     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
+     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
      */
-    public listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: InvoiceBillingStatus, issuedAfter?: string, issuedBefore?: string, _options?: Configuration): Promise<ListInvoicesResponse> {
-        const result = this.api.listInvoices(limit, cursor, customerId, billingStatus, issuedAfter, issuedBefore, _options);
+    public listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<ListInvoicesResponse> {
+        const result = this.api.listInvoices(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options);
         return result.toPromise();
     }
 

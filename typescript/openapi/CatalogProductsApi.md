@@ -31,7 +31,6 @@ const request: CatalogProductsApiCreateCatalogProductRequest = {
   createCatalogProductRequest: {
     name: "name_example",
     description: "description_example",
-    disableDescription: true,
     externalId: "externalId_example",
   },
 };
@@ -269,7 +268,6 @@ const request: CatalogProductsApiUpdateCatalogProductRequest = {
   updateCatalogProductRequest: {
     name: "name_example",
     description: "description_example",
-    disableDescription: true,
     externalId: "externalId_example",
   },
   

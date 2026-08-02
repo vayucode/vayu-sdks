@@ -28,13 +28,12 @@ class Address(BaseModel):
     The address of the customer
     """ # noqa: E501
     country: Optional[StrictStr] = None
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
     city: Optional[StrictStr] = None
     address_text: Optional[StrictStr] = Field(default=None, alias="addressText")
     state: Optional[StrictStr] = None
     postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["country", "countryCode", "city", "addressText", "state", "postalCode"]
+    __properties: ClassVar[List[str]] = ["country", "city", "addressText", "state", "postalCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,11 +86,6 @@ class Address(BaseModel):
         if self.country is None and "country" in self.model_fields_set:
             _dict['country'] = None
 
-        # set to None if country_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['countryCode'] = None
-
         # set to None if city (nullable) is None
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
@@ -125,7 +119,6 @@ class Address(BaseModel):
 
         _obj = cls.model_validate({
             "country": obj.get("country"),
-            "countryCode": obj.get("countryCode"),
             "city": obj.get("city"),
             "addressText": obj.get("addressText"),
             "state": obj.get("state"),

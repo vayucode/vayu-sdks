@@ -447,7 +447,7 @@ Use this endpoint to get a specific customer using its integration provider and 
 ```python
 import openapi
 from openapi.models.get_customer_by_integration_id_response import GetCustomerByIntegrationIdResponse
-from openapi.models.integration_providers import IntegrationProviders
+from openapi.models.integration_type import IntegrationType
 from openapi.rest import ApiException
 from pprint import pprint
 
@@ -471,7 +471,7 @@ configuration = openapi.Configuration(
 with openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi.CustomersApi(api_client)
-    integration_type = openapi.IntegrationProviders() # IntegrationProviders | 
+    integration_type = openapi.IntegrationType() # IntegrationType | 
     integration_id = 'integration_id_example' # str | 
 
     try:
@@ -490,7 +490,7 @@ with openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **integration_type** | [**IntegrationProviders**](.md)|  | 
+ **integration_type** | [**IntegrationType**](.md)|  | 
  **integration_id** | **str**|  | 
 
 ### Return type
@@ -852,7 +852,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_customers**
-> ListCustomersResponse list_customers(status=status, limit=limit, cursor=cursor)
+> ListCustomersResponse list_customers(limit=limit, cursor=cursor)
 
 List Customers
 
@@ -864,7 +864,6 @@ Get a list of Customers.
 
 ```python
 import openapi
-from openapi.models.customer_status import CustomerStatus
 from openapi.models.list_customers_response import ListCustomersResponse
 from openapi.rest import ApiException
 from pprint import pprint
@@ -889,13 +888,12 @@ configuration = openapi.Configuration(
 with openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi.CustomersApi(api_client)
-    status = openapi.CustomerStatus() # CustomerStatus |  (optional)
     limit = 10 # float |  (optional) (default to 10)
     cursor = 'cursor_example' # str |  (optional)
 
     try:
         # List Customers
-        api_response = api_instance.list_customers(status=status, limit=limit, cursor=cursor)
+        api_response = api_instance.list_customers(limit=limit, cursor=cursor)
         print("The response of CustomersApi->list_customers:\n")
         pprint(api_response)
     except Exception as e:
@@ -909,7 +907,6 @@ with openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**CustomerStatus**](.md)|  | [optional] 
  **limit** | **float**|  | [optional] [default to 10]
  **cursor** | **str**|  | [optional] 
 

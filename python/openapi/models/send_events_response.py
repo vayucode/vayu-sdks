@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from openapi.models.acknowledged_event import AcknowledgedEvent
+from openapi.models.event import Event
 from openapi.models.invalid_event import InvalidEvent
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class SendEventsResponse(BaseModel):
     """
     SendEventsResponse
     """ # noqa: E501
-    valid_events: List[AcknowledgedEvent] = Field(description="An array of events that were successfully processed and sent to the queue, each with its acknowledgment ID.", alias="validEvents")
+    valid_events: List[Event] = Field(description="An array of events that were successfully processed and sent to the queue.", alias="validEvents")
     invalid_events: List[InvalidEvent] = Field(description="An array of events that failed validation and were not sent to the queue. Each object contains the event and the error message.", alias="invalidEvents")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["validEvents", "invalidEvents"]
@@ -106,7 +106,7 @@ class SendEventsResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "validEvents": [AcknowledgedEvent.from_dict(_item) for _item in obj["validEvents"]] if obj.get("validEvents") is not None else None,
+            "validEvents": [Event.from_dict(_item) for _item in obj["validEvents"]] if obj.get("validEvents") is not None else None,
             "invalidEvents": [InvalidEvent.from_dict(_item) for _item in obj["invalidEvents"]] if obj.get("invalidEvents") is not None else None
         })
         # store additional fields in additional_properties

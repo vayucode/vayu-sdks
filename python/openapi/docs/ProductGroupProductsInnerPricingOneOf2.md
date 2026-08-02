@@ -9,8 +9,6 @@ Name | Type | Description | Notes
 **price** | **float** |  | 
 **subscription_cadence** | [**ProductGroupProductsInnerPricingOneOf2SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.md) |  | 
 **discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
-**issued_separately** | **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
-**seats** | **int** | The number of seats for this subscription product. | [optional] 
 
 ## Example
 

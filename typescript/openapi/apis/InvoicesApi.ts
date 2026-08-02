@@ -10,7 +10,6 @@ import {SecurityAuthentication} from '../auth/auth';
 
 import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
 import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
-import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
 import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
 import { NotFoundErrorResponse } from '../models/NotFoundErrorResponse';
@@ -105,11 +104,11 @@ export class InvoicesApiRequestFactory extends BaseAPIRequestFactory {
      * @param limit 
      * @param cursor 
      * @param customerId 
-     * @param billingStatus 
-     * @param issuedAfter 
-     * @param issuedBefore 
+     * @param billingStatus Filter invoices by their billing status
+     * @param issuedAtFrom Only include invoices issued on or after this timestamp
+     * @param issuedAtTo Only include invoices issued on or before this timestamp
      */
-    public async listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: InvoiceBillingStatus, issuedAfter?: string, issuedBefore?: string, _options?: Configuration): Promise<RequestContext> {
+    public async listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -142,20 +141,17 @@ export class InvoicesApiRequestFactory extends BaseAPIRequestFactory {
 
         // Query Params
         if (billingStatus !== undefined) {
-            const serializedParams = ObjectSerializer.serialize(billingStatus, "InvoiceBillingStatus", "");
-            for (const key of Object.keys(serializedParams)) {
-                requestContext.setQueryParam(key, serializedParams[key]);
-            }
+            requestContext.setQueryParam("billingStatus", ObjectSerializer.serialize(billingStatus, "'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue'", ""));
         }
 
         // Query Params
-        if (issuedAfter !== undefined) {
-            requestContext.setQueryParam("issuedAfter", ObjectSerializer.serialize(issuedAfter, "string", ""));
+        if (issuedAtFrom !== undefined) {
+            requestContext.setQueryParam("issuedAtFrom", ObjectSerializer.serialize(issuedAtFrom, "Date", "date-time"));
         }
 
         // Query Params
-        if (issuedBefore !== undefined) {
-            requestContext.setQueryParam("issuedBefore", ObjectSerializer.serialize(issuedBefore, "string", ""));
+        if (issuedAtTo !== undefined) {
+            requestContext.setQueryParam("issuedAtTo", ObjectSerializer.serialize(issuedAtTo, "Date", "date-time"));
         }
 
 

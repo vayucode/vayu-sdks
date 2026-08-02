@@ -18,13 +18,9 @@ export class ProductGroupProductsInnerPricingOneOf {
     'price': number;
     'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
     /**
-    * Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false.
+    * Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.
     */
     'isCreditPurchase'?: boolean;
-    /**
-    * When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.
-    */
-    'issuedSeparately'?: boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -52,12 +48,6 @@ export class ProductGroupProductsInnerPricingOneOf {
         {
             "name": "isCreditPurchase",
             "baseName": "isCreditPurchase",
-            "type": "boolean",
-            "format": ""
-        },
-        {
-            "name": "issuedSeparately",
-            "baseName": "issuedSeparately",
             "type": "boolean",
             "format": ""
         }    ];

@@ -97,7 +97,6 @@ export enum CustomFieldIntegrationSourceEnum {
     Snowflake = 'Snowflake',
     Anrok = 'Anrok',
     Connact = 'Connact',
-    Xero = 'Xero',
-    Paddle = 'Paddle'
+    Xero = 'Xero'
 }
 

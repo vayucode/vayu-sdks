@@ -146,12 +146,12 @@ const request: InvoicesApiListInvoicesRequest = {
   cursor: "cursor_example",
   
   customerId: "62ECB020842930cc01FFCCfe",
-  
+    // Filter invoices by their billing status (optional)
   billingStatus: "None",
-  
-  issuedAfter: "issuedAfter_example",
-  
-  issuedBefore: "issuedBefore_example",
+    // Only include invoices issued on or after this timestamp (optional)
+  issuedAtFrom: new Date('1970-01-01T00:00:00.00Z'),
+    // Only include invoices issued on or before this timestamp (optional)
+  issuedAtTo: new Date('1970-01-01T00:00:00.00Z'),
 };
 
 const data = await apiInstance.listInvoices(request);
@@ -166,9 +166,9 @@ Name | Type | Description  | Notes
  **limit** | [**number**] |  | (optional) defaults to 10
  **cursor** | [**string**] |  | (optional) defaults to undefined
  **customerId** | [**string**] |  | (optional) defaults to undefined
- **billingStatus** | **InvoiceBillingStatus** |  | (optional) defaults to undefined
- **issuedAfter** | [**string**] |  | (optional) defaults to undefined
- **issuedBefore** | [**string**] |  | (optional) defaults to undefined
+ **billingStatus** | [**&#39;None&#39; | &#39;Paid&#39; | &#39;Rejected&#39; | &#39;PendingPayment&#39; | &#39;Overdue&#39;**]**Array<&#39;None&#39; &#124; &#39;Paid&#39; &#124; &#39;Rejected&#39; &#124; &#39;PendingPayment&#39; &#124; &#39;Overdue&#39;>** | Filter invoices by their billing status | (optional) defaults to undefined
+ **issuedAtFrom** | [**Date**] | Only include invoices issued on or after this timestamp | (optional) defaults to undefined
+ **issuedAtTo** | [**Date**] | Only include invoices issued on or before this timestamp | (optional) defaults to undefined
 
 
 ### Return type

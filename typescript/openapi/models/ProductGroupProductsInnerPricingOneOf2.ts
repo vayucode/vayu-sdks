@@ -19,14 +19,6 @@ export class ProductGroupProductsInnerPricingOneOf2 {
     'price': number;
     'subscriptionCadence': ProductGroupProductsInnerPricingOneOf2SubscriptionCadence;
     'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
-    /**
-    * When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.
-    */
-    'issuedSeparately'?: boolean;
-    /**
-    * The number of seats for this subscription product.
-    */
-    'seats'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -55,18 +47,6 @@ export class ProductGroupProductsInnerPricingOneOf2 {
             "name": "discount",
             "baseName": "discount",
             "type": "ProductGroupProductsInnerPricingOneOfDiscount",
-            "format": ""
-        },
-        {
-            "name": "issuedSeparately",
-            "baseName": "issuedSeparately",
-            "type": "boolean",
-            "format": ""
-        },
-        {
-            "name": "seats",
-            "baseName": "seats",
-            "type": "number",
             "format": ""
         }    ];
 

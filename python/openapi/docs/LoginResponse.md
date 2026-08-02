@@ -6,8 +6,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **access_token** | **str** | The new access token to be used for subsequent API calls. It is set to expire every hour. | 
-**expires_in** | **int** | The lifetime of the access token in seconds. | 
-**expires_at** | **str** | The expiration time of the access token, in ISO 8601 format. | 
 
 ## Example
 

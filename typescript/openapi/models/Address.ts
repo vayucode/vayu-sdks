@@ -17,7 +17,6 @@ import { HttpFile } from '../http/http';
 */
 export class Address {
     'country'?: string | null;
-    'countryCode'?: string | null;
     'city'?: string | null;
     'addressText'?: string | null;
     'state'?: string | null;
@@ -31,12 +30,6 @@ export class Address {
         {
             "name": "country",
             "baseName": "country",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "countryCode",
-            "baseName": "countryCode",
             "type": "string",
             "format": ""
         },
