@@ -19,5 +19,6 @@ export enum CustomFieldEntities {
     Customer = 'Customer',
     Contract = 'Contract',
     Invoice = 'Invoice',
-    LineItem = 'LineItem'
+    LineItem = 'LineItem',
+    Product = 'Product'
 }

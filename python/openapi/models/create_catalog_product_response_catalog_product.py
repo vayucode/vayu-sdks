@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -31,12 +31,15 @@ class CreateCatalogProductResponseCatalogProduct(BaseModel):
     """ # noqa: E501
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the catalog product")
     description: Optional[StrictStr] = Field(default=None, description="The description of the catalog product")
+    product_code: Optional[StrictStr] = Field(default=None, description="The product code of the catalog product", alias="productCode")
+    disable_description: Optional[StrictBool] = Field(default=None, description="Whether to disable the default description on generated line items", alias="disableDescription")
     external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the catalog product", alias="externalId")
+    sales_force_product_id: Optional[StrictStr] = Field(default=None, description="The ID of the catalog product in the Salesforce system", alias="salesForceProductId")
     id: StrictStr
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "description", "externalId", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["name", "description", "productCode", "disableDescription", "externalId", "salesForceProductId", "id", "createdAt", "updatedAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +87,11 @@ class CreateCatalogProductResponseCatalogProduct(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if sales_force_product_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.sales_force_product_id is None and "sales_force_product_id" in self.model_fields_set:
+            _dict['salesForceProductId'] = None
+
         return _dict
 
     @classmethod
@@ -98,7 +106,10 @@ class CreateCatalogProductResponseCatalogProduct(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "productCode": obj.get("productCode"),
+            "disableDescription": obj.get("disableDescription"),
             "externalId": obj.get("externalId"),
+            "salesForceProductId": obj.get("salesForceProductId"),
             "id": obj.get("id"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")

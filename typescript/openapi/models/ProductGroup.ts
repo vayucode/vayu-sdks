@@ -36,7 +36,7 @@ export class ProductGroup {
     */
     'nsClassId'?: string | null;
     /**
-    * The products that the product group is associated with
+    * The usage-priced (PER_UNIT or TIERED) products that the product group is associated with. A fixed-priced product cannot be a member of a group; list it under products instead.
     */
     'products': Array<ProductGroupProductsInner>;
     /**

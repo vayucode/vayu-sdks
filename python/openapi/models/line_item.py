@@ -18,10 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from openapi.models.line_item_revenue_breakdown import LineItemRevenueBreakdown
+from openapi.models.line_item_service_period import LineItemServicePeriod
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,8 +32,11 @@ class LineItem(BaseModel):
     """ # noqa: E501
     invoice_id: Annotated[str, Field(strict=True)] = Field(description="The id of the invoice that the line item is a part of", alias="invoiceId")
     revenue_breakdown: LineItemRevenueBreakdown = Field(alias="revenueBreakdown")
+    product_name: Optional[StrictStr] = Field(default=None, description="The name of the product on the line", alias="productName")
+    description: Optional[StrictStr] = Field(default=None, description="The description shown on the line")
+    service_period: Optional[LineItemServicePeriod] = Field(default=None, alias="servicePeriod")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["invoiceId", "revenueBreakdown"]
+    __properties: ClassVar[List[str]] = ["invoiceId", "revenueBreakdown", "productName", "description", "servicePeriod"]
 
     @field_validator('invoice_id')
     def invoice_id_validate_regular_expression(cls, value):
@@ -85,6 +89,9 @@ class LineItem(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of revenue_breakdown
         if self.revenue_breakdown:
             _dict['revenueBreakdown'] = self.revenue_breakdown.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of service_period
+        if self.service_period:
+            _dict['servicePeriod'] = self.service_period.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -103,7 +110,10 @@ class LineItem(BaseModel):
 
         _obj = cls.model_validate({
             "invoiceId": obj.get("invoiceId"),
-            "revenueBreakdown": LineItemRevenueBreakdown.from_dict(obj["revenueBreakdown"]) if obj.get("revenueBreakdown") is not None else None
+            "revenueBreakdown": LineItemRevenueBreakdown.from_dict(obj["revenueBreakdown"]) if obj.get("revenueBreakdown") is not None else None,
+            "productName": obj.get("productName"),
+            "description": obj.get("description"),
+            "servicePeriod": LineItemServicePeriod.from_dict(obj["servicePeriod"]) if obj.get("servicePeriod") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

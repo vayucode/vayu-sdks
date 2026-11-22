@@ -39,8 +39,8 @@ class ProductCloudProviderSettings(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['AWS']):
-            raise ValueError("must be one of enum values ('AWS')")
+        if value not in set(['AWS', 'GCP', 'Azure']):
+            raise ValueError("must be one of enum values ('AWS', 'GCP', 'Azure')")
         return value
 
     model_config = ConfigDict(

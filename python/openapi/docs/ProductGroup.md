@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **product_erp_id** | **str** | The id of the product in NetSuite ERP | [optional] 
 **ns_class** | **str** | The class of the product in NetSuite ERP | [optional] 
 **ns_class_id** | **str** | The id of the class of the product in NetSuite ERP | [optional] 
-**products** | [**List[ProductGroupProductsInner]**](ProductGroupProductsInner.md) | The products that the product group is associated with | 
+**products** | [**List[ProductGroupProductsInner]**](ProductGroupProductsInner.md) | The usage-priced (PER_UNIT or TIERED) products that the product group is associated with. A fixed-priced product cannot be a member of a group; list it under products instead. | 
 **base_amount** | **float** | The base amount for the customer to pay even if the amount based on usage is lower | [optional] 
 **commitment** | [**ProductGroupCommitment**](ProductGroupCommitment.md) |  | [optional] 
 **is_calendar_aligned** | **bool** | Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned. | [optional] 

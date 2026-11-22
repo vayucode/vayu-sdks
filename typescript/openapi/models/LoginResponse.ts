@@ -17,6 +17,14 @@ export class LoginResponse {
     * The new access token to be used for subsequent API calls. It is set to expire every hour.
     */
     'accessToken': string;
+    /**
+    * The lifetime of the access token in seconds.
+    */
+    'expiresIn': number;
+    /**
+    * The expiration time of the access token, in ISO 8601 format.
+    */
+    'expiresAt': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -26,6 +34,18 @@ export class LoginResponse {
         {
             "name": "accessToken",
             "baseName": "accessToken",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "expiresIn",
+            "baseName": "expiresIn",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "expiresAt",
+            "baseName": "expiresAt",
             "type": "string",
             "format": ""
         }    ];

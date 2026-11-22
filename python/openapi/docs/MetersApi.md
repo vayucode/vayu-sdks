@@ -6,6 +6,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**delete_meter**](MetersApi.md#delete_meter) | **DELETE** /meters/{meterId} | Delete Meter
 [**get_meter**](MetersApi.md#get_meter) | **GET** /meters/{meterId} | Get Meter
+[**get_meter_by_integration_id**](MetersApi.md#get_meter_by_integration_id) | **GET** /meters/integration/{integrationType}/{integrationId} | Get meter by integration id
+[**get_meter_by_name**](MetersApi.md#get_meter_by_name) | **GET** /meters/name/{name} | Get meter by name
 [**list_meters**](MetersApi.md#list_meters) | **GET** /meters | List Meters
 [**update_meter**](MetersApi.md#update_meter) | **PUT** /meters/{meterId} | Update Meter
 
@@ -168,6 +170,175 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | RequestSuccess |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_meter_by_integration_id**
+> GetMeterByIntegrationIdResponse get_meter_by_integration_id(integration_type, integration_id)
+
+Get meter by integration id
+
+Use this endpoint to get a specific meter using its integration provider and identifier.
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuthorizer):
+
+```python
+import openapi
+from openapi.models.get_meter_by_integration_id_response import GetMeterByIntegrationIdResponse
+from openapi.models.integration_providers import IntegrationProviders
+from openapi.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://connect.withvayu.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi.Configuration(
+    host = "https://connect.withvayu.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuthorizer
+configuration = openapi.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi.MetersApi(api_client)
+    integration_type = openapi.IntegrationProviders() # IntegrationProviders | 
+    integration_id = 'integration_id_example' # str | 
+
+    try:
+        # Get meter by integration id
+        api_response = api_instance.get_meter_by_integration_id(integration_type, integration_id)
+        print("The response of MetersApi->get_meter_by_integration_id:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling MetersApi->get_meter_by_integration_id: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **integration_type** | [**IntegrationProviders**](.md)|  | 
+ **integration_id** | **str**|  | 
+
+### Return type
+
+[**GetMeterByIntegrationIdResponse**](GetMeterByIntegrationIdResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Response contains the meter matching the provided integration id |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_meter_by_name**
+> GetMeterByNameResponse get_meter_by_name(name)
+
+Get meter by name
+
+Use this endpoint to get a specific meter using its name.
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuthorizer):
+
+```python
+import openapi
+from openapi.models.get_meter_by_name_response import GetMeterByNameResponse
+from openapi.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://connect.withvayu.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi.Configuration(
+    host = "https://connect.withvayu.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuthorizer
+configuration = openapi.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi.MetersApi(api_client)
+    name = 'name_example' # str | 
+
+    try:
+        # Get meter by name
+        api_response = api_instance.get_meter_by_name(name)
+        print("The response of MetersApi->get_meter_by_name:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling MetersApi->get_meter_by_name: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **name** | **str**|  | 
+
+### Return type
+
+[**GetMeterByNameResponse**](GetMeterByNameResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | response contains the meter matching the provided name |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |

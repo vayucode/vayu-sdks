@@ -24,6 +24,10 @@ export class ValidationErrorResponse {
     */
     'message': string;
     /**
+    * Scope the token was missing, present on insufficient_scope errors
+    */
+    'requiredScope'?: string;
+    /**
     * Single parameter that failed validation
     */
     'param'?: string;
@@ -52,6 +56,12 @@ export class ValidationErrorResponse {
         {
             "name": "message",
             "baseName": "message",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "requiredScope",
+            "baseName": "requiredScope",
             "type": "string",
             "format": ""
         },

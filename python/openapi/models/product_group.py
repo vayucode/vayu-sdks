@@ -35,7 +35,7 @@ class ProductGroup(BaseModel):
     product_erp_id: Optional[StrictStr] = Field(default=None, description="The id of the product in NetSuite ERP", alias="productErpId")
     ns_class: Optional[StrictStr] = Field(default=None, description="The class of the product in NetSuite ERP", alias="nsClass")
     ns_class_id: Optional[StrictStr] = Field(default=None, description="The id of the class of the product in NetSuite ERP", alias="nsClassId")
-    products: Annotated[List[ProductGroupProductsInner], Field(min_length=1)] = Field(description="The products that the product group is associated with")
+    products: Annotated[List[ProductGroupProductsInner], Field(min_length=1)] = Field(description="The usage-priced (PER_UNIT or TIERED) products that the product group is associated with. A fixed-priced product cannot be a member of a group; list it under products instead.")
     base_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The base amount for the customer to pay even if the amount based on usage is lower", alias="baseAmount")
     commitment: Optional[ProductGroupCommitment] = None
     is_calendar_aligned: Optional[StrictBool] = Field(default=None, description="Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned.", alias="isCalendarAligned")

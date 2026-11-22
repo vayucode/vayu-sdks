@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | 
 **price** | **float** |  | 
+**quantity** | **int** | The number of units this term is charged for. When set, &#x60;price&#x60; is the rate per unit and the term is worth price x quantity. Leave unset for a flat fee. | [optional] 
 **installments** | [**List[ProductGroupProductsInnerPricingOneOf1InstallmentsInner]**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
 **discount** | [**ProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 

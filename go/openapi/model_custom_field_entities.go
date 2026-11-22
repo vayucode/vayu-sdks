@@ -25,6 +25,7 @@ const (
 	CUSTOMFIELDENTITIES_CONTRACT CustomFieldEntities = "Contract"
 	CUSTOMFIELDENTITIES_INVOICE CustomFieldEntities = "Invoice"
 	CUSTOMFIELDENTITIES_LINE_ITEM CustomFieldEntities = "LineItem"
+	CUSTOMFIELDENTITIES_PRODUCT CustomFieldEntities = "Product"
 )
 
 // All allowed values of CustomFieldEntities enum
@@ -33,6 +34,7 @@ var AllowedCustomFieldEntitiesEnumValues = []CustomFieldEntities{
 	"Contract",
 	"Invoice",
 	"LineItem",
+	"Product",
 }
 
 func (v *CustomFieldEntities) UnmarshalJSON(src []byte) error {

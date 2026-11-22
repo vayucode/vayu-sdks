@@ -36,6 +36,7 @@ const (
 	NOTIFICATIONEVENTTYPE_CURRENCY_COMMITMENT_USAGE_CROSSED NotificationEventType = "CurrencyCommitmentUsageCrossed"
 	NOTIFICATIONEVENTTYPE_FINAL_TIER_EXCEEDED NotificationEventType = "FinalTierExceeded"
 	NOTIFICATIONEVENTTYPE_INVOICE_PAYMENT_STATUS_CHANGED NotificationEventType = "InvoicePaymentStatusChanged"
+	NOTIFICATIONEVENTTYPE_CONTRACT_ANNIVERSARY NotificationEventType = "ContractAnniversary"
 	NOTIFICATIONEVENTTYPE_INVOICE_SEND_FAILED NotificationEventType = "InvoiceSendFailed"
 	NOTIFICATIONEVENTTYPE_CREDIT_POOL_DEPLETED NotificationEventType = "CreditPoolDepleted"
 	NOTIFICATIONEVENTTYPE_CREDIT_POOL_THRESHOLD_CROSSED NotificationEventType = "CreditPoolThresholdCrossed"
@@ -44,7 +45,12 @@ const (
 	NOTIFICATIONEVENTTYPE_CUSTOMER_CREATED NotificationEventType = "CustomerCreated"
 	NOTIFICATIONEVENTTYPE_CONTRACT_CREATED NotificationEventType = "ContractCreated"
 	NOTIFICATIONEVENTTYPE_INVOICE_ISSUE_DATE_ARRIVED NotificationEventType = "InvoiceIssueDateArrived"
+	NOTIFICATIONEVENTTYPE_INVOICE_PAST_DUE NotificationEventType = "InvoicePastDue"
+	NOTIFICATIONEVENTTYPE_INVOICE_ISSUE_DATE_APPROACHING NotificationEventType = "InvoiceIssueDateApproaching"
+	NOTIFICATIONEVENTTYPE_CONTRACT_EXPIRATION_APPROACHING NotificationEventType = "ContractExpirationApproaching"
 	NOTIFICATIONEVENTTYPE_METERING_HEALTH_DEGRADED NotificationEventType = "MeteringHealthDegraded"
+	NOTIFICATIONEVENTTYPE_EVENTS_INGESTION_STOPPED NotificationEventType = "EventsIngestionStopped"
+	NOTIFICATIONEVENTTYPE_CUSTOMER_RELATION_CONFLICT NotificationEventType = "CustomerRelationConflict"
 	NOTIFICATIONEVENTTYPE_PING_TEST NotificationEventType = "PingTest"
 )
 
@@ -65,6 +71,7 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"CurrencyCommitmentUsageCrossed",
 	"FinalTierExceeded",
 	"InvoicePaymentStatusChanged",
+	"ContractAnniversary",
 	"InvoiceSendFailed",
 	"CreditPoolDepleted",
 	"CreditPoolThresholdCrossed",
@@ -73,7 +80,12 @@ var AllowedNotificationEventTypeEnumValues = []NotificationEventType{
 	"CustomerCreated",
 	"ContractCreated",
 	"InvoiceIssueDateArrived",
+	"InvoicePastDue",
+	"InvoiceIssueDateApproaching",
+	"ContractExpirationApproaching",
 	"MeteringHealthDegraded",
+	"EventsIngestionStopped",
+	"CustomerRelationConflict",
 	"PingTest",
 }
 

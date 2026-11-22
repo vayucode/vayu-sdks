@@ -10,11 +10,15 @@
  * Do not edit the class manually.
  */
 
-import { FullDayPeriod } from '../models/FullDayPeriod';
+import { CustomFieldValue } from '../models/CustomFieldValue';
 import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
+import { InvoiceIntegration } from '../models/InvoiceIntegration';
+import { InvoicePayment } from '../models/InvoicePayment';
+import { InvoiceReviewStatus } from '../models/InvoiceReviewStatus';
 import { LineItem } from '../models/LineItem';
 import { PaymentInfo } from '../models/PaymentInfo';
+import { Period } from '../models/Period';
 import { HttpFile } from '../http/http';
 
 export class GetInvoiceResponseInvoice {
@@ -30,7 +34,6 @@ export class GetInvoiceResponseInvoice {
     * The name of the invoice, usually a description of the billing period
     */
     'name': string;
-    'billingCycle': FullDayPeriod;
     'revenueBreakdown': GetInvoiceResponseInvoiceRevenueBreakdown;
     'billingStatus': InvoiceBillingStatus;
     'paymentInfo'?: PaymentInfo;
@@ -39,14 +42,56 @@ export class GetInvoiceResponseInvoice {
     */
     'dueDate': Date | null;
     /**
+    * The number of the invoice
+    */
+    'invoiceNumber'?: string;
+    'reviewStatus': InvoiceReviewStatus;
+    /**
+    * The date the invoice was approved
+    */
+    'approvedAt'?: Date;
+    /**
+    * The date the invoice was issued
+    */
+    'issuedAt': Date | null;
+    /**
     * The id of the account that the invoice is associated with
     */
     'accountId': string;
+    'billingCycle': Period;
     'lineItems': Array<LineItem>;
+    /**
+    * The payments recorded for the invoice, including failed and pending ones; use status to filter
+    */
+    'payments': Array<InvoicePayment>;
     /**
     * The total amount of the invoice
     */
     'amount': number;
+    /**
+    * The purchase order of the invoice
+    */
+    'purchaseOrder'?: string;
+    /**
+    * The notes (memo) of the invoice
+    */
+    'notes'?: string;
+    /**
+    * The name of the plan the contract of the invoice is based on
+    */
+    'contractName'?: string;
+    /**
+    * The custom field values of the invoice\'s customer and contract. Customer field names are prefixed with customer_ and contract field names with contract_.
+    */
+    'customFieldValues'?: Array<CustomFieldValue>;
+    /**
+    * External systems the invoice was exported to. Each entry carries the provider, the id of the invoice in that system and, when available, its document number there. An empty list means the invoice was not exported; the field is omitted when the lookup is temporarily unavailable.
+    */
+    'externalIntegration'?: Array<InvoiceIntegration>;
+    /**
+    * Whether the invoice belongs to a trial contract
+    */
+    'isTrial': boolean;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -75,12 +120,6 @@ export class GetInvoiceResponseInvoice {
             "format": ""
         },
         {
-            "name": "billingCycle",
-            "baseName": "billingCycle",
-            "type": "FullDayPeriod",
-            "format": ""
-        },
-        {
             "name": "revenueBreakdown",
             "baseName": "revenueBreakdown",
             "type": "GetInvoiceResponseInvoiceRevenueBreakdown",
@@ -105,9 +144,39 @@ export class GetInvoiceResponseInvoice {
             "format": "date-time"
         },
         {
+            "name": "invoiceNumber",
+            "baseName": "invoiceNumber",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "reviewStatus",
+            "baseName": "reviewStatus",
+            "type": "InvoiceReviewStatus",
+            "format": ""
+        },
+        {
+            "name": "approvedAt",
+            "baseName": "approvedAt",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "issuedAt",
+            "baseName": "issuedAt",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
             "name": "accountId",
             "baseName": "accountId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "billingCycle",
+            "baseName": "billingCycle",
+            "type": "Period",
             "format": ""
         },
         {
@@ -117,9 +186,51 @@ export class GetInvoiceResponseInvoice {
             "format": ""
         },
         {
+            "name": "payments",
+            "baseName": "payments",
+            "type": "Array<InvoicePayment>",
+            "format": ""
+        },
+        {
             "name": "amount",
             "baseName": "amount",
             "type": "number",
+            "format": ""
+        },
+        {
+            "name": "purchaseOrder",
+            "baseName": "purchaseOrder",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "notes",
+            "baseName": "notes",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "contractName",
+            "baseName": "contractName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "customFieldValues",
+            "baseName": "customFieldValues",
+            "type": "Array<CustomFieldValue>",
+            "format": ""
+        },
+        {
+            "name": "externalIntegration",
+            "baseName": "externalIntegration",
+            "type": "Array<InvoiceIntegration>",
+            "format": ""
+        },
+        {
+            "name": "isTrial",
+            "baseName": "isTrial",
+            "type": "boolean",
             "format": ""
         },
         {

@@ -61,6 +61,8 @@ type DeleteContractResponseContract struct {
 	IsTrial *bool `json:"isTrial,omitempty"`
 	// A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints.
 	ExternalId NullableString `json:"externalId,omitempty"`
+	// PDF files to attach to the contract, as base64-encoded content. Accepted only when creating a contract and never returned in responses. PDF files only, at most 10 files and at most 4 MB in total.
+	Attachments []ContractAttachmentInput `json:"attachments,omitempty"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -773,6 +775,38 @@ func (o *DeleteContractResponseContract) UnsetExternalId() {
 	o.ExternalId.Unset()
 }
 
+// GetAttachments returns the Attachments field value if set, zero value otherwise.
+func (o *DeleteContractResponseContract) GetAttachments() []ContractAttachmentInput {
+	if o == nil || IsNil(o.Attachments) {
+		var ret []ContractAttachmentInput
+		return ret
+	}
+	return o.Attachments
+}
+
+// GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteContractResponseContract) GetAttachmentsOk() ([]ContractAttachmentInput, bool) {
+	if o == nil || IsNil(o.Attachments) {
+		return nil, false
+	}
+	return o.Attachments, true
+}
+
+// HasAttachments returns a boolean if a field has been set.
+func (o *DeleteContractResponseContract) HasAttachments() bool {
+	if o != nil && !IsNil(o.Attachments) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachments gets a reference to the given []ContractAttachmentInput and assigns it to the Attachments field.
+func (o *DeleteContractResponseContract) SetAttachments(v []ContractAttachmentInput) {
+	o.Attachments = v
+}
+
 // GetId returns the Id field value
 func (o *DeleteContractResponseContract) GetId() string {
 	if o == nil {
@@ -935,6 +969,9 @@ func (o DeleteContractResponseContract) ToMap() (map[string]interface{}, error) 
 	if o.ExternalId.IsSet() {
 		toSerialize["externalId"] = o.ExternalId.Get()
 	}
+	if !IsNil(o.Attachments) {
+		toSerialize["attachments"] = o.Attachments
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -1007,6 +1044,7 @@ func (o *DeleteContractResponseContract) UnmarshalJSON(data []byte) (err error) 
 		delete(additionalProperties, "currency")
 		delete(additionalProperties, "isTrial")
 		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "attachments")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

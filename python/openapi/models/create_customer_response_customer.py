@@ -21,12 +21,17 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from openapi.models.address import Address
 from openapi.models.contact import Contact
+from openapi.models.create_customer_request_cloud_provider_settings import CreateCustomerRequestCloudProviderSettings
+from openapi.models.create_customer_request_shipping_address import CreateCustomerRequestShippingAddress
 from openapi.models.currency import Currency
 from openapi.models.custom_field import CustomField
-from openapi.models.customer_cloud_provider_settings import CustomerCloudProviderSettings
+from openapi.models.custom_field_value import CustomFieldValue
+from openapi.models.customer_external_integration import CustomerExternalIntegration
 from openapi.models.customer_source import CustomerSource
+from openapi.models.customer_status import CustomerStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,21 +39,26 @@ class CreateCustomerResponseCustomer(BaseModel):
     """
     CreateCustomerResponseCustomer
     """ # noqa: E501
-    name: StrictStr = Field(description="The name of the customer")
+    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the customer")
     aliases: Optional[List[StrictStr]] = Field(default=None, description="The aliases of the customer used to match events to the customer.")
     contacts: Optional[List[Contact]] = Field(default=None, description="The contacts of the customer. Contact marked as primary is the target for invoice sharing.")
     source: Optional[CustomerSource] = None
     legal_name: Optional[StrictStr] = Field(default=None, description="The legal name of the customer", alias="legalName")
     tax_ids: Optional[List[StrictStr]] = Field(default=None, description="The tax IDs of the customer", alias="taxIds")
+    crm_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the CRM system. When not set directly, it is read from the linked CRM integration (Salesforce, HubSpot).", alias="crmId")
+    status: Optional[CustomerStatus] = None
     tax_id: Optional[StrictStr] = Field(default=None, description="The tax ID of the customer (deprecated, use taxIds instead)", alias="taxId")
-    cloud_provider_settings: Optional[CustomerCloudProviderSettings] = Field(default=None, alias="cloudProviderSettings")
+    cloud_provider_settings: Optional[CreateCustomerRequestCloudProviderSettings] = Field(default=None, alias="cloudProviderSettings")
     external_id: Optional[StrictStr] = Field(default=None, description="The external ID of the customer", alias="externalId")
     customer_erp_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the ERP system", alias="customerErpId")
     address: Optional[Address] = None
+    shipping_address: Optional[CreateCustomerRequestShippingAddress] = Field(default=None, alias="shippingAddress")
     sales_force_account_id: Optional[StrictStr] = Field(default=None, description="The ID of the customer in the Salesforce system", alias="salesForceAccountId")
+    external_integration: Optional[List[CustomerExternalIntegration]] = Field(default=None, description="External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.", alias="externalIntegration")
     due_days: Optional[StrictStr] = Field(default=None, description="The due days of the customer", alias="dueDays")
     currency: Optional[Currency] = None
     custom_fields: Optional[List[CustomField]] = Field(default=None, description="Custom fields from CRM systems (Salesforce, HubSpot, etc.)", alias="customFields")
+    custom_field_values: Optional[List[CustomFieldValue]] = Field(default=None, description="The stored custom field values associated with the customer. Read-only: ignored on create and update requests; values are set via customFields.", alias="customFieldValues")
     subsidiary: Optional[StrictStr] = Field(default=None, description="The name of the subsidiary of the customer")
     total_outstanding_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total outstanding amount across all unpaid invoices (in USD)", alias="totalOutstandingAmount")
     open_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Total amount of invoices with no billing status set (in USD)", alias="openAmount")
@@ -59,7 +69,7 @@ class CreateCustomerResponseCustomer(BaseModel):
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "salesForceAccountId", "dueDays", "currency", "customFields", "subsidiary", "totalOutstandingAmount", "openAmount", "overdueAmount", "pendingPaymentAmount", "paidAmount", "id", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["name", "aliases", "contacts", "source", "legalName", "taxIds", "crmId", "status", "taxId", "cloudProviderSettings", "externalId", "customerErpId", "address", "shippingAddress", "salesForceAccountId", "externalIntegration", "dueDays", "currency", "customFields", "customFieldValues", "subsidiary", "totalOutstandingAmount", "openAmount", "overdueAmount", "pendingPaymentAmount", "paidAmount", "id", "createdAt", "updatedAt"]
 
     @field_validator('due_days')
     def due_days_validate_enum(cls, value):
@@ -67,8 +77,8 @@ class CreateCustomerResponseCustomer(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS']):
-            raise ValueError("must be one of enum values ('END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS')")
+        if value not in set(['END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS', '180_DAYS']):
+            raise ValueError("must be one of enum values ('END_OF_MONTH', 'SAME_DAY', '15_DAYS', '30_DAYS', '45_DAYS', '60_DAYS', '90_DAYS', '180_DAYS')")
         return value
 
     model_config = ConfigDict(
@@ -125,6 +135,16 @@ class CreateCustomerResponseCustomer(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of shipping_address
+        if self.shipping_address:
+            _dict['shippingAddress'] = self.shipping_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in external_integration (list)
+        _items = []
+        if self.external_integration:
+            for _item_external_integration in self.external_integration:
+                if _item_external_integration:
+                    _items.append(_item_external_integration.to_dict())
+            _dict['externalIntegration'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in custom_fields (list)
         _items = []
         if self.custom_fields:
@@ -132,6 +152,13 @@ class CreateCustomerResponseCustomer(BaseModel):
                 if _item_custom_fields:
                     _items.append(_item_custom_fields.to_dict())
             _dict['customFields'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in custom_field_values (list)
+        _items = []
+        if self.custom_field_values:
+            for _item_custom_field_values in self.custom_field_values:
+                if _item_custom_field_values:
+                    _items.append(_item_custom_field_values.to_dict())
+            _dict['customFieldValues'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -162,6 +189,11 @@ class CreateCustomerResponseCustomer(BaseModel):
         if self.tax_ids is None and "tax_ids" in self.model_fields_set:
             _dict['taxIds'] = None
 
+        # set to None if crm_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.crm_id is None and "crm_id" in self.model_fields_set:
+            _dict['crmId'] = None
+
         # set to None if tax_id (nullable) is None
         # and model_fields_set contains the field
         if self.tax_id is None and "tax_id" in self.model_fields_set:
@@ -187,6 +219,11 @@ class CreateCustomerResponseCustomer(BaseModel):
         if self.sales_force_account_id is None and "sales_force_account_id" in self.model_fields_set:
             _dict['salesForceAccountId'] = None
 
+        # set to None if external_integration (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_integration is None and "external_integration" in self.model_fields_set:
+            _dict['externalIntegration'] = None
+
         # set to None if due_days (nullable) is None
         # and model_fields_set contains the field
         if self.due_days is None and "due_days" in self.model_fields_set:
@@ -201,6 +238,11 @@ class CreateCustomerResponseCustomer(BaseModel):
         # and model_fields_set contains the field
         if self.custom_fields is None and "custom_fields" in self.model_fields_set:
             _dict['customFields'] = None
+
+        # set to None if custom_field_values (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_field_values is None and "custom_field_values" in self.model_fields_set:
+            _dict['customFieldValues'] = None
 
         # set to None if subsidiary (nullable) is None
         # and model_fields_set contains the field
@@ -225,15 +267,20 @@ class CreateCustomerResponseCustomer(BaseModel):
             "source": obj.get("source"),
             "legalName": obj.get("legalName"),
             "taxIds": obj.get("taxIds"),
+            "crmId": obj.get("crmId"),
+            "status": obj.get("status"),
             "taxId": obj.get("taxId"),
-            "cloudProviderSettings": CustomerCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None,
+            "cloudProviderSettings": CreateCustomerRequestCloudProviderSettings.from_dict(obj["cloudProviderSettings"]) if obj.get("cloudProviderSettings") is not None else None,
             "externalId": obj.get("externalId"),
             "customerErpId": obj.get("customerErpId"),
             "address": Address.from_dict(obj["address"]) if obj.get("address") is not None else None,
+            "shippingAddress": CreateCustomerRequestShippingAddress.from_dict(obj["shippingAddress"]) if obj.get("shippingAddress") is not None else None,
             "salesForceAccountId": obj.get("salesForceAccountId"),
+            "externalIntegration": [CustomerExternalIntegration.from_dict(_item) for _item in obj["externalIntegration"]] if obj.get("externalIntegration") is not None else None,
             "dueDays": obj.get("dueDays"),
             "currency": obj.get("currency"),
             "customFields": [CustomField.from_dict(_item) for _item in obj["customFields"]] if obj.get("customFields") is not None else None,
+            "customFieldValues": [CustomFieldValue.from_dict(_item) for _item in obj["customFieldValues"]] if obj.get("customFieldValues") is not None else None,
             "subsidiary": obj.get("subsidiary"),
             "totalOutstandingAmount": obj.get("totalOutstandingAmount"),
             "openAmount": obj.get("openAmount"),

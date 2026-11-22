@@ -9,6 +9,10 @@
 
 * `ERP_INVOICE_SYNC_ON_BEHALF_PARENT` (value: `"erpInvoiceSyncOnBehalfParent"`)
 
+* `BILL_TO_PARENT` (value: `"billToParent"`)
+
+* `REPORTING_ONLY` (value: `"reportingOnly"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

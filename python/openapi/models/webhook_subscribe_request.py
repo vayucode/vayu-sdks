@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.notification_event_type import NotificationEventType
@@ -31,9 +31,11 @@ class WebhookSubscribeRequest(BaseModel):
     """ # noqa: E501
     callback_url: StrictStr = Field(alias="callbackUrl")
     event_type: NotificationEventType = Field(alias="eventType")
-    threshold: Optional[Union[Annotated[float, Field(le=1, strict=True, gt=0)], Annotated[int, Field(le=1, strict=True, gt=0)]]] = None
+    threshold: Optional[Union[StrictFloat, StrictInt]] = None
+    recurring_threshold: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="recurringThreshold")
+    days: Optional[Annotated[List[Annotated[int, Field(strict=True, ge=0)]], Field(min_length=1, max_length=30)]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["callbackUrl", "eventType", "threshold"]
+    __properties: ClassVar[List[str]] = ["callbackUrl", "eventType", "threshold", "recurringThreshold", "days"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +97,9 @@ class WebhookSubscribeRequest(BaseModel):
         _obj = cls.model_validate({
             "callbackUrl": obj.get("callbackUrl"),
             "eventType": obj.get("eventType"),
-            "threshold": obj.get("threshold")
+            "threshold": obj.get("threshold"),
+            "recurringThreshold": obj.get("recurringThreshold"),
+            "days": obj.get("days")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

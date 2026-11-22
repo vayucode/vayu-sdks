@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
+from openapi.models.customer_relation_type import CustomerRelationType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,8 +31,9 @@ class CreateCustomerRelationRequest(BaseModel):
     """ # noqa: E501
     vayu_parent_customer_id: Annotated[str, Field(strict=True)] = Field(description="Identifier of the parent customer in Vayu.", alias="vayuParentCustomerId")
     vayu_child_customer_id: Annotated[str, Field(strict=True)] = Field(description="Identifier of the child customer in Vayu.", alias="vayuChildCustomerId")
+    relation_type: CustomerRelationType = Field(alias="relationType")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["vayuParentCustomerId", "vayuChildCustomerId"]
+    __properties: ClassVar[List[str]] = ["vayuParentCustomerId", "vayuChildCustomerId", "relationType"]
 
     @field_validator('vayu_parent_customer_id')
     def vayu_parent_customer_id_validate_regular_expression(cls, value):
@@ -106,7 +108,8 @@ class CreateCustomerRelationRequest(BaseModel):
 
         _obj = cls.model_validate({
             "vayuParentCustomerId": obj.get("vayuParentCustomerId"),
-            "vayuChildCustomerId": obj.get("vayuChildCustomerId")
+            "vayuChildCustomerId": obj.get("vayuChildCustomerId"),
+            "relationType": obj.get("relationType") if obj.get("relationType") is not None else CustomerRelationType.ACCUMULATEUSAGE
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

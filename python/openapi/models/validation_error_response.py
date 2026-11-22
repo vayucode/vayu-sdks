@@ -31,10 +31,11 @@ class ValidationErrorResponse(BaseModel):
     type: StrictStr
     code: StrictStr = Field(description="Specific machine-readable error code")
     message: StrictStr = Field(description="Human-readable error explanation")
+    required_scope: Optional[StrictStr] = Field(default=None, description="Scope the token was missing, present on insufficient_scope errors", alias="requiredScope")
     param: Optional[StrictStr] = Field(default=None, description="Single parameter that failed validation")
     params: Optional[List[ValidationErrorResponseParamsInner]] = Field(default=None, description="Multiple parameters that failed validation")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "code", "message", "param", "params"]
+    __properties: ClassVar[List[str]] = ["type", "code", "message", "requiredScope", "param", "params"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -111,6 +112,7 @@ class ValidationErrorResponse(BaseModel):
             "type": obj.get("type"),
             "code": obj.get("code"),
             "message": obj.get("message"),
+            "requiredScope": obj.get("requiredScope"),
             "param": obj.get("param"),
             "params": [ValidationErrorResponseParamsInner.from_dict(_item) for _item in obj["params"]] if obj.get("params") is not None else None
         })

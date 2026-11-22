@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **callback_url** | **str** |  | 
 **event_type** | [**NotificationEventType**](NotificationEventType.md) |  | 
 **threshold** | **float** |  | [optional] 
+**recurring_threshold** | **float** |  | [optional] 
+**days** | **List[int]** |  | [optional] 
 
 ## Example
 

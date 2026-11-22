@@ -6,8 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The name of the meter | 
 **EventName** | **string** | The name of the event that the meter is tracking. | 
+**ProductCode** | Pointer to **string** | The product code of the meter | [optional] 
 **AggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
 **Filter** | Pointer to [**Filter**](Filter.md) |  | [optional] 
+**SalesForceProductId** | Pointer to **NullableString** | The ID of the meter in the Salesforce system | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -72,6 +74,31 @@ and a boolean to check if the value has been set.
 SetEventName sets EventName field to given value.
 
 
+### GetProductCode
+
+`func (o *DeleteMeterResponseMeter) GetProductCode() string`
+
+GetProductCode returns the ProductCode field if non-nil, zero value otherwise.
+
+### GetProductCodeOk
+
+`func (o *DeleteMeterResponseMeter) GetProductCodeOk() (*string, bool)`
+
+GetProductCodeOk returns a tuple with the ProductCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProductCode
+
+`func (o *DeleteMeterResponseMeter) SetProductCode(v string)`
+
+SetProductCode sets ProductCode field to given value.
+
+### HasProductCode
+
+`func (o *DeleteMeterResponseMeter) HasProductCode() bool`
+
+HasProductCode returns a boolean if a field has been set.
+
 ### GetAggregationMethod
 
 `func (o *DeleteMeterResponseMeter) GetAggregationMethod() AggregationMethod`
@@ -117,6 +144,41 @@ SetFilter sets Filter field to given value.
 
 HasFilter returns a boolean if a field has been set.
 
+### GetSalesForceProductId
+
+`func (o *DeleteMeterResponseMeter) GetSalesForceProductId() string`
+
+GetSalesForceProductId returns the SalesForceProductId field if non-nil, zero value otherwise.
+
+### GetSalesForceProductIdOk
+
+`func (o *DeleteMeterResponseMeter) GetSalesForceProductIdOk() (*string, bool)`
+
+GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSalesForceProductId
+
+`func (o *DeleteMeterResponseMeter) SetSalesForceProductId(v string)`
+
+SetSalesForceProductId sets SalesForceProductId field to given value.
+
+### HasSalesForceProductId
+
+`func (o *DeleteMeterResponseMeter) HasSalesForceProductId() bool`
+
+HasSalesForceProductId returns a boolean if a field has been set.
+
+### SetSalesForceProductIdNil
+
+`func (o *DeleteMeterResponseMeter) SetSalesForceProductIdNil(b bool)`
+
+ SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+
+### UnsetSalesForceProductId
+`func (o *DeleteMeterResponseMeter) UnsetSalesForceProductId()`
+
+UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
 ### GetId
 
 `func (o *DeleteMeterResponseMeter) GetId() string`

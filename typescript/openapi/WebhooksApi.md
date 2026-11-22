@@ -27,7 +27,11 @@ const request: WebhooksApiWebhookSubscribeRequest = {
   webhookSubscribeRequest: {
     callbackUrl: "callbackUrl_example",
     eventType: "AnonymousCustomer",
-    threshold: 0,
+    threshold: 3.14,
+    recurringThreshold: 3.14,
+    days: [
+      0,
+    ],
   },
 };
 

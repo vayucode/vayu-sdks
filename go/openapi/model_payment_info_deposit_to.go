@@ -23,6 +23,7 @@ var _ MappedNullable = &PaymentInfoDepositTo{}
 type PaymentInfoDepositTo struct {
 	Id *string `json:"id,omitempty"`
 	Name string `json:"name"`
+	Integration *string `json:"integration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -102,6 +103,38 @@ func (o *PaymentInfoDepositTo) SetName(v string) {
 	o.Name = v
 }
 
+// GetIntegration returns the Integration field value if set, zero value otherwise.
+func (o *PaymentInfoDepositTo) GetIntegration() string {
+	if o == nil || IsNil(o.Integration) {
+		var ret string
+		return ret
+	}
+	return *o.Integration
+}
+
+// GetIntegrationOk returns a tuple with the Integration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentInfoDepositTo) GetIntegrationOk() (*string, bool) {
+	if o == nil || IsNil(o.Integration) {
+		return nil, false
+	}
+	return o.Integration, true
+}
+
+// HasIntegration returns a boolean if a field has been set.
+func (o *PaymentInfoDepositTo) HasIntegration() bool {
+	if o != nil && !IsNil(o.Integration) {
+		return true
+	}
+
+	return false
+}
+
+// SetIntegration gets a reference to the given string and assigns it to the Integration field.
+func (o *PaymentInfoDepositTo) SetIntegration(v string) {
+	o.Integration = &v
+}
+
 func (o PaymentInfoDepositTo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -116,6 +149,9 @@ func (o PaymentInfoDepositTo) ToMap() (map[string]interface{}, error) {
 		toSerialize["id"] = o.Id
 	}
 	toSerialize["name"] = o.Name
+	if !IsNil(o.Integration) {
+		toSerialize["integration"] = o.Integration
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -161,6 +197,7 @@ func (o *PaymentInfoDepositTo) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "integration")
 		o.AdditionalProperties = additionalProperties
 	}
 

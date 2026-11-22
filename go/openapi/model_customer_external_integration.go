@@ -21,8 +21,11 @@ var _ MappedNullable = &CustomerExternalIntegration{}
 
 // CustomerExternalIntegration struct for CustomerExternalIntegration
 type CustomerExternalIntegration struct {
+	// The integration provider. Stripe links are saved on the customer; other providers are linked via the integration registry.
 	Type string `json:"type"`
+	// The ID of the customer in the external provider system
 	Id string `json:"id"`
+	// The name of the customer in the external provider system
 	Name string `json:"name"`
 	AdditionalProperties map[string]interface{}
 }

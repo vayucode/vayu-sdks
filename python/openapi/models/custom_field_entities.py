@@ -31,6 +31,7 @@ class CustomFieldEntities(str, Enum):
     CONTRACT = 'Contract'
     INVOICE = 'Invoice'
     LINEITEM = 'LineItem'
+    PRODUCT = 'Product'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

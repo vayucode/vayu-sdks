@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **Currency** | Pointer to [**Currency**](Currency.md) |  | [optional] 
 **IsTrial** | Pointer to **bool** | Whether the contract is a trial. All invoices under a trial contract are flagged with isTrial: true. If not provided, it defaults to false. | [optional] 
 **ExternalId** | Pointer to **NullableString** | A caller-owned external id for the contract. Once set, the contract can be fetched or deleted by passing this value in place of the Vayu id on the /contracts/{contractId} endpoints. | [optional] 
+**Attachments** | Pointer to [**[]ContractAttachmentInput**](ContractAttachmentInput.md) | PDF files to attach to the contract, as base64-encoded content. Accepted only when creating a contract and never returned in responses. PDF files only, at most 10 files and at most 4 MB in total. | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -618,6 +619,31 @@ HasExternalId returns a boolean if a field has been set.
 `func (o *DeleteContractResponseContract) UnsetExternalId()`
 
 UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+### GetAttachments
+
+`func (o *DeleteContractResponseContract) GetAttachments() []ContractAttachmentInput`
+
+GetAttachments returns the Attachments field if non-nil, zero value otherwise.
+
+### GetAttachmentsOk
+
+`func (o *DeleteContractResponseContract) GetAttachmentsOk() (*[]ContractAttachmentInput, bool)`
+
+GetAttachmentsOk returns a tuple with the Attachments field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttachments
+
+`func (o *DeleteContractResponseContract) SetAttachments(v []ContractAttachmentInput)`
+
+SetAttachments sets Attachments field to given value.
+
+### HasAttachments
+
+`func (o *DeleteContractResponseContract) HasAttachments() bool`
+
+HasAttachments returns a boolean if a field has been set.
+
 ### GetId
 
 `func (o *DeleteContractResponseContract) GetId() string`

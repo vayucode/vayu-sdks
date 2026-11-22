@@ -25,8 +25,12 @@ type EventsDryRunResponseObjectMeterWithValuesInner struct {
 	Name string `json:"name"`
 	// The name of the event that the meter is tracking.
 	EventName string `json:"eventName"`
+	// The product code of the meter
+	ProductCode *string `json:"productCode,omitempty"`
 	AggregationMethod AggregationMethod `json:"aggregationMethod"`
 	Filter *Filter `json:"filter,omitempty"`
+	// The ID of the meter in the Salesforce system
+	SalesForceProductId NullableString `json:"salesForceProductId,omitempty"`
 	Value NullableFloat32 `json:"value"`
 	InstanceValue interface{} `json:"instanceValue,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -103,6 +107,38 @@ func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetEventName(v string) 
 	o.EventName = v
 }
 
+// GetProductCode returns the ProductCode field value if set, zero value otherwise.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetProductCode() string {
+	if o == nil || IsNil(o.ProductCode) {
+		var ret string
+		return ret
+	}
+	return *o.ProductCode
+}
+
+// GetProductCodeOk returns a tuple with the ProductCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetProductCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.ProductCode) {
+		return nil, false
+	}
+	return o.ProductCode, true
+}
+
+// HasProductCode returns a boolean if a field has been set.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) HasProductCode() bool {
+	if o != nil && !IsNil(o.ProductCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductCode gets a reference to the given string and assigns it to the ProductCode field.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetProductCode(v string) {
+	o.ProductCode = &v
+}
+
 // GetAggregationMethod returns the AggregationMethod field value
 func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetAggregationMethod() AggregationMethod {
 	if o == nil {
@@ -157,6 +193,48 @@ func (o *EventsDryRunResponseObjectMeterWithValuesInner) HasFilter() bool {
 // SetFilter gets a reference to the given Filter and assigns it to the Filter field.
 func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetFilter(v Filter) {
 	o.Filter = &v
+}
+
+// GetSalesForceProductId returns the SalesForceProductId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetSalesForceProductId() string {
+	if o == nil || IsNil(o.SalesForceProductId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceProductId.Get()
+}
+
+// GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetSalesForceProductIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceProductId.Get(), o.SalesForceProductId.IsSet()
+}
+
+// HasSalesForceProductId returns a boolean if a field has been set.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) HasSalesForceProductId() bool {
+	if o != nil && o.SalesForceProductId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceProductId gets a reference to the given NullableString and assigns it to the SalesForceProductId field.
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetSalesForceProductId(v string) {
+	o.SalesForceProductId.Set(&v)
+}
+// SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetSalesForceProductIdNil() {
+	o.SalesForceProductId.Set(nil)
+}
+
+// UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
+func (o *EventsDryRunResponseObjectMeterWithValuesInner) UnsetSalesForceProductId() {
+	o.SalesForceProductId.Unset()
 }
 
 // GetValue returns the Value field value
@@ -230,9 +308,15 @@ func (o EventsDryRunResponseObjectMeterWithValuesInner) ToMap() (map[string]inte
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["eventName"] = o.EventName
+	if !IsNil(o.ProductCode) {
+		toSerialize["productCode"] = o.ProductCode
+	}
 	toSerialize["aggregationMethod"] = o.AggregationMethod
 	if !IsNil(o.Filter) {
 		toSerialize["filter"] = o.Filter
+	}
+	if o.SalesForceProductId.IsSet() {
+		toSerialize["salesForceProductId"] = o.SalesForceProductId.Get()
 	}
 	toSerialize["value"] = o.Value.Get()
 	if o.InstanceValue != nil {
@@ -286,8 +370,10 @@ func (o *EventsDryRunResponseObjectMeterWithValuesInner) UnmarshalJSON(data []by
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "eventName")
+		delete(additionalProperties, "productCode")
 		delete(additionalProperties, "aggregationMethod")
 		delete(additionalProperties, "filter")
+		delete(additionalProperties, "salesForceProductId")
 		delete(additionalProperties, "value")
 		delete(additionalProperties, "instanceValue")
 		o.AdditionalProperties = additionalProperties

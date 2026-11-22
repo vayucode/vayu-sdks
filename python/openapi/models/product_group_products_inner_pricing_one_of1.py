@@ -32,10 +32,11 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
     """ # noqa: E501
     type: StrictStr
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
+    quantity: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="The number of units this term is charged for. When set, `price` is the rate per unit and the term is worth price x quantity. Leave unset for a flat fee.")
     installments: Optional[List[ProductGroupProductsInnerPricingOneOf1InstallmentsInner]] = None
     discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price", "installments", "discount"]
+    __properties: ClassVar[List[str]] = ["type", "price", "quantity", "installments", "discount"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -124,6 +125,7 @@ class ProductGroupProductsInnerPricingOneOf1(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "price": obj.get("price"),
+            "quantity": obj.get("quantity"),
             "installments": [ProductGroupProductsInnerPricingOneOf1InstallmentsInner.from_dict(_item) for _item in obj["installments"]] if obj.get("installments") is not None else None,
             "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None
         })

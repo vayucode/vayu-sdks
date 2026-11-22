@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **CountryCode** | Pointer to **NullableString** |  | [optional] 
 **City** | Pointer to **NullableString** |  | [optional] 
 **AddressText** | Pointer to **NullableString** |  | [optional] 
+**StreetName** | Pointer to **NullableString** |  | [optional] 
+**Apartment** | Pointer to **NullableString** |  | [optional] 
 **State** | Pointer to **NullableString** |  | [optional] 
 **PostalCode** | Pointer to **NullableString** |  | [optional] 
 
@@ -170,6 +172,76 @@ HasAddressText returns a boolean if a field has been set.
 `func (o *Address) UnsetAddressText()`
 
 UnsetAddressText ensures that no value is present for AddressText, not even an explicit nil
+### GetStreetName
+
+`func (o *Address) GetStreetName() string`
+
+GetStreetName returns the StreetName field if non-nil, zero value otherwise.
+
+### GetStreetNameOk
+
+`func (o *Address) GetStreetNameOk() (*string, bool)`
+
+GetStreetNameOk returns a tuple with the StreetName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStreetName
+
+`func (o *Address) SetStreetName(v string)`
+
+SetStreetName sets StreetName field to given value.
+
+### HasStreetName
+
+`func (o *Address) HasStreetName() bool`
+
+HasStreetName returns a boolean if a field has been set.
+
+### SetStreetNameNil
+
+`func (o *Address) SetStreetNameNil(b bool)`
+
+ SetStreetNameNil sets the value for StreetName to be an explicit nil
+
+### UnsetStreetName
+`func (o *Address) UnsetStreetName()`
+
+UnsetStreetName ensures that no value is present for StreetName, not even an explicit nil
+### GetApartment
+
+`func (o *Address) GetApartment() string`
+
+GetApartment returns the Apartment field if non-nil, zero value otherwise.
+
+### GetApartmentOk
+
+`func (o *Address) GetApartmentOk() (*string, bool)`
+
+GetApartmentOk returns a tuple with the Apartment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetApartment
+
+`func (o *Address) SetApartment(v string)`
+
+SetApartment sets Apartment field to given value.
+
+### HasApartment
+
+`func (o *Address) HasApartment() bool`
+
+HasApartment returns a boolean if a field has been set.
+
+### SetApartmentNil
+
+`func (o *Address) SetApartmentNil(b bool)`
+
+ SetApartmentNil sets the value for Apartment to be an explicit nil
+
+### UnsetApartment
+`func (o *Address) UnsetApartment()`
+
+UnsetApartment ensures that no value is present for Apartment, not even an explicit nil
 ### GetState
 
 `func (o *Address) GetState() string`

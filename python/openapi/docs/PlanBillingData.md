@@ -1,6 +1,5 @@
 # PlanBillingData
 
-The billing data of the plan. The billing data contains the billing interval, the plan duration the payment terms and auto renewal, and the billing method.
 
 ## Properties
 
@@ -11,6 +10,9 @@ Name | Type | Description | Notes
 **payment_term** | [**PaymentTerm**](PaymentTerm.md) |  | 
 **auto_renewal** | **bool** |  | [default to False]
 **pro_rated** | **bool** |  | [optional] 
+**billing_date** | [**BillingDate**](BillingDate.md) |  | [optional] 
+**renewal_duration** | **float** | months each automatic renewal runs for; the term before it when not stated | [optional] 
+**renews_up_to_n_times** | **float** | how many times the contract renews automatically; no limit when not stated | [optional] 
 
 ## Example
 

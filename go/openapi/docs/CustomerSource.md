@@ -9,6 +9,8 @@
 
 * `API` (value: `"Api"`)
 
+* `VAYU` (value: `"Vayu"`)
+
 * `SALESFORCE` (value: `"Salesforce"`)
 
 * `HUB_SPOT` (value: `"HubSpot"`)

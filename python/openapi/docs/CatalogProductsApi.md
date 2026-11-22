@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**create_catalog_product**](CatalogProductsApi.md#create_catalog_product) | **POST** /catalogProducts | Create Catalog product
 [**delete_catalog_product**](CatalogProductsApi.md#delete_catalog_product) | **DELETE** /catalogProducts/{catalogProductId} | Delete Catalog product
 [**get_catalog_product**](CatalogProductsApi.md#get_catalog_product) | **GET** /catalogProducts/{catalogProductId} | Get Catalog product
+[**get_catalog_product_by_integration_id**](CatalogProductsApi.md#get_catalog_product_by_integration_id) | **GET** /catalogProducts/integration/{integrationType}/{integrationId} | Get catalog product by integration id
+[**get_catalog_product_by_name**](CatalogProductsApi.md#get_catalog_product_by_name) | **GET** /catalogProducts/name/{name} | Get catalog product by name
 [**list_catalog_products**](CatalogProductsApi.md#list_catalog_products) | **GET** /catalogProducts | List Catalog products
 [**update_catalog_product**](CatalogProductsApi.md#update_catalog_product) | **PUT** /catalogProducts/{catalogProductId} | Update Catalog product
 
@@ -252,6 +254,175 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | RequestSuccess |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_catalog_product_by_integration_id**
+> GetCatalogProductByIntegrationIdResponse get_catalog_product_by_integration_id(integration_type, integration_id)
+
+Get catalog product by integration id
+
+Use this endpoint to get a specific catalog product using its integration provider and identifier.
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuthorizer):
+
+```python
+import openapi
+from openapi.models.get_catalog_product_by_integration_id_response import GetCatalogProductByIntegrationIdResponse
+from openapi.models.integration_providers import IntegrationProviders
+from openapi.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://connect.withvayu.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi.Configuration(
+    host = "https://connect.withvayu.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuthorizer
+configuration = openapi.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi.CatalogProductsApi(api_client)
+    integration_type = openapi.IntegrationProviders() # IntegrationProviders | 
+    integration_id = 'integration_id_example' # str | 
+
+    try:
+        # Get catalog product by integration id
+        api_response = api_instance.get_catalog_product_by_integration_id(integration_type, integration_id)
+        print("The response of CatalogProductsApi->get_catalog_product_by_integration_id:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CatalogProductsApi->get_catalog_product_by_integration_id: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **integration_type** | [**IntegrationProviders**](.md)|  | 
+ **integration_id** | **str**|  | 
+
+### Return type
+
+[**GetCatalogProductByIntegrationIdResponse**](GetCatalogProductByIntegrationIdResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Response contains the catalog product matching the provided integration id |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_catalog_product_by_name**
+> GetCatalogProductByNameResponse get_catalog_product_by_name(name)
+
+Get catalog product by name
+
+Use this endpoint to get a specific catalog product using its name.
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuthorizer):
+
+```python
+import openapi
+from openapi.models.get_catalog_product_by_name_response import GetCatalogProductByNameResponse
+from openapi.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://connect.withvayu.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi.Configuration(
+    host = "https://connect.withvayu.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuthorizer
+configuration = openapi.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi.CatalogProductsApi(api_client)
+    name = 'name_example' # str | 
+
+    try:
+        # Get catalog product by name
+        api_response = api_instance.get_catalog_product_by_name(name)
+        print("The response of CatalogProductsApi->get_catalog_product_by_name:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CatalogProductsApi->get_catalog_product_by_name: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **name** | **str**|  | 
+
+### Return type
+
+[**GetCatalogProductByNameResponse**](GetCatalogProductByNameResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | response contains the catalog product matching the provided name |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |

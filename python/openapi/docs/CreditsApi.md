@@ -4,10 +4,94 @@ All URIs are relative to *https://connect.withvayu.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**credit_top_up**](CreditsApi.md#credit_top_up) | **POST** /credits/top-up | Create a one-off invoice to top up a customer with credits
 [**deduct_credits**](CreditsApi.md#deduct_credits) | **POST** /credits/deduct | Deduct credits from customer credit ledger
 [**grant_credits**](CreditsApi.md#grant_credits) | **POST** /credits/grant | Grant credits to a customer credit ledger
 [**list_credit_ledger_entries**](CreditsApi.md#list_credit_ledger_entries) | **GET** /credits | Retrieve credit ledger entries for customer.
 
+
+# **credit_top_up**
+> CreditTopUpResponse credit_top_up(credit_top_up_request)
+
+Create a one-off invoice to top up a customer with credits
+
+This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant's price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
+
+### Example
+
+* Bearer (JWT) Authentication (BearerAuthorizer):
+
+```python
+import openapi
+from openapi.models.credit_top_up_request import CreditTopUpRequest
+from openapi.models.credit_top_up_response import CreditTopUpResponse
+from openapi.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://connect.withvayu.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi.Configuration(
+    host = "https://connect.withvayu.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): BearerAuthorizer
+configuration = openapi.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi.CreditsApi(api_client)
+    credit_top_up_request = openapi.CreditTopUpRequest() # CreditTopUpRequest | 
+
+    try:
+        # Create a one-off invoice to top up a customer with credits
+        api_response = api_instance.credit_top_up(credit_top_up_request)
+        print("The response of CreditsApi->credit_top_up:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CreditsApi->credit_top_up: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **credit_top_up_request** | [**CreditTopUpRequest**](CreditTopUpRequest.md)|  | 
+
+### Return type
+
+[**CreditTopUpResponse**](CreditTopUpResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | RequestSuccess |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**429** | Too Many Requests |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deduct_credits**
 > deduct_credits(deduct_credits_request)

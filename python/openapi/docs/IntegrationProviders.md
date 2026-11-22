@@ -29,6 +29,16 @@
 
 * `XERO` (value: `'Xero'`)
 
+* `PADDLE` (value: `'Paddle'`)
+
+* `BIGQUERY` (value: `'BigQuery'`)
+
+* `AWSMARKETPLACEDIRECT` (value: `'AwsMarketplaceDirect'`)
+
+* `PLAID` (value: `'Plaid'`)
+
+* `REDSHIFT` (value: `'Redshift'`)
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

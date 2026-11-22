@@ -24,6 +24,7 @@ const (
 	CUSTOMERSOURCE_STRIPE CustomerSource = "Stripe"
 	CUSTOMERSOURCE_VAYU_EVENTS_API CustomerSource = "VayuEventsApi"
 	CUSTOMERSOURCE_API CustomerSource = "Api"
+	CUSTOMERSOURCE_VAYU CustomerSource = "Vayu"
 	CUSTOMERSOURCE_SALESFORCE CustomerSource = "Salesforce"
 	CUSTOMERSOURCE_HUB_SPOT CustomerSource = "HubSpot"
 	CUSTOMERSOURCE_CONTRACT_EXTRACTION CustomerSource = "ContractExtraction"
@@ -34,6 +35,7 @@ var AllowedCustomerSourceEnumValues = []CustomerSource{
 	"Stripe",
 	"VayuEventsApi",
 	"Api",
+	"Vayu",
 	"Salesforce",
 	"HubSpot",
 	"ContractExtraction",

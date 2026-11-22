@@ -11,6 +11,7 @@
  */
 
 import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
+import { LineItemServicePeriod } from '../models/LineItemServicePeriod';
 import { HttpFile } from '../http/http';
 
 export class LineItem {
@@ -19,6 +20,15 @@ export class LineItem {
     */
     'invoiceId': string;
     'revenueBreakdown': LineItemRevenueBreakdown;
+    /**
+    * The name of the product on the line
+    */
+    'productName'?: string;
+    /**
+    * The description shown on the line
+    */
+    'description'?: string;
+    'servicePeriod'?: LineItemServicePeriod;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -35,6 +45,24 @@ export class LineItem {
             "name": "revenueBreakdown",
             "baseName": "revenueBreakdown",
             "type": "LineItemRevenueBreakdown",
+            "format": ""
+        },
+        {
+            "name": "productName",
+            "baseName": "productName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "description",
+            "baseName": "description",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "servicePeriod",
+            "baseName": "servicePeriod",
+            "type": "LineItemServicePeriod",
             "format": ""
         }    ];
 

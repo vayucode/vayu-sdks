@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **IntegrationProvider** | [**IntegrationProviders**](IntegrationProviders.md) |  | 
 **IntegrationExternalId** | **string** |  | 
+**SubsidiaryId** | Pointer to **string** |  | [optional] 
 **SyncStatus** | [**SyncStatus**](SyncStatus.md) |  | 
 **Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
 **RawSyncedData** | Pointer to **map[string]interface{}** |  | [optional] 
@@ -89,6 +90,31 @@ and a boolean to check if the value has been set.
 
 SetIntegrationExternalId sets IntegrationExternalId field to given value.
 
+
+### GetSubsidiaryId
+
+`func (o *IntegrationEntity) GetSubsidiaryId() string`
+
+GetSubsidiaryId returns the SubsidiaryId field if non-nil, zero value otherwise.
+
+### GetSubsidiaryIdOk
+
+`func (o *IntegrationEntity) GetSubsidiaryIdOk() (*string, bool)`
+
+GetSubsidiaryIdOk returns a tuple with the SubsidiaryId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubsidiaryId
+
+`func (o *IntegrationEntity) SetSubsidiaryId(v string)`
+
+SetSubsidiaryId sets SubsidiaryId field to given value.
+
+### HasSubsidiaryId
+
+`func (o *IntegrationEntity) HasSubsidiaryId() bool`
+
+HasSubsidiaryId returns a boolean if a field has been set.
 
 ### GetSyncStatus
 

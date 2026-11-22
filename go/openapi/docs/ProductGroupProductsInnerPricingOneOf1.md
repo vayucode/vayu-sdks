@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
 **Price** | **float32** |  | 
+**Quantity** | Pointer to **int32** | The number of units this term is charged for. When set, &#x60;price&#x60; is the rate per unit and the term is worth price x quantity. Leave unset for a flat fee. | [optional] 
 **Installments** | Pointer to [**[]ProductGroupProductsInnerPricingOneOf1InstallmentsInner**](ProductGroupProductsInnerPricingOneOf1InstallmentsInner.md) |  | [optional] 
 **Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 
@@ -67,6 +68,31 @@ and a boolean to check if the value has been set.
 
 SetPrice sets Price field to given value.
 
+
+### GetQuantity
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) GetQuantity() int32`
+
+GetQuantity returns the Quantity field if non-nil, zero value otherwise.
+
+### GetQuantityOk
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) GetQuantityOk() (*int32, bool)`
+
+GetQuantityOk returns a tuple with the Quantity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuantity
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) SetQuantity(v int32)`
+
+SetQuantity sets Quantity field to given value.
+
+### HasQuantity
+
+`func (o *ProductGroupProductsInnerPricingOneOf1) HasQuantity() bool`
+
+HasQuantity returns a boolean if a field has been set.
 
 ### GetInstallments
 

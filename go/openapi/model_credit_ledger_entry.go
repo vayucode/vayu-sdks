@@ -24,12 +24,14 @@ var _ MappedNullable = &CreditLedgerEntry{}
 type CreditLedgerEntry struct {
 	Id string `json:"id" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	CreatedAt time.Time `json:"createdAt"`
-	Type BillingCycleStatus `json:"type"`
+	Type CreditLedgerEntryType `json:"type"`
 	Amount float32 `json:"amount"`
 	BalanceAfterEntry float32 `json:"balanceAfterEntry"`
 	InvoiceId *string `json:"invoiceId,omitempty"`
 	ErpId *string `json:"erpId,omitempty"`
+	CreditNoteNumber *string `json:"creditNoteNumber,omitempty"`
 	ContractId *string `json:"contractId,omitempty"`
+	Description *string `json:"description,omitempty"`
 	IntegrationEntities []IntegrationEntity `json:"integrationEntities"`
 	AdditionalProperties map[string]interface{}
 }
@@ -40,7 +42,7 @@ type _CreditLedgerEntry CreditLedgerEntry
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreditLedgerEntry(id string, createdAt time.Time, type_ BillingCycleStatus, amount float32, balanceAfterEntry float32, integrationEntities []IntegrationEntity) *CreditLedgerEntry {
+func NewCreditLedgerEntry(id string, createdAt time.Time, type_ CreditLedgerEntryType, amount float32, balanceAfterEntry float32, integrationEntities []IntegrationEntity) *CreditLedgerEntry {
 	this := CreditLedgerEntry{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -108,9 +110,9 @@ func (o *CreditLedgerEntry) SetCreatedAt(v time.Time) {
 }
 
 // GetType returns the Type field value
-func (o *CreditLedgerEntry) GetType() BillingCycleStatus {
+func (o *CreditLedgerEntry) GetType() CreditLedgerEntryType {
 	if o == nil {
-		var ret BillingCycleStatus
+		var ret CreditLedgerEntryType
 		return ret
 	}
 
@@ -119,7 +121,7 @@ func (o *CreditLedgerEntry) GetType() BillingCycleStatus {
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *CreditLedgerEntry) GetTypeOk() (*BillingCycleStatus, bool) {
+func (o *CreditLedgerEntry) GetTypeOk() (*CreditLedgerEntryType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *CreditLedgerEntry) GetTypeOk() (*BillingCycleStatus, bool) {
 }
 
 // SetType sets field value
-func (o *CreditLedgerEntry) SetType(v BillingCycleStatus) {
+func (o *CreditLedgerEntry) SetType(v CreditLedgerEntryType) {
 	o.Type = v
 }
 
@@ -243,6 +245,38 @@ func (o *CreditLedgerEntry) SetErpId(v string) {
 	o.ErpId = &v
 }
 
+// GetCreditNoteNumber returns the CreditNoteNumber field value if set, zero value otherwise.
+func (o *CreditLedgerEntry) GetCreditNoteNumber() string {
+	if o == nil || IsNil(o.CreditNoteNumber) {
+		var ret string
+		return ret
+	}
+	return *o.CreditNoteNumber
+}
+
+// GetCreditNoteNumberOk returns a tuple with the CreditNoteNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetCreditNoteNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.CreditNoteNumber) {
+		return nil, false
+	}
+	return o.CreditNoteNumber, true
+}
+
+// HasCreditNoteNumber returns a boolean if a field has been set.
+func (o *CreditLedgerEntry) HasCreditNoteNumber() bool {
+	if o != nil && !IsNil(o.CreditNoteNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreditNoteNumber gets a reference to the given string and assigns it to the CreditNoteNumber field.
+func (o *CreditLedgerEntry) SetCreditNoteNumber(v string) {
+	o.CreditNoteNumber = &v
+}
+
 // GetContractId returns the ContractId field value if set, zero value otherwise.
 func (o *CreditLedgerEntry) GetContractId() string {
 	if o == nil || IsNil(o.ContractId) {
@@ -273,6 +307,38 @@ func (o *CreditLedgerEntry) HasContractId() bool {
 // SetContractId gets a reference to the given string and assigns it to the ContractId field.
 func (o *CreditLedgerEntry) SetContractId(v string) {
 	o.ContractId = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *CreditLedgerEntry) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreditLedgerEntry) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *CreditLedgerEntry) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *CreditLedgerEntry) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetIntegrationEntities returns the IntegrationEntities field value
@@ -320,8 +386,14 @@ func (o CreditLedgerEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ErpId) {
 		toSerialize["erpId"] = o.ErpId
 	}
+	if !IsNil(o.CreditNoteNumber) {
+		toSerialize["creditNoteNumber"] = o.CreditNoteNumber
+	}
 	if !IsNil(o.ContractId) {
 		toSerialize["contractId"] = o.ContractId
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	toSerialize["integrationEntities"] = o.IntegrationEntities
 
@@ -379,7 +451,9 @@ func (o *CreditLedgerEntry) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "balanceAfterEntry")
 		delete(additionalProperties, "invoiceId")
 		delete(additionalProperties, "erpId")
+		delete(additionalProperties, "creditNoteNumber")
 		delete(additionalProperties, "contractId")
+		delete(additionalProperties, "description")
 		delete(additionalProperties, "integrationEntities")
 		o.AdditionalProperties = additionalProperties
 	}

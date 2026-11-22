@@ -1,12 +1,17 @@
+export * from '../models/AcknowledgedEvent';
+export * from '../models/ActionRefusedErrorResponse';
 export * from '../models/Address';
 export * from '../models/AggregationMethod';
 export * from '../models/AggregationOperator';
-export * from '../models/BillingCycleStatus';
+export * from '../models/BillingDate';
+export * from '../models/BillingDateAnchor';
 export * from '../models/BillingInterval';
+export * from '../models/CancelInvoiceResponse';
 export * from '../models/CloudUsageResult';
 export * from '../models/Condition';
 export * from '../models/ConflictErrorResponse';
 export * from '../models/Contact';
+export * from '../models/ContractAttachmentInput';
 export * from '../models/ContractStatus';
 export * from '../models/CreateCatalogProductRequest';
 export * from '../models/CreateCatalogProductResponse';
@@ -20,6 +25,8 @@ export * from '../models/CreateCustomerRelationRequest';
 export * from '../models/CreateCustomerRelationResponse';
 export * from '../models/CreateCustomerRelationResponseCustomerRelation';
 export * from '../models/CreateCustomerRequest';
+export * from '../models/CreateCustomerRequestCloudProviderSettings';
+export * from '../models/CreateCustomerRequestShippingAddress';
 export * from '../models/CreateCustomerResponse';
 export * from '../models/CreateCustomerResponseCustomer';
 export * from '../models/CreateMeasurementRequest';
@@ -27,6 +34,10 @@ export * from '../models/CreateMeasurementRequestUsageDate';
 export * from '../models/CreateMeasurementResponse';
 export * from '../models/CreateMeasurementResponseMeasurement';
 export * from '../models/CreditLedgerEntry';
+export * from '../models/CreditLedgerEntryType';
+export * from '../models/CreditTopUpRequest';
+export * from '../models/CreditTopUpRequestCreditGrant';
+export * from '../models/CreditTopUpResponse';
 export * from '../models/Criterion';
 export * from '../models/CriterionOperator';
 export * from '../models/Currency';
@@ -34,8 +45,10 @@ export * from '../models/CustomField';
 export * from '../models/CustomFieldEntities';
 export * from '../models/CustomFieldValue';
 export * from '../models/CustomFieldValueTypes';
-export * from '../models/CustomerCloudProviderSettings';
+export * from '../models/CustomerExternalIntegration';
+export * from '../models/CustomerRelationType';
 export * from '../models/CustomerSource';
+export * from '../models/CustomerStatus';
 export * from '../models/DeductCreditsRequest';
 export * from '../models/DeleteCatalogProductResponse';
 export * from '../models/DeleteCatalogProductResponseCatalogProduct';
@@ -50,6 +63,8 @@ export * from '../models/DeleteEventResponseEvent';
 export * from '../models/DeleteEventsByRefsRequest';
 export * from '../models/DeleteEventsByRefsResponse';
 export * from '../models/DeleteEventsByRefsResponseEventsInner';
+export * from '../models/DeleteInvoiceResponse';
+export * from '../models/DeleteInvoiceResponseInvoice';
 export * from '../models/DeleteMeasurementResponse';
 export * from '../models/DeleteMeasurementResponseMeasurement';
 export * from '../models/DeleteMeterResponse';
@@ -62,9 +77,15 @@ export * from '../models/EventsDryRunResponse';
 export * from '../models/EventsDryRunResponseObject';
 export * from '../models/EventsDryRunResponseObjectEvent';
 export * from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
+export * from '../models/ExternalCreditGrant';
+export * from '../models/ExternalCreditProduct';
 export * from '../models/ExternalOverageStrategy';
+export * from '../models/FailedDependencyErrorResponse';
 export * from '../models/Filter';
-export * from '../models/FullDayPeriod';
+export * from '../models/ForbiddenErrorResponse';
+export * from '../models/GetCatalogProductByIntegrationIdResponse';
+export * from '../models/GetCatalogProductByNameResponse';
+export * from '../models/GetCatalogProductByNameResponseCatalogProduct';
 export * from '../models/GetCatalogProductResponse';
 export * from '../models/GetContractByIntegrationIdResponse';
 export * from '../models/GetContractResponse';
@@ -83,6 +104,9 @@ export * from '../models/GetInvoiceResponse';
 export * from '../models/GetInvoiceResponseInvoice';
 export * from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 export * from '../models/GetMeasurementResponse';
+export * from '../models/GetMeterByIntegrationIdResponse';
+export * from '../models/GetMeterByNameResponse';
+export * from '../models/GetMeterByNameResponseMeter';
 export * from '../models/GetMeterResponse';
 export * from '../models/GetMeterResponseMeter';
 export * from '../models/GetPlanResponse';
@@ -93,16 +117,21 @@ export * from '../models/GrantCreditsRequest';
 export * from '../models/IntegrationEntity';
 export * from '../models/IntegrationEntityTypes';
 export * from '../models/IntegrationProviders';
-export * from '../models/IntegrationType';
 export * from '../models/InternalServerErrorResponse';
 export * from '../models/InvalidEvent';
+export * from '../models/Invoice';
 export * from '../models/InvoiceBillingStatus';
+export * from '../models/InvoiceIntegration';
+export * from '../models/InvoicePayment';
 export * from '../models/InvoicePaymentStatusResponse';
+export * from '../models/InvoiceReviewStatus';
 export * from '../models/LineItem';
 export * from '../models/LineItemRevenueBreakdown';
+export * from '../models/LineItemServicePeriod';
 export * from '../models/ListCatalogProductsResponse';
 export * from '../models/ListContractsResponse';
 export * from '../models/ListCreditLedgerEntriesResponse';
+export * from '../models/ListCreditProductsResponse';
 export * from '../models/ListCustomFieldsResponse';
 export * from '../models/ListCustomersResponse';
 export * from '../models/ListInvoicesResponse';
@@ -118,11 +147,14 @@ export * from '../models/PartnerSubmissionDetail';
 export * from '../models/PaymentInfo';
 export * from '../models/PaymentInfoDepositTo';
 export * from '../models/PaymentTerm';
+export * from '../models/Period';
 export * from '../models/PlanBillingData';
+export * from '../models/PlanBillingDataInput';
 export * from '../models/PlanDuration';
 export * from '../models/PlanStatus';
 export * from '../models/ProductCloudProviderSettings';
 export * from '../models/ProductConsumption';
+export * from '../models/ProductExternalIntegration';
 export * from '../models/ProductGroup';
 export * from '../models/ProductGroupCommitment';
 export * from '../models/ProductGroupProductsInner';
@@ -147,19 +179,37 @@ export * from '../models/ProductGroupProductsInnerSchedulingDuration';
 export * from '../models/QueryEventsResponse';
 export * from '../models/QueryEventsResponseEventsInner';
 export * from '../models/RateLimitErrorResponse';
+export * from '../models/RecordInvoicePaymentRequest';
+export * from '../models/RecordInvoicePaymentRequestDepositTo';
+export * from '../models/RecordInvoicePaymentResponse';
+export * from '../models/RecordInvoicePaymentResponseInvoice';
+export * from '../models/RefreshContractCreditsRequest';
+export * from '../models/RefreshContractCreditsRequestGrantsInner';
+export * from '../models/RefreshContractCreditsResponse';
+export * from '../models/ReissueInvoiceResponse';
+export * from '../models/ReissueInvoiceResponseInvoice';
 export * from '../models/RequestTooLongErrorResponse';
 export * from '../models/SendEventsRequest';
 export * from '../models/SendEventsResponse';
 export * from '../models/SubmitCloudUsageRequest';
 export * from '../models/SyncStatus';
+export * from '../models/TerminateContractRequest';
+export * from '../models/TerminateContractResponse';
 export * from '../models/UnauthorizedErrorResponse';
 export * from '../models/UnlimitedDuration';
+export * from '../models/UnprocessableEntityErrorResponse';
 export * from '../models/UpdateCatalogProductRequest';
 export * from '../models/UpdateCatalogProductResponse';
 export * from '../models/UpdateCustomFieldRequest';
 export * from '../models/UpdateCustomFieldResponse';
 export * from '../models/UpdateCustomerRequest';
 export * from '../models/UpdateCustomerResponse';
+export * from '../models/UpdateInvoiceDueDateRequest';
+export * from '../models/UpdateInvoiceDueDateResponse';
+export * from '../models/UpdateInvoiceDueDateResponseInvoice';
+export * from '../models/UpdateInvoiceIssueDateRequest';
+export * from '../models/UpdateInvoiceIssueDateResponse';
+export * from '../models/UpdateInvoiceIssueDateResponseInvoice';
 export * from '../models/UpdateMeterRequest';
 export * from '../models/UpdateMeterResponse';
 export * from '../models/UsageWindow';
@@ -186,35 +236,46 @@ export * from '../models/ValidationErrorResponse';
 export * from '../models/ValidationErrorResponseParamsInner';
 export * from '../models/WebhookSubscribeRequest';
 
+import { AcknowledgedEvent } from '../models/AcknowledgedEvent';
+import { ActionRefusedErrorResponse, ActionRefusedErrorResponseTypeEnum      } from '../models/ActionRefusedErrorResponse';
 import { Address } from '../models/Address';
 import { AggregationMethod    } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
-import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { BillingDate   } from '../models/BillingDate';
+import { BillingDateAnchor } from '../models/BillingDateAnchor';
 import { BillingInterval } from '../models/BillingInterval';
+import { CancelInvoiceResponse } from '../models/CancelInvoiceResponse';
 import { CloudUsageResult, CloudUsageResultStatusEnum              } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
-import { ConflictErrorResponse, ConflictErrorResponseTypeEnum  , ConflictErrorResponseCodeEnum    } from '../models/ConflictErrorResponse';
+import { ConflictErrorResponse, ConflictErrorResponseTypeEnum  , ConflictErrorResponseCodeEnum     } from '../models/ConflictErrorResponse';
 import { Contact } from '../models/Contact';
+import { ContractAttachmentInput } from '../models/ContractAttachmentInput';
 import { ContractStatus } from '../models/ContractStatus';
 import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
 import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResponse';
 import { CreateCatalogProductResponseCatalogProduct } from '../models/CreateCatalogProductResponseCatalogProduct';
-import { CreateContractRequest                   } from '../models/CreateContractRequest';
+import { CreateContractRequest                      } from '../models/CreateContractRequest';
 import { CreateContractResponse } from '../models/CreateContractResponse';
 import { CreateCustomFieldRequest   , CreateCustomFieldRequestIntegrationSourceEnum       } from '../models/CreateCustomFieldRequest';
 import { CreateCustomFieldResponse } from '../models/CreateCustomFieldResponse';
 import { CreateCustomFieldResponseCustomField   , CreateCustomFieldResponseCustomFieldIntegrationSourceEnum          } from '../models/CreateCustomFieldResponseCustomField';
-import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationRequest';
+import { CreateCustomerRelationRequest    } from '../models/CreateCustomerRelationRequest';
 import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
-import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
-import { CreateCustomerRequest            , CreateCustomerRequestDueDaysEnum           } from '../models/CreateCustomerRequest';
+import { CreateCustomerRelationResponseCustomerRelation       } from '../models/CreateCustomerRelationResponseCustomerRelation';
+import { CreateCustomerRequest                , CreateCustomerRequestDueDaysEnum            } from '../models/CreateCustomerRequest';
+import { CreateCustomerRequestCloudProviderSettings, CreateCustomerRequestCloudProviderSettingsCloudProviderEnum     } from '../models/CreateCustomerRequestCloudProviderSettings';
+import { CreateCustomerRequestShippingAddress } from '../models/CreateCustomerRequestShippingAddress';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
-import { CreateCustomerResponseCustomer            , CreateCustomerResponseCustomerDueDaysEnum              } from '../models/CreateCustomerResponseCustomer';
+import { CreateCustomerResponseCustomer                , CreateCustomerResponseCustomerDueDaysEnum               } from '../models/CreateCustomerResponseCustomer';
 import { CreateMeasurementRequest } from '../models/CreateMeasurementRequest';
 import { CreateMeasurementRequestUsageDate } from '../models/CreateMeasurementRequestUsageDate';
 import { CreateMeasurementResponse } from '../models/CreateMeasurementResponse';
 import { CreateMeasurementResponseMeasurement } from '../models/CreateMeasurementResponseMeasurement';
-import { CreditLedgerEntry          } from '../models/CreditLedgerEntry';
+import { CreditLedgerEntry            } from '../models/CreditLedgerEntry';
+import { CreditLedgerEntryType } from '../models/CreditLedgerEntryType';
+import { CreditTopUpRequest } from '../models/CreditTopUpRequest';
+import { CreditTopUpRequestCreditGrant  , CreditTopUpRequestCreditGrantBalanceKindEnum    , CreditTopUpRequestCreditGrantScheduleEnum   , CreditTopUpRequestCreditGrantExpirationPolicyEnum     } from '../models/CreditTopUpRequestCreditGrant';
+import { CreditTopUpResponse } from '../models/CreditTopUpResponse';
 import { Criterion    } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
 import { Currency } from '../models/Currency';
@@ -222,45 +283,55 @@ import { CustomField, CustomFieldIntegrationSourceEnum        } from '../models/
 import { CustomFieldEntities } from '../models/CustomFieldEntities';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
-import { CustomerCloudProviderSettings, CustomerCloudProviderSettingsCloudProviderEnum     } from '../models/CustomerCloudProviderSettings';
+import { CustomerExternalIntegration, CustomerExternalIntegrationTypeEnum     } from '../models/CustomerExternalIntegration';
+import { CustomerRelationType } from '../models/CustomerRelationType';
 import { CustomerSource } from '../models/CustomerSource';
+import { CustomerStatus } from '../models/CustomerStatus';
 import { DeductCreditsRequest } from '../models/DeductCreditsRequest';
 import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResponse';
 import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
 import { DeleteContractResponse } from '../models/DeleteContractResponse';
-import { DeleteContractResponseContract                     } from '../models/DeleteContractResponseContract';
+import { DeleteContractResponseContract                          } from '../models/DeleteContractResponseContract';
 import { DeleteCustomFieldResponse } from '../models/DeleteCustomFieldResponse';
 import { DeleteCustomFieldResponseCustomField   , DeleteCustomFieldResponseCustomFieldIntegrationSourceEnum           } from '../models/DeleteCustomFieldResponseCustomField';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
-import { DeleteCustomerResponseCustomer            , DeleteCustomerResponseCustomerDueDaysEnum               } from '../models/DeleteCustomerResponseCustomer';
+import { DeleteCustomerResponseCustomer                , DeleteCustomerResponseCustomerDueDaysEnum                } from '../models/DeleteCustomerResponseCustomer';
 import { DeleteEventResponse } from '../models/DeleteEventResponse';
 import { DeleteEventResponseEvent } from '../models/DeleteEventResponseEvent';
 import { DeleteEventsByRefsRequest } from '../models/DeleteEventsByRefsRequest';
 import { DeleteEventsByRefsResponse } from '../models/DeleteEventsByRefsResponse';
 import { DeleteEventsByRefsResponseEventsInner } from '../models/DeleteEventsByRefsResponseEventsInner';
+import { DeleteInvoiceResponse } from '../models/DeleteInvoiceResponse';
+import { DeleteInvoiceResponseInvoice                           } from '../models/DeleteInvoiceResponseInvoice';
 import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
 import { DeleteMeterResponseMeter } from '../models/DeleteMeterResponseMeter';
 import { DeletePlanResponse } from '../models/DeletePlanResponse';
-import { DeletePlanResponsePlan        } from '../models/DeletePlanResponsePlan';
+import { DeletePlanResponsePlan         } from '../models/DeletePlanResponsePlan';
 import { Event } from '../models/Event';
 import { EventsDryRunRequest } from '../models/EventsDryRunRequest';
 import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { EventsDryRunResponseObject } from '../models/EventsDryRunResponseObject';
 import { EventsDryRunResponseObjectEvent } from '../models/EventsDryRunResponseObjectEvent';
 import { EventsDryRunResponseObjectMeterWithValuesInner } from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
+import { ExternalCreditGrant  , ExternalCreditGrantBalanceKindEnum    , ExternalCreditGrantScheduleEnum   , ExternalCreditGrantExpirationPolicyEnum     } from '../models/ExternalCreditGrant';
+import { ExternalCreditProduct } from '../models/ExternalCreditProduct';
 import { ExternalOverageStrategy } from '../models/ExternalOverageStrategy';
+import { FailedDependencyErrorResponse, FailedDependencyErrorResponseTypeEnum      } from '../models/FailedDependencyErrorResponse';
 import { Filter } from '../models/Filter';
-import { FullDayPeriod } from '../models/FullDayPeriod';
+import { ForbiddenErrorResponse, ForbiddenErrorResponseTypeEnum      } from '../models/ForbiddenErrorResponse';
+import { GetCatalogProductByIntegrationIdResponse } from '../models/GetCatalogProductByIntegrationIdResponse';
+import { GetCatalogProductByNameResponse } from '../models/GetCatalogProductByNameResponse';
+import { GetCatalogProductByNameResponseCatalogProduct } from '../models/GetCatalogProductByNameResponseCatalogProduct';
 import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
 import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
-import { GetContractResponseContract                    } from '../models/GetContractResponseContract';
+import { GetContractResponseContract                         } from '../models/GetContractResponseContract';
 import { GetCustomFieldResponse } from '../models/GetCustomFieldResponse';
 import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
 import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
-import { GetCustomerByNameResponseCustomer            , GetCustomerByNameResponseCustomerDueDaysEnum              } from '../models/GetCustomerByNameResponseCustomer';
+import { GetCustomerByNameResponseCustomer                , GetCustomerByNameResponseCustomerDueDaysEnum               } from '../models/GetCustomerByNameResponseCustomer';
 import { GetCustomerProductsConsumptionsByAliasResponse } from '../models/GetCustomerProductsConsumptionsByAliasResponse';
 import { GetCustomerProductsConsumptionsResponse } from '../models/GetCustomerProductsConsumptionsResponse';
 import { GetCustomerRelationResponse } from '../models/GetCustomerRelationResponse';
@@ -268,29 +339,37 @@ import { GetCustomerResponse } from '../models/GetCustomerResponse';
 import { GetEventResponse } from '../models/GetEventResponse';
 import { GetEventResponseEvent } from '../models/GetEventResponseEvent';
 import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
-import { GetInvoiceResponseInvoice               } from '../models/GetInvoiceResponseInvoice';
+import { GetInvoiceResponseInvoice                          } from '../models/GetInvoiceResponseInvoice';
 import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
+import { GetMeterByIntegrationIdResponse } from '../models/GetMeterByIntegrationIdResponse';
+import { GetMeterByNameResponse } from '../models/GetMeterByNameResponse';
+import { GetMeterByNameResponseMeter } from '../models/GetMeterByNameResponseMeter';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
 import { GetPlanResponse } from '../models/GetPlanResponse';
-import { GetPlanResponsePlan       } from '../models/GetPlanResponsePlan';
+import { GetPlanResponsePlan        } from '../models/GetPlanResponsePlan';
 import { GetProductConsumptionResponse } from '../models/GetProductConsumptionResponse';
 import { GetProductConsumptionResponseProductConsumption } from '../models/GetProductConsumptionResponseProductConsumption';
 import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
-import { IntegrationEntity       } from '../models/IntegrationEntity';
+import { IntegrationEntity        } from '../models/IntegrationEntity';
 import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
 import { IntegrationProviders } from '../models/IntegrationProviders';
-import { IntegrationType } from '../models/IntegrationType';
-import { InternalServerErrorResponse, InternalServerErrorResponseTypeEnum  , InternalServerErrorResponseCodeEnum    } from '../models/InternalServerErrorResponse';
+import { InternalServerErrorResponse, InternalServerErrorResponseTypeEnum  , InternalServerErrorResponseCodeEnum     } from '../models/InternalServerErrorResponse';
 import { InvalidEvent } from '../models/InvalidEvent';
+import { Invoice                       } from '../models/Invoice';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
+import { InvoiceIntegration, InvoiceIntegrationTypeEnum     } from '../models/InvoiceIntegration';
+import { InvoicePayment } from '../models/InvoicePayment';
 import { InvoicePaymentStatusResponse         } from '../models/InvoicePaymentStatusResponse';
+import { InvoiceReviewStatus } from '../models/InvoiceReviewStatus';
 import { LineItem } from '../models/LineItem';
 import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
+import { LineItemServicePeriod } from '../models/LineItemServicePeriod';
 import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
+import { ListCreditProductsResponse } from '../models/ListCreditProductsResponse';
 import { ListCustomFieldsResponse } from '../models/ListCustomFieldsResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
@@ -300,28 +379,31 @@ import { ListPlansResponse } from '../models/ListPlansResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Meter } from '../models/Meter';
-import { NotFoundErrorResponse, NotFoundErrorResponseTypeEnum  , NotFoundErrorResponseCodeEnum    } from '../models/NotFoundErrorResponse';
+import { NotFoundErrorResponse, NotFoundErrorResponseTypeEnum  , NotFoundErrorResponseCodeEnum     } from '../models/NotFoundErrorResponse';
 import { NotificationEventType } from '../models/NotificationEventType';
 import { PartnerSubmissionDetail , PartnerSubmissionDetailStatusEnum    } from '../models/PartnerSubmissionDetail';
 import { PaymentInfo           } from '../models/PaymentInfo';
-import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
+import { PaymentInfoDepositTo  , PaymentInfoDepositToIntegrationEnum   } from '../models/PaymentInfoDepositTo';
 import { PaymentTerm } from '../models/PaymentTerm';
-import { PlanBillingData      } from '../models/PlanBillingData';
+import { Period } from '../models/Period';
+import { PlanBillingData         } from '../models/PlanBillingData';
+import { PlanBillingDataInput         } from '../models/PlanBillingDataInput';
 import { PlanDuration } from '../models/PlanDuration';
 import { PlanStatus } from '../models/PlanStatus';
 import { ProductCloudProviderSettings, ProductCloudProviderSettingsCloudProviderEnum     } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
+import { ProductExternalIntegration, ProductExternalIntegrationProviderEnum    } from '../models/ProductExternalIntegration';
 import { ProductGroup } from '../models/ProductGroup';
 import { ProductGroupCommitment  , ProductGroupCommitmentTypeEnum     } from '../models/ProductGroupCommitment';
-import { ProductGroupProductsInner             } from '../models/ProductGroupProductsInner';
+import { ProductGroupProductsInner                } from '../models/ProductGroupProductsInner';
 import { ProductGroupProductsInnerCommitment  , ProductGroupProductsInnerCommitmentTypeEnum     } from '../models/ProductGroupProductsInnerCommitment';
 import { ProductGroupProductsInnerCommitmentScheduling } from '../models/ProductGroupProductsInnerCommitmentScheduling';
 import { ProductGroupProductsInnerCommitmentSchedulingDuration, ProductGroupProductsInnerCommitmentSchedulingDurationUnitEnum    } from '../models/ProductGroupProductsInnerCommitmentSchedulingDuration';
 import { ProductGroupProductsInnerPricingClass } from '../models/ProductGroupProductsInnerPricing';
-import { ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOfTypeEnum      } from '../models/ProductGroupProductsInnerPricingOneOf';
-import { ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf1TypeEnum      } from '../models/ProductGroupProductsInnerPricingOneOf1';
+import { ProductGroupProductsInnerPricingOneOf, ProductGroupProductsInnerPricingOneOfTypeEnum       } from '../models/ProductGroupProductsInnerPricingOneOf';
+import { ProductGroupProductsInnerPricingOneOf1, ProductGroupProductsInnerPricingOneOf1TypeEnum       } from '../models/ProductGroupProductsInnerPricingOneOf1';
 import { ProductGroupProductsInnerPricingOneOf1InstallmentsInner } from '../models/ProductGroupProductsInnerPricingOneOf1InstallmentsInner';
-import { ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf2TypeEnum      } from '../models/ProductGroupProductsInnerPricingOneOf2';
+import { ProductGroupProductsInnerPricingOneOf2, ProductGroupProductsInnerPricingOneOf2TypeEnum        } from '../models/ProductGroupProductsInnerPricingOneOf2';
 import { ProductGroupProductsInnerPricingOneOf2SubscriptionCadence, ProductGroupProductsInnerPricingOneOf2SubscriptionCadenceUnitEnum    } from '../models/ProductGroupProductsInnerPricingOneOf2SubscriptionCadence';
 import { ProductGroupProductsInnerPricingOneOf3, ProductGroupProductsInnerPricingOneOf3TypeEnum          } from '../models/ProductGroupProductsInnerPricingOneOf3';
 import { ProductGroupProductsInnerPricingOneOf3SubscriptionCadence, ProductGroupProductsInnerPricingOneOf3SubscriptionCadenceUnitEnum    } from '../models/ProductGroupProductsInnerPricingOneOf3SubscriptionCadence';
@@ -334,20 +416,38 @@ import { ProductGroupProductsInnerScheduling } from '../models/ProductGroupProdu
 import { ProductGroupProductsInnerSchedulingDuration, ProductGroupProductsInnerSchedulingDurationUnitEnum    } from '../models/ProductGroupProductsInnerSchedulingDuration';
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
-import { RateLimitErrorResponse, RateLimitErrorResponseTypeEnum  , RateLimitErrorResponseCodeEnum    } from '../models/RateLimitErrorResponse';
-import { RequestTooLongErrorResponse, RequestTooLongErrorResponseTypeEnum  , RequestTooLongErrorResponseCodeEnum    } from '../models/RequestTooLongErrorResponse';
+import { RateLimitErrorResponse, RateLimitErrorResponseTypeEnum  , RateLimitErrorResponseCodeEnum     } from '../models/RateLimitErrorResponse';
+import { RecordInvoicePaymentRequest } from '../models/RecordInvoicePaymentRequest';
+import { RecordInvoicePaymentRequestDepositTo  , RecordInvoicePaymentRequestDepositToIntegrationEnum   } from '../models/RecordInvoicePaymentRequestDepositTo';
+import { RecordInvoicePaymentResponse } from '../models/RecordInvoicePaymentResponse';
+import { RecordInvoicePaymentResponseInvoice                       } from '../models/RecordInvoicePaymentResponseInvoice';
+import { RefreshContractCreditsRequest } from '../models/RefreshContractCreditsRequest';
+import { RefreshContractCreditsRequestGrantsInner } from '../models/RefreshContractCreditsRequestGrantsInner';
+import { RefreshContractCreditsResponse } from '../models/RefreshContractCreditsResponse';
+import { ReissueInvoiceResponse } from '../models/ReissueInvoiceResponse';
+import { ReissueInvoiceResponseInvoice                       } from '../models/ReissueInvoiceResponseInvoice';
+import { RequestTooLongErrorResponse, RequestTooLongErrorResponseTypeEnum  , RequestTooLongErrorResponseCodeEnum     } from '../models/RequestTooLongErrorResponse';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
 import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
 import { SyncStatus } from '../models/SyncStatus';
-import { UnauthorizedErrorResponse, UnauthorizedErrorResponseTypeEnum  , UnauthorizedErrorResponseCodeEnum    } from '../models/UnauthorizedErrorResponse';
+import { TerminateContractRequest } from '../models/TerminateContractRequest';
+import { TerminateContractResponse } from '../models/TerminateContractResponse';
+import { UnauthorizedErrorResponse, UnauthorizedErrorResponseTypeEnum  , UnauthorizedErrorResponseCodeEnum     } from '../models/UnauthorizedErrorResponse';
 import { UnlimitedDuration } from '../models/UnlimitedDuration';
+import { UnprocessableEntityErrorResponse, UnprocessableEntityErrorResponseTypeEnum      } from '../models/UnprocessableEntityErrorResponse';
 import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
 import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
 import { UpdateCustomFieldRequest   , UpdateCustomFieldRequestIntegrationSourceEnum       } from '../models/UpdateCustomFieldRequest';
 import { UpdateCustomFieldResponse } from '../models/UpdateCustomFieldResponse';
-import { UpdateCustomerRequest            , UpdateCustomerRequestDueDaysEnum           } from '../models/UpdateCustomerRequest';
+import { UpdateCustomerRequest                , UpdateCustomerRequestDueDaysEnum            } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
+import { UpdateInvoiceDueDateRequest } from '../models/UpdateInvoiceDueDateRequest';
+import { UpdateInvoiceDueDateResponse } from '../models/UpdateInvoiceDueDateResponse';
+import { UpdateInvoiceDueDateResponseInvoice                       } from '../models/UpdateInvoiceDueDateResponseInvoice';
+import { UpdateInvoiceIssueDateRequest } from '../models/UpdateInvoiceIssueDateRequest';
+import { UpdateInvoiceIssueDateResponse } from '../models/UpdateInvoiceIssueDateResponse';
+import { UpdateInvoiceIssueDateResponseInvoice                       } from '../models/UpdateInvoiceIssueDateResponseInvoice';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
 import { UsageWindow } from '../models/UsageWindow';
@@ -370,9 +470,9 @@ import { V2QueryEventsAggregationResponseDataPointsInner } from '../models/V2Que
 import { V2QueryEventsResponse } from '../models/V2QueryEventsResponse';
 import { V2SendEventsRequest } from '../models/V2SendEventsRequest';
 import { V2SendEventsResponse } from '../models/V2SendEventsResponse';
-import { ValidationErrorResponse, ValidationErrorResponseTypeEnum       } from '../models/ValidationErrorResponse';
+import { ValidationErrorResponse, ValidationErrorResponseTypeEnum        } from '../models/ValidationErrorResponse';
 import { ValidationErrorResponseParamsInner } from '../models/ValidationErrorResponseParamsInner';
-import { WebhookSubscribeRequest    } from '../models/WebhookSubscribeRequest';
+import { WebhookSubscribeRequest      } from '../models/WebhookSubscribeRequest';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -387,8 +487,9 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "ActionRefusedErrorResponseTypeEnum",
     "AggregationOperator",
-    "BillingCycleStatus",
+    "BillingDateAnchor",
     "BillingInterval",
     "CloudUsageResultStatusEnum",
     "ConflictErrorResponseTypeEnum",
@@ -397,31 +498,46 @@ let enumsMap: Set<string> = new Set<string>([
     "CreateCustomFieldRequestIntegrationSourceEnum",
     "CreateCustomFieldResponseCustomFieldIntegrationSourceEnum",
     "CreateCustomerRequestDueDaysEnum",
+    "CreateCustomerRequestCloudProviderSettingsCloudProviderEnum",
     "CreateCustomerResponseCustomerDueDaysEnum",
+    "CreditLedgerEntryType",
+    "CreditTopUpRequestCreditGrantBalanceKindEnum",
+    "CreditTopUpRequestCreditGrantScheduleEnum",
+    "CreditTopUpRequestCreditGrantExpirationPolicyEnum",
     "CriterionOperator",
     "Currency",
     "CustomFieldIntegrationSourceEnum",
     "CustomFieldEntities",
     "CustomFieldValueTypes",
-    "CustomerCloudProviderSettingsCloudProviderEnum",
+    "CustomerExternalIntegrationTypeEnum",
+    "CustomerRelationType",
     "CustomerSource",
+    "CustomerStatus",
     "DeleteCustomFieldResponseCustomFieldIntegrationSourceEnum",
     "DeleteCustomerResponseCustomerDueDaysEnum",
+    "ExternalCreditGrantBalanceKindEnum",
+    "ExternalCreditGrantScheduleEnum",
+    "ExternalCreditGrantExpirationPolicyEnum",
     "ExternalOverageStrategy",
+    "FailedDependencyErrorResponseTypeEnum",
+    "ForbiddenErrorResponseTypeEnum",
     "GetCustomerByNameResponseCustomerDueDaysEnum",
     "IntegrationEntityTypes",
     "IntegrationProviders",
-    "IntegrationType",
     "InternalServerErrorResponseTypeEnum",
     "InternalServerErrorResponseCodeEnum",
     "InvoiceBillingStatus",
+    "InvoiceIntegrationTypeEnum",
+    "InvoiceReviewStatus",
     "NotFoundErrorResponseTypeEnum",
     "NotFoundErrorResponseCodeEnum",
     "NotificationEventType",
     "PartnerSubmissionDetailStatusEnum",
+    "PaymentInfoDepositToIntegrationEnum",
     "PaymentTerm",
     "PlanStatus",
     "ProductCloudProviderSettingsCloudProviderEnum",
+    "ProductExternalIntegrationProviderEnum",
     "ProductGroupCommitmentTypeEnum",
     "ProductGroupProductsInnerCommitmentTypeEnum",
     "ProductGroupProductsInnerCommitmentSchedulingDurationUnitEnum",
@@ -439,12 +555,14 @@ let enumsMap: Set<string> = new Set<string>([
     "ProductGroupProductsInnerSchedulingDurationUnitEnum",
     "RateLimitErrorResponseTypeEnum",
     "RateLimitErrorResponseCodeEnum",
+    "RecordInvoicePaymentRequestDepositToIntegrationEnum",
     "RequestTooLongErrorResponseTypeEnum",
     "RequestTooLongErrorResponseCodeEnum",
     "SyncStatus",
     "UnauthorizedErrorResponseTypeEnum",
     "UnauthorizedErrorResponseCodeEnum",
     "UnlimitedDuration",
+    "UnprocessableEntityErrorResponseTypeEnum",
     "UpdateCustomFieldRequestIntegrationSourceEnum",
     "UpdateCustomerRequestDueDaysEnum",
     "V2QueryEventsAggregationRequestGroupByEnum",
@@ -455,12 +573,17 @@ let enumsMap: Set<string> = new Set<string>([
 ]);
 
 let typeMap: {[index: string]: any} = {
+    "AcknowledgedEvent": AcknowledgedEvent,
+    "ActionRefusedErrorResponse": ActionRefusedErrorResponse,
     "Address": Address,
     "AggregationMethod": AggregationMethod,
+    "BillingDate": BillingDate,
+    "CancelInvoiceResponse": CancelInvoiceResponse,
     "CloudUsageResult": CloudUsageResult,
     "Condition": Condition,
     "ConflictErrorResponse": ConflictErrorResponse,
     "Contact": Contact,
+    "ContractAttachmentInput": ContractAttachmentInput,
     "CreateCatalogProductRequest": CreateCatalogProductRequest,
     "CreateCatalogProductResponse": CreateCatalogProductResponse,
     "CreateCatalogProductResponseCatalogProduct": CreateCatalogProductResponseCatalogProduct,
@@ -473,6 +596,8 @@ let typeMap: {[index: string]: any} = {
     "CreateCustomerRelationResponse": CreateCustomerRelationResponse,
     "CreateCustomerRelationResponseCustomerRelation": CreateCustomerRelationResponseCustomerRelation,
     "CreateCustomerRequest": CreateCustomerRequest,
+    "CreateCustomerRequestCloudProviderSettings": CreateCustomerRequestCloudProviderSettings,
+    "CreateCustomerRequestShippingAddress": CreateCustomerRequestShippingAddress,
     "CreateCustomerResponse": CreateCustomerResponse,
     "CreateCustomerResponseCustomer": CreateCustomerResponseCustomer,
     "CreateMeasurementRequest": CreateMeasurementRequest,
@@ -480,10 +605,13 @@ let typeMap: {[index: string]: any} = {
     "CreateMeasurementResponse": CreateMeasurementResponse,
     "CreateMeasurementResponseMeasurement": CreateMeasurementResponseMeasurement,
     "CreditLedgerEntry": CreditLedgerEntry,
+    "CreditTopUpRequest": CreditTopUpRequest,
+    "CreditTopUpRequestCreditGrant": CreditTopUpRequestCreditGrant,
+    "CreditTopUpResponse": CreditTopUpResponse,
     "Criterion": Criterion,
     "CustomField": CustomField,
     "CustomFieldValue": CustomFieldValue,
-    "CustomerCloudProviderSettings": CustomerCloudProviderSettings,
+    "CustomerExternalIntegration": CustomerExternalIntegration,
     "DeductCreditsRequest": DeductCreditsRequest,
     "DeleteCatalogProductResponse": DeleteCatalogProductResponse,
     "DeleteCatalogProductResponseCatalogProduct": DeleteCatalogProductResponseCatalogProduct,
@@ -498,6 +626,8 @@ let typeMap: {[index: string]: any} = {
     "DeleteEventsByRefsRequest": DeleteEventsByRefsRequest,
     "DeleteEventsByRefsResponse": DeleteEventsByRefsResponse,
     "DeleteEventsByRefsResponseEventsInner": DeleteEventsByRefsResponseEventsInner,
+    "DeleteInvoiceResponse": DeleteInvoiceResponse,
+    "DeleteInvoiceResponseInvoice": DeleteInvoiceResponseInvoice,
     "DeleteMeasurementResponse": DeleteMeasurementResponse,
     "DeleteMeasurementResponseMeasurement": DeleteMeasurementResponseMeasurement,
     "DeleteMeterResponse": DeleteMeterResponse,
@@ -510,8 +640,14 @@ let typeMap: {[index: string]: any} = {
     "EventsDryRunResponseObject": EventsDryRunResponseObject,
     "EventsDryRunResponseObjectEvent": EventsDryRunResponseObjectEvent,
     "EventsDryRunResponseObjectMeterWithValuesInner": EventsDryRunResponseObjectMeterWithValuesInner,
+    "ExternalCreditGrant": ExternalCreditGrant,
+    "ExternalCreditProduct": ExternalCreditProduct,
+    "FailedDependencyErrorResponse": FailedDependencyErrorResponse,
     "Filter": Filter,
-    "FullDayPeriod": FullDayPeriod,
+    "ForbiddenErrorResponse": ForbiddenErrorResponse,
+    "GetCatalogProductByIntegrationIdResponse": GetCatalogProductByIntegrationIdResponse,
+    "GetCatalogProductByNameResponse": GetCatalogProductByNameResponse,
+    "GetCatalogProductByNameResponseCatalogProduct": GetCatalogProductByNameResponseCatalogProduct,
     "GetCatalogProductResponse": GetCatalogProductResponse,
     "GetContractByIntegrationIdResponse": GetContractByIntegrationIdResponse,
     "GetContractResponse": GetContractResponse,
@@ -530,6 +666,9 @@ let typeMap: {[index: string]: any} = {
     "GetInvoiceResponseInvoice": GetInvoiceResponseInvoice,
     "GetInvoiceResponseInvoiceRevenueBreakdown": GetInvoiceResponseInvoiceRevenueBreakdown,
     "GetMeasurementResponse": GetMeasurementResponse,
+    "GetMeterByIntegrationIdResponse": GetMeterByIntegrationIdResponse,
+    "GetMeterByNameResponse": GetMeterByNameResponse,
+    "GetMeterByNameResponseMeter": GetMeterByNameResponseMeter,
     "GetMeterResponse": GetMeterResponse,
     "GetMeterResponseMeter": GetMeterResponseMeter,
     "GetPlanResponse": GetPlanResponse,
@@ -540,12 +679,17 @@ let typeMap: {[index: string]: any} = {
     "IntegrationEntity": IntegrationEntity,
     "InternalServerErrorResponse": InternalServerErrorResponse,
     "InvalidEvent": InvalidEvent,
+    "Invoice": Invoice,
+    "InvoiceIntegration": InvoiceIntegration,
+    "InvoicePayment": InvoicePayment,
     "InvoicePaymentStatusResponse": InvoicePaymentStatusResponse,
     "LineItem": LineItem,
     "LineItemRevenueBreakdown": LineItemRevenueBreakdown,
+    "LineItemServicePeriod": LineItemServicePeriod,
     "ListCatalogProductsResponse": ListCatalogProductsResponse,
     "ListContractsResponse": ListContractsResponse,
     "ListCreditLedgerEntriesResponse": ListCreditLedgerEntriesResponse,
+    "ListCreditProductsResponse": ListCreditProductsResponse,
     "ListCustomFieldsResponse": ListCustomFieldsResponse,
     "ListCustomersResponse": ListCustomersResponse,
     "ListInvoicesResponse": ListInvoicesResponse,
@@ -559,10 +703,13 @@ let typeMap: {[index: string]: any} = {
     "PartnerSubmissionDetail": PartnerSubmissionDetail,
     "PaymentInfo": PaymentInfo,
     "PaymentInfoDepositTo": PaymentInfoDepositTo,
+    "Period": Period,
     "PlanBillingData": PlanBillingData,
+    "PlanBillingDataInput": PlanBillingDataInput,
     "PlanDuration": PlanDuration,
     "ProductCloudProviderSettings": ProductCloudProviderSettings,
     "ProductConsumption": ProductConsumption,
+    "ProductExternalIntegration": ProductExternalIntegration,
     "ProductGroup": ProductGroup,
     "ProductGroupCommitment": ProductGroupCommitment,
     "ProductGroupProductsInner": ProductGroupProductsInner,
@@ -587,17 +734,35 @@ let typeMap: {[index: string]: any} = {
     "QueryEventsResponse": QueryEventsResponse,
     "QueryEventsResponseEventsInner": QueryEventsResponseEventsInner,
     "RateLimitErrorResponse": RateLimitErrorResponse,
+    "RecordInvoicePaymentRequest": RecordInvoicePaymentRequest,
+    "RecordInvoicePaymentRequestDepositTo": RecordInvoicePaymentRequestDepositTo,
+    "RecordInvoicePaymentResponse": RecordInvoicePaymentResponse,
+    "RecordInvoicePaymentResponseInvoice": RecordInvoicePaymentResponseInvoice,
+    "RefreshContractCreditsRequest": RefreshContractCreditsRequest,
+    "RefreshContractCreditsRequestGrantsInner": RefreshContractCreditsRequestGrantsInner,
+    "RefreshContractCreditsResponse": RefreshContractCreditsResponse,
+    "ReissueInvoiceResponse": ReissueInvoiceResponse,
+    "ReissueInvoiceResponseInvoice": ReissueInvoiceResponseInvoice,
     "RequestTooLongErrorResponse": RequestTooLongErrorResponse,
     "SendEventsRequest": SendEventsRequest,
     "SendEventsResponse": SendEventsResponse,
     "SubmitCloudUsageRequest": SubmitCloudUsageRequest,
+    "TerminateContractRequest": TerminateContractRequest,
+    "TerminateContractResponse": TerminateContractResponse,
     "UnauthorizedErrorResponse": UnauthorizedErrorResponse,
+    "UnprocessableEntityErrorResponse": UnprocessableEntityErrorResponse,
     "UpdateCatalogProductRequest": UpdateCatalogProductRequest,
     "UpdateCatalogProductResponse": UpdateCatalogProductResponse,
     "UpdateCustomFieldRequest": UpdateCustomFieldRequest,
     "UpdateCustomFieldResponse": UpdateCustomFieldResponse,
     "UpdateCustomerRequest": UpdateCustomerRequest,
     "UpdateCustomerResponse": UpdateCustomerResponse,
+    "UpdateInvoiceDueDateRequest": UpdateInvoiceDueDateRequest,
+    "UpdateInvoiceDueDateResponse": UpdateInvoiceDueDateResponse,
+    "UpdateInvoiceDueDateResponseInvoice": UpdateInvoiceDueDateResponseInvoice,
+    "UpdateInvoiceIssueDateRequest": UpdateInvoiceIssueDateRequest,
+    "UpdateInvoiceIssueDateResponse": UpdateInvoiceIssueDateResponse,
+    "UpdateInvoiceIssueDateResponseInvoice": UpdateInvoiceIssueDateResponseInvoice,
     "UpdateMeterRequest": UpdateMeterRequest,
     "UpdateMeterResponse": UpdateMeterResponse,
     "UsageWindow": UsageWindow,

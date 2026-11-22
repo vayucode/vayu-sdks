@@ -26,6 +26,8 @@ type ValidationErrorResponse struct {
 	Code string `json:"code"`
 	// Human-readable error explanation
 	Message string `json:"message"`
+	// Scope the token was missing, present on insufficient_scope errors
+	RequiredScope *string `json:"requiredScope,omitempty"`
 	// Single parameter that failed validation
 	Param *string `json:"param,omitempty"`
 	// Multiple parameters that failed validation
@@ -127,6 +129,38 @@ func (o *ValidationErrorResponse) SetMessage(v string) {
 	o.Message = v
 }
 
+// GetRequiredScope returns the RequiredScope field value if set, zero value otherwise.
+func (o *ValidationErrorResponse) GetRequiredScope() string {
+	if o == nil || IsNil(o.RequiredScope) {
+		var ret string
+		return ret
+	}
+	return *o.RequiredScope
+}
+
+// GetRequiredScopeOk returns a tuple with the RequiredScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationErrorResponse) GetRequiredScopeOk() (*string, bool) {
+	if o == nil || IsNil(o.RequiredScope) {
+		return nil, false
+	}
+	return o.RequiredScope, true
+}
+
+// HasRequiredScope returns a boolean if a field has been set.
+func (o *ValidationErrorResponse) HasRequiredScope() bool {
+	if o != nil && !IsNil(o.RequiredScope) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequiredScope gets a reference to the given string and assigns it to the RequiredScope field.
+func (o *ValidationErrorResponse) SetRequiredScope(v string) {
+	o.RequiredScope = &v
+}
+
 // GetParam returns the Param field value if set, zero value otherwise.
 func (o *ValidationErrorResponse) GetParam() string {
 	if o == nil || IsNil(o.Param) {
@@ -204,6 +238,9 @@ func (o ValidationErrorResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	toSerialize["code"] = o.Code
 	toSerialize["message"] = o.Message
+	if !IsNil(o.RequiredScope) {
+		toSerialize["requiredScope"] = o.RequiredScope
+	}
 	if !IsNil(o.Param) {
 		toSerialize["param"] = o.Param
 	}
@@ -258,6 +295,7 @@ func (o *ValidationErrorResponse) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "code")
 		delete(additionalProperties, "message")
+		delete(additionalProperties, "requiredScope")
 		delete(additionalProperties, "param")
 		delete(additionalProperties, "params")
 		o.AdditionalProperties = additionalProperties

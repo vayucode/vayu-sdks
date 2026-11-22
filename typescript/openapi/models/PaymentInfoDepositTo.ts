@@ -15,6 +15,7 @@ import { HttpFile } from '../http/http';
 export class PaymentInfoDepositTo {
     'id'?: string;
     'name': string;
+    'integration'?: PaymentInfoDepositToIntegrationEnum;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -32,6 +33,12 @@ export class PaymentInfoDepositTo {
             "baseName": "name",
             "type": "string",
             "format": ""
+        },
+        {
+            "name": "integration",
+            "baseName": "integration",
+            "type": "PaymentInfoDepositToIntegrationEnum",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
@@ -41,3 +48,11 @@ export class PaymentInfoDepositTo {
     public constructor() {
     }
 }
+
+export enum PaymentInfoDepositToIntegrationEnum {
+    NetSuite = 'NetSuite',
+    QuickBooks = 'QuickBooks',
+    Morning = 'Morning',
+    Xero = 'Xero'
+}
+

@@ -66,6 +66,30 @@ export class WebhooksClient {
     });
   }
 
+  subscribeToInvoicePastDue(callbackUrl: string, days: number[]) {
+    return this.subscribe({
+      callbackUrl,
+      eventType: NotificationEventType.InvoicePastDue,
+      days,
+    });
+  }
+
+  subscribeToInvoiceIssueDateApproaching(callbackUrl: string, days: number[]) {
+    return this.subscribe({
+      callbackUrl,
+      eventType: NotificationEventType.InvoiceIssueDateApproaching,
+      days,
+    });
+  }
+
+  subscribeToContractExpirationApproaching(callbackUrl: string, days: number[]) {
+    return this.subscribe({
+      callbackUrl,
+      eventType: NotificationEventType.ContractExpirationApproaching,
+      days,
+    });
+  }
+
   private async subscribe(payload: WebhookSubscribeRequest) {
     return this.client.webhookSubscribe(payload);
   }

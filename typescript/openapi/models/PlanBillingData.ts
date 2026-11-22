@@ -10,20 +10,27 @@
  * Do not edit the class manually.
  */
 
+import { BillingDate } from '../models/BillingDate';
 import { BillingInterval } from '../models/BillingInterval';
 import { PaymentTerm } from '../models/PaymentTerm';
 import { PlanDuration } from '../models/PlanDuration';
 import { HttpFile } from '../http/http';
 
-/**
-* The billing data of the plan. The billing data contains the billing interval, the plan duration the payment terms and auto renewal, and the billing method.
-*/
 export class PlanBillingData {
     'billingInterval': BillingInterval;
     'duration': PlanDuration;
     'paymentTerm': PaymentTerm;
     'autoRenewal': boolean;
     'proRated'?: boolean | null;
+    'billingDate'?: BillingDate | null;
+    /**
+    * months each automatic renewal runs for; the term before it when not stated
+    */
+    'renewalDuration'?: number | null;
+    /**
+    * how many times the contract renews automatically; no limit when not stated
+    */
+    'renewsUpToNTimes'?: number | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -58,6 +65,24 @@ export class PlanBillingData {
             "name": "proRated",
             "baseName": "proRated",
             "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "billingDate",
+            "baseName": "billingDate",
+            "type": "BillingDate",
+            "format": ""
+        },
+        {
+            "name": "renewalDuration",
+            "baseName": "renewalDuration",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "renewsUpToNTimes",
+            "baseName": "renewsUpToNTimes",
+            "type": "number",
             "format": ""
         }    ];
 

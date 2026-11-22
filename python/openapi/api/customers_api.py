@@ -24,6 +24,7 @@ from openapi.models.create_customer_relation_request import CreateCustomerRelati
 from openapi.models.create_customer_relation_response import CreateCustomerRelationResponse
 from openapi.models.create_customer_request import CreateCustomerRequest
 from openapi.models.create_customer_response import CreateCustomerResponse
+from openapi.models.customer_status import CustomerStatus
 from openapi.models.delete_customer_response import DeleteCustomerResponse
 from openapi.models.get_customer_by_integration_id_response import GetCustomerByIntegrationIdResponse
 from openapi.models.get_customer_by_name_response import GetCustomerByNameResponse
@@ -31,7 +32,7 @@ from openapi.models.get_customer_products_consumptions_by_alias_response import 
 from openapi.models.get_customer_products_consumptions_response import GetCustomerProductsConsumptionsResponse
 from openapi.models.get_customer_relation_response import GetCustomerRelationResponse
 from openapi.models.get_customer_response import GetCustomerResponse
-from openapi.models.integration_type import IntegrationType
+from openapi.models.integration_providers import IntegrationProviders
 from openapi.models.list_customers_response import ListCustomersResponse
 from openapi.models.update_customer_request import UpdateCustomerRequest
 from openapi.models.update_customer_response import UpdateCustomerResponse
@@ -1457,7 +1458,7 @@ class CustomersApi:
     @validate_call
     def get_customer_by_integration_id(
         self,
-        integration_type: IntegrationType,
+        integration_type: IntegrationProviders,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1477,7 +1478,7 @@ class CustomersApi:
         Use this endpoint to get a specific customer using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationType
+        :type integration_type: IntegrationProviders
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1533,7 +1534,7 @@ class CustomersApi:
     @validate_call
     def get_customer_by_integration_id_with_http_info(
         self,
-        integration_type: IntegrationType,
+        integration_type: IntegrationProviders,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1553,7 +1554,7 @@ class CustomersApi:
         Use this endpoint to get a specific customer using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationType
+        :type integration_type: IntegrationProviders
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1609,7 +1610,7 @@ class CustomersApi:
     @validate_call
     def get_customer_by_integration_id_without_preload_content(
         self,
-        integration_type: IntegrationType,
+        integration_type: IntegrationProviders,
         integration_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1629,7 +1630,7 @@ class CustomersApi:
         Use this endpoint to get a specific customer using its integration provider and identifier.
 
         :param integration_type: (required)
-        :type integration_type: IntegrationType
+        :type integration_type: IntegrationProviders
         :param integration_id: (required)
         :type integration_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2852,6 +2853,7 @@ class CustomersApi:
     @validate_call
     def list_customers(
         self,
+        status: Optional[CustomerStatus] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2871,6 +2873,8 @@ class CustomersApi:
 
         Get a list of Customers.
 
+        :param status:
+        :type status: CustomerStatus
         :param limit:
         :type limit: float
         :param cursor:
@@ -2898,6 +2902,7 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._list_customers_serialize(
+            status=status,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -2927,6 +2932,7 @@ class CustomersApi:
     @validate_call
     def list_customers_with_http_info(
         self,
+        status: Optional[CustomerStatus] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2946,6 +2952,8 @@ class CustomersApi:
 
         Get a list of Customers.
 
+        :param status:
+        :type status: CustomerStatus
         :param limit:
         :type limit: float
         :param cursor:
@@ -2973,6 +2981,7 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._list_customers_serialize(
+            status=status,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -3002,6 +3011,7 @@ class CustomersApi:
     @validate_call
     def list_customers_without_preload_content(
         self,
+        status: Optional[CustomerStatus] = None,
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -3021,6 +3031,8 @@ class CustomersApi:
 
         Get a list of Customers.
 
+        :param status:
+        :type status: CustomerStatus
         :param limit:
         :type limit: float
         :param cursor:
@@ -3048,6 +3060,7 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._list_customers_serialize(
+            status=status,
             limit=limit,
             cursor=cursor,
             _request_auth=_request_auth,
@@ -3072,6 +3085,7 @@ class CustomersApi:
 
     def _list_customers_serialize(
         self,
+        status,
         limit,
         cursor,
         _request_auth,
@@ -3096,6 +3110,10 @@ class CustomersApi:
 
         # process the path parameters
         # process the query parameters
+        if status is not None:
+            
+            _query_params.append(('status', status.value))
+            
         if limit is not None:
             
             _query_params.append(('limit', limit))

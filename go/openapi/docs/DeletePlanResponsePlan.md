@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The name of the plan | 
 **Status** | [**PlanStatus**](PlanStatus.md) |  | 
-**BillingData** | [**PlanBillingData**](PlanBillingData.md) |  | 
+**BillingData** | [**PlanBillingDataInput**](PlanBillingDataInput.md) |  | 
 **ExternalId** | Pointer to **NullableString** | A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints. | [optional] 
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewDeletePlanResponsePlan
 
-`func NewDeletePlanResponsePlan(name string, status PlanStatus, billingData PlanBillingData, id string, createdAt time.Time, updatedAt time.Time, deletedAt string, ) *DeletePlanResponsePlan`
+`func NewDeletePlanResponsePlan(name string, status PlanStatus, billingData PlanBillingDataInput, id string, createdAt time.Time, updatedAt time.Time, deletedAt string, ) *DeletePlanResponsePlan`
 
 NewDeletePlanResponsePlan instantiates a new DeletePlanResponsePlan object
 This constructor will assign default values to properties that have it defined,
@@ -74,20 +74,20 @@ SetStatus sets Status field to given value.
 
 ### GetBillingData
 
-`func (o *DeletePlanResponsePlan) GetBillingData() PlanBillingData`
+`func (o *DeletePlanResponsePlan) GetBillingData() PlanBillingDataInput`
 
 GetBillingData returns the BillingData field if non-nil, zero value otherwise.
 
 ### GetBillingDataOk
 
-`func (o *DeletePlanResponsePlan) GetBillingDataOk() (*PlanBillingData, bool)`
+`func (o *DeletePlanResponsePlan) GetBillingDataOk() (*PlanBillingDataInput, bool)`
 
 GetBillingDataOk returns a tuple with the BillingData field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBillingData
 
-`func (o *DeletePlanResponsePlan) SetBillingData(v PlanBillingData)`
+`func (o *DeletePlanResponsePlan) SetBillingData(v PlanBillingDataInput)`
 
 SetBillingData sets BillingData field to given value.
 

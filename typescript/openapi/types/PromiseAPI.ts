@@ -1,15 +1,20 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
+import { AcknowledgedEvent } from '../models/AcknowledgedEvent';
+import { ActionRefusedErrorResponse } from '../models/ActionRefusedErrorResponse';
 import { Address } from '../models/Address';
 import { AggregationMethod } from '../models/AggregationMethod';
 import { AggregationOperator } from '../models/AggregationOperator';
-import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { BillingDate } from '../models/BillingDate';
+import { BillingDateAnchor } from '../models/BillingDateAnchor';
 import { BillingInterval } from '../models/BillingInterval';
+import { CancelInvoiceResponse } from '../models/CancelInvoiceResponse';
 import { CloudUsageResult } from '../models/CloudUsageResult';
 import { Condition } from '../models/Condition';
 import { ConflictErrorResponse } from '../models/ConflictErrorResponse';
 import { Contact } from '../models/Contact';
+import { ContractAttachmentInput } from '../models/ContractAttachmentInput';
 import { ContractStatus } from '../models/ContractStatus';
 import { CreateCatalogProductRequest } from '../models/CreateCatalogProductRequest';
 import { CreateCatalogProductResponse } from '../models/CreateCatalogProductResponse';
@@ -23,6 +28,8 @@ import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationR
 import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
 import { CreateCustomerRelationResponseCustomerRelation } from '../models/CreateCustomerRelationResponseCustomerRelation';
 import { CreateCustomerRequest } from '../models/CreateCustomerRequest';
+import { CreateCustomerRequestCloudProviderSettings } from '../models/CreateCustomerRequestCloudProviderSettings';
+import { CreateCustomerRequestShippingAddress } from '../models/CreateCustomerRequestShippingAddress';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
 import { CreateCustomerResponseCustomer } from '../models/CreateCustomerResponseCustomer';
 import { CreateMeasurementRequest } from '../models/CreateMeasurementRequest';
@@ -30,6 +37,10 @@ import { CreateMeasurementRequestUsageDate } from '../models/CreateMeasurementRe
 import { CreateMeasurementResponse } from '../models/CreateMeasurementResponse';
 import { CreateMeasurementResponseMeasurement } from '../models/CreateMeasurementResponseMeasurement';
 import { CreditLedgerEntry } from '../models/CreditLedgerEntry';
+import { CreditLedgerEntryType } from '../models/CreditLedgerEntryType';
+import { CreditTopUpRequest } from '../models/CreditTopUpRequest';
+import { CreditTopUpRequestCreditGrant } from '../models/CreditTopUpRequestCreditGrant';
+import { CreditTopUpResponse } from '../models/CreditTopUpResponse';
 import { Criterion } from '../models/Criterion';
 import { CriterionOperator } from '../models/CriterionOperator';
 import { Currency } from '../models/Currency';
@@ -37,8 +48,10 @@ import { CustomField } from '../models/CustomField';
 import { CustomFieldEntities } from '../models/CustomFieldEntities';
 import { CustomFieldValue } from '../models/CustomFieldValue';
 import { CustomFieldValueTypes } from '../models/CustomFieldValueTypes';
-import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomerExternalIntegration } from '../models/CustomerExternalIntegration';
+import { CustomerRelationType } from '../models/CustomerRelationType';
 import { CustomerSource } from '../models/CustomerSource';
+import { CustomerStatus } from '../models/CustomerStatus';
 import { DeductCreditsRequest } from '../models/DeductCreditsRequest';
 import { DeleteCatalogProductResponse } from '../models/DeleteCatalogProductResponse';
 import { DeleteCatalogProductResponseCatalogProduct } from '../models/DeleteCatalogProductResponseCatalogProduct';
@@ -53,6 +66,8 @@ import { DeleteEventResponseEvent } from '../models/DeleteEventResponseEvent';
 import { DeleteEventsByRefsRequest } from '../models/DeleteEventsByRefsRequest';
 import { DeleteEventsByRefsResponse } from '../models/DeleteEventsByRefsResponse';
 import { DeleteEventsByRefsResponseEventsInner } from '../models/DeleteEventsByRefsResponseEventsInner';
+import { DeleteInvoiceResponse } from '../models/DeleteInvoiceResponse';
+import { DeleteInvoiceResponseInvoice } from '../models/DeleteInvoiceResponseInvoice';
 import { DeleteMeasurementResponse } from '../models/DeleteMeasurementResponse';
 import { DeleteMeasurementResponseMeasurement } from '../models/DeleteMeasurementResponseMeasurement';
 import { DeleteMeterResponse } from '../models/DeleteMeterResponse';
@@ -65,9 +80,15 @@ import { EventsDryRunResponse } from '../models/EventsDryRunResponse';
 import { EventsDryRunResponseObject } from '../models/EventsDryRunResponseObject';
 import { EventsDryRunResponseObjectEvent } from '../models/EventsDryRunResponseObjectEvent';
 import { EventsDryRunResponseObjectMeterWithValuesInner } from '../models/EventsDryRunResponseObjectMeterWithValuesInner';
+import { ExternalCreditGrant } from '../models/ExternalCreditGrant';
+import { ExternalCreditProduct } from '../models/ExternalCreditProduct';
 import { ExternalOverageStrategy } from '../models/ExternalOverageStrategy';
+import { FailedDependencyErrorResponse } from '../models/FailedDependencyErrorResponse';
 import { Filter } from '../models/Filter';
-import { FullDayPeriod } from '../models/FullDayPeriod';
+import { ForbiddenErrorResponse } from '../models/ForbiddenErrorResponse';
+import { GetCatalogProductByIntegrationIdResponse } from '../models/GetCatalogProductByIntegrationIdResponse';
+import { GetCatalogProductByNameResponse } from '../models/GetCatalogProductByNameResponse';
+import { GetCatalogProductByNameResponseCatalogProduct } from '../models/GetCatalogProductByNameResponseCatalogProduct';
 import { GetCatalogProductResponse } from '../models/GetCatalogProductResponse';
 import { GetContractByIntegrationIdResponse } from '../models/GetContractByIntegrationIdResponse';
 import { GetContractResponse } from '../models/GetContractResponse';
@@ -86,6 +107,9 @@ import { GetInvoiceResponse } from '../models/GetInvoiceResponse';
 import { GetInvoiceResponseInvoice } from '../models/GetInvoiceResponseInvoice';
 import { GetInvoiceResponseInvoiceRevenueBreakdown } from '../models/GetInvoiceResponseInvoiceRevenueBreakdown';
 import { GetMeasurementResponse } from '../models/GetMeasurementResponse';
+import { GetMeterByIntegrationIdResponse } from '../models/GetMeterByIntegrationIdResponse';
+import { GetMeterByNameResponse } from '../models/GetMeterByNameResponse';
+import { GetMeterByNameResponseMeter } from '../models/GetMeterByNameResponseMeter';
 import { GetMeterResponse } from '../models/GetMeterResponse';
 import { GetMeterResponseMeter } from '../models/GetMeterResponseMeter';
 import { GetPlanResponse } from '../models/GetPlanResponse';
@@ -96,16 +120,21 @@ import { GrantCreditsRequest } from '../models/GrantCreditsRequest';
 import { IntegrationEntity } from '../models/IntegrationEntity';
 import { IntegrationEntityTypes } from '../models/IntegrationEntityTypes';
 import { IntegrationProviders } from '../models/IntegrationProviders';
-import { IntegrationType } from '../models/IntegrationType';
 import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { InvalidEvent } from '../models/InvalidEvent';
+import { Invoice } from '../models/Invoice';
 import { InvoiceBillingStatus } from '../models/InvoiceBillingStatus';
+import { InvoiceIntegration } from '../models/InvoiceIntegration';
+import { InvoicePayment } from '../models/InvoicePayment';
 import { InvoicePaymentStatusResponse } from '../models/InvoicePaymentStatusResponse';
+import { InvoiceReviewStatus } from '../models/InvoiceReviewStatus';
 import { LineItem } from '../models/LineItem';
 import { LineItemRevenueBreakdown } from '../models/LineItemRevenueBreakdown';
+import { LineItemServicePeriod } from '../models/LineItemServicePeriod';
 import { ListCatalogProductsResponse } from '../models/ListCatalogProductsResponse';
 import { ListContractsResponse } from '../models/ListContractsResponse';
 import { ListCreditLedgerEntriesResponse } from '../models/ListCreditLedgerEntriesResponse';
+import { ListCreditProductsResponse } from '../models/ListCreditProductsResponse';
 import { ListCustomFieldsResponse } from '../models/ListCustomFieldsResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { ListInvoicesResponse } from '../models/ListInvoicesResponse';
@@ -121,11 +150,14 @@ import { PartnerSubmissionDetail } from '../models/PartnerSubmissionDetail';
 import { PaymentInfo } from '../models/PaymentInfo';
 import { PaymentInfoDepositTo } from '../models/PaymentInfoDepositTo';
 import { PaymentTerm } from '../models/PaymentTerm';
+import { Period } from '../models/Period';
 import { PlanBillingData } from '../models/PlanBillingData';
+import { PlanBillingDataInput } from '../models/PlanBillingDataInput';
 import { PlanDuration } from '../models/PlanDuration';
 import { PlanStatus } from '../models/PlanStatus';
 import { ProductCloudProviderSettings } from '../models/ProductCloudProviderSettings';
 import { ProductConsumption } from '../models/ProductConsumption';
+import { ProductExternalIntegration } from '../models/ProductExternalIntegration';
 import { ProductGroup } from '../models/ProductGroup';
 import { ProductGroupCommitment } from '../models/ProductGroupCommitment';
 import { ProductGroupProductsInner } from '../models/ProductGroupProductsInner';
@@ -150,19 +182,37 @@ import { ProductGroupProductsInnerSchedulingDuration } from '../models/ProductGr
 import { QueryEventsResponse } from '../models/QueryEventsResponse';
 import { QueryEventsResponseEventsInner } from '../models/QueryEventsResponseEventsInner';
 import { RateLimitErrorResponse } from '../models/RateLimitErrorResponse';
+import { RecordInvoicePaymentRequest } from '../models/RecordInvoicePaymentRequest';
+import { RecordInvoicePaymentRequestDepositTo } from '../models/RecordInvoicePaymentRequestDepositTo';
+import { RecordInvoicePaymentResponse } from '../models/RecordInvoicePaymentResponse';
+import { RecordInvoicePaymentResponseInvoice } from '../models/RecordInvoicePaymentResponseInvoice';
+import { RefreshContractCreditsRequest } from '../models/RefreshContractCreditsRequest';
+import { RefreshContractCreditsRequestGrantsInner } from '../models/RefreshContractCreditsRequestGrantsInner';
+import { RefreshContractCreditsResponse } from '../models/RefreshContractCreditsResponse';
+import { ReissueInvoiceResponse } from '../models/ReissueInvoiceResponse';
+import { ReissueInvoiceResponseInvoice } from '../models/ReissueInvoiceResponseInvoice';
 import { RequestTooLongErrorResponse } from '../models/RequestTooLongErrorResponse';
 import { SendEventsRequest } from '../models/SendEventsRequest';
 import { SendEventsResponse } from '../models/SendEventsResponse';
 import { SubmitCloudUsageRequest } from '../models/SubmitCloudUsageRequest';
 import { SyncStatus } from '../models/SyncStatus';
+import { TerminateContractRequest } from '../models/TerminateContractRequest';
+import { TerminateContractResponse } from '../models/TerminateContractResponse';
 import { UnauthorizedErrorResponse } from '../models/UnauthorizedErrorResponse';
 import { UnlimitedDuration } from '../models/UnlimitedDuration';
+import { UnprocessableEntityErrorResponse } from '../models/UnprocessableEntityErrorResponse';
 import { UpdateCatalogProductRequest } from '../models/UpdateCatalogProductRequest';
 import { UpdateCatalogProductResponse } from '../models/UpdateCatalogProductResponse';
 import { UpdateCustomFieldRequest } from '../models/UpdateCustomFieldRequest';
 import { UpdateCustomFieldResponse } from '../models/UpdateCustomFieldResponse';
 import { UpdateCustomerRequest } from '../models/UpdateCustomerRequest';
 import { UpdateCustomerResponse } from '../models/UpdateCustomerResponse';
+import { UpdateInvoiceDueDateRequest } from '../models/UpdateInvoiceDueDateRequest';
+import { UpdateInvoiceDueDateResponse } from '../models/UpdateInvoiceDueDateResponse';
+import { UpdateInvoiceDueDateResponseInvoice } from '../models/UpdateInvoiceDueDateResponseInvoice';
+import { UpdateInvoiceIssueDateRequest } from '../models/UpdateInvoiceIssueDateRequest';
+import { UpdateInvoiceIssueDateResponse } from '../models/UpdateInvoiceIssueDateResponse';
+import { UpdateInvoiceIssueDateResponseInvoice } from '../models/UpdateInvoiceIssueDateResponseInvoice';
 import { UpdateMeterRequest } from '../models/UpdateMeterRequest';
 import { UpdateMeterResponse } from '../models/UpdateMeterResponse';
 import { UsageWindow } from '../models/UsageWindow';
@@ -298,6 +348,48 @@ export class PromiseCatalogProductsApi {
      */
     public getCatalogProduct(catalogProductId: string, _options?: Configuration): Promise<GetCatalogProductResponse> {
         const result = this.api.getCatalogProduct(catalogProductId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific catalog product using its integration provider and identifier.
+     * Get catalog product by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCatalogProductByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCatalogProductByIntegrationIdResponse>> {
+        const result = this.api.getCatalogProductByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific catalog product using its integration provider and identifier.
+     * Get catalog product by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getCatalogProductByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetCatalogProductByIntegrationIdResponse> {
+        const result = this.api.getCatalogProductByIntegrationId(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific catalog product using its name.
+     * Get catalog product by name
+     * @param name
+     */
+    public getCatalogProductByNameWithHttpInfo(name: string, _options?: Configuration): Promise<HttpInfo<GetCatalogProductByNameResponse>> {
+        const result = this.api.getCatalogProductByNameWithHttpInfo(name, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific catalog product using its name.
+     * Get catalog product by name
+     * @param name
+     */
+    public getCatalogProductByName(name: string, _options?: Configuration): Promise<GetCatalogProductByNameResponse> {
+        const result = this.api.getCatalogProductByName(name, _options);
         return result.toPromise();
     }
 
@@ -469,7 +561,7 @@ export class PromiseContractsApi {
      * @param integrationType
      * @param integrationId
      */
-    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetContractByIntegrationIdResponse>> {
+    public getContractByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetContractByIntegrationIdResponse>> {
         const result = this.api.getContractByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -480,32 +572,115 @@ export class PromiseContractsApi {
      * @param integrationType
      * @param integrationId
      */
-    public getContractByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetContractByIntegrationIdResponse> {
+    public getContractByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetContractByIntegrationIdResponse> {
         const result = this.api.getContractByIntegrationId(integrationType, integrationId, _options);
         return result.toPromise();
     }
 
     /**
-     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
      * List contracts
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
+     * @param [customerExternalId]
      */
-    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
-        const result = this.api.listContractsWithHttpInfo(limit, cursor, customerId, _options);
+    public listContractsWithHttpInfo(limit?: number, cursor?: string, customerId?: string, customerExternalId?: string, _options?: Configuration): Promise<HttpInfo<ListContractsResponse>> {
+        const result = this.api.listContractsWithHttpInfo(limit, cursor, customerId, customerExternalId, _options);
         return result.toPromise();
     }
 
     /**
-     * List contracts for the account. Optionally filter by customerId to retrieve contracts for a specific customer.
+     * List contracts for the account. Optionally filter by customerId or customerExternalId to retrieve contracts for a specific customer (provide at most one, not both).
      * List contracts
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
+     * @param [customerExternalId]
      */
-    public listContracts(limit?: number, cursor?: string, customerId?: string, _options?: Configuration): Promise<ListContractsResponse> {
-        const result = this.api.listContracts(limit, cursor, customerId, _options);
+    public listContracts(limit?: number, cursor?: string, customerId?: string, customerExternalId?: string, _options?: Configuration): Promise<ListContractsResponse> {
+        const result = this.api.listContracts(limit, cursor, customerId, customerExternalId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
+     * Refresh the credit grants on a contract
+     * @param refreshContractCreditsRequest
+     * @param contractId
+     */
+    public refreshContractCreditsWithHttpInfo(refreshContractCreditsRequest: RefreshContractCreditsRequest, contractId: string, _options?: Configuration): Promise<HttpInfo<RefreshContractCreditsResponse>> {
+        const result = this.api.refreshContractCreditsWithHttpInfo(refreshContractCreditsRequest, contractId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to refresh the credit grants on a contract by creating a new contract phase     (a contract revision) that takes effect immediately.      Provide a list of credit grants to refresh in the request body — each is identified by its credit product     (credit type) id and is set to non-prorated in the new phase, optionally with a new price. Every other credit     grant on the contract is set to prorated. If the grants list is omitted, all credit grants on the contract are     refreshed (set to non-prorated).      If a supplied credit product matches more than one grant product on the contract and a newPrice is provided,     the request is rejected because the price cannot be applied unambiguously.
+     * Refresh the credit grants on a contract
+     * @param refreshContractCreditsRequest
+     * @param contractId
+     */
+    public refreshContractCredits(refreshContractCreditsRequest: RefreshContractCreditsRequest, contractId: string, _options?: Configuration): Promise<RefreshContractCreditsResponse> {
+        const result = this.api.refreshContractCredits(refreshContractCreditsRequest, contractId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract\'s end date is updated accordingly. A terminationDate that is today or later sets the     status to PendingTermination, and the contract becomes Terminated once that date passes.     A terminationDate that has already passed sets the status to Terminated straight away.
+     * Terminate a contract
+     * @param terminateContractRequest
+     * @param contractId
+     */
+    public terminateContractWithHttpInfo(terminateContractRequest: TerminateContractRequest, contractId: string, _options?: Configuration): Promise<HttpInfo<TerminateContractResponse>> {
+        const result = this.api.terminateContractWithHttpInfo(terminateContractRequest, contractId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to terminate a contract.     Provide a terminationDate in the request body to schedule the termination for a specific date,     or omit it to terminate the contract immediately.     The contract\'s end date is updated accordingly. A terminationDate that is today or later sets the     status to PendingTermination, and the contract becomes Terminated once that date passes.     A terminationDate that has already passed sets the status to Terminated straight away.
+     * Terminate a contract
+     * @param terminateContractRequest
+     * @param contractId
+     */
+    public terminateContract(terminateContractRequest: TerminateContractRequest, contractId: string, _options?: Configuration): Promise<TerminateContractResponse> {
+        const result = this.api.terminateContract(terminateContractRequest, contractId, _options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableCreditProductsApi } from './ObservableAPI';
+
+import { CreditProductsApiRequestFactory, CreditProductsApiResponseProcessor} from "../apis/CreditProductsApi";
+export class PromiseCreditProductsApi {
+    private api: ObservableCreditProductsApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: CreditProductsApiRequestFactory,
+        responseProcessor?: CreditProductsApiResponseProcessor
+    ) {
+        this.api = new ObservableCreditProductsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Retrieve the credit products defined in your account. Use a credit product ID to fund a credit pool (a product creditGrant.creditProductId) or to debit one (a usage product consumesCreditProductIds). Distinct from the credit ledger (GET /credits).
+     * List credit products
+     */
+    public listCreditProductsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<ListCreditProductsResponse>> {
+        const result = this.api.listCreditProductsWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Retrieve the credit products defined in your account. Use a credit product ID to fund a credit pool (a product creditGrant.creditProductId) or to debit one (a usage product consumesCreditProductIds). Distinct from the credit ledger (GET /credits).
+     * List credit products
+     */
+    public listCreditProducts(_options?: Configuration): Promise<ListCreditProductsResponse> {
+        const result = this.api.listCreditProducts(_options);
         return result.toPromise();
     }
 
@@ -526,6 +701,26 @@ export class PromiseCreditsApi {
         responseProcessor?: CreditsApiResponseProcessor
     ) {
         this.api = new ObservableCreditsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant\'s price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
+     * Create a one-off invoice to top up a customer with credits
+     * @param creditTopUpRequest
+     */
+    public creditTopUpWithHttpInfo(creditTopUpRequest: CreditTopUpRequest, _options?: Configuration): Promise<HttpInfo<CreditTopUpResponse>> {
+        const result = this.api.creditTopUpWithHttpInfo(creditTopUpRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * This endpoint creates a one-off invoice that bills a customer for a credit grant.     Submit the customer ID and the credit grant (credit product, amount, type and price) in the request     body — the same credit grant shape used when defining grants on a contract. The grant\'s price is     charged on the invoice, and the credits are granted to the customer when the invoice is approved.
+     * Create a one-off invoice to top up a customer with credits
+     * @param creditTopUpRequest
+     */
+    public creditTopUp(creditTopUpRequest: CreditTopUpRequest, _options?: Configuration): Promise<CreditTopUpResponse> {
+        const result = this.api.creditTopUp(creditTopUpRequest, _options);
+        return result.toPromise();
     }
 
     /**
@@ -840,7 +1035,7 @@ export class PromiseCustomersApi {
      * @param integrationType
      * @param integrationId
      */
-    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByIntegrationIdResponse>> {
+    public getCustomerByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetCustomerByIntegrationIdResponse>> {
         const result = this.api.getCustomerByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -851,7 +1046,7 @@ export class PromiseCustomersApi {
      * @param integrationType
      * @param integrationId
      */
-    public getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<GetCustomerByIntegrationIdResponse> {
+    public getCustomerByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetCustomerByIntegrationIdResponse> {
         const result = this.api.getCustomerByIntegrationId(integrationType, integrationId, _options);
         return result.toPromise();
     }
@@ -939,22 +1134,24 @@ export class PromiseCustomersApi {
     /**
      * Get a list of Customers.
      * List Customers
+     * @param [status]
      * @param [limit]
      * @param [cursor]
      */
-    public listCustomersWithHttpInfo(limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCustomersResponse>> {
-        const result = this.api.listCustomersWithHttpInfo(limit, cursor, _options);
+    public listCustomersWithHttpInfo(status?: CustomerStatus, limit?: number, cursor?: string, _options?: Configuration): Promise<HttpInfo<ListCustomersResponse>> {
+        const result = this.api.listCustomersWithHttpInfo(status, limit, cursor, _options);
         return result.toPromise();
     }
 
     /**
      * Get a list of Customers.
      * List Customers
+     * @param [status]
      * @param [limit]
      * @param [cursor]
      */
-    public listCustomers(limit?: number, cursor?: string, _options?: Configuration): Promise<ListCustomersResponse> {
-        const result = this.api.listCustomers(limit, cursor, _options);
+    public listCustomers(status?: CustomerStatus, limit?: number, cursor?: string, _options?: Configuration): Promise<ListCustomersResponse> {
+        const result = this.api.listCustomers(status, limit, cursor, _options);
         return result.toPromise();
     }
 
@@ -1299,6 +1496,46 @@ export class PromiseInvoicesApi {
     }
 
     /**
+     * Use this endpoint to cancel an invoice.     Only an approved invoice with no payments recorded can be cancelled.     Cancelling an invoice cannot be undone.
+     * Cancel an invoice
+     * @param invoiceId
+     */
+    public cancelInvoiceWithHttpInfo(invoiceId: string, _options?: Configuration): Promise<HttpInfo<CancelInvoiceResponse>> {
+        const result = this.api.cancelInvoiceWithHttpInfo(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to cancel an invoice.     Only an approved invoice with no payments recorded can be cancelled.     Cancelling an invoice cannot be undone.
+     * Cancel an invoice
+     * @param invoiceId
+     */
+    public cancelInvoice(invoiceId: string, _options?: Configuration): Promise<CancelInvoiceResponse> {
+        const result = this.api.cancelInvoice(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Invoice by id.
+     * Delete Invoice
+     * @param invoiceId
+     */
+    public deleteInvoiceWithHttpInfo(invoiceId: string, _options?: Configuration): Promise<HttpInfo<DeleteInvoiceResponse>> {
+        const result = this.api.deleteInvoiceWithHttpInfo(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a Invoice by id.
+     * Delete Invoice
+     * @param invoiceId
+     */
+    public deleteInvoice(invoiceId: string, _options?: Configuration): Promise<DeleteInvoiceResponse> {
+        const result = this.api.deleteInvoice(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
      * Get a Invoice by id.
      * Get Invoice
      * @param invoiceId
@@ -1344,12 +1581,12 @@ export class PromiseInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [billingStatus] Filter invoices by their billing status
-     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
-     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
+     * @param [billingStatus]
+     * @param [issuedAfter]
+     * @param [issuedBefore]
      */
-    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
-        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options);
+    public listInvoicesWithHttpInfo(limit?: number, cursor?: string, customerId?: string, billingStatus?: InvoiceBillingStatus, issuedAfter?: string, issuedBefore?: string, _options?: Configuration): Promise<HttpInfo<ListInvoicesResponse>> {
+        const result = this.api.listInvoicesWithHttpInfo(limit, cursor, customerId, billingStatus, issuedAfter, issuedBefore, _options);
         return result.toPromise();
     }
 
@@ -1359,12 +1596,98 @@ export class PromiseInvoicesApi {
      * @param [limit]
      * @param [cursor]
      * @param [customerId]
-     * @param [billingStatus] Filter invoices by their billing status
-     * @param [issuedAtFrom] Only include invoices issued on or after this timestamp
-     * @param [issuedAtTo] Only include invoices issued on or before this timestamp
+     * @param [billingStatus]
+     * @param [issuedAfter]
+     * @param [issuedBefore]
      */
-    public listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: 'None' | 'Paid' | 'Rejected' | 'PendingPayment' | 'Overdue', issuedAtFrom?: Date, issuedAtTo?: Date, _options?: Configuration): Promise<ListInvoicesResponse> {
-        const result = this.api.listInvoices(limit, cursor, customerId, billingStatus, issuedAtFrom, issuedAtTo, _options);
+    public listInvoices(limit?: number, cursor?: string, customerId?: string, billingStatus?: InvoiceBillingStatus, issuedAfter?: string, issuedBefore?: string, _options?: Configuration): Promise<ListInvoicesResponse> {
+        const result = this.api.listInvoices(limit, cursor, customerId, billingStatus, issuedAfter, issuedBefore, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to record a payment on an approved invoice.     Provide the amount and an idempotencyKey in the request body.     Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.     That credit is not exported as a credit memo to a connected accounting system.     The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.     An idempotencyKey is remembered for 24 hours.     A request whose transactionId is already recorded on the invoice is refused.     If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.     A recorded payment cannot be edited or deleted through the API.
+     * Record a payment on an invoice
+     * @param recordInvoicePaymentRequest
+     * @param invoiceId
+     */
+    public recordInvoicePaymentWithHttpInfo(recordInvoicePaymentRequest: RecordInvoicePaymentRequest, invoiceId: string, _options?: Configuration): Promise<HttpInfo<RecordInvoicePaymentResponse>> {
+        const result = this.api.recordInvoicePaymentWithHttpInfo(recordInvoicePaymentRequest, invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to record a payment on an approved invoice.     Provide the amount and an idempotencyKey in the request body.     Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.     That credit is not exported as a credit memo to a connected accounting system.     The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.     An idempotencyKey is remembered for 24 hours.     A request whose transactionId is already recorded on the invoice is refused.     If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.     A recorded payment cannot be edited or deleted through the API.
+     * Record a payment on an invoice
+     * @param recordInvoicePaymentRequest
+     * @param invoiceId
+     */
+    public recordInvoicePayment(recordInvoicePaymentRequest: RecordInvoicePaymentRequest, invoiceId: string, _options?: Configuration): Promise<RecordInvoicePaymentResponse> {
+        const result = this.api.recordInvoicePayment(recordInvoicePaymentRequest, invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to reissue an invoice: the original invoice is cancelled and a replacement is produced.     Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.     The original invoice is cancelled and cannot be restored.     For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.     For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement\'s id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.     A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.     Invoice reissue must be enabled for your account.
+     * Reissue an invoice
+     * @param invoiceId
+     */
+    public reissueInvoiceWithHttpInfo(invoiceId: string, _options?: Configuration): Promise<HttpInfo<ReissueInvoiceResponse>> {
+        const result = this.api.reissueInvoiceWithHttpInfo(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to reissue an invoice: the original invoice is cancelled and a replacement is produced.     Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.     The original invoice is cancelled and cannot be restored.     For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.     For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement\'s id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.     A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.     Invoice reissue must be enabled for your account.
+     * Reissue an invoice
+     * @param invoiceId
+     */
+    public reissueInvoice(invoiceId: string, _options?: Configuration): Promise<ReissueInvoiceResponse> {
+        const result = this.api.reissueInvoice(invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to change the due date of an invoice.     Provide the new dueDate in the request body.     The due date of an invoice that is already paid or cancelled cannot be changed.
+     * Update the due date of an invoice
+     * @param updateInvoiceDueDateRequest
+     * @param invoiceId
+     */
+    public updateInvoiceDueDateWithHttpInfo(updateInvoiceDueDateRequest: UpdateInvoiceDueDateRequest, invoiceId: string, _options?: Configuration): Promise<HttpInfo<UpdateInvoiceDueDateResponse>> {
+        const result = this.api.updateInvoiceDueDateWithHttpInfo(updateInvoiceDueDateRequest, invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to change the due date of an invoice.     Provide the new dueDate in the request body.     The due date of an invoice that is already paid or cancelled cannot be changed.
+     * Update the due date of an invoice
+     * @param updateInvoiceDueDateRequest
+     * @param invoiceId
+     */
+    public updateInvoiceDueDate(updateInvoiceDueDateRequest: UpdateInvoiceDueDateRequest, invoiceId: string, _options?: Configuration): Promise<UpdateInvoiceDueDateResponse> {
+        const result = this.api.updateInvoiceDueDate(updateInvoiceDueDateRequest, invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to change the issue date of an invoice.     Provide the new issuedAt date in the request body.     The issue date can only be changed before the invoice is approved.     Changing it recalculates the due date from the invoice\'s payment terms.
+     * Update the issue date of an invoice
+     * @param updateInvoiceIssueDateRequest
+     * @param invoiceId
+     */
+    public updateInvoiceIssueDateWithHttpInfo(updateInvoiceIssueDateRequest: UpdateInvoiceIssueDateRequest, invoiceId: string, _options?: Configuration): Promise<HttpInfo<UpdateInvoiceIssueDateResponse>> {
+        const result = this.api.updateInvoiceIssueDateWithHttpInfo(updateInvoiceIssueDateRequest, invoiceId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to change the issue date of an invoice.     Provide the new issuedAt date in the request body.     The issue date can only be changed before the invoice is approved.     Changing it recalculates the due date from the invoice\'s payment terms.
+     * Update the issue date of an invoice
+     * @param updateInvoiceIssueDateRequest
+     * @param invoiceId
+     */
+    public updateInvoiceIssueDate(updateInvoiceIssueDateRequest: UpdateInvoiceIssueDateRequest, invoiceId: string, _options?: Configuration): Promise<UpdateInvoiceIssueDateResponse> {
+        const result = this.api.updateInvoiceIssueDate(updateInvoiceIssueDateRequest, invoiceId, _options);
         return result.toPromise();
     }
 
@@ -1525,6 +1848,48 @@ export class PromiseMetersApi {
      */
     public getMeter(meterId: string, _options?: Configuration): Promise<GetMeterResponse> {
         const result = this.api.getMeter(meterId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific meter using its integration provider and identifier.
+     * Get meter by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getMeterByIntegrationIdWithHttpInfo(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<HttpInfo<GetMeterByIntegrationIdResponse>> {
+        const result = this.api.getMeterByIntegrationIdWithHttpInfo(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific meter using its integration provider and identifier.
+     * Get meter by integration id
+     * @param integrationType
+     * @param integrationId
+     */
+    public getMeterByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<GetMeterByIntegrationIdResponse> {
+        const result = this.api.getMeterByIntegrationId(integrationType, integrationId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific meter using its name.
+     * Get meter by name
+     * @param name
+     */
+    public getMeterByNameWithHttpInfo(name: string, _options?: Configuration): Promise<HttpInfo<GetMeterByNameResponse>> {
+        const result = this.api.getMeterByNameWithHttpInfo(name, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Use this endpoint to get a specific meter using its name.
+     * Get meter by name
+     * @param name
+     */
+    public getMeterByName(name: string, _options?: Configuration): Promise<GetMeterByNameResponse> {
+        const result = this.api.getMeterByName(name, _options);
         return result.toPromise();
     }
 

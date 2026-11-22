@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **code** | **str** | Specific machine-readable error code | 
 **message** | **str** | Human-readable error explanation | 
+**required_scope** | **str** | Scope the token was missing, present on insufficient_scope errors | [optional] 
 **param** | **str** | Single parameter that failed validation | [optional] 
 **params** | [**List[ValidationErrorResponseParamsInner]**](ValidationErrorResponseParamsInner.md) | Multiple parameters that failed validation | [optional] 
 

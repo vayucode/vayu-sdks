@@ -97,6 +97,11 @@ export enum CustomFieldIntegrationSourceEnum {
     Snowflake = 'Snowflake',
     Anrok = 'Anrok',
     Connact = 'Connact',
-    Xero = 'Xero'
+    Xero = 'Xero',
+    Paddle = 'Paddle',
+    BigQuery = 'BigQuery',
+    AwsMarketplaceDirect = 'AwsMarketplaceDirect',
+    Plaid = 'Plaid',
+    Redshift = 'Redshift'
 }
 

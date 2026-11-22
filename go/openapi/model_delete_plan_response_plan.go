@@ -25,7 +25,7 @@ type DeletePlanResponsePlan struct {
 	// The name of the plan
 	Name string `json:"name"`
 	Status PlanStatus `json:"status"`
-	BillingData PlanBillingData `json:"billingData"`
+	BillingData PlanBillingDataInput `json:"billingData"`
 	// A caller-owned external id for the plan. Once set, the plan can be fetched or deleted by passing this value in place of the Vayu id on the /plans/{planId} endpoints.
 	ExternalId NullableString `json:"externalId,omitempty"`
 	Id string `json:"id"`
@@ -41,7 +41,7 @@ type _DeletePlanResponsePlan DeletePlanResponsePlan
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeletePlanResponsePlan(name string, status PlanStatus, billingData PlanBillingData, id string, createdAt time.Time, updatedAt time.Time, deletedAt string) *DeletePlanResponsePlan {
+func NewDeletePlanResponsePlan(name string, status PlanStatus, billingData PlanBillingDataInput, id string, createdAt time.Time, updatedAt time.Time, deletedAt string) *DeletePlanResponsePlan {
 	this := DeletePlanResponsePlan{}
 	this.Name = name
 	this.Status = status
@@ -110,9 +110,9 @@ func (o *DeletePlanResponsePlan) SetStatus(v PlanStatus) {
 }
 
 // GetBillingData returns the BillingData field value
-func (o *DeletePlanResponsePlan) GetBillingData() PlanBillingData {
+func (o *DeletePlanResponsePlan) GetBillingData() PlanBillingDataInput {
 	if o == nil {
-		var ret PlanBillingData
+		var ret PlanBillingDataInput
 		return ret
 	}
 
@@ -121,7 +121,7 @@ func (o *DeletePlanResponsePlan) GetBillingData() PlanBillingData {
 
 // GetBillingDataOk returns a tuple with the BillingData field value
 // and a boolean to check if the value has been set.
-func (o *DeletePlanResponsePlan) GetBillingDataOk() (*PlanBillingData, bool) {
+func (o *DeletePlanResponsePlan) GetBillingDataOk() (*PlanBillingDataInput, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -129,7 +129,7 @@ func (o *DeletePlanResponsePlan) GetBillingDataOk() (*PlanBillingData, bool) {
 }
 
 // SetBillingData sets field value
-func (o *DeletePlanResponsePlan) SetBillingData(v PlanBillingData) {
+func (o *DeletePlanResponsePlan) SetBillingData(v PlanBillingDataInput) {
 	o.BillingData = v
 }
 

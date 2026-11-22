@@ -33,6 +33,8 @@
 
 * `INVOICE_PAYMENT_STATUS_CHANGED` (value: `"InvoicePaymentStatusChanged"`)
 
+* `CONTRACT_ANNIVERSARY` (value: `"ContractAnniversary"`)
+
 * `INVOICE_SEND_FAILED` (value: `"InvoiceSendFailed"`)
 
 * `CREDIT_POOL_DEPLETED` (value: `"CreditPoolDepleted"`)
@@ -49,7 +51,17 @@
 
 * `INVOICE_ISSUE_DATE_ARRIVED` (value: `"InvoiceIssueDateArrived"`)
 
+* `INVOICE_PAST_DUE` (value: `"InvoicePastDue"`)
+
+* `INVOICE_ISSUE_DATE_APPROACHING` (value: `"InvoiceIssueDateApproaching"`)
+
+* `CONTRACT_EXPIRATION_APPROACHING` (value: `"ContractExpirationApproaching"`)
+
 * `METERING_HEALTH_DEGRADED` (value: `"MeteringHealthDegraded"`)
+
+* `EVENTS_INGESTION_STOPPED` (value: `"EventsIngestionStopped"`)
+
+* `CUSTOMER_RELATION_CONFLICT` (value: `"CustomerRelationConflict"`)
 
 * `PING_TEST` (value: `"PingTest"`)
 

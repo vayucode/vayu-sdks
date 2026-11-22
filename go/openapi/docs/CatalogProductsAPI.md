@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**CreateCatalogProduct**](CatalogProductsAPI.md#CreateCatalogProduct) | **Post** /catalogProducts | Create Catalog product
 [**DeleteCatalogProduct**](CatalogProductsAPI.md#DeleteCatalogProduct) | **Delete** /catalogProducts/{catalogProductId} | Delete Catalog product
 [**GetCatalogProduct**](CatalogProductsAPI.md#GetCatalogProduct) | **Get** /catalogProducts/{catalogProductId} | Get Catalog product
+[**GetCatalogProductByIntegrationId**](CatalogProductsAPI.md#GetCatalogProductByIntegrationId) | **Get** /catalogProducts/integration/{integrationType}/{integrationId} | Get catalog product by integration id
+[**GetCatalogProductByName**](CatalogProductsAPI.md#GetCatalogProductByName) | **Get** /catalogProducts/name/{name} | Get catalog product by name
 [**ListCatalogProducts**](CatalogProductsAPI.md#ListCatalogProducts) | **Get** /catalogProducts | List Catalog products
 [**UpdateCatalogProduct**](CatalogProductsAPI.md#UpdateCatalogProduct) | **Put** /catalogProducts/{catalogProductId} | Update Catalog product
 
@@ -203,6 +205,149 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetCatalogProductResponse**](GetCatalogProductResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCatalogProductByIntegrationId
+
+> GetCatalogProductByIntegrationIdResponse GetCatalogProductByIntegrationId(ctx, integrationType, integrationId).Execute()
+
+Get catalog product by integration id
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	integrationType := openapiclient.IntegrationProviders("Hubspot") // IntegrationProviders | 
+	integrationId := "integrationId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CatalogProductsAPI.GetCatalogProductByIntegrationId(context.Background(), integrationType, integrationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CatalogProductsAPI.GetCatalogProductByIntegrationId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCatalogProductByIntegrationId`: GetCatalogProductByIntegrationIdResponse
+	fmt.Fprintf(os.Stdout, "Response from `CatalogProductsAPI.GetCatalogProductByIntegrationId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**integrationType** | [**IntegrationProviders**](.md) |  | 
+**integrationId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCatalogProductByIntegrationIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GetCatalogProductByIntegrationIdResponse**](GetCatalogProductByIntegrationIdResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCatalogProductByName
+
+> GetCatalogProductByNameResponse GetCatalogProductByName(ctx, name).Execute()
+
+Get catalog product by name
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CatalogProductsAPI.GetCatalogProductByName(context.Background(), name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CatalogProductsAPI.GetCatalogProductByName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCatalogProductByName`: GetCatalogProductByNameResponse
+	fmt.Fprintf(os.Stdout, "Response from `CatalogProductsAPI.GetCatalogProductByName`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCatalogProductByNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetCatalogProductByNameResponse**](GetCatalogProductByNameResponse.md)
 
 ### Authorization
 

@@ -35,6 +35,10 @@ const (
 	INTEGRATIONPROVIDERS_CONNACT IntegrationProviders = "Connact"
 	INTEGRATIONPROVIDERS_XERO IntegrationProviders = "Xero"
 	INTEGRATIONPROVIDERS_PADDLE IntegrationProviders = "Paddle"
+	INTEGRATIONPROVIDERS_BIG_QUERY IntegrationProviders = "BigQuery"
+	INTEGRATIONPROVIDERS_AWS_MARKETPLACE_DIRECT IntegrationProviders = "AwsMarketplaceDirect"
+	INTEGRATIONPROVIDERS_PLAID IntegrationProviders = "Plaid"
+	INTEGRATIONPROVIDERS_REDSHIFT IntegrationProviders = "Redshift"
 )
 
 // All allowed values of IntegrationProviders enum
@@ -53,6 +57,10 @@ var AllowedIntegrationProvidersEnumValues = []IntegrationProviders{
 	"Connact",
 	"Xero",
 	"Paddle",
+	"BigQuery",
+	"AwsMarketplaceDirect",
+	"Plaid",
+	"Redshift",
 }
 
 func (v *IntegrationProviders) UnmarshalJSON(src []byte) error {

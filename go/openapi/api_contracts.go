@@ -1021,7 +1021,9 @@ TerminateContract Terminate a contract
 Use this endpoint to terminate a contract.
     Provide a terminationDate in the request body to schedule the termination for a specific date,
     or omit it to terminate the contract immediately.
-    The contract's status is set to PendingTermination and its end date is updated accordingly.
+    The contract's end date is updated accordingly. A terminationDate that is today or later sets the
+    status to PendingTermination, and the contract becomes Terminated once that date passes.
+    A terminationDate that has already passed sets the status to Terminated straight away.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param contractId

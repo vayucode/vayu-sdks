@@ -6,19 +6,21 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
-**Type** | [**BillingCycleStatus**](BillingCycleStatus.md) |  | 
+**Type** | [**CreditLedgerEntryType**](CreditLedgerEntryType.md) |  | 
 **Amount** | **float32** |  | 
 **BalanceAfterEntry** | **float32** |  | 
 **InvoiceId** | Pointer to **string** |  | [optional] 
 **ErpId** | Pointer to **string** |  | [optional] 
+**CreditNoteNumber** | Pointer to **string** |  | [optional] 
 **ContractId** | Pointer to **string** |  | [optional] 
+**Description** | Pointer to **string** |  | [optional] 
 **IntegrationEntities** | [**[]IntegrationEntity**](IntegrationEntity.md) |  | 
 
 ## Methods
 
 ### NewCreditLedgerEntry
 
-`func NewCreditLedgerEntry(id string, createdAt time.Time, type_ BillingCycleStatus, amount float32, balanceAfterEntry float32, integrationEntities []IntegrationEntity, ) *CreditLedgerEntry`
+`func NewCreditLedgerEntry(id string, createdAt time.Time, type_ CreditLedgerEntryType, amount float32, balanceAfterEntry float32, integrationEntities []IntegrationEntity, ) *CreditLedgerEntry`
 
 NewCreditLedgerEntry instantiates a new CreditLedgerEntry object
 This constructor will assign default values to properties that have it defined,
@@ -75,20 +77,20 @@ SetCreatedAt sets CreatedAt field to given value.
 
 ### GetType
 
-`func (o *CreditLedgerEntry) GetType() BillingCycleStatus`
+`func (o *CreditLedgerEntry) GetType() CreditLedgerEntryType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *CreditLedgerEntry) GetTypeOk() (*BillingCycleStatus, bool)`
+`func (o *CreditLedgerEntry) GetTypeOk() (*CreditLedgerEntryType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *CreditLedgerEntry) SetType(v BillingCycleStatus)`
+`func (o *CreditLedgerEntry) SetType(v CreditLedgerEntryType)`
 
 SetType sets Type field to given value.
 
@@ -183,6 +185,31 @@ SetErpId sets ErpId field to given value.
 
 HasErpId returns a boolean if a field has been set.
 
+### GetCreditNoteNumber
+
+`func (o *CreditLedgerEntry) GetCreditNoteNumber() string`
+
+GetCreditNoteNumber returns the CreditNoteNumber field if non-nil, zero value otherwise.
+
+### GetCreditNoteNumberOk
+
+`func (o *CreditLedgerEntry) GetCreditNoteNumberOk() (*string, bool)`
+
+GetCreditNoteNumberOk returns a tuple with the CreditNoteNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreditNoteNumber
+
+`func (o *CreditLedgerEntry) SetCreditNoteNumber(v string)`
+
+SetCreditNoteNumber sets CreditNoteNumber field to given value.
+
+### HasCreditNoteNumber
+
+`func (o *CreditLedgerEntry) HasCreditNoteNumber() bool`
+
+HasCreditNoteNumber returns a boolean if a field has been set.
+
 ### GetContractId
 
 `func (o *CreditLedgerEntry) GetContractId() string`
@@ -207,6 +234,31 @@ SetContractId sets ContractId field to given value.
 `func (o *CreditLedgerEntry) HasContractId() bool`
 
 HasContractId returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *CreditLedgerEntry) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *CreditLedgerEntry) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *CreditLedgerEntry) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *CreditLedgerEntry) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 ### GetIntegrationEntities
 

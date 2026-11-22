@@ -25,6 +25,8 @@ type ConflictErrorResponse struct {
 	Code string `json:"code"`
 	// Human-readable error explanation
 	Message string `json:"message"`
+	// Scope the token was missing, present on insufficient_scope errors
+	RequiredScope *string `json:"requiredScope,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -122,6 +124,38 @@ func (o *ConflictErrorResponse) SetMessage(v string) {
 	o.Message = v
 }
 
+// GetRequiredScope returns the RequiredScope field value if set, zero value otherwise.
+func (o *ConflictErrorResponse) GetRequiredScope() string {
+	if o == nil || IsNil(o.RequiredScope) {
+		var ret string
+		return ret
+	}
+	return *o.RequiredScope
+}
+
+// GetRequiredScopeOk returns a tuple with the RequiredScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConflictErrorResponse) GetRequiredScopeOk() (*string, bool) {
+	if o == nil || IsNil(o.RequiredScope) {
+		return nil, false
+	}
+	return o.RequiredScope, true
+}
+
+// HasRequiredScope returns a boolean if a field has been set.
+func (o *ConflictErrorResponse) HasRequiredScope() bool {
+	if o != nil && !IsNil(o.RequiredScope) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequiredScope gets a reference to the given string and assigns it to the RequiredScope field.
+func (o *ConflictErrorResponse) SetRequiredScope(v string) {
+	o.RequiredScope = &v
+}
+
 func (o ConflictErrorResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -135,6 +169,9 @@ func (o ConflictErrorResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	toSerialize["code"] = o.Code
 	toSerialize["message"] = o.Message
+	if !IsNil(o.RequiredScope) {
+		toSerialize["requiredScope"] = o.RequiredScope
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -183,6 +220,7 @@ func (o *ConflictErrorResponse) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "type")
 		delete(additionalProperties, "code")
 		delete(additionalProperties, "message")
+		delete(additionalProperties, "requiredScope")
 		o.AdditionalProperties = additionalProperties
 	}
 

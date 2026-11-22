@@ -22,7 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from openapi.models.billing_cycle_status import BillingCycleStatus
+from openapi.models.credit_ledger_entry_type import CreditLedgerEntryType
 from openapi.models.integration_entity import IntegrationEntity
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,15 +33,17 @@ class CreditLedgerEntry(BaseModel):
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)]
     created_at: datetime = Field(alias="createdAt")
-    type: BillingCycleStatus
+    type: CreditLedgerEntryType
     amount: Union[StrictFloat, StrictInt]
     balance_after_entry: Union[StrictFloat, StrictInt] = Field(alias="balanceAfterEntry")
     invoice_id: Optional[StrictStr] = Field(default=None, alias="invoiceId")
     erp_id: Optional[StrictStr] = Field(default=None, alias="erpId")
+    credit_note_number: Optional[StrictStr] = Field(default=None, alias="creditNoteNumber")
     contract_id: Optional[StrictStr] = Field(default=None, alias="contractId")
+    description: Optional[StrictStr] = None
     integration_entities: List[IntegrationEntity] = Field(alias="integrationEntities")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "createdAt", "type", "amount", "balanceAfterEntry", "invoiceId", "erpId", "contractId", "integrationEntities"]
+    __properties: ClassVar[List[str]] = ["id", "createdAt", "type", "amount", "balanceAfterEntry", "invoiceId", "erpId", "creditNoteNumber", "contractId", "description", "integrationEntities"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -122,7 +124,9 @@ class CreditLedgerEntry(BaseModel):
             "balanceAfterEntry": obj.get("balanceAfterEntry"),
             "invoiceId": obj.get("invoiceId"),
             "erpId": obj.get("erpId"),
+            "creditNoteNumber": obj.get("creditNoteNumber"),
             "contractId": obj.get("contractId"),
+            "description": obj.get("description"),
             "integrationEntities": [IntegrationEntity.from_dict(_item) for _item in obj["integrationEntities"]] if obj.get("integrationEntities") is not None else None
         })
         # store additional fields in additional_properties
