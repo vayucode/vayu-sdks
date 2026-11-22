@@ -24,6 +24,8 @@ type Address struct {
 	CountryCode NullableString `json:"countryCode,omitempty"`
 	City NullableString `json:"city,omitempty"`
 	AddressText NullableString `json:"addressText,omitempty"`
+	StreetName NullableString `json:"streetName,omitempty"`
+	Apartment NullableString `json:"apartment,omitempty"`
 	State NullableString `json:"state,omitempty"`
 	PostalCode NullableString `json:"postalCode,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -216,6 +218,90 @@ func (o *Address) UnsetAddressText() {
 	o.AddressText.Unset()
 }
 
+// GetStreetName returns the StreetName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Address) GetStreetName() string {
+	if o == nil || IsNil(o.StreetName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StreetName.Get()
+}
+
+// GetStreetNameOk returns a tuple with the StreetName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Address) GetStreetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StreetName.Get(), o.StreetName.IsSet()
+}
+
+// HasStreetName returns a boolean if a field has been set.
+func (o *Address) HasStreetName() bool {
+	if o != nil && o.StreetName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStreetName gets a reference to the given NullableString and assigns it to the StreetName field.
+func (o *Address) SetStreetName(v string) {
+	o.StreetName.Set(&v)
+}
+// SetStreetNameNil sets the value for StreetName to be an explicit nil
+func (o *Address) SetStreetNameNil() {
+	o.StreetName.Set(nil)
+}
+
+// UnsetStreetName ensures that no value is present for StreetName, not even an explicit nil
+func (o *Address) UnsetStreetName() {
+	o.StreetName.Unset()
+}
+
+// GetApartment returns the Apartment field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Address) GetApartment() string {
+	if o == nil || IsNil(o.Apartment.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Apartment.Get()
+}
+
+// GetApartmentOk returns a tuple with the Apartment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Address) GetApartmentOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Apartment.Get(), o.Apartment.IsSet()
+}
+
+// HasApartment returns a boolean if a field has been set.
+func (o *Address) HasApartment() bool {
+	if o != nil && o.Apartment.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetApartment gets a reference to the given NullableString and assigns it to the Apartment field.
+func (o *Address) SetApartment(v string) {
+	o.Apartment.Set(&v)
+}
+// SetApartmentNil sets the value for Apartment to be an explicit nil
+func (o *Address) SetApartmentNil() {
+	o.Apartment.Set(nil)
+}
+
+// UnsetApartment ensures that no value is present for Apartment, not even an explicit nil
+func (o *Address) UnsetApartment() {
+	o.Apartment.Unset()
+}
+
 // GetState returns the State field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Address) GetState() string {
 	if o == nil || IsNil(o.State.Get()) {
@@ -322,6 +408,12 @@ func (o Address) ToMap() (map[string]interface{}, error) {
 	if o.AddressText.IsSet() {
 		toSerialize["addressText"] = o.AddressText.Get()
 	}
+	if o.StreetName.IsSet() {
+		toSerialize["streetName"] = o.StreetName.Get()
+	}
+	if o.Apartment.IsSet() {
+		toSerialize["apartment"] = o.Apartment.Get()
+	}
 	if o.State.IsSet() {
 		toSerialize["state"] = o.State.Get()
 	}
@@ -354,6 +446,8 @@ func (o *Address) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "countryCode")
 		delete(additionalProperties, "city")
 		delete(additionalProperties, "addressText")
+		delete(additionalProperties, "streetName")
+		delete(additionalProperties, "apartment")
 		delete(additionalProperties, "state")
 		delete(additionalProperties, "postalCode")
 		o.AdditionalProperties = additionalProperties

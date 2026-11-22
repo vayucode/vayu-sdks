@@ -24,6 +24,11 @@ type LineItem struct {
 	// The id of the invoice that the line item is a part of
 	InvoiceId string `json:"invoiceId" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	RevenueBreakdown LineItemRevenueBreakdown `json:"revenueBreakdown"`
+	// The name of the product on the line
+	ProductName *string `json:"productName,omitempty"`
+	// The description shown on the line
+	Description *string `json:"description,omitempty"`
+	ServicePeriod *LineItemServicePeriod `json:"servicePeriod,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -96,6 +101,102 @@ func (o *LineItem) SetRevenueBreakdown(v LineItemRevenueBreakdown) {
 	o.RevenueBreakdown = v
 }
 
+// GetProductName returns the ProductName field value if set, zero value otherwise.
+func (o *LineItem) GetProductName() string {
+	if o == nil || IsNil(o.ProductName) {
+		var ret string
+		return ret
+	}
+	return *o.ProductName
+}
+
+// GetProductNameOk returns a tuple with the ProductName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LineItem) GetProductNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ProductName) {
+		return nil, false
+	}
+	return o.ProductName, true
+}
+
+// HasProductName returns a boolean if a field has been set.
+func (o *LineItem) HasProductName() bool {
+	if o != nil && !IsNil(o.ProductName) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductName gets a reference to the given string and assigns it to the ProductName field.
+func (o *LineItem) SetProductName(v string) {
+	o.ProductName = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *LineItem) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LineItem) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *LineItem) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *LineItem) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetServicePeriod returns the ServicePeriod field value if set, zero value otherwise.
+func (o *LineItem) GetServicePeriod() LineItemServicePeriod {
+	if o == nil || IsNil(o.ServicePeriod) {
+		var ret LineItemServicePeriod
+		return ret
+	}
+	return *o.ServicePeriod
+}
+
+// GetServicePeriodOk returns a tuple with the ServicePeriod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LineItem) GetServicePeriodOk() (*LineItemServicePeriod, bool) {
+	if o == nil || IsNil(o.ServicePeriod) {
+		return nil, false
+	}
+	return o.ServicePeriod, true
+}
+
+// HasServicePeriod returns a boolean if a field has been set.
+func (o *LineItem) HasServicePeriod() bool {
+	if o != nil && !IsNil(o.ServicePeriod) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePeriod gets a reference to the given LineItemServicePeriod and assigns it to the ServicePeriod field.
+func (o *LineItem) SetServicePeriod(v LineItemServicePeriod) {
+	o.ServicePeriod = &v
+}
+
 func (o LineItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -108,6 +209,15 @@ func (o LineItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["invoiceId"] = o.InvoiceId
 	toSerialize["revenueBreakdown"] = o.RevenueBreakdown
+	if !IsNil(o.ProductName) {
+		toSerialize["productName"] = o.ProductName
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.ServicePeriod) {
+		toSerialize["servicePeriod"] = o.ServicePeriod
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -154,6 +264,9 @@ func (o *LineItem) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "invoiceId")
 		delete(additionalProperties, "revenueBreakdown")
+		delete(additionalProperties, "productName")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "servicePeriod")
 		o.AdditionalProperties = additionalProperties
 	}
 

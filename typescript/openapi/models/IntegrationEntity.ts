@@ -18,6 +18,7 @@ export class IntegrationEntity {
     'updatedAt': Date;
     'integrationProvider': IntegrationProviders;
     'integrationExternalId': string;
+    'subsidiaryId'?: string;
     'syncStatus': SyncStatus;
     'metadata'?: { [key: string]: any | null; } | null;
     'rawSyncedData'?: { [key: string]: any | null; } | null;
@@ -42,6 +43,12 @@ export class IntegrationEntity {
         {
             "name": "integrationExternalId",
             "baseName": "integrationExternalId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "subsidiaryId",
+            "baseName": "subsidiaryId",
             "type": "string",
             "format": ""
         },

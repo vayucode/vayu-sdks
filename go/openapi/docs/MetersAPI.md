@@ -6,6 +6,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteMeter**](MetersAPI.md#DeleteMeter) | **Delete** /meters/{meterId} | Delete Meter
 [**GetMeter**](MetersAPI.md#GetMeter) | **Get** /meters/{meterId} | Get Meter
+[**GetMeterByIntegrationId**](MetersAPI.md#GetMeterByIntegrationId) | **Get** /meters/integration/{integrationType}/{integrationId} | Get meter by integration id
+[**GetMeterByName**](MetersAPI.md#GetMeterByName) | **Get** /meters/name/{name} | Get meter by name
 [**ListMeters**](MetersAPI.md#ListMeters) | **Get** /meters | List Meters
 [**UpdateMeter**](MetersAPI.md#UpdateMeter) | **Put** /meters/{meterId} | Update Meter
 
@@ -136,6 +138,149 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetMeterResponse**](GetMeterResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMeterByIntegrationId
+
+> GetMeterByIntegrationIdResponse GetMeterByIntegrationId(ctx, integrationType, integrationId).Execute()
+
+Get meter by integration id
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	integrationType := openapiclient.IntegrationProviders("Hubspot") // IntegrationProviders | 
+	integrationId := "integrationId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MetersAPI.GetMeterByIntegrationId(context.Background(), integrationType, integrationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MetersAPI.GetMeterByIntegrationId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMeterByIntegrationId`: GetMeterByIntegrationIdResponse
+	fmt.Fprintf(os.Stdout, "Response from `MetersAPI.GetMeterByIntegrationId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**integrationType** | [**IntegrationProviders**](.md) |  | 
+**integrationId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMeterByIntegrationIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GetMeterByIntegrationIdResponse**](GetMeterByIntegrationIdResponse.md)
+
+### Authorization
+
+[BearerAuthorizer](../README.md#BearerAuthorizer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMeterByName
+
+> GetMeterByNameResponse GetMeterByName(ctx, name).Execute()
+
+Get meter by name
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/vayucode/vayu-sdks/go/openapi"
+)
+
+func main() {
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MetersAPI.GetMeterByName(context.Background(), name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MetersAPI.GetMeterByName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMeterByName`: GetMeterByNameResponse
+	fmt.Fprintf(os.Stdout, "Response from `MetersAPI.GetMeterByName`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMeterByNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetMeterByNameResponse**](GetMeterByNameResponse.md)
 
 ### Authorization
 

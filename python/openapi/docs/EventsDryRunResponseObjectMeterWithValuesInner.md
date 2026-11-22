@@ -7,8 +7,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | The name of the meter | 
 **event_name** | **str** | The name of the event that the meter is tracking. | 
+**product_code** | **str** | The product code of the meter | [optional] 
 **aggregation_method** | [**AggregationMethod**](AggregationMethod.md) |  | 
 **filter** | [**Filter**](Filter.md) |  | [optional] 
+**sales_force_product_id** | **str** | The ID of the meter in the Salesforce system | [optional] 
 **value** | **float** |  | 
 **instance_value** | **object** |  | [optional] 
 

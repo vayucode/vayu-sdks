@@ -203,6 +203,24 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RefreshContractCreditsRequest"
+    RecordInvoicePaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RecordInvoicePaymentRequest"
+    UpdateInvoiceDueDateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateInvoiceDueDateRequest"
+    UpdateInvoiceIssueDateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateInvoiceIssueDateRequest"
     SubmitCloudUsageRequest:
       required: true
       content:
@@ -342,6 +360,12 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/GetInvoiceResponse"
+    DeleteInvoiceResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeleteInvoiceResponse"
     CreateCustomerRelationResponse:
       description: RequestSuccess
       content:
@@ -554,6 +578,37 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RefreshContractCreditsResponse"
+    GetCatalogProductByNameResponse:
+      description: response contains the catalog product matching the provided name
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCatalogProductByNameResponse"
+    GetCatalogProductByIntegrationIdResponse:
+      description: Response contains the catalog product matching the provided
+        integration id
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCatalogProductByIntegrationIdResponse"
+    GetMeterByNameResponse:
+      description: response contains the meter matching the provided name
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetMeterByNameResponse"
+    GetMeterByIntegrationIdResponse:
+      description: Response contains the meter matching the provided integration id
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetMeterByIntegrationIdResponse"
+    CancelInvoiceResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CancelInvoiceResponse"
     InvoicePaymentStatusResponse:
       description: Invoice payment status information including payment status,
         amounts, and dates.
@@ -567,6 +622,30 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ListInvoicesResponse"
+    RecordInvoicePaymentResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RecordInvoicePaymentResponse"
+    ReissueInvoiceResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ReissueInvoiceResponse"
+    UpdateInvoiceDueDateResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateInvoiceDueDateResponse"
+    UpdateInvoiceIssueDateResponse:
+      description: RequestSuccess
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateInvoiceIssueDateResponse"
     GetProductConsumptionResponse:
       description: The response from the get product consumption action
       content:
@@ -594,6 +673,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
         param:
           type: string
           description: Single parameter that failed validation
@@ -630,6 +712,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -648,6 +733,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -666,6 +754,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -684,6 +775,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -702,6 +796,9 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -720,6 +817,89 @@ components:
         message:
           type: string
           description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
+      required:
+        - type
+        - code
+        - message
+    ActionRefusedErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - invalid_request_error
+        code:
+          type: string
+          description: Specific machine-readable error code
+        message:
+          type: string
+          description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
+      required:
+        - type
+        - code
+        - message
+    FailedDependencyErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - api_error
+        code:
+          type: string
+          description: Specific machine-readable error code
+        message:
+          type: string
+          description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
+      required:
+        - type
+        - code
+        - message
+    UnprocessableEntityErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - invalid_request_error
+        code:
+          type: string
+          description: Specific machine-readable error code
+        message:
+          type: string
+          description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
+      required:
+        - type
+        - code
+        - message
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - permission_error
+        code:
+          type: string
+          description: Specific machine-readable error code
+        message:
+          type: string
+          description: Human-readable error explanation
+        requiredScope:
+          type: string
+          description: Scope the token was missing, present on insufficient_scope errors
       required:
         - type
         - code
@@ -734,12 +914,19 @@ components:
         description:
           type: string
           description: The description of the catalog product
+        productCode:
+          type: string
+          description: The product code of the catalog product
         disableDescription:
           type: boolean
           description: Whether to disable the default description on generated line items
         externalId:
           type: string
           description: The external ID of the catalog product
+        salesForceProductId:
+          type: string
+          nullable: true
+          description: The ID of the catalog product in the Salesforce system
       required:
         - name
     CreateCatalogProductResponse:
@@ -755,12 +942,19 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
             disableDescription:
               type: boolean
               description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
             id:
               type: string
             createdAt:
@@ -791,12 +985,19 @@ components:
               description:
                 type: string
                 description: The description of the catalog product
+              productCode:
+                type: string
+                description: The product code of the catalog product
               disableDescription:
                 type: boolean
                 description: Whether to disable the default description on generated line items
               externalId:
                 type: string
                 description: The external ID of the catalog product
+              salesForceProductId:
+                type: string
+                nullable: true
+                description: The ID of the catalog product in the Salesforce system
               id:
                 type: string
               createdAt:
@@ -833,12 +1034,19 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
             disableDescription:
               type: boolean
               description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
             id:
               type: string
             createdAt:
@@ -864,12 +1072,19 @@ components:
         description:
           type: string
           description: The description of the catalog product
+        productCode:
+          type: string
+          description: The product code of the catalog product
         disableDescription:
           type: boolean
           description: Whether to disable the default description on generated line items
         externalId:
           type: string
           description: The external ID of the catalog product
+        salesForceProductId:
+          type: string
+          nullable: true
+          description: The ID of the catalog product in the Salesforce system
       additionalProperties: false
     UpdateCatalogProductResponse:
       type: object
@@ -884,12 +1099,19 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
             disableDescription:
               type: boolean
               description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
             id:
               type: string
             createdAt:
@@ -918,12 +1140,19 @@ components:
             description:
               type: string
               description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
             disableDescription:
               type: boolean
               description: Whether to disable the default description on generated line items
             externalId:
               type: string
               description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
             id:
               type: string
             createdAt:
@@ -949,12 +1178,10 @@ components:
           type: string
         email:
           type: string
-          pattern: ^(?!\.)[A-Za-z0-9_!#$%&'*+/=?^`{|}~-]+(?:\.[A-Za-z0-9_!#$%&'*+/=?^`{|}~-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$
         title:
           type: string
         phone:
           type: string
-          pattern: ^\+?[1-9]\d{4,15}$
         receiveInvoiceEmail:
           type: boolean
     CustomerSource:
@@ -964,6 +1191,7 @@ components:
         - Stripe
         - VayuEventsApi
         - Api
+        - Vayu
         - Salesforce
         - HubSpot
         - ContractExtraction
@@ -977,19 +1205,6 @@ components:
         - Trial
       description: The lifecycle status of the customer. Defaults to Active when
         omitted on creation.
-    CustomerCloudProviderSettings:
-      type: object
-      nullable: true
-      properties:
-        cloudProvider:
-          type: string
-          enum:
-            - AWS
-        cloudProviderMarketplaceId:
-          type: string
-        customerIdentifier:
-          type: string
-      description: Cloud provider settings for the customer
     Address:
       type: object
       nullable: true
@@ -1004,6 +1219,12 @@ components:
           type: string
           nullable: true
         addressText:
+          type: string
+          nullable: true
+        streetName:
+          type: string
+          nullable: true
+        apartment:
           type: string
           nullable: true
         state:
@@ -1029,10 +1250,19 @@ components:
             - Xero
             - Salesforce
             - Paddle
+            - Stripe
+            - BigQuery
+            - AwsMarketplaceDirect
+            - Plaid
+            - Redshift
+          description: The integration provider. Stripe links are saved on the customer;
+            other providers are linked via the integration registry.
         id:
           type: string
+          description: The ID of the customer in the external provider system
         name:
           type: string
+          description: The name of the customer in the external provider system
       required:
         - type
         - id
@@ -1052,6 +1282,7 @@ components:
         - ARS
         - INR
         - MXN
+        - CHF
       description: The billing currency of the customer
     IntegrationEntityTypes:
       type: string
@@ -1092,6 +1323,10 @@ components:
             - Connact
             - Xero
             - Paddle
+            - BigQuery
+            - AwsMarketplaceDirect
+            - Plaid
+            - Redshift
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           $ref: "#/components/schemas/IntegrationEntityTypes"
@@ -1109,11 +1344,23 @@ components:
       required:
         - vayuCustomFieldName
         - valueType
+    CustomFieldValue:
+      type: object
+      properties:
+        customFieldDefinitionId:
+          type: string
+        value:
+          type: string
+        fieldName:
+          type: string
+      required:
+        - customFieldDefinitionId
     CreateCustomerRequest:
       type: object
       properties:
         name:
           type: string
+          minLength: 1
           description: The name of the customer
         aliases:
           type: array
@@ -1142,6 +1389,11 @@ components:
             type: string
           default: []
           description: The tax IDs of the customer
+        crmId:
+          type: string
+          nullable: true
+          description: The ID of the customer in the CRM system. When not set directly, it
+            is read from the linked CRM integration (Salesforce, HubSpot).
         status:
           $ref: "#/components/schemas/CustomerStatus"
         taxId:
@@ -1150,7 +1402,20 @@ components:
           description: The tax ID of the customer (deprecated, use taxIds instead)
           deprecated: true
         cloudProviderSettings:
-          $ref: "#/components/schemas/CustomerCloudProviderSettings"
+          type: object
+          nullable: true
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+                - AWS
+                - GCP
+                - Azure
+            cloudProviderMarketplaceId:
+              type: string
+            customerIdentifier:
+              type: string
+          description: Cloud provider settings for the customer
         externalId:
           type: string
           description: The external ID of the customer
@@ -1160,6 +1425,10 @@ components:
           description: The ID of the customer in the ERP system
         address:
           $ref: "#/components/schemas/Address"
+        shippingAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+            - description: The shipping address of the customer
         salesForceAccountId:
           type: string
           nullable: true
@@ -1198,6 +1467,14 @@ components:
           items:
             $ref: "#/components/schemas/CustomField"
           description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+        customFieldValues:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/CustomFieldValue"
+          description: "The stored custom field values associated with the customer.
+            Read-only: ignored on create and update requests; values are set via
+            customFields."
         subsidiary:
           type: string
           nullable: true
@@ -1227,6 +1504,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -1255,6 +1533,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -1263,7 +1546,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -1273,6 +1569,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -1311,6 +1611,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -1355,6 +1663,7 @@ components:
             properties:
               name:
                 type: string
+                minLength: 1
                 description: The name of the customer
               aliases:
                 type: array
@@ -1383,6 +1692,11 @@ components:
                   type: string
                 default: []
                 description: The tax IDs of the customer
+              crmId:
+                type: string
+                nullable: true
+                description: The ID of the customer in the CRM system. When not set directly, it
+                  is read from the linked CRM integration (Salesforce, HubSpot).
               status:
                 $ref: "#/components/schemas/CustomerStatus"
               taxId:
@@ -1391,7 +1705,20 @@ components:
                 description: The tax ID of the customer (deprecated, use taxIds instead)
                 deprecated: true
               cloudProviderSettings:
-                $ref: "#/components/schemas/CustomerCloudProviderSettings"
+                type: object
+                nullable: true
+                properties:
+                  cloudProvider:
+                    type: string
+                    enum:
+                      - AWS
+                      - GCP
+                      - Azure
+                  cloudProviderMarketplaceId:
+                    type: string
+                  customerIdentifier:
+                    type: string
+                description: Cloud provider settings for the customer
               externalId:
                 type: string
                 description: The external ID of the customer
@@ -1401,6 +1728,10 @@ components:
                 description: The ID of the customer in the ERP system
               address:
                 $ref: "#/components/schemas/Address"
+              shippingAddress:
+                allOf:
+                  - $ref: "#/components/schemas/Address"
+                  - description: The shipping address of the customer
               salesForceAccountId:
                 type: string
                 nullable: true
@@ -1439,6 +1770,14 @@ components:
                 items:
                   $ref: "#/components/schemas/CustomField"
                 description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+              customFieldValues:
+                type: array
+                nullable: true
+                items:
+                  $ref: "#/components/schemas/CustomFieldValue"
+                description: "The stored custom field values associated with the customer.
+                  Read-only: ignored on create and update requests; values are
+                  set via customFields."
               subsidiary:
                 type: string
                 nullable: true
@@ -1489,6 +1828,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -1517,6 +1857,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -1525,7 +1870,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -1535,6 +1893,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -1573,6 +1935,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -1612,6 +1982,7 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
           description: The name of the customer
         aliases:
           type: array
@@ -1640,6 +2011,11 @@ components:
             type: string
           default: []
           description: The tax IDs of the customer
+        crmId:
+          type: string
+          nullable: true
+          description: The ID of the customer in the CRM system. When not set directly, it
+            is read from the linked CRM integration (Salesforce, HubSpot).
         status:
           $ref: "#/components/schemas/CustomerStatus"
         taxId:
@@ -1648,7 +2024,20 @@ components:
           description: The tax ID of the customer (deprecated, use taxIds instead)
           deprecated: true
         cloudProviderSettings:
-          $ref: "#/components/schemas/CustomerCloudProviderSettings"
+          type: object
+          nullable: true
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+                - AWS
+                - GCP
+                - Azure
+            cloudProviderMarketplaceId:
+              type: string
+            customerIdentifier:
+              type: string
+          description: Cloud provider settings for the customer
         externalId:
           type: string
           description: The external ID of the customer
@@ -1658,6 +2047,10 @@ components:
           description: The ID of the customer in the ERP system
         address:
           $ref: "#/components/schemas/Address"
+        shippingAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+            - description: The shipping address of the customer
         salesForceAccountId:
           type: string
           nullable: true
@@ -1696,6 +2089,14 @@ components:
           items:
             $ref: "#/components/schemas/CustomField"
           description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+        customFieldValues:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/CustomFieldValue"
+          description: "The stored custom field values associated with the customer.
+            Read-only: ignored on create and update requests; values are set via
+            customFields."
         subsidiary:
           type: string
           nullable: true
@@ -1724,6 +2125,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -1752,6 +2154,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -1760,7 +2167,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -1770,6 +2190,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -1808,6 +2232,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -1850,6 +2282,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -1878,6 +2311,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -1886,7 +2324,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -1896,6 +2347,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -1934,6 +2389,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -2069,10 +2532,17 @@ components:
               type: string
               minLength: 1
               description: The name of the event that the meter is tracking.
+            productCode:
+              type: string
+              description: The product code of the meter
             aggregationMethod:
               $ref: "#/components/schemas/AggregationMethod"
             filter:
               $ref: "#/components/schemas/Filter"
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the meter in the Salesforce system
             id:
               type: string
             createdAt:
@@ -2101,10 +2571,17 @@ components:
           type: string
           minLength: 1
           description: The name of the event that the meter is tracking.
+        productCode:
+          type: string
+          description: The product code of the meter
         aggregationMethod:
           $ref: "#/components/schemas/AggregationMethod"
         filter:
           $ref: "#/components/schemas/Filter"
+        salesForceProductId:
+          type: string
+          nullable: true
+          description: The ID of the meter in the Salesforce system
       additionalProperties: false
     UpdateMeterResponse:
       type: object
@@ -2120,10 +2597,17 @@ components:
               type: string
               minLength: 1
               description: The name of the event that the meter is tracking.
+            productCode:
+              type: string
+              description: The product code of the meter
             aggregationMethod:
               $ref: "#/components/schemas/AggregationMethod"
             filter:
               $ref: "#/components/schemas/Filter"
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the meter in the Salesforce system
             id:
               type: string
             createdAt:
@@ -2155,10 +2639,17 @@ components:
               type: string
               minLength: 1
               description: The name of the event that the meter is tracking.
+            productCode:
+              type: string
+              description: The product code of the meter
             aggregationMethod:
               $ref: "#/components/schemas/AggregationMethod"
             filter:
               $ref: "#/components/schemas/Filter"
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the meter in the Salesforce system
             id:
               type: string
             createdAt:
@@ -2195,10 +2686,17 @@ components:
                 type: string
                 minLength: 1
                 description: The name of the event that the meter is tracking.
+              productCode:
+                type: string
+                description: The product code of the meter
               aggregationMethod:
                 $ref: "#/components/schemas/AggregationMethod"
               filter:
                 $ref: "#/components/schemas/Filter"
+              salesForceProductId:
+                type: string
+                nullable: true
+                description: The ID of the meter in the Salesforce system
               id:
                 type: string
               createdAt:
@@ -2274,6 +2772,8 @@ components:
           type: string
           enum:
             - AWS
+            - GCP
+            - Azure
         cloudProviderMarketplaceId:
           type: string
         dimension:
@@ -2504,6 +3004,12 @@ components:
                       price:
                         type: number
                         minimum: 0
+                      quantity:
+                        type: integer
+                        minimum: 0
+                        description: The number of units this term is charged for. When set, `price` is
+                          the rate per unit and the term is worth price x
+                          quantity. Leave unset for a flat fee.
                       installments:
                         type: array
                         nullable: true
@@ -2865,7 +3371,9 @@ components:
               - scheduling
               - pricing
           minItems: 1
-          description: The products that the product group is associated with
+          description: The usage-priced (PER_UNIT or TIERED) products that the product
+            group is associated with. A fixed-priced product cannot be a member
+            of a group; list it under products instead.
         baseAmount:
           type: number
           nullable: true
@@ -2940,17 +3448,6 @@ components:
       required:
         - displayName
         - products
-    CustomFieldValue:
-      type: object
-      properties:
-        customFieldDefinitionId:
-          type: string
-        value:
-          type: string
-        fieldName:
-          type: string
-      required:
-        - customFieldDefinitionId
     ContractStatus:
       type: string
       enum:
@@ -2963,6 +3460,22 @@ components:
         - PendingTermination
         - Error
       description: The status of the contract
+    ContractAttachmentInput:
+      type: object
+      properties:
+        fileName:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The name of the file, including its extension
+          example: MSA-signed.pdf
+        content:
+          type: string
+          minLength: 1
+          description: The base64-encoded content of the PDF file
+      required:
+        - fileName
+        - content
     GetContractResponse:
       type: object
       properties:
@@ -3114,6 +3627,12 @@ components:
                           price:
                             type: number
                             minimum: 0
+                          quantity:
+                            type: integer
+                            minimum: 0
+                            description: The number of units this term is charged for. When set, `price` is
+                              the rate per unit and the term is worth price x
+                              quantity. Leave unset for a flat fee.
                           installments:
                             type: array
                             nullable: true
@@ -3538,6 +4057,16 @@ components:
               description: A caller-owned external id for the contract. Once set, the contract
                 can be fetched or deleted by passing this value in place of the
                 Vayu id on the /contracts/{contractId} endpoints.
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/ContractAttachmentInput"
+              maxItems: 10
+              description: PDF files to attach to the contract, as base64-encoded content.
+                Accepted only when creating a contract and never returned in
+                responses. PDF files only, at most 10 files and at most 4 MB in
+                total.
+              writeOnly: true
             id:
               type: string
             createdAt:
@@ -3705,6 +4234,12 @@ components:
                           price:
                             type: number
                             minimum: 0
+                          quantity:
+                            type: integer
+                            minimum: 0
+                            description: The number of units this term is charged for. When set, `price` is
+                              the rate per unit and the term is worth price x
+                              quantity. Leave unset for a flat fee.
                           installments:
                             type: array
                             nullable: true
@@ -4129,6 +4664,16 @@ components:
               description: A caller-owned external id for the contract. Once set, the contract
                 can be fetched or deleted by passing this value in place of the
                 Vayu id on the /contracts/{contractId} endpoints.
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/ContractAttachmentInput"
+              maxItems: 10
+              description: PDF files to attach to the contract, as base64-encoded content.
+                Accepted only when creating a contract and never returned in
+                responses. PDF files only, at most 10 files and at most 4 MB in
+                total.
+              writeOnly: true
             id:
               type: string
             createdAt:
@@ -4296,6 +4841,12 @@ components:
                       price:
                         type: number
                         minimum: 0
+                      quantity:
+                        type: integer
+                        minimum: 0
+                        description: The number of units this term is charged for. When set, `price` is
+                          the rate per unit and the term is worth price x
+                          quantity. Leave unset for a flat fee.
                       installments:
                         type: array
                         nullable: true
@@ -4720,6 +5271,16 @@ components:
           description: A caller-owned external id for the contract. Once set, the contract
             can be fetched or deleted by passing this value in place of the Vayu
             id on the /contracts/{contractId} endpoints.
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContractAttachmentInput"
+          maxItems: 10
+          description: PDF files to attach to the contract, as base64-encoded content.
+            Accepted only when creating a contract and never returned in
+            responses. PDF files only, at most 10 files and at most 4 MB in
+            total.
+          writeOnly: true
       required:
         - startDate
         - customerId
@@ -4874,6 +5435,12 @@ components:
                           price:
                             type: number
                             minimum: 0
+                          quantity:
+                            type: integer
+                            minimum: 0
+                            description: The number of units this term is charged for. When set, `price` is
+                              the rate per unit and the term is worth price x
+                              quantity. Leave unset for a flat fee.
                           installments:
                             type: array
                             nullable: true
@@ -5298,6 +5865,16 @@ components:
               description: A caller-owned external id for the contract. Once set, the contract
                 can be fetched or deleted by passing this value in place of the
                 Vayu id on the /contracts/{contractId} endpoints.
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/ContractAttachmentInput"
+              maxItems: 10
+              description: PDF files to attach to the contract, as base64-encoded content.
+                Accepted only when creating a contract and never returned in
+                responses. PDF files only, at most 10 files and at most 4 MB in
+                total.
+              writeOnly: true
             id:
               type: string
             createdAt:
@@ -5586,19 +6163,6 @@ components:
             - deletedAt
       required:
         - measurement
-    FullDayPeriod:
-      type: object
-      properties:
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-      required:
-        - startTime
-        - endTime
-      description: The billing cycle of the invoice, consists of a start and end date
     InvoiceBillingStatus:
       type: string
       enum:
@@ -5639,9 +6203,37 @@ components:
               type: string
             name:
               type: string
+            integration:
+              type: string
+              enum:
+                - NetSuite
+                - QuickBooks
+                - Morning
+                - Xero
           required:
             - name
       description: The payment information of the invoice
+    InvoiceReviewStatus:
+      type: string
+      enum:
+        - Draft
+        - Approved
+        - InReview
+        - Future
+      description: The review status of the invoice
+    Period:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+      required:
+        - startTime
+        - endTime
+      description: The billing cycle of the invoice, consists of a start and end date
     LineItem:
       type: object
       properties:
@@ -5672,9 +6264,79 @@ components:
             - creditsUsed
             - tax
           description: The revenue breakdown of the line item
+        productName:
+          type: string
+          description: The name of the product on the line
+        description:
+          type: string
+          description: The description shown on the line
+        servicePeriod:
+          allOf:
+            - $ref: "#/components/schemas/Period"
+            - description: The service period the line covers
       required:
         - invoiceId
         - revenueBreakdown
+    InvoicePayment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the payment
+        date:
+          type: string
+          description: The date of the payment
+          format: date-time
+        amount:
+          type: number
+          description: The amount of the payment
+        currency:
+          allOf:
+            - $ref: "#/components/schemas/Currency"
+            - description: The currency of the payment
+        paymentMethod:
+          type: string
+          description: The method the payment was made with
+        status:
+          type: string
+          description: The status of the payment
+      required:
+        - id
+        - date
+        - amount
+        - currency
+    InvoiceIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - NetSuite
+            - QuickBooks
+            - Morning
+            - Hubspot
+            - Anrok
+            - Snowflake
+            - Connact
+            - Xero
+            - Salesforce
+            - Paddle
+            - Stripe
+            - BigQuery
+            - AwsMarketplaceDirect
+            - Plaid
+            - Redshift
+          description: The external system the invoice was exported to
+        id:
+          type: string
+          description: The id of the invoice in the external system
+        name:
+          type: string
+          description: The document number of the invoice in the external system, when
+            available
+      required:
+        - type
+        - id
     GetInvoiceResponse:
       type: object
       properties:
@@ -5694,8 +6356,6 @@ components:
               minLength: 1
               description: The name of the invoice, usually a description of the billing
                 period
-            billingCycle:
-              $ref: "#/components/schemas/FullDayPeriod"
             revenueBreakdown:
               type: object
               properties:
@@ -5728,16 +6388,63 @@ components:
               nullable: true
               description: The due date of the invoice
               format: date-time
+            invoiceNumber:
+              type: string
+              description: The number of the invoice
+            reviewStatus:
+              $ref: "#/components/schemas/InvoiceReviewStatus"
+            approvedAt:
+              type: string
+              description: The date the invoice was approved
+              format: date-time
+            issuedAt:
+              type: string
+              nullable: true
+              description: The date the invoice was issued
+              format: date-time
             accountId:
               type: string
               description: The id of the account that the invoice is associated with
+            billingCycle:
+              $ref: "#/components/schemas/Period"
             lineItems:
               type: array
               items:
                 $ref: "#/components/schemas/LineItem"
+            payments:
+              type: array
+              items:
+                $ref: "#/components/schemas/InvoicePayment"
+              description: The payments recorded for the invoice, including failed and pending
+                ones; use status to filter
             amount:
               type: number
               description: The total amount of the invoice
+            purchaseOrder:
+              type: string
+              description: The purchase order of the invoice
+            notes:
+              type: string
+              description: The notes (memo) of the invoice
+            contractName:
+              type: string
+              description: The name of the plan the contract of the invoice is based on
+            customFieldValues:
+              type: array
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: The custom field values of the invoice's customer and contract.
+                Customer field names are prefixed with customer_ and contract
+                field names with contract_.
+            externalIntegration:
+              type: array
+              items:
+                $ref: "#/components/schemas/InvoiceIntegration"
+              description: External systems the invoice was exported to. Each entry carries
+                the provider, the id of the invoice in that system and, when
+                available, its document number there. An empty list means the
+                invoice was not exported; the field is omitted when the lookup
+                is temporarily unavailable.
             isTrial:
               type: boolean
               description: Whether the invoice belongs to a trial contract
@@ -5752,17 +6459,161 @@ components:
           required:
             - customerId
             - name
-            - billingCycle
             - revenueBreakdown
             - billingStatus
             - dueDate
+            - reviewStatus
+            - issuedAt
             - accountId
+            - billingCycle
             - lineItems
+            - payments
             - amount
             - isTrial
             - id
             - createdAt
             - updatedAt
+      required:
+        - invoice
+    DeleteInvoiceResponse:
+      type: object
+      properties:
+        invoice:
+          type: object
+          properties:
+            customerId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the customer that the invoice is associated with
+            contractId:
+              type: string
+              pattern: ^[0-9a-fA-F]{24}$
+              description: The id of the contract that the invoice is associated with
+            name:
+              type: string
+              minLength: 1
+              description: The name of the invoice, usually a description of the billing
+                period
+            revenueBreakdown:
+              type: object
+              properties:
+                total:
+                  type: number
+                subtotal:
+                  type: number
+                overage:
+                  type: number
+                discount:
+                  type: number
+                creditsUsed:
+                  type: number
+                tax:
+                  type: number
+              required:
+                - total
+                - subtotal
+                - overage
+                - discount
+                - creditsUsed
+                - tax
+              description: The breakdown of the revenue for the invoice
+            billingStatus:
+              $ref: "#/components/schemas/InvoiceBillingStatus"
+            paymentInfo:
+              $ref: "#/components/schemas/PaymentInfo"
+            dueDate:
+              type: string
+              nullable: true
+              description: The due date of the invoice
+              format: date-time
+            invoiceNumber:
+              type: string
+              description: The number of the invoice
+            reviewStatus:
+              $ref: "#/components/schemas/InvoiceReviewStatus"
+            approvedAt:
+              type: string
+              description: The date the invoice was approved
+              format: date-time
+            issuedAt:
+              type: string
+              nullable: true
+              description: The date the invoice was issued
+              format: date-time
+            accountId:
+              type: string
+              description: The id of the account that the invoice is associated with
+            billingCycle:
+              $ref: "#/components/schemas/Period"
+            lineItems:
+              type: array
+              items:
+                $ref: "#/components/schemas/LineItem"
+            payments:
+              type: array
+              items:
+                $ref: "#/components/schemas/InvoicePayment"
+              description: The payments recorded for the invoice, including failed and pending
+                ones; use status to filter
+            amount:
+              type: number
+              description: The total amount of the invoice
+            purchaseOrder:
+              type: string
+              description: The purchase order of the invoice
+            notes:
+              type: string
+              description: The notes (memo) of the invoice
+            contractName:
+              type: string
+              description: The name of the plan the contract of the invoice is based on
+            customFieldValues:
+              type: array
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: The custom field values of the invoice's customer and contract.
+                Customer field names are prefixed with customer_ and contract
+                field names with contract_.
+            externalIntegration:
+              type: array
+              items:
+                $ref: "#/components/schemas/InvoiceIntegration"
+              description: External systems the invoice was exported to. Each entry carries
+                the provider, the id of the invoice in that system and, when
+                available, its document number there. An empty list means the
+                invoice was not exported; the field is omitted when the lookup
+                is temporarily unavailable.
+            isTrial:
+              type: boolean
+              description: Whether the invoice belongs to a trial contract
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            deletedAt:
+              type: string
+          required:
+            - customerId
+            - name
+            - revenueBreakdown
+            - billingStatus
+            - dueDate
+            - reviewStatus
+            - issuedAt
+            - accountId
+            - billingCycle
+            - lineItems
+            - payments
+            - amount
+            - isTrial
+            - id
+            - createdAt
+            - updatedAt
+            - deletedAt
       required:
         - invoice
     CustomerRelationType:
@@ -5771,6 +6622,8 @@ components:
         - accumulateUsage
         - accumulateCharges
         - erpInvoiceSyncOnBehalfParent
+        - billToParent
+        - reportingOnly
       default: accumulateUsage
       description: Relation type between parent and child customer. Defaults to
         accumulateUsage.
@@ -5882,6 +6735,24 @@ components:
           minimum: 0
           exclusiveMinimum: true
         - $ref: "#/components/schemas/UnlimitedDuration"
+    BillingDateAnchor:
+      type: string
+      enum:
+        - Earliest
+        - Latest
+    BillingDate:
+      type: object
+      nullable: true
+      properties:
+        anchor:
+          $ref: "#/components/schemas/BillingDateAnchor"
+        dayOfMonth:
+          type: integer
+          minimum: 1
+          maximum: 31
+      required:
+        - anchor
+        - dayOfMonth
     PlanBillingData:
       type: object
       properties:
@@ -5900,11 +6771,44 @@ components:
         proRated:
           type: boolean
           nullable: true
+        billingDate:
+          $ref: "#/components/schemas/BillingDate"
+        renewalDuration:
+          type: number
+          nullable: true
+          description: months each automatic renewal runs for; the term before it when not
+            stated
+        renewsUpToNTimes:
+          type: number
+          nullable: true
+          description: how many times the contract renews automatically; no limit when not
+            stated
       required:
         - billingInterval
         - duration
         - paymentTerm
         - autoRenewal
+    PlanBillingDataInput:
+      allOf:
+        - $ref: "#/components/schemas/PlanBillingData"
+        - type: object
+          properties:
+            renewalDuration:
+              type: integer
+              nullable: true
+              minimum: 0
+              exclusiveMinimum: true
+              maximum: 84
+              description: months each automatic renewal runs for; the term before it when not
+                stated
+            renewsUpToNTimes:
+              type: integer
+              nullable: true
+              minimum: 0
+              exclusiveMinimum: true
+              maximum: 100
+              description: how many times the contract renews automatically; no limit when not
+                stated
       description: The billing data of the plan. The billing data contains the billing
         interval, the plan duration the payment terms and auto renewal, and the
         billing method.
@@ -5921,7 +6825,7 @@ components:
             status:
               $ref: "#/components/schemas/PlanStatus"
             billingData:
-              $ref: "#/components/schemas/PlanBillingData"
+              $ref: "#/components/schemas/PlanBillingDataInput"
             externalId:
               type: string
               nullable: true
@@ -5958,7 +6862,7 @@ components:
             status:
               $ref: "#/components/schemas/PlanStatus"
             billingData:
-              $ref: "#/components/schemas/PlanBillingData"
+              $ref: "#/components/schemas/PlanBillingDataInput"
             externalId:
               type: string
               nullable: true
@@ -6000,7 +6904,7 @@ components:
               status:
                 $ref: "#/components/schemas/PlanStatus"
               billingData:
-                $ref: "#/components/schemas/PlanBillingData"
+                $ref: "#/components/schemas/PlanBillingDataInput"
               externalId:
                 type: string
                 nullable: true
@@ -6039,6 +6943,7 @@ components:
         - Contract
         - Invoice
         - LineItem
+        - Product
       description: The Vayu entity this field applies to
     CreateCustomFieldRequest:
       type: object
@@ -6067,6 +6972,10 @@ components:
             - Connact
             - Xero
             - Paddle
+            - BigQuery
+            - AwsMarketplaceDirect
+            - Plaid
+            - Redshift
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           allOf:
@@ -6117,6 +7026,10 @@ components:
                 - Connact
                 - Xero
                 - Paddle
+                - BigQuery
+                - AwsMarketplaceDirect
+                - Plaid
+                - Redshift
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -6182,6 +7095,10 @@ components:
                   - Connact
                   - Xero
                   - Paddle
+                  - BigQuery
+                  - AwsMarketplaceDirect
+                  - Plaid
+                  - Redshift
                 description: The integration provider (e.g., "Salesforce", "HubSpot")
               integrationEntityType:
                 allOf:
@@ -6253,6 +7170,10 @@ components:
                 - Connact
                 - Xero
                 - Paddle
+                - BigQuery
+                - AwsMarketplaceDirect
+                - Plaid
+                - Redshift
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -6313,6 +7234,10 @@ components:
             - Connact
             - Xero
             - Paddle
+            - BigQuery
+            - AwsMarketplaceDirect
+            - Plaid
+            - Redshift
           description: The integration provider (e.g., "Salesforce", "HubSpot")
         integrationEntityType:
           allOf:
@@ -6360,6 +7285,10 @@ components:
                 - Connact
                 - Xero
                 - Paddle
+                - BigQuery
+                - AwsMarketplaceDirect
+                - Plaid
+                - Redshift
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -6423,6 +7352,10 @@ components:
                 - Connact
                 - Xero
                 - Paddle
+                - BigQuery
+                - AwsMarketplaceDirect
+                - Plaid
+                - Redshift
               description: The integration provider (e.g., "Salesforce", "HubSpot")
             integrationEntityType:
               allOf:
@@ -6464,6 +7397,7 @@ components:
       properties:
         refreshToken:
           type: string
+          minLength: 1
           description: The refresh token issued for the authentication process. It is
             required to obtain a new access token.
       required:
@@ -6628,10 +7562,17 @@ components:
           type: string
           minLength: 1
           description: The name of the event that the meter is tracking.
+        productCode:
+          type: string
+          description: The product code of the meter
         aggregationMethod:
           $ref: "#/components/schemas/AggregationMethod"
         filter:
           $ref: "#/components/schemas/Filter"
+        salesForceProductId:
+          type: string
+          nullable: true
+          description: The ID of the meter in the Salesforce system
       required:
         - name
         - eventName
@@ -7424,7 +8365,7 @@ components:
         - dataPoints
         - period
         - groupBy
-    BillingCycleStatus:
+    CreditLedgerEntryType:
       type: string
       enum:
         - Grant
@@ -7446,6 +8387,10 @@ components:
         - Connact
         - Xero
         - Paddle
+        - BigQuery
+        - AwsMarketplaceDirect
+        - Plaid
+        - Redshift
     SyncStatus:
       type: string
       enum:
@@ -7461,6 +8406,8 @@ components:
         integrationProvider:
           $ref: "#/components/schemas/IntegrationProviders"
         integrationExternalId:
+          type: string
+        subsidiaryId:
           type: string
         syncStatus:
           $ref: "#/components/schemas/SyncStatus"
@@ -7489,7 +8436,7 @@ components:
           type: string
           format: date-time
         type:
-          $ref: "#/components/schemas/BillingCycleStatus"
+          $ref: "#/components/schemas/CreditLedgerEntryType"
         amount:
           type: number
         balanceAfterEntry:
@@ -7498,7 +8445,11 @@ components:
           type: string
         erpId:
           type: string
+        creditNoteNumber:
+          type: string
         contractId:
+          type: string
+        description:
           type: string
         integrationEntities:
           type: array
@@ -7622,6 +8573,7 @@ components:
         - CurrencyCommitmentUsageCrossed
         - FinalTierExceeded
         - InvoicePaymentStatusChanged
+        - ContractAnniversary
         - InvoiceSendFailed
         - CreditPoolDepleted
         - CreditPoolThresholdCrossed
@@ -7630,7 +8582,12 @@ components:
         - CustomerCreated
         - ContractCreated
         - InvoiceIssueDateArrived
+        - InvoicePastDue
+        - InvoiceIssueDateApproaching
+        - ContractExpirationApproaching
         - MeteringHealthDegraded
+        - EventsIngestionStopped
+        - CustomerRelationConflict
         - PingTest
     WebhookSubscribeRequest:
       type: object
@@ -7643,6 +8600,13 @@ components:
           type: number
         recurringThreshold:
           type: number
+        days:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+          minItems: 1
+          maxItems: 30
       required:
         - callbackUrl
         - eventType
@@ -7654,6 +8618,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -7682,6 +8647,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -7690,7 +8660,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -7700,6 +8683,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -7738,6 +8725,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -7844,6 +8839,7 @@ components:
           properties:
             name:
               type: string
+              minLength: 1
               description: The name of the customer
             aliases:
               type: array
@@ -7872,6 +8868,11 @@ components:
                 type: string
               default: []
               description: The tax IDs of the customer
+            crmId:
+              type: string
+              nullable: true
+              description: The ID of the customer in the CRM system. When not set directly, it
+                is read from the linked CRM integration (Salesforce, HubSpot).
             status:
               $ref: "#/components/schemas/CustomerStatus"
             taxId:
@@ -7880,7 +8881,20 @@ components:
               description: The tax ID of the customer (deprecated, use taxIds instead)
               deprecated: true
             cloudProviderSettings:
-              $ref: "#/components/schemas/CustomerCloudProviderSettings"
+              type: object
+              nullable: true
+              properties:
+                cloudProvider:
+                  type: string
+                  enum:
+                    - AWS
+                    - GCP
+                    - Azure
+                cloudProviderMarketplaceId:
+                  type: string
+                customerIdentifier:
+                  type: string
+              description: Cloud provider settings for the customer
             externalId:
               type: string
               description: The external ID of the customer
@@ -7890,6 +8904,10 @@ components:
               description: The ID of the customer in the ERP system
             address:
               $ref: "#/components/schemas/Address"
+            shippingAddress:
+              allOf:
+                - $ref: "#/components/schemas/Address"
+                - description: The shipping address of the customer
             salesForceAccountId:
               type: string
               nullable: true
@@ -7928,6 +8946,14 @@ components:
               items:
                 $ref: "#/components/schemas/CustomField"
               description: Custom fields from CRM systems (Salesforce, HubSpot, etc.)
+            customFieldValues:
+              type: array
+              nullable: true
+              items:
+                $ref: "#/components/schemas/CustomFieldValue"
+              description: "The stored custom field values associated with the customer.
+                Read-only: ignored on create and update requests; values are set
+                via customFields."
             subsidiary:
               type: string
               nullable: true
@@ -8111,6 +9137,12 @@ components:
                           price:
                             type: number
                             minimum: 0
+                          quantity:
+                            type: integer
+                            minimum: 0
+                            description: The number of units this term is charged for. When set, `price` is
+                              the rate per unit and the term is worth price x
+                              quantity. Leave unset for a flat fee.
                           installments:
                             type: array
                             nullable: true
@@ -8535,6 +9567,16 @@ components:
               description: A caller-owned external id for the contract. Once set, the contract
                 can be fetched or deleted by passing this value in place of the
                 Vayu id on the /contracts/{contractId} endpoints.
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/ContractAttachmentInput"
+              maxItems: 10
+              description: PDF files to attach to the contract, as base64-encoded content.
+                Accepted only when creating a contract and never returned in
+                responses. PDF files only, at most 10 files and at most 4 MB in
+                total.
+              writeOnly: true
             id:
               type: string
             createdAt:
@@ -8702,6 +9744,12 @@ components:
                             price:
                               type: number
                               minimum: 0
+                            quantity:
+                              type: integer
+                              minimum: 0
+                              description: The number of units this term is charged for. When set, `price` is
+                                the rate per unit and the term is worth price x
+                                quantity. Leave unset for a flat fee.
                             installments:
                               type: array
                               nullable: true
@@ -9127,6 +10175,16 @@ components:
                 description: A caller-owned external id for the contract. Once set, the contract
                   can be fetched or deleted by passing this value in place of
                   the Vayu id on the /contracts/{contractId} endpoints.
+              attachments:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContractAttachmentInput"
+                maxItems: 10
+                description: PDF files to attach to the contract, as base64-encoded content.
+                  Accepted only when creating a contract and never returned in
+                  responses. PDF files only, at most 10 files and at most 4 MB
+                  in total.
+                writeOnly: true
               id:
                 type: string
               createdAt:
@@ -9205,6 +10263,299 @@ components:
           description: The identifier of the contract whose credit grants were refreshed
       required:
         - contractId
+    GetCatalogProductByNameResponse:
+      type: object
+      properties:
+        catalogProduct:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the catalog product
+            description:
+              type: string
+              description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
+            externalId:
+              type: string
+              description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+          description: The catalog product matching the provided name
+      required:
+        - catalogProduct
+    GetCatalogProductByIntegrationIdResponse:
+      type: object
+      properties:
+        catalogProduct:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the catalog product
+            description:
+              type: string
+              description: The description of the catalog product
+            productCode:
+              type: string
+              description: The product code of the catalog product
+            disableDescription:
+              type: boolean
+              description: Whether to disable the default description on generated line items
+            externalId:
+              type: string
+              description: The external ID of the catalog product
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the catalog product in the Salesforce system
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - id
+            - createdAt
+            - updatedAt
+    GetMeterByNameResponse:
+      type: object
+      properties:
+        meter:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the meter
+            eventName:
+              type: string
+              minLength: 1
+              description: The name of the event that the meter is tracking.
+            productCode:
+              type: string
+              description: The product code of the meter
+            aggregationMethod:
+              $ref: "#/components/schemas/AggregationMethod"
+            filter:
+              $ref: "#/components/schemas/Filter"
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the meter in the Salesforce system
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - eventName
+            - aggregationMethod
+            - id
+            - createdAt
+            - updatedAt
+          description: The meter matching the provided name
+      required:
+        - meter
+    GetMeterByIntegrationIdResponse:
+      type: object
+      properties:
+        meter:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the meter
+            eventName:
+              type: string
+              minLength: 1
+              description: The name of the event that the meter is tracking.
+            productCode:
+              type: string
+              description: The product code of the meter
+            aggregationMethod:
+              $ref: "#/components/schemas/AggregationMethod"
+            filter:
+              $ref: "#/components/schemas/Filter"
+            salesForceProductId:
+              type: string
+              nullable: true
+              description: The ID of the meter in the Salesforce system
+            id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+            - name
+            - eventName
+            - aggregationMethod
+            - id
+            - createdAt
+            - updatedAt
+    Invoice:
+      type: object
+      properties:
+        customerId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the customer that the invoice is associated with
+        contractId:
+          type: string
+          pattern: ^[0-9a-fA-F]{24}$
+          description: The id of the contract that the invoice is associated with
+        name:
+          type: string
+          minLength: 1
+          description: The name of the invoice, usually a description of the billing period
+        revenueBreakdown:
+          type: object
+          properties:
+            total:
+              type: number
+            subtotal:
+              type: number
+            overage:
+              type: number
+            discount:
+              type: number
+            creditsUsed:
+              type: number
+            tax:
+              type: number
+          required:
+            - total
+            - subtotal
+            - overage
+            - discount
+            - creditsUsed
+            - tax
+          description: The breakdown of the revenue for the invoice
+        billingStatus:
+          $ref: "#/components/schemas/InvoiceBillingStatus"
+        paymentInfo:
+          $ref: "#/components/schemas/PaymentInfo"
+        dueDate:
+          type: string
+          nullable: true
+          description: The due date of the invoice
+          format: date-time
+        invoiceNumber:
+          type: string
+          description: The number of the invoice
+        reviewStatus:
+          $ref: "#/components/schemas/InvoiceReviewStatus"
+        approvedAt:
+          type: string
+          description: The date the invoice was approved
+          format: date-time
+        issuedAt:
+          type: string
+          nullable: true
+          description: The date the invoice was issued
+          format: date-time
+        accountId:
+          type: string
+          description: The id of the account that the invoice is associated with
+        billingCycle:
+          $ref: "#/components/schemas/Period"
+        lineItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/LineItem"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoicePayment"
+          description: The payments recorded for the invoice, including failed and pending
+            ones; use status to filter
+        amount:
+          type: number
+          description: The total amount of the invoice
+        purchaseOrder:
+          type: string
+          description: The purchase order of the invoice
+        notes:
+          type: string
+          description: The notes (memo) of the invoice
+        contractName:
+          type: string
+          description: The name of the plan the contract of the invoice is based on
+        customFieldValues:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFieldValue"
+          description: The custom field values of the invoice's customer and contract.
+            Customer field names are prefixed with customer_ and contract field
+            names with contract_.
+        externalIntegration:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoiceIntegration"
+          description: External systems the invoice was exported to. Each entry carries
+            the provider, the id of the invoice in that system and, when
+            available, its document number there. An empty list means the
+            invoice was not exported; the field is omitted when the lookup is
+            temporarily unavailable.
+        isTrial:
+          type: boolean
+          description: Whether the invoice belongs to a trial contract
+      required:
+        - customerId
+        - name
+        - revenueBreakdown
+        - billingStatus
+        - dueDate
+        - reviewStatus
+        - issuedAt
+        - accountId
+        - billingCycle
+        - lineItems
+        - payments
+        - amount
+        - isTrial
+      description: The cancelled invoice
+    CancelInvoiceResponse:
+      type: object
+      properties:
+        invoice:
+          $ref: "#/components/schemas/Invoice"
+      required:
+        - invoice
     InvoicePaymentStatusResponse:
       type: object
       properties:
@@ -9254,8 +10605,6 @@ components:
                 minLength: 1
                 description: The name of the invoice, usually a description of the billing
                   period
-              billingCycle:
-                $ref: "#/components/schemas/FullDayPeriod"
               revenueBreakdown:
                 type: object
                 properties:
@@ -9288,16 +10637,63 @@ components:
                 nullable: true
                 description: The due date of the invoice
                 format: date-time
+              invoiceNumber:
+                type: string
+                description: The number of the invoice
+              reviewStatus:
+                $ref: "#/components/schemas/InvoiceReviewStatus"
+              approvedAt:
+                type: string
+                description: The date the invoice was approved
+                format: date-time
+              issuedAt:
+                type: string
+                nullable: true
+                description: The date the invoice was issued
+                format: date-time
               accountId:
                 type: string
                 description: The id of the account that the invoice is associated with
+              billingCycle:
+                $ref: "#/components/schemas/Period"
               lineItems:
                 type: array
                 items:
                   $ref: "#/components/schemas/LineItem"
+              payments:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InvoicePayment"
+                description: The payments recorded for the invoice, including failed and pending
+                  ones; use status to filter
               amount:
                 type: number
                 description: The total amount of the invoice
+              purchaseOrder:
+                type: string
+                description: The purchase order of the invoice
+              notes:
+                type: string
+                description: The notes (memo) of the invoice
+              contractName:
+                type: string
+                description: The name of the plan the contract of the invoice is based on
+              customFieldValues:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomFieldValue"
+                description: The custom field values of the invoice's customer and contract.
+                  Customer field names are prefixed with customer_ and contract
+                  field names with contract_.
+              externalIntegration:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InvoiceIntegration"
+                description: External systems the invoice was exported to. Each entry carries
+                  the provider, the id of the invoice in that system and, when
+                  available, its document number there. An empty list means the
+                  invoice was not exported; the field is omitted when the lookup
+                  is temporarily unavailable.
               isTrial:
                 type: boolean
                 description: Whether the invoice belongs to a trial contract
@@ -9312,12 +10708,15 @@ components:
             required:
               - customerId
               - name
-              - billingCycle
               - revenueBreakdown
               - billingStatus
               - dueDate
+              - reviewStatus
+              - issuedAt
               - accountId
+              - billingCycle
               - lineItems
+              - payments
               - amount
               - isTrial
               - id
@@ -9333,6 +10732,130 @@ components:
         - invoices
         - total
         - hasMore
+    RecordInvoicePaymentRequest:
+      type: object
+      properties:
+        date:
+          type: string
+          description: When the payment was received, as an ISO 8601 date-time. Defaults
+            to the time of the request.
+          format: date-time
+        paymentMethod:
+          type: string
+          description: The method the payment was made with, for example "Wire transfer"
+        transactionId:
+          type: string
+          description: The reference of the payment in the system it was made through, for
+            example a bank reference. It can be used once per invoice.
+        note:
+          type: string
+          description: A free-text note stored with the payment
+        paymentMethodId:
+          type: string
+          description: The id of the payment method in your connected accounting system.
+            Used when the payment is exported there.
+        depositTo:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            integration:
+              type: string
+              enum:
+                - NetSuite
+                - QuickBooks
+                - Morning
+                - Xero
+          required:
+            - name
+          description: "The deposit account in your connected accounting system that the
+            payment is deposited to: its id, its name and the integration it
+            belongs to. Used when the payment is exported there."
+        amount:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          description: The amount received, in the currency of the invoice. It must be
+            greater than 0 and may be lower than what is still owed.
+        idempotencyKey:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: A unique value you generate for this payment, up to 255 characters.
+            Send the same value when you retry a request so that the payment is
+            recorded only once.
+      required:
+        - amount
+        - idempotencyKey
+    RecordInvoicePaymentResponse:
+      type: object
+      properties:
+        invoice:
+          allOf:
+            - $ref: "#/components/schemas/Invoice"
+            - description: The invoice as it is after the payment was recorded
+      required:
+        - invoice
+    ReissueInvoiceResponse:
+      type: object
+      properties:
+        invoice:
+          allOf:
+            - $ref: "#/components/schemas/Invoice"
+            - description: The original invoice after the reissue. It is now cancelled.
+        replacementInvoiceId:
+          type: string
+          nullable: true
+          description: The id of the replacement invoice. For a manually created invoice
+            it is returned by the call that reissues it, and only by that call.
+            For an invoice generated from a contract it is null while the
+            replacement is still being generated. A later call returns it once
+            the replacement exists and can be matched to this invoice; if it
+            cannot be matched, the call returns null and asks again for the
+            replacement to be generated.
+      required:
+        - invoice
+        - replacementInvoiceId
+    UpdateInvoiceDueDateRequest:
+      type: object
+      properties:
+        dueDate:
+          type: string
+          description: The new due date, as an ISO 8601 date-time. A date without a time
+            is read as midnight UTC.
+          format: date-time
+      required:
+        - dueDate
+    UpdateInvoiceDueDateResponse:
+      type: object
+      properties:
+        invoice:
+          allOf:
+            - $ref: "#/components/schemas/Invoice"
+            - description: The invoice with its updated due date
+      required:
+        - invoice
+    UpdateInvoiceIssueDateRequest:
+      type: object
+      properties:
+        issuedAt:
+          type: string
+          description: The new issue date, as an ISO 8601 date-time. A date without a time
+            is read as midnight UTC.
+          format: date-time
+      required:
+        - issuedAt
+    UpdateInvoiceIssueDateResponse:
+      type: object
+      properties:
+        invoice:
+          allOf:
+            - $ref: "#/components/schemas/Invoice"
+            - description: The invoice with its updated issue date and recalculated due date
+      required:
+        - invoice
     GetProductConsumptionResponse:
       type: object
       properties:
@@ -9397,7 +10920,7 @@ components:
           description: Unique identifier for tracing the submission through the system
         idempotencyKey:
           type: string
-          pattern: ^vayu-\S{24}-\S{24}-\S{24}-\S{24}-\d{13}$
+          pattern: ^vayu-\S{24}-\S{24}-\S{24}-[^\s-]+-[^\s-]+-\d{13}$
           description: Key used to ensure the submission is processed exactly once
         meterDimension:
           type: string
@@ -9527,6 +11050,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateCatalogProductRequest"
+      x-required-scope: vayu.catalog-products.write
       responses:
         "200":
           $ref: "#/components/responses/CreateCatalogProductResponse"
@@ -9562,6 +11086,7 @@ paths:
       summary: List Catalog products
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.catalog-products.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -9609,6 +11134,7 @@ paths:
       summary: Get Catalog product
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.catalog-products.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CatalogProductId"
@@ -9658,6 +11184,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/UpdateCatalogProductRequest"
+      x-required-scope: vayu.catalog-products.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CatalogProductId"
@@ -9705,6 +11232,7 @@ paths:
       summary: Delete Catalog product
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.catalog-products.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CatalogProductId"
@@ -9755,6 +11283,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateCustomerRequest"
+      x-required-scope: vayu.customers.write
       responses:
         "200":
           $ref: "#/components/responses/CreateCustomerResponse"
@@ -9790,6 +11319,7 @@ paths:
       summary: List Customers
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerStatus"
@@ -9842,6 +11372,7 @@ paths:
       summary: Get Customer
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerId"
@@ -9891,6 +11422,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/UpdateCustomerRequest"
+      x-required-scope: vayu.customers.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerId"
@@ -9938,6 +11470,7 @@ paths:
       summary: Delete Customer
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerId"
@@ -9986,6 +11519,7 @@ paths:
       summary: Get Meter
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.meters.read
       parameters:
         - schema:
             $ref: "#/components/schemas/MeterId"
@@ -10035,6 +11569,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/UpdateMeterRequest"
+      x-required-scope: vayu.meters.write
       parameters:
         - schema:
             $ref: "#/components/schemas/MeterId"
@@ -10082,6 +11617,7 @@ paths:
       summary: Delete Meter
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.meters.write
       parameters:
         - schema:
             $ref: "#/components/schemas/MeterId"
@@ -10130,6 +11666,7 @@ paths:
       summary: List Meters
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.meters.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -10177,6 +11714,7 @@ paths:
       summary: Get Contract
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.contracts.read
       parameters:
         - schema:
             $ref: "#/components/schemas/ContractId"
@@ -10224,6 +11762,7 @@ paths:
       summary: Delete Contract
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.contracts.write
       parameters:
         - schema:
             $ref: "#/components/schemas/ContractId"
@@ -10274,6 +11813,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateContractRequest"
+      x-required-scope: vayu.contracts.write
       responses:
         "200":
           $ref: "#/components/responses/CreateContractResponse"
@@ -10311,6 +11851,7 @@ paths:
       summary: List contracts
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.contracts.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -10370,6 +11911,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateMeasurementRequest"
+      x-required-scope: vayu.measurements.write
       responses:
         "200":
           $ref: "#/components/responses/CreateMeasurementResponse"
@@ -10405,6 +11947,7 @@ paths:
       summary: List Measurements
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.measurements.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -10452,6 +11995,7 @@ paths:
       summary: Get Measurement
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.measurements.read
       parameters:
         - schema:
             $ref: "#/components/schemas/MeasurementId"
@@ -10499,6 +12043,7 @@ paths:
       summary: Delete Measurement
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.measurements.write
       parameters:
         - schema:
             $ref: "#/components/schemas/MeasurementId"
@@ -10547,6 +12092,7 @@ paths:
       summary: Get Invoice
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.read
       parameters:
         - schema:
             $ref: "#/components/schemas/InvoiceId"
@@ -10556,6 +12102,54 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/GetInvoiceResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+    delete:
+      tags:
+        - invoices
+      operationId: deleteInvoice
+      description: Delete a Invoice by id.
+      summary: Delete Invoice
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteInvoiceResponse"
         "400":
           description: Bad Request
           content:
@@ -10597,6 +12191,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateCustomerRelationRequest"
+      x-required-scope: vayu.customers.write
       responses:
         "200":
           $ref: "#/components/responses/CreateCustomerRelationResponse"
@@ -10633,6 +12228,7 @@ paths:
       summary: Get Customer relation
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerRelationId"
@@ -10681,6 +12277,7 @@ paths:
       summary: Get Plan
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.plans.read
       parameters:
         - schema:
             $ref: "#/components/schemas/PlanId"
@@ -10728,6 +12325,7 @@ paths:
       summary: Delete Plan
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.plans.write
       parameters:
         - schema:
             $ref: "#/components/schemas/PlanId"
@@ -10776,6 +12374,7 @@ paths:
       summary: List Plans
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.plans.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -10825,6 +12424,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreateCustomFieldRequest"
+      x-required-scope: vayu.custom-fields.write
       responses:
         "200":
           $ref: "#/components/responses/CreateCustomFieldResponse"
@@ -10860,6 +12460,7 @@ paths:
       summary: List Custom fields
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.custom-fields.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -10907,6 +12508,7 @@ paths:
       summary: Get Custom field
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.custom-fields.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomFieldId"
@@ -10956,6 +12558,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/UpdateCustomFieldRequest"
+      x-required-scope: vayu.custom-fields.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomFieldId"
@@ -11003,6 +12606,7 @@ paths:
       summary: Delete Custom field
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.custom-fields.write
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomFieldId"
@@ -11092,6 +12696,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/DeleteEventsByRefsRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/DeleteEventsByRefsResponse"
@@ -11138,6 +12743,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/EventsDryRunRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/EventsDryRunResponse"
@@ -11181,6 +12787,7 @@ paths:
       summary: Query events by timestamp period and optional event name
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.read
       parameters:
         - schema:
             $ref: "#/components/schemas/StartTime"
@@ -11250,6 +12857,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/SendEventsRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/SendEventsResponse"
@@ -11292,6 +12900,7 @@ paths:
       summary: Get event by refId
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.read
       parameters:
         - schema:
             $ref: "#/components/schemas/RefId"
@@ -11339,6 +12948,7 @@ paths:
       summary: Delete an event by refId
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.write
       parameters:
         - schema:
             $ref: "#/components/schemas/RefId"
@@ -11389,6 +12999,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/V2DeleteEventsByRefsRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/V2DeleteEventsByRefsResponse"
@@ -11434,6 +13045,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/V2EventsDryRunRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/V2EventsDryRunResponse"
@@ -11477,6 +13089,7 @@ paths:
       summary: Query events by timestamp period and optional event name (v2)
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.read
       parameters:
         - schema:
             $ref: "#/components/schemas/StartTime"
@@ -11545,6 +13158,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/V2SendEventsRequest"
+      x-required-scope: vayu.events.write
       responses:
         "200":
           $ref: "#/components/responses/V2SendEventsResponse"
@@ -11587,6 +13201,7 @@ paths:
       summary: Get event by refId (v2)
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.read
       parameters:
         - schema:
             $ref: "#/components/schemas/RefId"
@@ -11634,6 +13249,7 @@ paths:
       summary: Delete an event by refId (v2)
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.events.write
       parameters:
         - schema:
             $ref: "#/components/schemas/RefId"
@@ -11684,6 +13300,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/V2QueryEventsAggregationRequest"
+      x-required-scope: vayu.events.read
       responses:
         "200":
           $ref: "#/components/responses/V2QueryEventsAggregationResponse"
@@ -11721,6 +13338,7 @@ paths:
       summary: Retrieve credit ledger entries for customer.
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.credits.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerId"
@@ -11778,6 +13396,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/GrantCreditsRequest"
+      x-required-scope: vayu.credits.write
       responses:
         "200":
           $ref: "#/components/responses/RequestSuccess"
@@ -11820,6 +13439,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/DeductCreditsRequest"
+      x-required-scope: vayu.credits.write
       responses:
         "200":
           $ref: "#/components/responses/RequestSuccess"
@@ -11863,6 +13483,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/CreditTopUpRequest"
+      x-required-scope: vayu.credits.write
       responses:
         "200":
           $ref: "#/components/responses/CreditTopUpResponse"
@@ -11902,6 +13523,7 @@ paths:
       summary: List credit products
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.credit-products.read
       responses:
         "200":
           $ref: "#/components/responses/ListCreditProductsResponse"
@@ -11941,6 +13563,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/WebhookSubscribeRequest"
+      x-required-scope: vayu.webhooks.write
       responses:
         "200":
           $ref: "#/components/responses/RequestSuccess"
@@ -11983,6 +13606,7 @@ paths:
       summary: Get customer by externalId
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/ExternalId"
@@ -12031,6 +13655,7 @@ paths:
       summary: Get customer by name
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Name"
@@ -12079,6 +13704,7 @@ paths:
       summary: Get products consumptions by customer id
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/CustomerId"
@@ -12127,6 +13753,7 @@ paths:
       summary: Get products consumptions by customer alias
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Alias"
@@ -12176,6 +13803,7 @@ paths:
       summary: Get customer by integration id
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.customers.read
       parameters:
         - schema:
             $ref: "#/components/schemas/IntegrationProviders"
@@ -12230,6 +13858,7 @@ paths:
       summary: Get contract by integration id
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.contracts.read
       parameters:
         - schema:
             $ref: "#/components/schemas/IntegrationProviders"
@@ -12283,12 +13912,15 @@ paths:
         Use this endpoint to terminate a contract.
             Provide a terminationDate in the request body to schedule the termination for a specific date,
             or omit it to terminate the contract immediately.
-            The contract's status is set to PendingTermination and its end date is updated accordingly.
+            The contract's end date is updated accordingly. A terminationDate that is today or later sets the
+            status to PendingTermination, and the contract becomes Terminated once that date passes.
+            A terminationDate that has already passed sets the status to Terminated straight away.
       summary: Terminate a contract
       security:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/TerminateContractRequest"
+      x-required-scope: vayu.contracts.write
       parameters:
         - schema:
             $ref: "#/components/schemas/ContractId"
@@ -12344,6 +13976,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/RefreshContractCreditsRequest"
+      x-required-scope: vayu.contracts.write
       parameters:
         - schema:
             $ref: "#/components/schemas/ContractId"
@@ -12377,6 +14010,278 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InternalServerErrorResponse"
+  /catalogProducts/name/{name}:
+    get:
+      tags:
+        - catalog-products
+      operationId: getCatalogProductByName
+      description: Use this endpoint to get a specific catalog product using its name.
+      summary: Get catalog product by name
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.catalog-products.read
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Name"
+          required: true
+          in: path
+          name: name
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCatalogProductByNameResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /catalogProducts/integration/{integrationType}/{integrationId}:
+    get:
+      tags:
+        - catalog-products
+      operationId: getCatalogProductByIntegrationId
+      description: Use this endpoint to get a specific catalog product using its
+        integration provider and identifier.
+      summary: Get catalog product by integration id
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.catalog-products.read
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/IntegrationProviders"
+          required: true
+          in: path
+          name: integrationType
+        - schema:
+            $ref: "#/components/schemas/IntegrationId"
+          required: true
+          in: path
+          name: integrationId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetCatalogProductByIntegrationIdResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /meters/name/{name}:
+    get:
+      tags:
+        - meters
+      operationId: getMeterByName
+      description: Use this endpoint to get a specific meter using its name.
+      summary: Get meter by name
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.meters.read
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/Name"
+          required: true
+          in: path
+          name: name
+      responses:
+        "200":
+          $ref: "#/components/responses/GetMeterByNameResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /meters/integration/{integrationType}/{integrationId}:
+    get:
+      tags:
+        - meters
+      operationId: getMeterByIntegrationId
+      description: Use this endpoint to get a specific meter using its integration
+        provider and identifier.
+      summary: Get meter by integration id
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.meters.read
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/IntegrationProviders"
+          required: true
+          in: path
+          name: integrationType
+        - schema:
+            $ref: "#/components/schemas/IntegrationId"
+          required: true
+          in: path
+          name: integrationId
+      responses:
+        "200":
+          $ref: "#/components/responses/GetMeterByIntegrationIdResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /invoices/{invoiceId}/cancel:
+    post:
+      tags:
+        - invoices
+      operationId: cancelInvoice
+      description: |-
+        Use this endpoint to cancel an invoice.
+            Only an approved invoice with no payments recorded can be cancelled.
+            Cancelling an invoice cannot be undone.
+      summary: Cancel an invoice
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/CancelInvoiceResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRefusedErrorResponse"
+        "424":
+          description: Failed Dependency
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedDependencyErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
   /invoices/{invoiceId}/payment-status:
     get:
       tags:
@@ -12388,6 +14293,7 @@ paths:
       summary: Get invoice payment status
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.read
       parameters:
         - schema:
             $ref: "#/components/schemas/InvoiceId"
@@ -12431,6 +14337,7 @@ paths:
       summary: List invoices
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.read
       parameters:
         - schema:
             $ref: "#/components/schemas/Limit"
@@ -12489,6 +14396,268 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InternalServerErrorResponse"
+  /invoices/{invoiceId}/payments:
+    post:
+      tags:
+        - invoices
+      operationId: recordInvoicePayment
+      description: >-
+        Use this endpoint to record a payment on an approved invoice.
+            Provide the amount and an idempotencyKey in the request body.
+            Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.
+            That credit is not exported as a credit memo to a connected accounting system.
+            The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.
+            An idempotencyKey is remembered for 24 hours.
+            A request whose transactionId is already recorded on the invoice is refused.
+            If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.
+            A recorded payment cannot be edited or deleted through the API.
+      summary: Record a payment on an invoice
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/RecordInvoicePaymentRequest"
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/RecordInvoicePaymentResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRefusedErrorResponse"
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /invoices/{invoiceId}/reissue:
+    post:
+      tags:
+        - invoices
+      operationId: reissueInvoice
+      description: >-
+        Use this endpoint to reissue an invoice: the original invoice is
+        cancelled and a replacement is produced.
+            Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.
+            The original invoice is cancelled and cannot be restored.
+            For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.
+            For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement's id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.
+            A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.
+            Invoice reissue must be enabled for your account.
+      summary: Reissue an invoice
+      security:
+        - BearerAuthorizer: []
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/ReissueInvoiceResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRefusedErrorResponse"
+        "424":
+          description: Failed Dependency
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedDependencyErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /invoices/{invoiceId}/due-date:
+    put:
+      tags:
+        - invoices
+      operationId: updateInvoiceDueDate
+      description: >-
+        Use this endpoint to change the due date of an invoice.
+            Provide the new dueDate in the request body.
+            The due date of an invoice that is already paid or cancelled cannot be changed.
+      summary: Update the due date of an invoice
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateInvoiceDueDateRequest"
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/UpdateInvoiceDueDateResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
+  /invoices/{invoiceId}/issue-date:
+    put:
+      tags:
+        - invoices
+      operationId: updateInvoiceIssueDate
+      description: >-
+        Use this endpoint to change the issue date of an invoice.
+            Provide the new issuedAt date in the request body.
+            The issue date can only be changed before the invoice is approved.
+            Changing it recalculates the due date from the invoice's payment terms.
+      summary: Update the issue date of an invoice
+      security:
+        - BearerAuthorizer: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateInvoiceIssueDateRequest"
+      x-required-scope: vayu.invoices.write
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/InvoiceId"
+          required: true
+          in: path
+          name: invoiceId
+      responses:
+        "200":
+          $ref: "#/components/responses/UpdateInvoiceIssueDateResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRefusedErrorResponse"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InternalServerErrorResponse"
   /product-consumption/{productId}:
     get:
       tags:
@@ -12498,6 +14667,7 @@ paths:
       summary: Get product consumption
       security:
         - BearerAuthorizer: []
+      x-required-scope: vayu.product-consumptions.read
       parameters:
         - schema:
             $ref: "#/components/schemas/ProductId"
@@ -12548,6 +14718,7 @@ paths:
         - BearerAuthorizer: []
       requestBody:
         $ref: "#/components/requestBodies/SubmitCloudUsageRequest"
+      x-required-scope: vayu.cloud-usage-submission.write
       responses:
         "200":
           $ref: "#/components/responses/SubmitCloudUsageResponse"

@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **invoice_id** | **str** | The id of the invoice that the line item is a part of | 
 **revenue_breakdown** | [**LineItemRevenueBreakdown**](LineItemRevenueBreakdown.md) |  | 
+**product_name** | **str** | The name of the product on the line | [optional] 
+**description** | **str** | The description shown on the line | [optional] 
+**service_period** | [**LineItemServicePeriod**](LineItemServicePeriod.md) |  | [optional] 
 
 ## Example
 

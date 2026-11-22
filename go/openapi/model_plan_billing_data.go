@@ -19,13 +19,18 @@ import (
 // checks if the PlanBillingData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PlanBillingData{}
 
-// PlanBillingData The billing data of the plan. The billing data contains the billing interval, the plan duration the payment terms and auto renewal, and the billing method.
+// PlanBillingData struct for PlanBillingData
 type PlanBillingData struct {
 	BillingInterval BillingInterval `json:"billingInterval"`
 	Duration PlanDuration `json:"duration"`
 	PaymentTerm PaymentTerm `json:"paymentTerm"`
 	AutoRenewal bool `json:"autoRenewal"`
 	ProRated NullableBool `json:"proRated,omitempty"`
+	BillingDate NullableBillingDate `json:"billingDate,omitempty"`
+	// months each automatic renewal runs for; the term before it when not stated
+	RenewalDuration NullableFloat32 `json:"renewalDuration,omitempty"`
+	// how many times the contract renews automatically; no limit when not stated
+	RenewsUpToNTimes NullableFloat32 `json:"renewsUpToNTimes,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -192,6 +197,132 @@ func (o *PlanBillingData) UnsetProRated() {
 	o.ProRated.Unset()
 }
 
+// GetBillingDate returns the BillingDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlanBillingData) GetBillingDate() BillingDate {
+	if o == nil || IsNil(o.BillingDate.Get()) {
+		var ret BillingDate
+		return ret
+	}
+	return *o.BillingDate.Get()
+}
+
+// GetBillingDateOk returns a tuple with the BillingDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlanBillingData) GetBillingDateOk() (*BillingDate, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BillingDate.Get(), o.BillingDate.IsSet()
+}
+
+// HasBillingDate returns a boolean if a field has been set.
+func (o *PlanBillingData) HasBillingDate() bool {
+	if o != nil && o.BillingDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingDate gets a reference to the given NullableBillingDate and assigns it to the BillingDate field.
+func (o *PlanBillingData) SetBillingDate(v BillingDate) {
+	o.BillingDate.Set(&v)
+}
+// SetBillingDateNil sets the value for BillingDate to be an explicit nil
+func (o *PlanBillingData) SetBillingDateNil() {
+	o.BillingDate.Set(nil)
+}
+
+// UnsetBillingDate ensures that no value is present for BillingDate, not even an explicit nil
+func (o *PlanBillingData) UnsetBillingDate() {
+	o.BillingDate.Unset()
+}
+
+// GetRenewalDuration returns the RenewalDuration field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlanBillingData) GetRenewalDuration() float32 {
+	if o == nil || IsNil(o.RenewalDuration.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.RenewalDuration.Get()
+}
+
+// GetRenewalDurationOk returns a tuple with the RenewalDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlanBillingData) GetRenewalDurationOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RenewalDuration.Get(), o.RenewalDuration.IsSet()
+}
+
+// HasRenewalDuration returns a boolean if a field has been set.
+func (o *PlanBillingData) HasRenewalDuration() bool {
+	if o != nil && o.RenewalDuration.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRenewalDuration gets a reference to the given NullableFloat32 and assigns it to the RenewalDuration field.
+func (o *PlanBillingData) SetRenewalDuration(v float32) {
+	o.RenewalDuration.Set(&v)
+}
+// SetRenewalDurationNil sets the value for RenewalDuration to be an explicit nil
+func (o *PlanBillingData) SetRenewalDurationNil() {
+	o.RenewalDuration.Set(nil)
+}
+
+// UnsetRenewalDuration ensures that no value is present for RenewalDuration, not even an explicit nil
+func (o *PlanBillingData) UnsetRenewalDuration() {
+	o.RenewalDuration.Unset()
+}
+
+// GetRenewsUpToNTimes returns the RenewsUpToNTimes field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlanBillingData) GetRenewsUpToNTimes() float32 {
+	if o == nil || IsNil(o.RenewsUpToNTimes.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.RenewsUpToNTimes.Get()
+}
+
+// GetRenewsUpToNTimesOk returns a tuple with the RenewsUpToNTimes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlanBillingData) GetRenewsUpToNTimesOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RenewsUpToNTimes.Get(), o.RenewsUpToNTimes.IsSet()
+}
+
+// HasRenewsUpToNTimes returns a boolean if a field has been set.
+func (o *PlanBillingData) HasRenewsUpToNTimes() bool {
+	if o != nil && o.RenewsUpToNTimes.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRenewsUpToNTimes gets a reference to the given NullableFloat32 and assigns it to the RenewsUpToNTimes field.
+func (o *PlanBillingData) SetRenewsUpToNTimes(v float32) {
+	o.RenewsUpToNTimes.Set(&v)
+}
+// SetRenewsUpToNTimesNil sets the value for RenewsUpToNTimes to be an explicit nil
+func (o *PlanBillingData) SetRenewsUpToNTimesNil() {
+	o.RenewsUpToNTimes.Set(nil)
+}
+
+// UnsetRenewsUpToNTimes ensures that no value is present for RenewsUpToNTimes, not even an explicit nil
+func (o *PlanBillingData) UnsetRenewsUpToNTimes() {
+	o.RenewsUpToNTimes.Unset()
+}
+
 func (o PlanBillingData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -208,6 +339,15 @@ func (o PlanBillingData) ToMap() (map[string]interface{}, error) {
 	toSerialize["autoRenewal"] = o.AutoRenewal
 	if o.ProRated.IsSet() {
 		toSerialize["proRated"] = o.ProRated.Get()
+	}
+	if o.BillingDate.IsSet() {
+		toSerialize["billingDate"] = o.BillingDate.Get()
+	}
+	if o.RenewalDuration.IsSet() {
+		toSerialize["renewalDuration"] = o.RenewalDuration.Get()
+	}
+	if o.RenewsUpToNTimes.IsSet() {
+		toSerialize["renewsUpToNTimes"] = o.RenewsUpToNTimes.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -260,6 +400,9 @@ func (o *PlanBillingData) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "paymentTerm")
 		delete(additionalProperties, "autoRenewal")
 		delete(additionalProperties, "proRated")
+		delete(additionalProperties, "billingDate")
+		delete(additionalProperties, "renewalDuration")
+		delete(additionalProperties, "renewsUpToNTimes")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -7,8 +7,11 @@ The address of the customer
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **country** | **str** |  | [optional] 
+**country_code** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **address_text** | **str** |  | [optional] 
+**street_name** | **str** |  | [optional] 
+**apartment** | **str** |  | [optional] 
 **state** | **str** |  | [optional] 
 **postal_code** | **str** |  | [optional] 
 

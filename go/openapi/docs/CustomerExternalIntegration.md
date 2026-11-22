@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** |  | 
-**Id** | **string** |  | 
-**Name** | **string** |  | 
+**Type** | **string** | The integration provider. Stripe links are saved on the customer; other providers are linked via the integration registry. | 
+**Id** | **string** | The ID of the customer in the external provider system | 
+**Name** | **string** | The name of the customer in the external provider system | 
 
 ## Methods
 

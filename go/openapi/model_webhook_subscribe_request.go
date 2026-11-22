@@ -25,6 +25,7 @@ type WebhookSubscribeRequest struct {
 	EventType NotificationEventType `json:"eventType"`
 	Threshold *float32 `json:"threshold,omitempty"`
 	RecurringThreshold *float32 `json:"recurringThreshold,omitempty"`
+	Days []int32 `json:"days,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -161,6 +162,38 @@ func (o *WebhookSubscribeRequest) SetRecurringThreshold(v float32) {
 	o.RecurringThreshold = &v
 }
 
+// GetDays returns the Days field value if set, zero value otherwise.
+func (o *WebhookSubscribeRequest) GetDays() []int32 {
+	if o == nil || IsNil(o.Days) {
+		var ret []int32
+		return ret
+	}
+	return o.Days
+}
+
+// GetDaysOk returns a tuple with the Days field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WebhookSubscribeRequest) GetDaysOk() ([]int32, bool) {
+	if o == nil || IsNil(o.Days) {
+		return nil, false
+	}
+	return o.Days, true
+}
+
+// HasDays returns a boolean if a field has been set.
+func (o *WebhookSubscribeRequest) HasDays() bool {
+	if o != nil && !IsNil(o.Days) {
+		return true
+	}
+
+	return false
+}
+
+// SetDays gets a reference to the given []int32 and assigns it to the Days field.
+func (o *WebhookSubscribeRequest) SetDays(v []int32) {
+	o.Days = v
+}
+
 func (o WebhookSubscribeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -178,6 +211,9 @@ func (o WebhookSubscribeRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RecurringThreshold) {
 		toSerialize["recurringThreshold"] = o.RecurringThreshold
+	}
+	if !IsNil(o.Days) {
+		toSerialize["days"] = o.Days
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -227,6 +263,7 @@ func (o *WebhookSubscribeRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "eventType")
 		delete(additionalProperties, "threshold")
 		delete(additionalProperties, "recurringThreshold")
+		delete(additionalProperties, "days")
 		o.AdditionalProperties = additionalProperties
 	}
 

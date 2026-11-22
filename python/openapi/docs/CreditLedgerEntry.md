@@ -7,12 +7,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
 **created_at** | **datetime** |  | 
-**type** | [**BillingCycleStatus**](BillingCycleStatus.md) |  | 
+**type** | [**CreditLedgerEntryType**](CreditLedgerEntryType.md) |  | 
 **amount** | **float** |  | 
 **balance_after_entry** | **float** |  | 
 **invoice_id** | **str** |  | [optional] 
 **erp_id** | **str** |  | [optional] 
+**credit_note_number** | **str** |  | [optional] 
 **contract_id** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
 **integration_entities** | [**List[IntegrationEntity]**](IntegrationEntity.md) |  | 
 
 ## Example

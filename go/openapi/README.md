@@ -85,6 +85,8 @@ Class | Method | HTTP request | Description
 *CatalogProductsAPI* | [**CreateCatalogProduct**](docs/CatalogProductsAPI.md#createcatalogproduct) | **Post** /catalogProducts | Create Catalog product
 *CatalogProductsAPI* | [**DeleteCatalogProduct**](docs/CatalogProductsAPI.md#deletecatalogproduct) | **Delete** /catalogProducts/{catalogProductId} | Delete Catalog product
 *CatalogProductsAPI* | [**GetCatalogProduct**](docs/CatalogProductsAPI.md#getcatalogproduct) | **Get** /catalogProducts/{catalogProductId} | Get Catalog product
+*CatalogProductsAPI* | [**GetCatalogProductByIntegrationId**](docs/CatalogProductsAPI.md#getcatalogproductbyintegrationid) | **Get** /catalogProducts/integration/{integrationType}/{integrationId} | Get catalog product by integration id
+*CatalogProductsAPI* | [**GetCatalogProductByName**](docs/CatalogProductsAPI.md#getcatalogproductbyname) | **Get** /catalogProducts/name/{name} | Get catalog product by name
 *CatalogProductsAPI* | [**ListCatalogProducts**](docs/CatalogProductsAPI.md#listcatalogproducts) | **Get** /catalogProducts | List Catalog products
 *CatalogProductsAPI* | [**UpdateCatalogProduct**](docs/CatalogProductsAPI.md#updatecatalogproduct) | **Put** /catalogProducts/{catalogProductId} | Update Catalog product
 *CloudUsageSubmissionAPI* | [**SubmitCloudUsage**](docs/CloudUsageSubmissionAPI.md#submitcloudusage) | **Post** /cloudUsageSubmission | Submit cloud usage
@@ -130,15 +132,23 @@ Class | Method | HTTP request | Description
 *EventsAPI* | [**V2QueryEventsAggregation**](docs/EventsAPI.md#v2queryeventsaggregation) | **Post** /v2/events/aggregation | Aggregate events (v2)
 *EventsAPI* | [**V2SendEvents**](docs/EventsAPI.md#v2sendevents) | **Post** /v2/events | Submit a batch of events for ingestion (v2)
 *EventsAPI* | [**V2SendEventsDryRun**](docs/EventsAPI.md#v2sendeventsdryrun) | **Post** /v2/events/dry-run | Submit a batch of events for testing (v2)
+*InvoicesAPI* | [**CancelInvoice**](docs/InvoicesAPI.md#cancelinvoice) | **Post** /invoices/{invoiceId}/cancel | Cancel an invoice
+*InvoicesAPI* | [**DeleteInvoice**](docs/InvoicesAPI.md#deleteinvoice) | **Delete** /invoices/{invoiceId} | Delete Invoice
 *InvoicesAPI* | [**GetInvoice**](docs/InvoicesAPI.md#getinvoice) | **Get** /invoices/{invoiceId} | Get Invoice
 *InvoicesAPI* | [**GetInvoicePaymentStatus**](docs/InvoicesAPI.md#getinvoicepaymentstatus) | **Get** /invoices/{invoiceId}/payment-status | Get invoice payment status
 *InvoicesAPI* | [**ListInvoices**](docs/InvoicesAPI.md#listinvoices) | **Get** /invoices | List invoices
+*InvoicesAPI* | [**RecordInvoicePayment**](docs/InvoicesAPI.md#recordinvoicepayment) | **Post** /invoices/{invoiceId}/payments | Record a payment on an invoice
+*InvoicesAPI* | [**ReissueInvoice**](docs/InvoicesAPI.md#reissueinvoice) | **Post** /invoices/{invoiceId}/reissue | Reissue an invoice
+*InvoicesAPI* | [**UpdateInvoiceDueDate**](docs/InvoicesAPI.md#updateinvoiceduedate) | **Put** /invoices/{invoiceId}/due-date | Update the due date of an invoice
+*InvoicesAPI* | [**UpdateInvoiceIssueDate**](docs/InvoicesAPI.md#updateinvoiceissuedate) | **Put** /invoices/{invoiceId}/issue-date | Update the issue date of an invoice
 *MeasurementsAPI* | [**CreateMeasurement**](docs/MeasurementsAPI.md#createmeasurement) | **Post** /measurements | Create Measurement
 *MeasurementsAPI* | [**DeleteMeasurement**](docs/MeasurementsAPI.md#deletemeasurement) | **Delete** /measurements/{measurementId} | Delete Measurement
 *MeasurementsAPI* | [**GetMeasurement**](docs/MeasurementsAPI.md#getmeasurement) | **Get** /measurements/{measurementId} | Get Measurement
 *MeasurementsAPI* | [**ListMeasurements**](docs/MeasurementsAPI.md#listmeasurements) | **Get** /measurements | List Measurements
 *MetersAPI* | [**DeleteMeter**](docs/MetersAPI.md#deletemeter) | **Delete** /meters/{meterId} | Delete Meter
 *MetersAPI* | [**GetMeter**](docs/MetersAPI.md#getmeter) | **Get** /meters/{meterId} | Get Meter
+*MetersAPI* | [**GetMeterByIntegrationId**](docs/MetersAPI.md#getmeterbyintegrationid) | **Get** /meters/integration/{integrationType}/{integrationId} | Get meter by integration id
+*MetersAPI* | [**GetMeterByName**](docs/MetersAPI.md#getmeterbyname) | **Get** /meters/name/{name} | Get meter by name
 *MetersAPI* | [**ListMeters**](docs/MetersAPI.md#listmeters) | **Get** /meters | List Meters
 *MetersAPI* | [**UpdateMeter**](docs/MetersAPI.md#updatemeter) | **Put** /meters/{meterId} | Update Meter
 *PlansAPI* | [**DeletePlan**](docs/PlansAPI.md#deleteplan) | **Delete** /plans/{planId} | Delete Plan
@@ -151,15 +161,19 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AcknowledgedEvent](docs/AcknowledgedEvent.md)
+ - [ActionRefusedErrorResponse](docs/ActionRefusedErrorResponse.md)
  - [Address](docs/Address.md)
  - [AggregationMethod](docs/AggregationMethod.md)
  - [AggregationOperator](docs/AggregationOperator.md)
- - [BillingCycleStatus](docs/BillingCycleStatus.md)
+ - [BillingDate](docs/BillingDate.md)
+ - [BillingDateAnchor](docs/BillingDateAnchor.md)
  - [BillingInterval](docs/BillingInterval.md)
+ - [CancelInvoiceResponse](docs/CancelInvoiceResponse.md)
  - [CloudUsageResult](docs/CloudUsageResult.md)
  - [Condition](docs/Condition.md)
  - [ConflictErrorResponse](docs/ConflictErrorResponse.md)
  - [Contact](docs/Contact.md)
+ - [ContractAttachmentInput](docs/ContractAttachmentInput.md)
  - [ContractStatus](docs/ContractStatus.md)
  - [CreateCatalogProductRequest](docs/CreateCatalogProductRequest.md)
  - [CreateCatalogProductResponse](docs/CreateCatalogProductResponse.md)
@@ -173,6 +187,8 @@ Class | Method | HTTP request | Description
  - [CreateCustomerRelationResponse](docs/CreateCustomerRelationResponse.md)
  - [CreateCustomerRelationResponseCustomerRelation](docs/CreateCustomerRelationResponseCustomerRelation.md)
  - [CreateCustomerRequest](docs/CreateCustomerRequest.md)
+ - [CreateCustomerRequestCloudProviderSettings](docs/CreateCustomerRequestCloudProviderSettings.md)
+ - [CreateCustomerRequestShippingAddress](docs/CreateCustomerRequestShippingAddress.md)
  - [CreateCustomerResponse](docs/CreateCustomerResponse.md)
  - [CreateCustomerResponseCustomer](docs/CreateCustomerResponseCustomer.md)
  - [CreateMeasurementRequest](docs/CreateMeasurementRequest.md)
@@ -180,6 +196,7 @@ Class | Method | HTTP request | Description
  - [CreateMeasurementResponse](docs/CreateMeasurementResponse.md)
  - [CreateMeasurementResponseMeasurement](docs/CreateMeasurementResponseMeasurement.md)
  - [CreditLedgerEntry](docs/CreditLedgerEntry.md)
+ - [CreditLedgerEntryType](docs/CreditLedgerEntryType.md)
  - [CreditTopUpRequest](docs/CreditTopUpRequest.md)
  - [CreditTopUpRequestCreditGrant](docs/CreditTopUpRequestCreditGrant.md)
  - [CreditTopUpResponse](docs/CreditTopUpResponse.md)
@@ -190,7 +207,6 @@ Class | Method | HTTP request | Description
  - [CustomFieldEntities](docs/CustomFieldEntities.md)
  - [CustomFieldValue](docs/CustomFieldValue.md)
  - [CustomFieldValueTypes](docs/CustomFieldValueTypes.md)
- - [CustomerCloudProviderSettings](docs/CustomerCloudProviderSettings.md)
  - [CustomerExternalIntegration](docs/CustomerExternalIntegration.md)
  - [CustomerRelationType](docs/CustomerRelationType.md)
  - [CustomerSource](docs/CustomerSource.md)
@@ -209,6 +225,8 @@ Class | Method | HTTP request | Description
  - [DeleteEventsByRefsRequest](docs/DeleteEventsByRefsRequest.md)
  - [DeleteEventsByRefsResponse](docs/DeleteEventsByRefsResponse.md)
  - [DeleteEventsByRefsResponseEventsInner](docs/DeleteEventsByRefsResponseEventsInner.md)
+ - [DeleteInvoiceResponse](docs/DeleteInvoiceResponse.md)
+ - [DeleteInvoiceResponseInvoice](docs/DeleteInvoiceResponseInvoice.md)
  - [DeleteMeasurementResponse](docs/DeleteMeasurementResponse.md)
  - [DeleteMeasurementResponseMeasurement](docs/DeleteMeasurementResponseMeasurement.md)
  - [DeleteMeterResponse](docs/DeleteMeterResponse.md)
@@ -224,8 +242,12 @@ Class | Method | HTTP request | Description
  - [ExternalCreditGrant](docs/ExternalCreditGrant.md)
  - [ExternalCreditProduct](docs/ExternalCreditProduct.md)
  - [ExternalOverageStrategy](docs/ExternalOverageStrategy.md)
+ - [FailedDependencyErrorResponse](docs/FailedDependencyErrorResponse.md)
  - [Filter](docs/Filter.md)
- - [FullDayPeriod](docs/FullDayPeriod.md)
+ - [ForbiddenErrorResponse](docs/ForbiddenErrorResponse.md)
+ - [GetCatalogProductByIntegrationIdResponse](docs/GetCatalogProductByIntegrationIdResponse.md)
+ - [GetCatalogProductByNameResponse](docs/GetCatalogProductByNameResponse.md)
+ - [GetCatalogProductByNameResponseCatalogProduct](docs/GetCatalogProductByNameResponseCatalogProduct.md)
  - [GetCatalogProductResponse](docs/GetCatalogProductResponse.md)
  - [GetContractByIntegrationIdResponse](docs/GetContractByIntegrationIdResponse.md)
  - [GetContractResponse](docs/GetContractResponse.md)
@@ -244,6 +266,9 @@ Class | Method | HTTP request | Description
  - [GetInvoiceResponseInvoice](docs/GetInvoiceResponseInvoice.md)
  - [GetInvoiceResponseInvoiceRevenueBreakdown](docs/GetInvoiceResponseInvoiceRevenueBreakdown.md)
  - [GetMeasurementResponse](docs/GetMeasurementResponse.md)
+ - [GetMeterByIntegrationIdResponse](docs/GetMeterByIntegrationIdResponse.md)
+ - [GetMeterByNameResponse](docs/GetMeterByNameResponse.md)
+ - [GetMeterByNameResponseMeter](docs/GetMeterByNameResponseMeter.md)
  - [GetMeterResponse](docs/GetMeterResponse.md)
  - [GetMeterResponseMeter](docs/GetMeterResponseMeter.md)
  - [GetPlanResponse](docs/GetPlanResponse.md)
@@ -256,10 +281,15 @@ Class | Method | HTTP request | Description
  - [IntegrationProviders](docs/IntegrationProviders.md)
  - [InternalServerErrorResponse](docs/InternalServerErrorResponse.md)
  - [InvalidEvent](docs/InvalidEvent.md)
+ - [Invoice](docs/Invoice.md)
  - [InvoiceBillingStatus](docs/InvoiceBillingStatus.md)
+ - [InvoiceIntegration](docs/InvoiceIntegration.md)
+ - [InvoicePayment](docs/InvoicePayment.md)
  - [InvoicePaymentStatusResponse](docs/InvoicePaymentStatusResponse.md)
+ - [InvoiceReviewStatus](docs/InvoiceReviewStatus.md)
  - [LineItem](docs/LineItem.md)
  - [LineItemRevenueBreakdown](docs/LineItemRevenueBreakdown.md)
+ - [LineItemServicePeriod](docs/LineItemServicePeriod.md)
  - [ListCatalogProductsResponse](docs/ListCatalogProductsResponse.md)
  - [ListContractsResponse](docs/ListContractsResponse.md)
  - [ListCreditLedgerEntriesResponse](docs/ListCreditLedgerEntriesResponse.md)
@@ -279,7 +309,9 @@ Class | Method | HTTP request | Description
  - [PaymentInfo](docs/PaymentInfo.md)
  - [PaymentInfoDepositTo](docs/PaymentInfoDepositTo.md)
  - [PaymentTerm](docs/PaymentTerm.md)
+ - [Period](docs/Period.md)
  - [PlanBillingData](docs/PlanBillingData.md)
+ - [PlanBillingDataInput](docs/PlanBillingDataInput.md)
  - [PlanDuration](docs/PlanDuration.md)
  - [PlanStatus](docs/PlanStatus.md)
  - [ProductCloudProviderSettings](docs/ProductCloudProviderSettings.md)
@@ -309,9 +341,15 @@ Class | Method | HTTP request | Description
  - [QueryEventsResponse](docs/QueryEventsResponse.md)
  - [QueryEventsResponseEventsInner](docs/QueryEventsResponseEventsInner.md)
  - [RateLimitErrorResponse](docs/RateLimitErrorResponse.md)
+ - [RecordInvoicePaymentRequest](docs/RecordInvoicePaymentRequest.md)
+ - [RecordInvoicePaymentRequestDepositTo](docs/RecordInvoicePaymentRequestDepositTo.md)
+ - [RecordInvoicePaymentResponse](docs/RecordInvoicePaymentResponse.md)
+ - [RecordInvoicePaymentResponseInvoice](docs/RecordInvoicePaymentResponseInvoice.md)
  - [RefreshContractCreditsRequest](docs/RefreshContractCreditsRequest.md)
  - [RefreshContractCreditsRequestGrantsInner](docs/RefreshContractCreditsRequestGrantsInner.md)
  - [RefreshContractCreditsResponse](docs/RefreshContractCreditsResponse.md)
+ - [ReissueInvoiceResponse](docs/ReissueInvoiceResponse.md)
+ - [ReissueInvoiceResponseInvoice](docs/ReissueInvoiceResponseInvoice.md)
  - [RequestTooLongErrorResponse](docs/RequestTooLongErrorResponse.md)
  - [SendEventsRequest](docs/SendEventsRequest.md)
  - [SendEventsResponse](docs/SendEventsResponse.md)
@@ -321,12 +359,19 @@ Class | Method | HTTP request | Description
  - [TerminateContractResponse](docs/TerminateContractResponse.md)
  - [UnauthorizedErrorResponse](docs/UnauthorizedErrorResponse.md)
  - [UnlimitedDuration](docs/UnlimitedDuration.md)
+ - [UnprocessableEntityErrorResponse](docs/UnprocessableEntityErrorResponse.md)
  - [UpdateCatalogProductRequest](docs/UpdateCatalogProductRequest.md)
  - [UpdateCatalogProductResponse](docs/UpdateCatalogProductResponse.md)
  - [UpdateCustomFieldRequest](docs/UpdateCustomFieldRequest.md)
  - [UpdateCustomFieldResponse](docs/UpdateCustomFieldResponse.md)
  - [UpdateCustomerRequest](docs/UpdateCustomerRequest.md)
  - [UpdateCustomerResponse](docs/UpdateCustomerResponse.md)
+ - [UpdateInvoiceDueDateRequest](docs/UpdateInvoiceDueDateRequest.md)
+ - [UpdateInvoiceDueDateResponse](docs/UpdateInvoiceDueDateResponse.md)
+ - [UpdateInvoiceDueDateResponseInvoice](docs/UpdateInvoiceDueDateResponseInvoice.md)
+ - [UpdateInvoiceIssueDateRequest](docs/UpdateInvoiceIssueDateRequest.md)
+ - [UpdateInvoiceIssueDateResponse](docs/UpdateInvoiceIssueDateResponse.md)
+ - [UpdateInvoiceIssueDateResponseInvoice](docs/UpdateInvoiceIssueDateResponseInvoice.md)
  - [UpdateMeterRequest](docs/UpdateMeterRequest.md)
  - [UpdateMeterResponse](docs/UpdateMeterResponse.md)
  - [UsageWindow](docs/UsageWindow.md)

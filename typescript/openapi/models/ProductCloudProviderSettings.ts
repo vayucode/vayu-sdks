@@ -53,6 +53,8 @@ export class ProductCloudProviderSettings {
 }
 
 export enum ProductCloudProviderSettingsCloudProviderEnum {
-    Aws = 'AWS'
+    Aws = 'AWS',
+    Gcp = 'GCP',
+    Azure = 'Azure'
 }
 

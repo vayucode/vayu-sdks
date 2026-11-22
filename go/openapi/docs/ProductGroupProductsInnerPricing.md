@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Discount** | Pointer to [**NullableProductGroupProductsInnerPricingOneOfDiscount**](ProductGroupProductsInnerPricingOneOfDiscount.md) |  | [optional] 
 **IsCreditPurchase** | Pointer to **bool** | Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false. | [optional] 
 **IssuedSeparately** | Pointer to **bool** | When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false. | [optional] 
+**Quantity** | Pointer to **int32** | The number of units this term is charged for. When set, &#x60;price&#x60; is the rate per unit and the term is worth price x quantity. Leave unset for a flat fee. | [optional] 
 **Installments** | Pointer to **int32** | The number of installments to spread the deduction over | [optional] 
 **SubscriptionCadence** | [**NullableProductGroupProductsInnerPricingOneOf3SubscriptionCadence**](ProductGroupProductsInnerPricingOneOf3SubscriptionCadence.md) |  | 
 **Seats** | Pointer to **int32** | The number of seats for this subscription product. | [optional] 
@@ -165,6 +166,31 @@ SetIssuedSeparately sets IssuedSeparately field to given value.
 `func (o *ProductGroupProductsInnerPricing) HasIssuedSeparately() bool`
 
 HasIssuedSeparately returns a boolean if a field has been set.
+
+### GetQuantity
+
+`func (o *ProductGroupProductsInnerPricing) GetQuantity() int32`
+
+GetQuantity returns the Quantity field if non-nil, zero value otherwise.
+
+### GetQuantityOk
+
+`func (o *ProductGroupProductsInnerPricing) GetQuantityOk() (*int32, bool)`
+
+GetQuantityOk returns a tuple with the Quantity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuantity
+
+`func (o *ProductGroupProductsInnerPricing) SetQuantity(v int32)`
+
+SetQuantity sets Quantity field to given value.
+
+### HasQuantity
+
+`func (o *ProductGroupProductsInnerPricing) HasQuantity() bool`
+
+HasQuantity returns a boolean if a field has been set.
 
 ### GetInstallments
 

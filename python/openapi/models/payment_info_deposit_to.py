@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,8 +29,19 @@ class PaymentInfoDepositTo(BaseModel):
     """ # noqa: E501
     id: Optional[StrictStr] = None
     name: StrictStr
+    integration: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "name"]
+    __properties: ClassVar[List[str]] = ["id", "name", "integration"]
+
+    @field_validator('integration')
+    def integration_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['NetSuite', 'QuickBooks', 'Morning', 'Xero']):
+            raise ValueError("must be one of enum values ('NetSuite', 'QuickBooks', 'Morning', 'Xero')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,7 +102,8 @@ class PaymentInfoDepositTo(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "name": obj.get("name")
+            "name": obj.get("name"),
+            "integration": obj.get("integration")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

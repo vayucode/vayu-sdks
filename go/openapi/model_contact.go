@@ -21,9 +21,9 @@ var _ MappedNullable = &Contact{}
 // Contact struct for Contact
 type Contact struct {
 	Name *string `json:"name,omitempty"`
-	Email *string "json:\"email,omitempty\" validate:\"regexp=^(?!\\\\.)[A-Za-z0-9_!#$%&'*+\\/=?^`{|}~-]+(?:\\\\.[A-Za-z0-9_!#$%&'*+\\/=?^`{|}~-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\\\\.)+[A-Za-z]{2,}$\""
+	Email *string `json:"email,omitempty"`
 	Title *string `json:"title,omitempty"`
-	Phone *string `json:"phone,omitempty" validate:"regexp=^\\\\+?[1-9]\\\\d{4,15}$"`
+	Phone *string `json:"phone,omitempty"`
 	ReceiveInvoiceEmail *bool `json:"receiveInvoiceEmail,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

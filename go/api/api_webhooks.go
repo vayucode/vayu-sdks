@@ -42,6 +42,30 @@ func NewCurrencyCommitmentUsageCrossedWebhookSubscribeRequest(callbackUrl string
 	}
 }
 
+func NewInvoicePastDueWebhookSubscribeRequest(callbackUrl string, days []int32) *WebhookSubscribeRequest {
+	return &openapi.WebhookSubscribeRequest{
+		CallbackUrl: callbackUrl,
+		EventType:   openapi.NOTIFICATIONEVENTTYPE_INVOICE_PAST_DUE,
+		Days:        days,
+	}
+}
+
+func NewInvoiceIssueDateApproachingWebhookSubscribeRequest(callbackUrl string, days []int32) *WebhookSubscribeRequest {
+	return &openapi.WebhookSubscribeRequest{
+		CallbackUrl: callbackUrl,
+		EventType:   openapi.NOTIFICATIONEVENTTYPE_INVOICE_ISSUE_DATE_APPROACHING,
+		Days:        days,
+	}
+}
+
+func NewContractExpirationApproachingWebhookSubscribeRequest(callbackUrl string, days []int32) *WebhookSubscribeRequest {
+	return &openapi.WebhookSubscribeRequest{
+		CallbackUrl: callbackUrl,
+		EventType:   openapi.NOTIFICATIONEVENTTYPE_CONTRACT_EXPIRATION_APPROACHING,
+		Days:        days,
+	}
+}
+
 func (api *WebhooksAPI) Subscribe(payload WebhookSubscribeRequest) error {
 	ctx, cancel := client.GenerateContextWithTimeout()
 	defer cancel()

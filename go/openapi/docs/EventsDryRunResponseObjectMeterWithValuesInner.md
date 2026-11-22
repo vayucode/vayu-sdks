@@ -6,8 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The name of the meter | 
 **EventName** | **string** | The name of the event that the meter is tracking. | 
+**ProductCode** | Pointer to **string** | The product code of the meter | [optional] 
 **AggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
 **Filter** | Pointer to [**Filter**](Filter.md) |  | [optional] 
+**SalesForceProductId** | Pointer to **NullableString** | The ID of the meter in the Salesforce system | [optional] 
 **Value** | **NullableFloat32** |  | 
 **InstanceValue** | Pointer to **interface{}** |  | [optional] 
 
@@ -70,6 +72,31 @@ and a boolean to check if the value has been set.
 SetEventName sets EventName field to given value.
 
 
+### GetProductCode
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetProductCode() string`
+
+GetProductCode returns the ProductCode field if non-nil, zero value otherwise.
+
+### GetProductCodeOk
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetProductCodeOk() (*string, bool)`
+
+GetProductCodeOk returns a tuple with the ProductCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProductCode
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetProductCode(v string)`
+
+SetProductCode sets ProductCode field to given value.
+
+### HasProductCode
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) HasProductCode() bool`
+
+HasProductCode returns a boolean if a field has been set.
+
 ### GetAggregationMethod
 
 `func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetAggregationMethod() AggregationMethod`
@@ -115,6 +142,41 @@ SetFilter sets Filter field to given value.
 
 HasFilter returns a boolean if a field has been set.
 
+### GetSalesForceProductId
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetSalesForceProductId() string`
+
+GetSalesForceProductId returns the SalesForceProductId field if non-nil, zero value otherwise.
+
+### GetSalesForceProductIdOk
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetSalesForceProductIdOk() (*string, bool)`
+
+GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSalesForceProductId
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetSalesForceProductId(v string)`
+
+SetSalesForceProductId sets SalesForceProductId field to given value.
+
+### HasSalesForceProductId
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) HasSalesForceProductId() bool`
+
+HasSalesForceProductId returns a boolean if a field has been set.
+
+### SetSalesForceProductIdNil
+
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) SetSalesForceProductIdNil(b bool)`
+
+ SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+
+### UnsetSalesForceProductId
+`func (o *EventsDryRunResponseObjectMeterWithValuesInner) UnsetSalesForceProductId()`
+
+UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
 ### GetValue
 
 `func (o *EventsDryRunResponseObjectMeterWithValuesInner) GetValue() float32`

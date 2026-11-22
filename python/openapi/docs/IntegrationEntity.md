@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** |  | 
 **integration_provider** | [**IntegrationProviders**](IntegrationProviders.md) |  | 
 **integration_external_id** | **str** |  | 
+**subsidiary_id** | **str** |  | [optional] 
 **sync_status** | [**SyncStatus**](SyncStatus.md) |  | 
 **metadata** | **Dict[str, Optional[object]]** |  | [optional] 
 **raw_synced_data** | **Dict[str, Optional[object]]** |  | [optional] 

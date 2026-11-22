@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Code** | **string** | Specific machine-readable error code | 
 **Message** | **string** | Human-readable error explanation | 
+**RequiredScope** | Pointer to **string** | Scope the token was missing, present on insufficient_scope errors | [optional] 
 **Param** | Pointer to **string** | Single parameter that failed validation | [optional] 
 **Params** | Pointer to [**[]ValidationErrorResponseParamsInner**](ValidationErrorResponseParamsInner.md) | Multiple parameters that failed validation | [optional] 
 
@@ -88,6 +89,31 @@ and a boolean to check if the value has been set.
 
 SetMessage sets Message field to given value.
 
+
+### GetRequiredScope
+
+`func (o *ValidationErrorResponse) GetRequiredScope() string`
+
+GetRequiredScope returns the RequiredScope field if non-nil, zero value otherwise.
+
+### GetRequiredScopeOk
+
+`func (o *ValidationErrorResponse) GetRequiredScopeOk() (*string, bool)`
+
+GetRequiredScopeOk returns a tuple with the RequiredScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequiredScope
+
+`func (o *ValidationErrorResponse) SetRequiredScope(v string)`
+
+SetRequiredScope sets RequiredScope field to given value.
+
+### HasRequiredScope
+
+`func (o *ValidationErrorResponse) HasRequiredScope() bool`
+
+HasRequiredScope returns a boolean if a field has been set.
 
 ### GetParam
 

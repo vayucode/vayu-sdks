@@ -28,17 +28,36 @@ type GetInvoiceResponseInvoice struct {
 	ContractId *string `json:"contractId,omitempty" validate:"regexp=^[0-9a-fA-F]{24}$"`
 	// The name of the invoice, usually a description of the billing period
 	Name string `json:"name"`
-	BillingCycle FullDayPeriod `json:"billingCycle"`
 	RevenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown `json:"revenueBreakdown"`
 	BillingStatus InvoiceBillingStatus `json:"billingStatus"`
 	PaymentInfo *PaymentInfo `json:"paymentInfo,omitempty"`
 	// The due date of the invoice
 	DueDate NullableTime `json:"dueDate"`
+	// The number of the invoice
+	InvoiceNumber *string `json:"invoiceNumber,omitempty"`
+	ReviewStatus InvoiceReviewStatus `json:"reviewStatus"`
+	// The date the invoice was approved
+	ApprovedAt *time.Time `json:"approvedAt,omitempty"`
+	// The date the invoice was issued
+	IssuedAt NullableTime `json:"issuedAt"`
 	// The id of the account that the invoice is associated with
 	AccountId string `json:"accountId"`
+	BillingCycle Period `json:"billingCycle"`
 	LineItems []LineItem `json:"lineItems"`
+	// The payments recorded for the invoice, including failed and pending ones; use status to filter
+	Payments []InvoicePayment `json:"payments"`
 	// The total amount of the invoice
 	Amount float32 `json:"amount"`
+	// The purchase order of the invoice
+	PurchaseOrder *string `json:"purchaseOrder,omitempty"`
+	// The notes (memo) of the invoice
+	Notes *string `json:"notes,omitempty"`
+	// The name of the plan the contract of the invoice is based on
+	ContractName *string `json:"contractName,omitempty"`
+	// The custom field values of the invoice's customer and contract. Customer field names are prefixed with customer_ and contract field names with contract_.
+	CustomFieldValues []CustomFieldValue `json:"customFieldValues,omitempty"`
+	// External systems the invoice was exported to. Each entry carries the provider, the id of the invoice in that system and, when available, its document number there. An empty list means the invoice was not exported; the field is omitted when the lookup is temporarily unavailable.
+	ExternalIntegration []InvoiceIntegration `json:"externalIntegration,omitempty"`
 	// Whether the invoice belongs to a trial contract
 	IsTrial bool `json:"isTrial"`
 	Id string `json:"id"`
@@ -53,16 +72,19 @@ type _GetInvoiceResponseInvoice GetInvoiceResponseInvoice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetInvoiceResponseInvoice(customerId string, name string, billingCycle FullDayPeriod, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, accountId string, lineItems []LineItem, amount float32, isTrial bool, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
+func NewGetInvoiceResponseInvoice(customerId string, name string, revenueBreakdown GetInvoiceResponseInvoiceRevenueBreakdown, billingStatus InvoiceBillingStatus, dueDate NullableTime, reviewStatus InvoiceReviewStatus, issuedAt NullableTime, accountId string, billingCycle Period, lineItems []LineItem, payments []InvoicePayment, amount float32, isTrial bool, id string, createdAt time.Time, updatedAt time.Time) *GetInvoiceResponseInvoice {
 	this := GetInvoiceResponseInvoice{}
 	this.CustomerId = customerId
 	this.Name = name
-	this.BillingCycle = billingCycle
 	this.RevenueBreakdown = revenueBreakdown
 	this.BillingStatus = billingStatus
 	this.DueDate = dueDate
+	this.ReviewStatus = reviewStatus
+	this.IssuedAt = issuedAt
 	this.AccountId = accountId
+	this.BillingCycle = billingCycle
 	this.LineItems = lineItems
+	this.Payments = payments
 	this.Amount = amount
 	this.IsTrial = isTrial
 	this.Id = id
@@ -157,30 +179,6 @@ func (o *GetInvoiceResponseInvoice) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *GetInvoiceResponseInvoice) SetName(v string) {
 	o.Name = v
-}
-
-// GetBillingCycle returns the BillingCycle field value
-func (o *GetInvoiceResponseInvoice) GetBillingCycle() FullDayPeriod {
-	if o == nil {
-		var ret FullDayPeriod
-		return ret
-	}
-
-	return o.BillingCycle
-}
-
-// GetBillingCycleOk returns a tuple with the BillingCycle field value
-// and a boolean to check if the value has been set.
-func (o *GetInvoiceResponseInvoice) GetBillingCycleOk() (*FullDayPeriod, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.BillingCycle, true
-}
-
-// SetBillingCycle sets field value
-func (o *GetInvoiceResponseInvoice) SetBillingCycle(v FullDayPeriod) {
-	o.BillingCycle = v
 }
 
 // GetRevenueBreakdown returns the RevenueBreakdown field value
@@ -289,6 +287,120 @@ func (o *GetInvoiceResponseInvoice) SetDueDate(v time.Time) {
 	o.DueDate.Set(&v)
 }
 
+// GetInvoiceNumber returns the InvoiceNumber field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetInvoiceNumber() string {
+	if o == nil || IsNil(o.InvoiceNumber) {
+		var ret string
+		return ret
+	}
+	return *o.InvoiceNumber
+}
+
+// GetInvoiceNumberOk returns a tuple with the InvoiceNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetInvoiceNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.InvoiceNumber) {
+		return nil, false
+	}
+	return o.InvoiceNumber, true
+}
+
+// HasInvoiceNumber returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasInvoiceNumber() bool {
+	if o != nil && !IsNil(o.InvoiceNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvoiceNumber gets a reference to the given string and assigns it to the InvoiceNumber field.
+func (o *GetInvoiceResponseInvoice) SetInvoiceNumber(v string) {
+	o.InvoiceNumber = &v
+}
+
+// GetReviewStatus returns the ReviewStatus field value
+func (o *GetInvoiceResponseInvoice) GetReviewStatus() InvoiceReviewStatus {
+	if o == nil {
+		var ret InvoiceReviewStatus
+		return ret
+	}
+
+	return o.ReviewStatus
+}
+
+// GetReviewStatusOk returns a tuple with the ReviewStatus field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetReviewStatusOk() (*InvoiceReviewStatus, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ReviewStatus, true
+}
+
+// SetReviewStatus sets field value
+func (o *GetInvoiceResponseInvoice) SetReviewStatus(v InvoiceReviewStatus) {
+	o.ReviewStatus = v
+}
+
+// GetApprovedAt returns the ApprovedAt field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetApprovedAt() time.Time {
+	if o == nil || IsNil(o.ApprovedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ApprovedAt
+}
+
+// GetApprovedAtOk returns a tuple with the ApprovedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetApprovedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ApprovedAt) {
+		return nil, false
+	}
+	return o.ApprovedAt, true
+}
+
+// HasApprovedAt returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasApprovedAt() bool {
+	if o != nil && !IsNil(o.ApprovedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetApprovedAt gets a reference to the given time.Time and assigns it to the ApprovedAt field.
+func (o *GetInvoiceResponseInvoice) SetApprovedAt(v time.Time) {
+	o.ApprovedAt = &v
+}
+
+// GetIssuedAt returns the IssuedAt field value
+// If the value is explicit nil, the zero value for time.Time will be returned
+func (o *GetInvoiceResponseInvoice) GetIssuedAt() time.Time {
+	if o == nil || o.IssuedAt.Get() == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return *o.IssuedAt.Get()
+}
+
+// GetIssuedAtOk returns a tuple with the IssuedAt field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvoiceResponseInvoice) GetIssuedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IssuedAt.Get(), o.IssuedAt.IsSet()
+}
+
+// SetIssuedAt sets field value
+func (o *GetInvoiceResponseInvoice) SetIssuedAt(v time.Time) {
+	o.IssuedAt.Set(&v)
+}
+
 // GetAccountId returns the AccountId field value
 func (o *GetInvoiceResponseInvoice) GetAccountId() string {
 	if o == nil {
@@ -311,6 +423,30 @@ func (o *GetInvoiceResponseInvoice) GetAccountIdOk() (*string, bool) {
 // SetAccountId sets field value
 func (o *GetInvoiceResponseInvoice) SetAccountId(v string) {
 	o.AccountId = v
+}
+
+// GetBillingCycle returns the BillingCycle field value
+func (o *GetInvoiceResponseInvoice) GetBillingCycle() Period {
+	if o == nil {
+		var ret Period
+		return ret
+	}
+
+	return o.BillingCycle
+}
+
+// GetBillingCycleOk returns a tuple with the BillingCycle field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetBillingCycleOk() (*Period, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BillingCycle, true
+}
+
+// SetBillingCycle sets field value
+func (o *GetInvoiceResponseInvoice) SetBillingCycle(v Period) {
+	o.BillingCycle = v
 }
 
 // GetLineItems returns the LineItems field value
@@ -337,6 +473,30 @@ func (o *GetInvoiceResponseInvoice) SetLineItems(v []LineItem) {
 	o.LineItems = v
 }
 
+// GetPayments returns the Payments field value
+func (o *GetInvoiceResponseInvoice) GetPayments() []InvoicePayment {
+	if o == nil {
+		var ret []InvoicePayment
+		return ret
+	}
+
+	return o.Payments
+}
+
+// GetPaymentsOk returns a tuple with the Payments field value
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetPaymentsOk() ([]InvoicePayment, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Payments, true
+}
+
+// SetPayments sets field value
+func (o *GetInvoiceResponseInvoice) SetPayments(v []InvoicePayment) {
+	o.Payments = v
+}
+
 // GetAmount returns the Amount field value
 func (o *GetInvoiceResponseInvoice) GetAmount() float32 {
 	if o == nil {
@@ -359,6 +519,166 @@ func (o *GetInvoiceResponseInvoice) GetAmountOk() (*float32, bool) {
 // SetAmount sets field value
 func (o *GetInvoiceResponseInvoice) SetAmount(v float32) {
 	o.Amount = v
+}
+
+// GetPurchaseOrder returns the PurchaseOrder field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetPurchaseOrder() string {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		var ret string
+		return ret
+	}
+	return *o.PurchaseOrder
+}
+
+// GetPurchaseOrderOk returns a tuple with the PurchaseOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetPurchaseOrderOk() (*string, bool) {
+	if o == nil || IsNil(o.PurchaseOrder) {
+		return nil, false
+	}
+	return o.PurchaseOrder, true
+}
+
+// HasPurchaseOrder returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasPurchaseOrder() bool {
+	if o != nil && !IsNil(o.PurchaseOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetPurchaseOrder gets a reference to the given string and assigns it to the PurchaseOrder field.
+func (o *GetInvoiceResponseInvoice) SetPurchaseOrder(v string) {
+	o.PurchaseOrder = &v
+}
+
+// GetNotes returns the Notes field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetNotes() string {
+	if o == nil || IsNil(o.Notes) {
+		var ret string
+		return ret
+	}
+	return *o.Notes
+}
+
+// GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetNotesOk() (*string, bool) {
+	if o == nil || IsNil(o.Notes) {
+		return nil, false
+	}
+	return o.Notes, true
+}
+
+// HasNotes returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasNotes() bool {
+	if o != nil && !IsNil(o.Notes) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotes gets a reference to the given string and assigns it to the Notes field.
+func (o *GetInvoiceResponseInvoice) SetNotes(v string) {
+	o.Notes = &v
+}
+
+// GetContractName returns the ContractName field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetContractName() string {
+	if o == nil || IsNil(o.ContractName) {
+		var ret string
+		return ret
+	}
+	return *o.ContractName
+}
+
+// GetContractNameOk returns a tuple with the ContractName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetContractNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ContractName) {
+		return nil, false
+	}
+	return o.ContractName, true
+}
+
+// HasContractName returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasContractName() bool {
+	if o != nil && !IsNil(o.ContractName) {
+		return true
+	}
+
+	return false
+}
+
+// SetContractName gets a reference to the given string and assigns it to the ContractName field.
+func (o *GetInvoiceResponseInvoice) SetContractName(v string) {
+	o.ContractName = &v
+}
+
+// GetCustomFieldValues returns the CustomFieldValues field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetCustomFieldValues() []CustomFieldValue {
+	if o == nil || IsNil(o.CustomFieldValues) {
+		var ret []CustomFieldValue
+		return ret
+	}
+	return o.CustomFieldValues
+}
+
+// GetCustomFieldValuesOk returns a tuple with the CustomFieldValues field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetCustomFieldValuesOk() ([]CustomFieldValue, bool) {
+	if o == nil || IsNil(o.CustomFieldValues) {
+		return nil, false
+	}
+	return o.CustomFieldValues, true
+}
+
+// HasCustomFieldValues returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasCustomFieldValues() bool {
+	if o != nil && !IsNil(o.CustomFieldValues) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomFieldValues gets a reference to the given []CustomFieldValue and assigns it to the CustomFieldValues field.
+func (o *GetInvoiceResponseInvoice) SetCustomFieldValues(v []CustomFieldValue) {
+	o.CustomFieldValues = v
+}
+
+// GetExternalIntegration returns the ExternalIntegration field value if set, zero value otherwise.
+func (o *GetInvoiceResponseInvoice) GetExternalIntegration() []InvoiceIntegration {
+	if o == nil || IsNil(o.ExternalIntegration) {
+		var ret []InvoiceIntegration
+		return ret
+	}
+	return o.ExternalIntegration
+}
+
+// GetExternalIntegrationOk returns a tuple with the ExternalIntegration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetInvoiceResponseInvoice) GetExternalIntegrationOk() ([]InvoiceIntegration, bool) {
+	if o == nil || IsNil(o.ExternalIntegration) {
+		return nil, false
+	}
+	return o.ExternalIntegration, true
+}
+
+// HasExternalIntegration returns a boolean if a field has been set.
+func (o *GetInvoiceResponseInvoice) HasExternalIntegration() bool {
+	if o != nil && !IsNil(o.ExternalIntegration) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalIntegration gets a reference to the given []InvoiceIntegration and assigns it to the ExternalIntegration field.
+func (o *GetInvoiceResponseInvoice) SetExternalIntegration(v []InvoiceIntegration) {
+	o.ExternalIntegration = v
 }
 
 // GetIsTrial returns the IsTrial field value
@@ -472,16 +792,40 @@ func (o GetInvoiceResponseInvoice) ToMap() (map[string]interface{}, error) {
 		toSerialize["contractId"] = o.ContractId
 	}
 	toSerialize["name"] = o.Name
-	toSerialize["billingCycle"] = o.BillingCycle
 	toSerialize["revenueBreakdown"] = o.RevenueBreakdown
 	toSerialize["billingStatus"] = o.BillingStatus
 	if !IsNil(o.PaymentInfo) {
 		toSerialize["paymentInfo"] = o.PaymentInfo
 	}
 	toSerialize["dueDate"] = o.DueDate.Get()
+	if !IsNil(o.InvoiceNumber) {
+		toSerialize["invoiceNumber"] = o.InvoiceNumber
+	}
+	toSerialize["reviewStatus"] = o.ReviewStatus
+	if !IsNil(o.ApprovedAt) {
+		toSerialize["approvedAt"] = o.ApprovedAt
+	}
+	toSerialize["issuedAt"] = o.IssuedAt.Get()
 	toSerialize["accountId"] = o.AccountId
+	toSerialize["billingCycle"] = o.BillingCycle
 	toSerialize["lineItems"] = o.LineItems
+	toSerialize["payments"] = o.Payments
 	toSerialize["amount"] = o.Amount
+	if !IsNil(o.PurchaseOrder) {
+		toSerialize["purchaseOrder"] = o.PurchaseOrder
+	}
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.ContractName) {
+		toSerialize["contractName"] = o.ContractName
+	}
+	if !IsNil(o.CustomFieldValues) {
+		toSerialize["customFieldValues"] = o.CustomFieldValues
+	}
+	if !IsNil(o.ExternalIntegration) {
+		toSerialize["externalIntegration"] = o.ExternalIntegration
+	}
 	toSerialize["isTrial"] = o.IsTrial
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
@@ -501,12 +845,15 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"customerId",
 		"name",
-		"billingCycle",
 		"revenueBreakdown",
 		"billingStatus",
 		"dueDate",
+		"reviewStatus",
+		"issuedAt",
 		"accountId",
+		"billingCycle",
 		"lineItems",
+		"payments",
 		"amount",
 		"isTrial",
 		"id",
@@ -544,14 +891,24 @@ func (o *GetInvoiceResponseInvoice) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "customerId")
 		delete(additionalProperties, "contractId")
 		delete(additionalProperties, "name")
-		delete(additionalProperties, "billingCycle")
 		delete(additionalProperties, "revenueBreakdown")
 		delete(additionalProperties, "billingStatus")
 		delete(additionalProperties, "paymentInfo")
 		delete(additionalProperties, "dueDate")
+		delete(additionalProperties, "invoiceNumber")
+		delete(additionalProperties, "reviewStatus")
+		delete(additionalProperties, "approvedAt")
+		delete(additionalProperties, "issuedAt")
 		delete(additionalProperties, "accountId")
+		delete(additionalProperties, "billingCycle")
 		delete(additionalProperties, "lineItems")
+		delete(additionalProperties, "payments")
 		delete(additionalProperties, "amount")
+		delete(additionalProperties, "purchaseOrder")
+		delete(additionalProperties, "notes")
+		delete(additionalProperties, "contractName")
+		delete(additionalProperties, "customFieldValues")
+		delete(additionalProperties, "externalIntegration")
 		delete(additionalProperties, "isTrial")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")

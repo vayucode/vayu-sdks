@@ -19,6 +19,10 @@ export class RateLimitErrorResponse {
     * Human-readable error explanation
     */
     'message': string;
+    /**
+    * Scope the token was missing, present on insufficient_scope errors
+    */
+    'requiredScope'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -40,6 +44,12 @@ export class RateLimitErrorResponse {
         {
             "name": "message",
             "baseName": "message",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "requiredScope",
+            "baseName": "requiredScope",
             "type": "string",
             "format": ""
         }    ];

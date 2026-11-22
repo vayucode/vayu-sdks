@@ -10,17 +10,20 @@ Name | Type | Description | Notes
 **Source** | Pointer to [**NullableCustomerSource**](CustomerSource.md) |  | [optional] 
 **LegalName** | Pointer to **NullableString** | The legal name of the customer | [optional] 
 **TaxIds** | Pointer to **[]string** | The tax IDs of the customer | [optional] [default to []]
+**CrmId** | Pointer to **NullableString** | The ID of the customer in the CRM system. When not set directly, it is read from the linked CRM integration (Salesforce, HubSpot). | [optional] 
 **Status** | Pointer to [**CustomerStatus**](CustomerStatus.md) |  | [optional] 
 **TaxId** | Pointer to **NullableString** | The tax ID of the customer (deprecated, use taxIds instead) | [optional] 
-**CloudProviderSettings** | Pointer to [**NullableCustomerCloudProviderSettings**](CustomerCloudProviderSettings.md) |  | [optional] 
+**CloudProviderSettings** | Pointer to [**NullableCreateCustomerRequestCloudProviderSettings**](CreateCustomerRequestCloudProviderSettings.md) |  | [optional] 
 **ExternalId** | Pointer to **string** | The external ID of the customer | [optional] 
 **CustomerErpId** | Pointer to **NullableString** | The ID of the customer in the ERP system | [optional] 
 **Address** | Pointer to [**NullableAddress**](Address.md) |  | [optional] 
+**ShippingAddress** | Pointer to [**CreateCustomerRequestShippingAddress**](CreateCustomerRequestShippingAddress.md) |  | [optional] 
 **SalesForceAccountId** | Pointer to **NullableString** | The ID of the customer in the Salesforce system | [optional] 
 **ExternalIntegration** | Pointer to [**[]CustomerExternalIntegration**](CustomerExternalIntegration.md) | External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry. | [optional] 
 **DueDays** | Pointer to **NullableString** | The due days of the customer | [optional] 
 **Currency** | Pointer to [**NullableCurrency**](Currency.md) |  | [optional] 
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
+**CustomFieldValues** | Pointer to [**[]CustomFieldValue**](CustomFieldValue.md) | The stored custom field values associated with the customer. Read-only: ignored on create and update requests; values are set via customFields. | [optional] 
 **Subsidiary** | Pointer to **NullableString** | The name of the subsidiary of the customer | [optional] 
 **TotalOutstandingAmount** | Pointer to **float32** | Total outstanding amount across all unpaid invoices (in USD) | [optional] 
 **OpenAmount** | Pointer to **float32** | Total amount of invoices with no billing status set (in USD) | [optional] 
@@ -246,6 +249,41 @@ HasTaxIds returns a boolean if a field has been set.
 `func (o *DeleteCustomerResponseCustomer) UnsetTaxIds()`
 
 UnsetTaxIds ensures that no value is present for TaxIds, not even an explicit nil
+### GetCrmId
+
+`func (o *DeleteCustomerResponseCustomer) GetCrmId() string`
+
+GetCrmId returns the CrmId field if non-nil, zero value otherwise.
+
+### GetCrmIdOk
+
+`func (o *DeleteCustomerResponseCustomer) GetCrmIdOk() (*string, bool)`
+
+GetCrmIdOk returns a tuple with the CrmId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCrmId
+
+`func (o *DeleteCustomerResponseCustomer) SetCrmId(v string)`
+
+SetCrmId sets CrmId field to given value.
+
+### HasCrmId
+
+`func (o *DeleteCustomerResponseCustomer) HasCrmId() bool`
+
+HasCrmId returns a boolean if a field has been set.
+
+### SetCrmIdNil
+
+`func (o *DeleteCustomerResponseCustomer) SetCrmIdNil(b bool)`
+
+ SetCrmIdNil sets the value for CrmId to be an explicit nil
+
+### UnsetCrmId
+`func (o *DeleteCustomerResponseCustomer) UnsetCrmId()`
+
+UnsetCrmId ensures that no value is present for CrmId, not even an explicit nil
 ### GetStatus
 
 `func (o *DeleteCustomerResponseCustomer) GetStatus() CustomerStatus`
@@ -308,20 +346,20 @@ HasTaxId returns a boolean if a field has been set.
 UnsetTaxId ensures that no value is present for TaxId, not even an explicit nil
 ### GetCloudProviderSettings
 
-`func (o *DeleteCustomerResponseCustomer) GetCloudProviderSettings() CustomerCloudProviderSettings`
+`func (o *DeleteCustomerResponseCustomer) GetCloudProviderSettings() CreateCustomerRequestCloudProviderSettings`
 
 GetCloudProviderSettings returns the CloudProviderSettings field if non-nil, zero value otherwise.
 
 ### GetCloudProviderSettingsOk
 
-`func (o *DeleteCustomerResponseCustomer) GetCloudProviderSettingsOk() (*CustomerCloudProviderSettings, bool)`
+`func (o *DeleteCustomerResponseCustomer) GetCloudProviderSettingsOk() (*CreateCustomerRequestCloudProviderSettings, bool)`
 
 GetCloudProviderSettingsOk returns a tuple with the CloudProviderSettings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCloudProviderSettings
 
-`func (o *DeleteCustomerResponseCustomer) SetCloudProviderSettings(v CustomerCloudProviderSettings)`
+`func (o *DeleteCustomerResponseCustomer) SetCloudProviderSettings(v CreateCustomerRequestCloudProviderSettings)`
 
 SetCloudProviderSettings sets CloudProviderSettings field to given value.
 
@@ -436,6 +474,31 @@ HasAddress returns a boolean if a field has been set.
 `func (o *DeleteCustomerResponseCustomer) UnsetAddress()`
 
 UnsetAddress ensures that no value is present for Address, not even an explicit nil
+### GetShippingAddress
+
+`func (o *DeleteCustomerResponseCustomer) GetShippingAddress() CreateCustomerRequestShippingAddress`
+
+GetShippingAddress returns the ShippingAddress field if non-nil, zero value otherwise.
+
+### GetShippingAddressOk
+
+`func (o *DeleteCustomerResponseCustomer) GetShippingAddressOk() (*CreateCustomerRequestShippingAddress, bool)`
+
+GetShippingAddressOk returns a tuple with the ShippingAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShippingAddress
+
+`func (o *DeleteCustomerResponseCustomer) SetShippingAddress(v CreateCustomerRequestShippingAddress)`
+
+SetShippingAddress sets ShippingAddress field to given value.
+
+### HasShippingAddress
+
+`func (o *DeleteCustomerResponseCustomer) HasShippingAddress() bool`
+
+HasShippingAddress returns a boolean if a field has been set.
+
 ### GetSalesForceAccountId
 
 `func (o *DeleteCustomerResponseCustomer) GetSalesForceAccountId() string`
@@ -611,6 +674,41 @@ HasCustomFields returns a boolean if a field has been set.
 `func (o *DeleteCustomerResponseCustomer) UnsetCustomFields()`
 
 UnsetCustomFields ensures that no value is present for CustomFields, not even an explicit nil
+### GetCustomFieldValues
+
+`func (o *DeleteCustomerResponseCustomer) GetCustomFieldValues() []CustomFieldValue`
+
+GetCustomFieldValues returns the CustomFieldValues field if non-nil, zero value otherwise.
+
+### GetCustomFieldValuesOk
+
+`func (o *DeleteCustomerResponseCustomer) GetCustomFieldValuesOk() (*[]CustomFieldValue, bool)`
+
+GetCustomFieldValuesOk returns a tuple with the CustomFieldValues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomFieldValues
+
+`func (o *DeleteCustomerResponseCustomer) SetCustomFieldValues(v []CustomFieldValue)`
+
+SetCustomFieldValues sets CustomFieldValues field to given value.
+
+### HasCustomFieldValues
+
+`func (o *DeleteCustomerResponseCustomer) HasCustomFieldValues() bool`
+
+HasCustomFieldValues returns a boolean if a field has been set.
+
+### SetCustomFieldValuesNil
+
+`func (o *DeleteCustomerResponseCustomer) SetCustomFieldValuesNil(b bool)`
+
+ SetCustomFieldValuesNil sets the value for CustomFieldValues to be an explicit nil
+
+### UnsetCustomFieldValues
+`func (o *DeleteCustomerResponseCustomer) UnsetCustomFieldValues()`
+
+UnsetCustomFieldValues ensures that no value is present for CustomFieldValues, not even an explicit nil
 ### GetSubsidiary
 
 `func (o *DeleteCustomerResponseCustomer) GetSubsidiary() string`

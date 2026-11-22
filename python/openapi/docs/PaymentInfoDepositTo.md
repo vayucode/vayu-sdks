@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
 **name** | **str** |  | 
+**integration** | **str** |  | [optional] 
 
 ## Example
 

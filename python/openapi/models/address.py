@@ -28,12 +28,15 @@ class Address(BaseModel):
     The address of the customer
     """ # noqa: E501
     country: Optional[StrictStr] = None
+    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
     city: Optional[StrictStr] = None
     address_text: Optional[StrictStr] = Field(default=None, alias="addressText")
+    street_name: Optional[StrictStr] = Field(default=None, alias="streetName")
+    apartment: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["country", "city", "addressText", "state", "postalCode"]
+    __properties: ClassVar[List[str]] = ["country", "countryCode", "city", "addressText", "streetName", "apartment", "state", "postalCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +89,11 @@ class Address(BaseModel):
         if self.country is None and "country" in self.model_fields_set:
             _dict['country'] = None
 
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['countryCode'] = None
+
         # set to None if city (nullable) is None
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
@@ -95,6 +103,16 @@ class Address(BaseModel):
         # and model_fields_set contains the field
         if self.address_text is None and "address_text" in self.model_fields_set:
             _dict['addressText'] = None
+
+        # set to None if street_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.street_name is None and "street_name" in self.model_fields_set:
+            _dict['streetName'] = None
+
+        # set to None if apartment (nullable) is None
+        # and model_fields_set contains the field
+        if self.apartment is None and "apartment" in self.model_fields_set:
+            _dict['apartment'] = None
 
         # set to None if state (nullable) is None
         # and model_fields_set contains the field
@@ -119,8 +137,11 @@ class Address(BaseModel):
 
         _obj = cls.model_validate({
             "country": obj.get("country"),
+            "countryCode": obj.get("countryCode"),
             "city": obj.get("city"),
             "addressText": obj.get("addressText"),
+            "streetName": obj.get("streetName"),
+            "apartment": obj.get("apartment"),
             "state": obj.get("state"),
             "postalCode": obj.get("postalCode")
         })

@@ -10,19 +10,21 @@
  * Do not edit the class manually.
  */
 
-import { BillingCycleStatus } from '../models/BillingCycleStatus';
+import { CreditLedgerEntryType } from '../models/CreditLedgerEntryType';
 import { IntegrationEntity } from '../models/IntegrationEntity';
 import { HttpFile } from '../http/http';
 
 export class CreditLedgerEntry {
     'id': string;
     'createdAt': Date;
-    'type': BillingCycleStatus;
+    'type': CreditLedgerEntryType;
     'amount': number;
     'balanceAfterEntry': number;
     'invoiceId'?: string;
     'erpId'?: string;
+    'creditNoteNumber'?: string;
     'contractId'?: string;
+    'description'?: string;
     'integrationEntities': Array<IntegrationEntity>;
 
     static readonly discriminator: string | undefined = undefined;
@@ -45,7 +47,7 @@ export class CreditLedgerEntry {
         {
             "name": "type",
             "baseName": "type",
-            "type": "BillingCycleStatus",
+            "type": "CreditLedgerEntryType",
             "format": ""
         },
         {
@@ -73,8 +75,20 @@ export class CreditLedgerEntry {
             "format": ""
         },
         {
+            "name": "creditNoteNumber",
+            "baseName": "creditNoteNumber",
+            "type": "string",
+            "format": ""
+        },
+        {
             "name": "contractId",
             "baseName": "contractId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "description",
+            "baseName": "description",
             "type": "string",
             "format": ""
         },

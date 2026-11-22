@@ -23,8 +23,16 @@ export class GetMeterResponseMeter {
     * The name of the event that the meter is tracking.
     */
     'eventName': string;
+    /**
+    * The product code of the meter
+    */
+    'productCode'?: string;
     'aggregationMethod': AggregationMethod;
     'filter'?: Filter;
+    /**
+    * The ID of the meter in the Salesforce system
+    */
+    'salesForceProductId'?: string | null;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -47,6 +55,12 @@ export class GetMeterResponseMeter {
             "format": ""
         },
         {
+            "name": "productCode",
+            "baseName": "productCode",
+            "type": "string",
+            "format": ""
+        },
+        {
             "name": "aggregationMethod",
             "baseName": "aggregationMethod",
             "type": "AggregationMethod",
@@ -56,6 +70,12 @@ export class GetMeterResponseMeter {
             "name": "filter",
             "baseName": "filter",
             "type": "Filter",
+            "format": ""
+        },
+        {
+            "name": "salesForceProductId",
+            "baseName": "salesForceProductId",
+            "type": "string",
             "format": ""
         },
         {

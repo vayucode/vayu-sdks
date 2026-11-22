@@ -30,8 +30,10 @@ class CustomerSource(str, Enum):
     STRIPE = 'Stripe'
     VAYUEVENTSAPI = 'VayuEventsApi'
     API = 'Api'
+    VAYU = 'Vayu'
     SALESFORCE = 'Salesforce'
     HUBSPOT = 'HubSpot'
+    CONTRACTEXTRACTION = 'ContractExtraction'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

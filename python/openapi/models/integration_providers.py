@@ -40,6 +40,11 @@ class IntegrationProviders(str, Enum):
     SNOWFLAKE = 'Snowflake'
     CONNACT = 'Connact'
     XERO = 'Xero'
+    PADDLE = 'Paddle'
+    BIGQUERY = 'BigQuery'
+    AWSMARKETPLACEDIRECT = 'AwsMarketplaceDirect'
+    PLAID = 'Plaid'
+    REDSHIFT = 'Redshift'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

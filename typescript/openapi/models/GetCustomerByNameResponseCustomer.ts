@@ -12,10 +12,14 @@
 
 import { Address } from '../models/Address';
 import { Contact } from '../models/Contact';
+import { CreateCustomerRequestCloudProviderSettings } from '../models/CreateCustomerRequestCloudProviderSettings';
+import { CreateCustomerRequestShippingAddress } from '../models/CreateCustomerRequestShippingAddress';
 import { Currency } from '../models/Currency';
 import { CustomField } from '../models/CustomField';
-import { CustomerCloudProviderSettings } from '../models/CustomerCloudProviderSettings';
+import { CustomFieldValue } from '../models/CustomFieldValue';
+import { CustomerExternalIntegration } from '../models/CustomerExternalIntegration';
 import { CustomerSource } from '../models/CustomerSource';
+import { CustomerStatus } from '../models/CustomerStatus';
 import { HttpFile } from '../http/http';
 
 /**
@@ -44,10 +48,15 @@ export class GetCustomerByNameResponseCustomer {
     */
     'taxIds'?: Array<string> | null;
     /**
+    * The ID of the customer in the CRM system. When not set directly, it is read from the linked CRM integration (Salesforce, HubSpot).
+    */
+    'crmId'?: string | null;
+    'status'?: CustomerStatus;
+    /**
     * The tax ID of the customer (deprecated, use taxIds instead)
     */
     'taxId'?: string | null;
-    'cloudProviderSettings'?: CustomerCloudProviderSettings | null;
+    'cloudProviderSettings'?: CreateCustomerRequestCloudProviderSettings | null;
     /**
     * The external ID of the customer
     */
@@ -57,10 +66,15 @@ export class GetCustomerByNameResponseCustomer {
     */
     'customerErpId'?: string | null;
     'address'?: Address | null;
+    'shippingAddress'?: CreateCustomerRequestShippingAddress;
     /**
     * The ID of the customer in the Salesforce system
     */
     'salesForceAccountId'?: string | null;
+    /**
+    * External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.
+    */
+    'externalIntegration'?: Array<CustomerExternalIntegration> | null;
     /**
     * The due days of the customer
     */
@@ -70,6 +84,10 @@ export class GetCustomerByNameResponseCustomer {
     * Custom fields from CRM systems (Salesforce, HubSpot, etc.)
     */
     'customFields'?: Array<CustomField> | null;
+    /**
+    * The stored custom field values associated with the customer. Read-only: ignored on create and update requests; values are set via customFields.
+    */
+    'customFieldValues'?: Array<CustomFieldValue> | null;
     /**
     * The name of the subsidiary of the customer
     */
@@ -140,6 +158,18 @@ export class GetCustomerByNameResponseCustomer {
             "format": ""
         },
         {
+            "name": "crmId",
+            "baseName": "crmId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "CustomerStatus",
+            "format": ""
+        },
+        {
             "name": "taxId",
             "baseName": "taxId",
             "type": "string",
@@ -148,7 +178,7 @@ export class GetCustomerByNameResponseCustomer {
         {
             "name": "cloudProviderSettings",
             "baseName": "cloudProviderSettings",
-            "type": "CustomerCloudProviderSettings",
+            "type": "CreateCustomerRequestCloudProviderSettings",
             "format": ""
         },
         {
@@ -170,9 +200,21 @@ export class GetCustomerByNameResponseCustomer {
             "format": ""
         },
         {
+            "name": "shippingAddress",
+            "baseName": "shippingAddress",
+            "type": "CreateCustomerRequestShippingAddress",
+            "format": ""
+        },
+        {
             "name": "salesForceAccountId",
             "baseName": "salesForceAccountId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "externalIntegration",
+            "baseName": "externalIntegration",
+            "type": "Array<CustomerExternalIntegration>",
             "format": ""
         },
         {
@@ -191,6 +233,12 @@ export class GetCustomerByNameResponseCustomer {
             "name": "customFields",
             "baseName": "customFields",
             "type": "Array<CustomField>",
+            "format": ""
+        },
+        {
+            "name": "customFieldValues",
+            "baseName": "customFieldValues",
+            "type": "Array<CustomFieldValue>",
             "format": ""
         },
         {
@@ -263,6 +311,7 @@ export enum GetCustomerByNameResponseCustomerDueDaysEnum {
     _30Days = '30_DAYS',
     _45Days = '45_DAYS',
     _60Days = '60_DAYS',
-    _90Days = '90_DAYS'
+    _90Days = '90_DAYS',
+    _180Days = '180_DAYS'
 }
 

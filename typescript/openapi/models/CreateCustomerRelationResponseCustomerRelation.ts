@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { CustomerRelationType } from '../models/CustomerRelationType';
 import { HttpFile } from '../http/http';
 
 export class CreateCustomerRelationResponseCustomerRelation {
@@ -21,6 +22,7 @@ export class CreateCustomerRelationResponseCustomerRelation {
     * Identifier of the child customer in Vayu.
     */
     'vayuChildCustomerId': string;
+    'relationType': CustomerRelationType;
     'id': string;
     'createdAt': Date;
     'updatedAt': Date;
@@ -40,6 +42,12 @@ export class CreateCustomerRelationResponseCustomerRelation {
             "name": "vayuChildCustomerId",
             "baseName": "vayuChildCustomerId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "relationType",
+            "baseName": "relationType",
+            "type": "CustomerRelationType",
             "format": ""
         },
         {
@@ -68,3 +76,5 @@ export class CreateCustomerRelationResponseCustomerRelation {
     public constructor() {
     }
 }
+
+

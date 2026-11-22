@@ -28,6 +28,7 @@ class ContractStatus(str, Enum):
     allowed enum values
     """
     INREVIEW = 'InReview'
+    SCHEDULED = 'Scheduled'
     ACTIVE = 'Active'
     INACTIVE = 'Inactive'
     EXPIRED = 'Expired'

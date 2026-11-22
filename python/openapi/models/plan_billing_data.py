@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from openapi.models.billing_date import BillingDate
 from openapi.models.billing_interval import BillingInterval
 from openapi.models.plan_duration import PlanDuration
 from typing import Optional, Set
@@ -27,15 +28,18 @@ from typing_extensions import Self
 
 class PlanBillingData(BaseModel):
     """
-    The billing data of the plan. The billing data contains the billing interval, the plan duration the payment terms and auto renewal, and the billing method.
+    PlanBillingData
     """ # noqa: E501
     billing_interval: BillingInterval = Field(alias="billingInterval")
     duration: PlanDuration
     payment_term: Any = Field(alias="paymentTerm")
     auto_renewal: StrictBool = Field(alias="autoRenewal")
     pro_rated: Optional[StrictBool] = Field(default=None, alias="proRated")
+    billing_date: Optional[BillingDate] = Field(default=None, alias="billingDate")
+    renewal_duration: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="months each automatic renewal runs for; the term before it when not stated", alias="renewalDuration")
+    renews_up_to_n_times: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="how many times the contract renews automatically; no limit when not stated", alias="renewsUpToNTimes")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["billingInterval", "duration", "paymentTerm", "autoRenewal", "proRated"]
+    __properties: ClassVar[List[str]] = ["billingInterval", "duration", "paymentTerm", "autoRenewal", "proRated", "billingDate", "renewalDuration", "renewsUpToNTimes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +88,9 @@ class PlanBillingData(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payment_term
         if self.payment_term:
             _dict['paymentTerm'] = self.payment_term.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of billing_date
+        if self.billing_date:
+            _dict['billingDate'] = self.billing_date.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -93,6 +100,21 @@ class PlanBillingData(BaseModel):
         # and model_fields_set contains the field
         if self.pro_rated is None and "pro_rated" in self.model_fields_set:
             _dict['proRated'] = None
+
+        # set to None if billing_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.billing_date is None and "billing_date" in self.model_fields_set:
+            _dict['billingDate'] = None
+
+        # set to None if renewal_duration (nullable) is None
+        # and model_fields_set contains the field
+        if self.renewal_duration is None and "renewal_duration" in self.model_fields_set:
+            _dict['renewalDuration'] = None
+
+        # set to None if renews_up_to_n_times (nullable) is None
+        # and model_fields_set contains the field
+        if self.renews_up_to_n_times is None and "renews_up_to_n_times" in self.model_fields_set:
+            _dict['renewsUpToNTimes'] = None
 
         return _dict
 
@@ -110,7 +132,10 @@ class PlanBillingData(BaseModel):
             "duration": PlanDuration.from_dict(obj["duration"]) if obj.get("duration") is not None else None,
             "paymentTerm": PaymentTerm.from_dict(obj["paymentTerm"]) if obj.get("paymentTerm") is not None else None,
             "autoRenewal": obj.get("autoRenewal") if obj.get("autoRenewal") is not None else False,
-            "proRated": obj.get("proRated")
+            "proRated": obj.get("proRated"),
+            "billingDate": BillingDate.from_dict(obj["billingDate"]) if obj.get("billingDate") is not None else None,
+            "renewalDuration": obj.get("renewalDuration"),
+            "renewsUpToNTimes": obj.get("renewsUpToNTimes")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -32,16 +32,19 @@ type CreateCustomerRequest struct {
 	LegalName NullableString `json:"legalName,omitempty"`
 	// The tax IDs of the customer
 	TaxIds []string `json:"taxIds,omitempty"`
+	// The ID of the customer in the CRM system. When not set directly, it is read from the linked CRM integration (Salesforce, HubSpot).
+	CrmId NullableString `json:"crmId,omitempty"`
 	Status *CustomerStatus `json:"status,omitempty"`
 	// The tax ID of the customer (deprecated, use taxIds instead)
 	// Deprecated
 	TaxId NullableString `json:"taxId,omitempty"`
-	CloudProviderSettings NullableCustomerCloudProviderSettings `json:"cloudProviderSettings,omitempty"`
+	CloudProviderSettings NullableCreateCustomerRequestCloudProviderSettings `json:"cloudProviderSettings,omitempty"`
 	// The external ID of the customer
 	ExternalId *string `json:"externalId,omitempty"`
 	// The ID of the customer in the ERP system
 	CustomerErpId NullableString `json:"customerErpId,omitempty"`
 	Address NullableAddress `json:"address,omitempty"`
+	ShippingAddress *CreateCustomerRequestShippingAddress `json:"shippingAddress,omitempty"`
 	// The ID of the customer in the Salesforce system
 	SalesForceAccountId NullableString `json:"salesForceAccountId,omitempty"`
 	// External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry.
@@ -51,6 +54,8 @@ type CreateCustomerRequest struct {
 	Currency NullableCurrency `json:"currency,omitempty"`
 	// Custom fields from CRM systems (Salesforce, HubSpot, etc.)
 	CustomFields []CustomField `json:"customFields,omitempty"`
+	// The stored custom field values associated with the customer. Read-only: ignored on create and update requests; values are set via customFields.
+	CustomFieldValues []CustomFieldValue `json:"customFieldValues,omitempty"`
 	// The name of the subsidiary of the customer
 	Subsidiary NullableString `json:"subsidiary,omitempty"`
 	// Total outstanding amount across all unpaid invoices (in USD)
@@ -293,6 +298,48 @@ func (o *CreateCustomerRequest) SetTaxIds(v []string) {
 	o.TaxIds = v
 }
 
+// GetCrmId returns the CrmId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCrmId() string {
+	if o == nil || IsNil(o.CrmId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CrmId.Get()
+}
+
+// GetCrmIdOk returns a tuple with the CrmId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCrmIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CrmId.Get(), o.CrmId.IsSet()
+}
+
+// HasCrmId returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCrmId() bool {
+	if o != nil && o.CrmId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCrmId gets a reference to the given NullableString and assigns it to the CrmId field.
+func (o *CreateCustomerRequest) SetCrmId(v string) {
+	o.CrmId.Set(&v)
+}
+// SetCrmIdNil sets the value for CrmId to be an explicit nil
+func (o *CreateCustomerRequest) SetCrmIdNil() {
+	o.CrmId.Set(nil)
+}
+
+// UnsetCrmId ensures that no value is present for CrmId, not even an explicit nil
+func (o *CreateCustomerRequest) UnsetCrmId() {
+	o.CrmId.Unset()
+}
+
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *CreateCustomerRequest) GetStatus() CustomerStatus {
 	if o == nil || IsNil(o.Status) {
@@ -371,9 +418,9 @@ func (o *CreateCustomerRequest) UnsetTaxId() {
 }
 
 // GetCloudProviderSettings returns the CloudProviderSettings field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CreateCustomerRequest) GetCloudProviderSettings() CustomerCloudProviderSettings {
+func (o *CreateCustomerRequest) GetCloudProviderSettings() CreateCustomerRequestCloudProviderSettings {
 	if o == nil || IsNil(o.CloudProviderSettings.Get()) {
-		var ret CustomerCloudProviderSettings
+		var ret CreateCustomerRequestCloudProviderSettings
 		return ret
 	}
 	return *o.CloudProviderSettings.Get()
@@ -382,7 +429,7 @@ func (o *CreateCustomerRequest) GetCloudProviderSettings() CustomerCloudProvider
 // GetCloudProviderSettingsOk returns a tuple with the CloudProviderSettings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CreateCustomerRequest) GetCloudProviderSettingsOk() (*CustomerCloudProviderSettings, bool) {
+func (o *CreateCustomerRequest) GetCloudProviderSettingsOk() (*CreateCustomerRequestCloudProviderSettings, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -398,8 +445,8 @@ func (o *CreateCustomerRequest) HasCloudProviderSettings() bool {
 	return false
 }
 
-// SetCloudProviderSettings gets a reference to the given NullableCustomerCloudProviderSettings and assigns it to the CloudProviderSettings field.
-func (o *CreateCustomerRequest) SetCloudProviderSettings(v CustomerCloudProviderSettings) {
+// SetCloudProviderSettings gets a reference to the given NullableCreateCustomerRequestCloudProviderSettings and assigns it to the CloudProviderSettings field.
+func (o *CreateCustomerRequest) SetCloudProviderSettings(v CreateCustomerRequestCloudProviderSettings) {
 	o.CloudProviderSettings.Set(&v)
 }
 // SetCloudProviderSettingsNil sets the value for CloudProviderSettings to be an explicit nil
@@ -526,6 +573,38 @@ func (o *CreateCustomerRequest) SetAddressNil() {
 // UnsetAddress ensures that no value is present for Address, not even an explicit nil
 func (o *CreateCustomerRequest) UnsetAddress() {
 	o.Address.Unset()
+}
+
+// GetShippingAddress returns the ShippingAddress field value if set, zero value otherwise.
+func (o *CreateCustomerRequest) GetShippingAddress() CreateCustomerRequestShippingAddress {
+	if o == nil || IsNil(o.ShippingAddress) {
+		var ret CreateCustomerRequestShippingAddress
+		return ret
+	}
+	return *o.ShippingAddress
+}
+
+// GetShippingAddressOk returns a tuple with the ShippingAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCustomerRequest) GetShippingAddressOk() (*CreateCustomerRequestShippingAddress, bool) {
+	if o == nil || IsNil(o.ShippingAddress) {
+		return nil, false
+	}
+	return o.ShippingAddress, true
+}
+
+// HasShippingAddress returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasShippingAddress() bool {
+	if o != nil && !IsNil(o.ShippingAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetShippingAddress gets a reference to the given CreateCustomerRequestShippingAddress and assigns it to the ShippingAddress field.
+func (o *CreateCustomerRequest) SetShippingAddress(v CreateCustomerRequestShippingAddress) {
+	o.ShippingAddress = &v
 }
 
 // GetSalesForceAccountId returns the SalesForceAccountId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -718,6 +797,39 @@ func (o *CreateCustomerRequest) HasCustomFields() bool {
 // SetCustomFields gets a reference to the given []CustomField and assigns it to the CustomFields field.
 func (o *CreateCustomerRequest) SetCustomFields(v []CustomField) {
 	o.CustomFields = v
+}
+
+// GetCustomFieldValues returns the CustomFieldValues field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateCustomerRequest) GetCustomFieldValues() []CustomFieldValue {
+	if o == nil {
+		var ret []CustomFieldValue
+		return ret
+	}
+	return o.CustomFieldValues
+}
+
+// GetCustomFieldValuesOk returns a tuple with the CustomFieldValues field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateCustomerRequest) GetCustomFieldValuesOk() ([]CustomFieldValue, bool) {
+	if o == nil || IsNil(o.CustomFieldValues) {
+		return nil, false
+	}
+	return o.CustomFieldValues, true
+}
+
+// HasCustomFieldValues returns a boolean if a field has been set.
+func (o *CreateCustomerRequest) HasCustomFieldValues() bool {
+	if o != nil && !IsNil(o.CustomFieldValues) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomFieldValues gets a reference to the given []CustomFieldValue and assigns it to the CustomFieldValues field.
+func (o *CreateCustomerRequest) SetCustomFieldValues(v []CustomFieldValue) {
+	o.CustomFieldValues = v
 }
 
 // GetSubsidiary returns the Subsidiary field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -948,6 +1060,9 @@ func (o CreateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	if o.TaxIds != nil {
 		toSerialize["taxIds"] = o.TaxIds
 	}
+	if o.CrmId.IsSet() {
+		toSerialize["crmId"] = o.CrmId.Get()
+	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
@@ -966,6 +1081,9 @@ func (o CreateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	if o.Address.IsSet() {
 		toSerialize["address"] = o.Address.Get()
 	}
+	if !IsNil(o.ShippingAddress) {
+		toSerialize["shippingAddress"] = o.ShippingAddress
+	}
 	if o.SalesForceAccountId.IsSet() {
 		toSerialize["salesForceAccountId"] = o.SalesForceAccountId.Get()
 	}
@@ -980,6 +1098,9 @@ func (o CreateCustomerRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.CustomFields != nil {
 		toSerialize["customFields"] = o.CustomFields
+	}
+	if o.CustomFieldValues != nil {
+		toSerialize["customFieldValues"] = o.CustomFieldValues
 	}
 	if o.Subsidiary.IsSet() {
 		toSerialize["subsidiary"] = o.Subsidiary.Get()
@@ -1048,17 +1169,20 @@ func (o *CreateCustomerRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "source")
 		delete(additionalProperties, "legalName")
 		delete(additionalProperties, "taxIds")
+		delete(additionalProperties, "crmId")
 		delete(additionalProperties, "status")
 		delete(additionalProperties, "taxId")
 		delete(additionalProperties, "cloudProviderSettings")
 		delete(additionalProperties, "externalId")
 		delete(additionalProperties, "customerErpId")
 		delete(additionalProperties, "address")
+		delete(additionalProperties, "shippingAddress")
 		delete(additionalProperties, "salesForceAccountId")
 		delete(additionalProperties, "externalIntegration")
 		delete(additionalProperties, "dueDays")
 		delete(additionalProperties, "currency")
 		delete(additionalProperties, "customFields")
+		delete(additionalProperties, "customFieldValues")
 		delete(additionalProperties, "subsidiary")
 		delete(additionalProperties, "totalOutstandingAmount")
 		delete(additionalProperties, "openAmount")

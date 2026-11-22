@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** |  | [optional] 
 **Name** | **string** |  | 
+**Integration** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -70,6 +71,31 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+
+### GetIntegration
+
+`func (o *PaymentInfoDepositTo) GetIntegration() string`
+
+GetIntegration returns the Integration field if non-nil, zero value otherwise.
+
+### GetIntegrationOk
+
+`func (o *PaymentInfoDepositTo) GetIntegrationOk() (*string, bool)`
+
+GetIntegrationOk returns a tuple with the Integration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegration
+
+`func (o *PaymentInfoDepositTo) SetIntegration(v string)`
+
+SetIntegration sets Integration field to given value.
+
+### HasIntegration
+
+`func (o *PaymentInfoDepositTo) HasIntegration() bool`
+
+HasIntegration returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

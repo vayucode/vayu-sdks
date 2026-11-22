@@ -1,4 +1,4 @@
-import type { CreateCustomerRelationRequest, CreateCustomerRequest, IntegrationType, UpdateCustomerRequest } from '../../openapi';
+import type { CreateCustomerRelationRequest, CreateCustomerRequest, IntegrationProviders, UpdateCustomerRequest } from '../../openapi';
 import { CustomersApi } from '../../openapi';
 import { ConfigurationService } from '../services';
 import type { PaginationOptions } from '../types';
@@ -14,7 +14,7 @@ export class CustomersClient {
     const cursor = paginationOptions?.cursor;
     const limit = paginationOptions?.limit;
 
-    return this.client.listCustomers(limit, cursor);
+    return this.client.listCustomers(undefined, limit, cursor);
   }
 
   async get(id: string) {
@@ -49,7 +49,7 @@ export class CustomersClient {
     return this.client.getCustomerByName(name);
   }
 
-  async getByIntegrationId(integrationType: IntegrationType, integrationId: string) {
+  async getByIntegrationId(integrationType: IntegrationProviders, integrationId: string) {
     return this.client.getCustomerByIntegrationId(integrationType, integrationId);
   }
 

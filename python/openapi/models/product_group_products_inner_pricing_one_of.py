@@ -32,9 +32,10 @@ class ProductGroupProductsInnerPricingOneOf(BaseModel):
     type: StrictStr
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
     discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
-    is_credit_purchase: Optional[StrictBool] = Field(default=None, description="Whether this one-time fee is a credit purchase. When true, the product is treated as a prepaid credit that the customer can use later. Defaults to false.", alias="isCreditPurchase")
+    is_credit_purchase: Optional[StrictBool] = Field(default=None, description="Deprecated. Legacy prepaid-credit marker: sets a fixed Credit product type and prepayment, but does NOT fund a credit pool. For the credit pool system, use the contract-level creditGrants field instead. Defaults to false.", alias="isCreditPurchase")
+    issued_separately: Optional[StrictBool] = Field(default=None, description="When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.", alias="issuedSeparately")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price", "discount", "isCreditPurchase"]
+    __properties: ClassVar[List[str]] = ["type", "price", "discount", "isCreditPurchase", "issuedSeparately"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -112,7 +113,8 @@ class ProductGroupProductsInnerPricingOneOf(BaseModel):
             "type": obj.get("type"),
             "price": obj.get("price"),
             "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None,
-            "isCreditPurchase": obj.get("isCreditPurchase")
+            "isCreditPurchase": obj.get("isCreditPurchase"),
+            "issuedSeparately": obj.get("issuedSeparately")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

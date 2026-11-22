@@ -10,17 +10,20 @@ Name | Type | Description | Notes
 **Source** | Pointer to [**NullableCustomerSource**](CustomerSource.md) |  | [optional] 
 **LegalName** | Pointer to **NullableString** | The legal name of the customer | [optional] 
 **TaxIds** | Pointer to **[]string** | The tax IDs of the customer | [optional] [default to []]
+**CrmId** | Pointer to **NullableString** | The ID of the customer in the CRM system. When not set directly, it is read from the linked CRM integration (Salesforce, HubSpot). | [optional] 
 **Status** | Pointer to [**CustomerStatus**](CustomerStatus.md) |  | [optional] 
 **TaxId** | Pointer to **NullableString** | The tax ID of the customer (deprecated, use taxIds instead) | [optional] 
-**CloudProviderSettings** | Pointer to [**NullableCustomerCloudProviderSettings**](CustomerCloudProviderSettings.md) |  | [optional] 
+**CloudProviderSettings** | Pointer to [**NullableCreateCustomerRequestCloudProviderSettings**](CreateCustomerRequestCloudProviderSettings.md) |  | [optional] 
 **ExternalId** | Pointer to **string** | The external ID of the customer | [optional] 
 **CustomerErpId** | Pointer to **NullableString** | The ID of the customer in the ERP system | [optional] 
 **Address** | Pointer to [**NullableAddress**](Address.md) |  | [optional] 
+**ShippingAddress** | Pointer to [**CreateCustomerRequestShippingAddress**](CreateCustomerRequestShippingAddress.md) |  | [optional] 
 **SalesForceAccountId** | Pointer to **NullableString** | The ID of the customer in the Salesforce system | [optional] 
 **ExternalIntegration** | Pointer to [**[]CustomerExternalIntegration**](CustomerExternalIntegration.md) | External integration links for the customer. Each entry links the customer to an external provider entity by its id. Stripe entries are saved on the customer; other providers are linked via the integration registry. | [optional] 
 **DueDays** | Pointer to **NullableString** | The due days of the customer | [optional] 
 **Currency** | Pointer to [**NullableCurrency**](Currency.md) |  | [optional] 
 **CustomFields** | Pointer to [**[]CustomField**](CustomField.md) | Custom fields from CRM systems (Salesforce, HubSpot, etc.) | [optional] 
+**CustomFieldValues** | Pointer to [**[]CustomFieldValue**](CustomFieldValue.md) | The stored custom field values associated with the customer. Read-only: ignored on create and update requests; values are set via customFields. | [optional] 
 **Subsidiary** | Pointer to **NullableString** | The name of the subsidiary of the customer | [optional] 
 **TotalOutstandingAmount** | Pointer to **float32** | Total outstanding amount across all unpaid invoices (in USD) | [optional] 
 **OpenAmount** | Pointer to **float32** | Total amount of invoices with no billing status set (in USD) | [optional] 
@@ -245,6 +248,41 @@ HasTaxIds returns a boolean if a field has been set.
 `func (o *GetCustomerByNameResponseCustomer) UnsetTaxIds()`
 
 UnsetTaxIds ensures that no value is present for TaxIds, not even an explicit nil
+### GetCrmId
+
+`func (o *GetCustomerByNameResponseCustomer) GetCrmId() string`
+
+GetCrmId returns the CrmId field if non-nil, zero value otherwise.
+
+### GetCrmIdOk
+
+`func (o *GetCustomerByNameResponseCustomer) GetCrmIdOk() (*string, bool)`
+
+GetCrmIdOk returns a tuple with the CrmId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCrmId
+
+`func (o *GetCustomerByNameResponseCustomer) SetCrmId(v string)`
+
+SetCrmId sets CrmId field to given value.
+
+### HasCrmId
+
+`func (o *GetCustomerByNameResponseCustomer) HasCrmId() bool`
+
+HasCrmId returns a boolean if a field has been set.
+
+### SetCrmIdNil
+
+`func (o *GetCustomerByNameResponseCustomer) SetCrmIdNil(b bool)`
+
+ SetCrmIdNil sets the value for CrmId to be an explicit nil
+
+### UnsetCrmId
+`func (o *GetCustomerByNameResponseCustomer) UnsetCrmId()`
+
+UnsetCrmId ensures that no value is present for CrmId, not even an explicit nil
 ### GetStatus
 
 `func (o *GetCustomerByNameResponseCustomer) GetStatus() CustomerStatus`
@@ -307,20 +345,20 @@ HasTaxId returns a boolean if a field has been set.
 UnsetTaxId ensures that no value is present for TaxId, not even an explicit nil
 ### GetCloudProviderSettings
 
-`func (o *GetCustomerByNameResponseCustomer) GetCloudProviderSettings() CustomerCloudProviderSettings`
+`func (o *GetCustomerByNameResponseCustomer) GetCloudProviderSettings() CreateCustomerRequestCloudProviderSettings`
 
 GetCloudProviderSettings returns the CloudProviderSettings field if non-nil, zero value otherwise.
 
 ### GetCloudProviderSettingsOk
 
-`func (o *GetCustomerByNameResponseCustomer) GetCloudProviderSettingsOk() (*CustomerCloudProviderSettings, bool)`
+`func (o *GetCustomerByNameResponseCustomer) GetCloudProviderSettingsOk() (*CreateCustomerRequestCloudProviderSettings, bool)`
 
 GetCloudProviderSettingsOk returns a tuple with the CloudProviderSettings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCloudProviderSettings
 
-`func (o *GetCustomerByNameResponseCustomer) SetCloudProviderSettings(v CustomerCloudProviderSettings)`
+`func (o *GetCustomerByNameResponseCustomer) SetCloudProviderSettings(v CreateCustomerRequestCloudProviderSettings)`
 
 SetCloudProviderSettings sets CloudProviderSettings field to given value.
 
@@ -435,6 +473,31 @@ HasAddress returns a boolean if a field has been set.
 `func (o *GetCustomerByNameResponseCustomer) UnsetAddress()`
 
 UnsetAddress ensures that no value is present for Address, not even an explicit nil
+### GetShippingAddress
+
+`func (o *GetCustomerByNameResponseCustomer) GetShippingAddress() CreateCustomerRequestShippingAddress`
+
+GetShippingAddress returns the ShippingAddress field if non-nil, zero value otherwise.
+
+### GetShippingAddressOk
+
+`func (o *GetCustomerByNameResponseCustomer) GetShippingAddressOk() (*CreateCustomerRequestShippingAddress, bool)`
+
+GetShippingAddressOk returns a tuple with the ShippingAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShippingAddress
+
+`func (o *GetCustomerByNameResponseCustomer) SetShippingAddress(v CreateCustomerRequestShippingAddress)`
+
+SetShippingAddress sets ShippingAddress field to given value.
+
+### HasShippingAddress
+
+`func (o *GetCustomerByNameResponseCustomer) HasShippingAddress() bool`
+
+HasShippingAddress returns a boolean if a field has been set.
+
 ### GetSalesForceAccountId
 
 `func (o *GetCustomerByNameResponseCustomer) GetSalesForceAccountId() string`
@@ -610,6 +673,41 @@ HasCustomFields returns a boolean if a field has been set.
 `func (o *GetCustomerByNameResponseCustomer) UnsetCustomFields()`
 
 UnsetCustomFields ensures that no value is present for CustomFields, not even an explicit nil
+### GetCustomFieldValues
+
+`func (o *GetCustomerByNameResponseCustomer) GetCustomFieldValues() []CustomFieldValue`
+
+GetCustomFieldValues returns the CustomFieldValues field if non-nil, zero value otherwise.
+
+### GetCustomFieldValuesOk
+
+`func (o *GetCustomerByNameResponseCustomer) GetCustomFieldValuesOk() (*[]CustomFieldValue, bool)`
+
+GetCustomFieldValuesOk returns a tuple with the CustomFieldValues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomFieldValues
+
+`func (o *GetCustomerByNameResponseCustomer) SetCustomFieldValues(v []CustomFieldValue)`
+
+SetCustomFieldValues sets CustomFieldValues field to given value.
+
+### HasCustomFieldValues
+
+`func (o *GetCustomerByNameResponseCustomer) HasCustomFieldValues() bool`
+
+HasCustomFieldValues returns a boolean if a field has been set.
+
+### SetCustomFieldValuesNil
+
+`func (o *GetCustomerByNameResponseCustomer) SetCustomFieldValuesNil(b bool)`
+
+ SetCustomFieldValuesNil sets the value for CustomFieldValues to be an explicit nil
+
+### UnsetCustomFieldValues
+`func (o *GetCustomerByNameResponseCustomer) UnsetCustomFieldValues()`
+
+UnsetCustomFieldValues ensures that no value is present for CustomFieldValues, not even an explicit nil
 ### GetSubsidiary
 
 `func (o *GetCustomerByNameResponseCustomer) GetSubsidiary() string`

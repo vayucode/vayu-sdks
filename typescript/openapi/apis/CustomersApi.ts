@@ -12,6 +12,7 @@ import { CreateCustomerRelationRequest } from '../models/CreateCustomerRelationR
 import { CreateCustomerRelationResponse } from '../models/CreateCustomerRelationResponse';
 import { CreateCustomerRequest } from '../models/CreateCustomerRequest';
 import { CreateCustomerResponse } from '../models/CreateCustomerResponse';
+import { CustomerStatus } from '../models/CustomerStatus';
 import { DeleteCustomerResponse } from '../models/DeleteCustomerResponse';
 import { GetCustomerByIntegrationIdResponse } from '../models/GetCustomerByIntegrationIdResponse';
 import { GetCustomerByNameResponse } from '../models/GetCustomerByNameResponse';
@@ -19,7 +20,7 @@ import { GetCustomerProductsConsumptionsByAliasResponse } from '../models/GetCus
 import { GetCustomerProductsConsumptionsResponse } from '../models/GetCustomerProductsConsumptionsResponse';
 import { GetCustomerRelationResponse } from '../models/GetCustomerRelationResponse';
 import { GetCustomerResponse } from '../models/GetCustomerResponse';
-import { IntegrationType } from '../models/IntegrationType';
+import { IntegrationProviders } from '../models/IntegrationProviders';
 import { InternalServerErrorResponse } from '../models/InternalServerErrorResponse';
 import { ListCustomersResponse } from '../models/ListCustomersResponse';
 import { NotFoundErrorResponse } from '../models/NotFoundErrorResponse';
@@ -250,7 +251,7 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
      * @param integrationType 
      * @param integrationId 
      */
-    public async getCustomerByIntegrationId(integrationType: IntegrationType, integrationId: string, _options?: Configuration): Promise<RequestContext> {
+    public async getCustomerByIntegrationId(integrationType: IntegrationProviders, integrationId: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'integrationType' is not null or undefined
@@ -445,11 +446,13 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * Get a list of Customers.
      * List Customers
+     * @param status 
      * @param limit 
      * @param cursor 
      */
-    public async listCustomers(limit?: number, cursor?: string, _options?: Configuration): Promise<RequestContext> {
+    public async listCustomers(status?: CustomerStatus, limit?: number, cursor?: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
 
 
 
@@ -459,6 +462,14 @@ export class CustomersApiRequestFactory extends BaseAPIRequestFactory {
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+        // Query Params
+        if (status !== undefined) {
+            const serializedParams = ObjectSerializer.serialize(status, "CustomerStatus", "");
+            for (const key of Object.keys(serializedParams)) {
+                requestContext.setQueryParam(key, serializedParams[key]);
+            }
+        }
 
         // Query Params
         if (limit !== undefined) {

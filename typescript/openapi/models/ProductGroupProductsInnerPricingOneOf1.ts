@@ -17,6 +17,10 @@ import { HttpFile } from '../http/http';
 export class ProductGroupProductsInnerPricingOneOf1 {
     'type': ProductGroupProductsInnerPricingOneOf1TypeEnum;
     'price': number;
+    /**
+    * The number of units this term is charged for. When set, `price` is the rate per unit and the term is worth price x quantity. Leave unset for a flat fee.
+    */
+    'quantity'?: number;
     'installments'?: Array<ProductGroupProductsInnerPricingOneOf1InstallmentsInner> | null;
     'discount'?: ProductGroupProductsInnerPricingOneOfDiscount | null;
 
@@ -34,6 +38,12 @@ export class ProductGroupProductsInnerPricingOneOf1 {
         {
             "name": "price",
             "baseName": "price",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "quantity",
+            "baseName": "quantity",
             "type": "number",
             "format": ""
         },

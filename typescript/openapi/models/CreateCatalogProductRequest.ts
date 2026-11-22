@@ -22,9 +22,21 @@ export class CreateCatalogProductRequest {
     */
     'description'?: string;
     /**
+    * The product code of the catalog product
+    */
+    'productCode'?: string;
+    /**
+    * Whether to disable the default description on generated line items
+    */
+    'disableDescription'?: boolean;
+    /**
     * The external ID of the catalog product
     */
     'externalId'?: string;
+    /**
+    * The ID of the catalog product in the Salesforce system
+    */
+    'salesForceProductId'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -44,8 +56,26 @@ export class CreateCatalogProductRequest {
             "format": ""
         },
         {
+            "name": "productCode",
+            "baseName": "productCode",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "disableDescription",
+            "baseName": "disableDescription",
+            "type": "boolean",
+            "format": ""
+        },
+        {
             "name": "externalId",
             "baseName": "externalId",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "salesForceProductId",
+            "baseName": "salesForceProductId",
             "type": "string",
             "format": ""
         }    ];

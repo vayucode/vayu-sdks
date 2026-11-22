@@ -25,8 +25,12 @@ type Meter struct {
 	Name string `json:"name"`
 	// The name of the event that the meter is tracking.
 	EventName string `json:"eventName"`
+	// The product code of the meter
+	ProductCode *string `json:"productCode,omitempty"`
 	AggregationMethod AggregationMethod `json:"aggregationMethod"`
 	Filter *Filter `json:"filter,omitempty"`
+	// The ID of the meter in the Salesforce system
+	SalesForceProductId NullableString `json:"salesForceProductId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -100,6 +104,38 @@ func (o *Meter) SetEventName(v string) {
 	o.EventName = v
 }
 
+// GetProductCode returns the ProductCode field value if set, zero value otherwise.
+func (o *Meter) GetProductCode() string {
+	if o == nil || IsNil(o.ProductCode) {
+		var ret string
+		return ret
+	}
+	return *o.ProductCode
+}
+
+// GetProductCodeOk returns a tuple with the ProductCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Meter) GetProductCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.ProductCode) {
+		return nil, false
+	}
+	return o.ProductCode, true
+}
+
+// HasProductCode returns a boolean if a field has been set.
+func (o *Meter) HasProductCode() bool {
+	if o != nil && !IsNil(o.ProductCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductCode gets a reference to the given string and assigns it to the ProductCode field.
+func (o *Meter) SetProductCode(v string) {
+	o.ProductCode = &v
+}
+
 // GetAggregationMethod returns the AggregationMethod field value
 func (o *Meter) GetAggregationMethod() AggregationMethod {
 	if o == nil {
@@ -156,6 +192,48 @@ func (o *Meter) SetFilter(v Filter) {
 	o.Filter = &v
 }
 
+// GetSalesForceProductId returns the SalesForceProductId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Meter) GetSalesForceProductId() string {
+	if o == nil || IsNil(o.SalesForceProductId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceProductId.Get()
+}
+
+// GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Meter) GetSalesForceProductIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceProductId.Get(), o.SalesForceProductId.IsSet()
+}
+
+// HasSalesForceProductId returns a boolean if a field has been set.
+func (o *Meter) HasSalesForceProductId() bool {
+	if o != nil && o.SalesForceProductId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceProductId gets a reference to the given NullableString and assigns it to the SalesForceProductId field.
+func (o *Meter) SetSalesForceProductId(v string) {
+	o.SalesForceProductId.Set(&v)
+}
+// SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+func (o *Meter) SetSalesForceProductIdNil() {
+	o.SalesForceProductId.Set(nil)
+}
+
+// UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
+func (o *Meter) UnsetSalesForceProductId() {
+	o.SalesForceProductId.Unset()
+}
+
 func (o Meter) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -168,9 +246,15 @@ func (o Meter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["eventName"] = o.EventName
+	if !IsNil(o.ProductCode) {
+		toSerialize["productCode"] = o.ProductCode
+	}
 	toSerialize["aggregationMethod"] = o.AggregationMethod
 	if !IsNil(o.Filter) {
 		toSerialize["filter"] = o.Filter
+	}
+	if o.SalesForceProductId.IsSet() {
+		toSerialize["salesForceProductId"] = o.SalesForceProductId.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -219,8 +303,10 @@ func (o *Meter) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "eventName")
+		delete(additionalProperties, "productCode")
 		delete(additionalProperties, "aggregationMethod")
 		delete(additionalProperties, "filter")
+		delete(additionalProperties, "salesForceProductId")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -19,6 +19,7 @@ export class EventsDryRunResponseObjectEvent {
     'data'?: { [key: string]: any | null; } | null;
     'ref': string;
     'name': string;
+    'ackId'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -58,6 +59,12 @@ export class EventsDryRunResponseObjectEvent {
         {
             "name": "name",
             "baseName": "name",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "ackId",
+            "baseName": "ackId",
             "type": "string",
             "format": ""
         }    ];

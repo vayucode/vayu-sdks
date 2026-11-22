@@ -24,8 +24,12 @@ type UpdateMeterRequest struct {
 	Name *string `json:"name,omitempty"`
 	// The name of the event that the meter is tracking.
 	EventName *string `json:"eventName,omitempty"`
+	// The product code of the meter
+	ProductCode *string `json:"productCode,omitempty"`
 	AggregationMethod *AggregationMethod `json:"aggregationMethod,omitempty"`
 	Filter *Filter `json:"filter,omitempty"`
+	// The ID of the meter in the Salesforce system
+	SalesForceProductId NullableString `json:"salesForceProductId,omitempty"`
 }
 
 // NewUpdateMeterRequest instantiates a new UpdateMeterRequest object
@@ -109,6 +113,38 @@ func (o *UpdateMeterRequest) SetEventName(v string) {
 	o.EventName = &v
 }
 
+// GetProductCode returns the ProductCode field value if set, zero value otherwise.
+func (o *UpdateMeterRequest) GetProductCode() string {
+	if o == nil || IsNil(o.ProductCode) {
+		var ret string
+		return ret
+	}
+	return *o.ProductCode
+}
+
+// GetProductCodeOk returns a tuple with the ProductCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateMeterRequest) GetProductCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.ProductCode) {
+		return nil, false
+	}
+	return o.ProductCode, true
+}
+
+// HasProductCode returns a boolean if a field has been set.
+func (o *UpdateMeterRequest) HasProductCode() bool {
+	if o != nil && !IsNil(o.ProductCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductCode gets a reference to the given string and assigns it to the ProductCode field.
+func (o *UpdateMeterRequest) SetProductCode(v string) {
+	o.ProductCode = &v
+}
+
 // GetAggregationMethod returns the AggregationMethod field value if set, zero value otherwise.
 func (o *UpdateMeterRequest) GetAggregationMethod() AggregationMethod {
 	if o == nil || IsNil(o.AggregationMethod) {
@@ -173,6 +209,48 @@ func (o *UpdateMeterRequest) SetFilter(v Filter) {
 	o.Filter = &v
 }
 
+// GetSalesForceProductId returns the SalesForceProductId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateMeterRequest) GetSalesForceProductId() string {
+	if o == nil || IsNil(o.SalesForceProductId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceProductId.Get()
+}
+
+// GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateMeterRequest) GetSalesForceProductIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceProductId.Get(), o.SalesForceProductId.IsSet()
+}
+
+// HasSalesForceProductId returns a boolean if a field has been set.
+func (o *UpdateMeterRequest) HasSalesForceProductId() bool {
+	if o != nil && o.SalesForceProductId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceProductId gets a reference to the given NullableString and assigns it to the SalesForceProductId field.
+func (o *UpdateMeterRequest) SetSalesForceProductId(v string) {
+	o.SalesForceProductId.Set(&v)
+}
+// SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+func (o *UpdateMeterRequest) SetSalesForceProductIdNil() {
+	o.SalesForceProductId.Set(nil)
+}
+
+// UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
+func (o *UpdateMeterRequest) UnsetSalesForceProductId() {
+	o.SalesForceProductId.Unset()
+}
+
 func (o UpdateMeterRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -189,11 +267,17 @@ func (o UpdateMeterRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EventName) {
 		toSerialize["eventName"] = o.EventName
 	}
+	if !IsNil(o.ProductCode) {
+		toSerialize["productCode"] = o.ProductCode
+	}
 	if !IsNil(o.AggregationMethod) {
 		toSerialize["aggregationMethod"] = o.AggregationMethod
 	}
 	if !IsNil(o.Filter) {
 		toSerialize["filter"] = o.Filter
+	}
+	if o.SalesForceProductId.IsSet() {
+		toSerialize["salesForceProductId"] = o.SalesForceProductId.Get()
 	}
 	return toSerialize, nil
 }

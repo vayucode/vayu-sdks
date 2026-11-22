@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Code** | **string** |  | 
 **Message** | **string** | Human-readable error explanation | 
+**RequiredScope** | Pointer to **string** | Scope the token was missing, present on insufficient_scope errors | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetMessage sets Message field to given value.
 
+
+### GetRequiredScope
+
+`func (o *ConflictErrorResponse) GetRequiredScope() string`
+
+GetRequiredScope returns the RequiredScope field if non-nil, zero value otherwise.
+
+### GetRequiredScopeOk
+
+`func (o *ConflictErrorResponse) GetRequiredScopeOk() (*string, bool)`
+
+GetRequiredScopeOk returns a tuple with the RequiredScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequiredScope
+
+`func (o *ConflictErrorResponse) SetRequiredScope(v string)`
+
+SetRequiredScope sets RequiredScope field to given value.
+
+### HasRequiredScope
+
+`func (o *ConflictErrorResponse) HasRequiredScope() bool`
+
+HasRequiredScope returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

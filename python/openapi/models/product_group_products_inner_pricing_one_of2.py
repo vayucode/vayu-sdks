@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.product_group_products_inner_pricing_one_of2_subscription_cadence import ProductGroupProductsInnerPricingOneOf2SubscriptionCadence
@@ -34,8 +34,10 @@ class ProductGroupProductsInnerPricingOneOf2(BaseModel):
     price: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
     subscription_cadence: ProductGroupProductsInnerPricingOneOf2SubscriptionCadence = Field(alias="subscriptionCadence")
     discount: Optional[ProductGroupProductsInnerPricingOneOfDiscount] = None
+    issued_separately: Optional[StrictBool] = Field(default=None, description="When true, this product is billed on its own invoice instead of being combined with other products in the same contract. Defaults to false.", alias="issuedSeparately")
+    seats: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="The number of seats for this subscription product.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "price", "subscriptionCadence", "discount"]
+    __properties: ClassVar[List[str]] = ["type", "price", "subscriptionCadence", "discount", "issuedSeparately", "seats"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -116,7 +118,9 @@ class ProductGroupProductsInnerPricingOneOf2(BaseModel):
             "type": obj.get("type"),
             "price": obj.get("price"),
             "subscriptionCadence": ProductGroupProductsInnerPricingOneOf2SubscriptionCadence.from_dict(obj["subscriptionCadence"]) if obj.get("subscriptionCadence") is not None else None,
-            "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None
+            "discount": ProductGroupProductsInnerPricingOneOfDiscount.from_dict(obj["discount"]) if obj.get("discount") is not None else None,
+            "issuedSeparately": obj.get("issuedSeparately"),
+            "seats": obj.get("seats")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

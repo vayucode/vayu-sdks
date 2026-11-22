@@ -17,13 +17,22 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from datetime import datetime
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional, Union
 from typing_extensions import Annotated
+from openapi.models.cancel_invoice_response import CancelInvoiceResponse
+from openapi.models.delete_invoice_response import DeleteInvoiceResponse
 from openapi.models.get_invoice_response import GetInvoiceResponse
+from openapi.models.invoice_billing_status import InvoiceBillingStatus
 from openapi.models.invoice_payment_status_response import InvoicePaymentStatusResponse
 from openapi.models.list_invoices_response import ListInvoicesResponse
+from openapi.models.record_invoice_payment_request import RecordInvoicePaymentRequest
+from openapi.models.record_invoice_payment_response import RecordInvoicePaymentResponse
+from openapi.models.reissue_invoice_response import ReissueInvoiceResponse
+from openapi.models.update_invoice_due_date_request import UpdateInvoiceDueDateRequest
+from openapi.models.update_invoice_due_date_response import UpdateInvoiceDueDateResponse
+from openapi.models.update_invoice_issue_date_request import UpdateInvoiceIssueDateRequest
+from openapi.models.update_invoice_issue_date_response import UpdateInvoiceIssueDateResponse
 
 from openapi.api_client import ApiClient, RequestSerialized
 from openapi.api_response import ApiResponse
@@ -41,6 +50,564 @@ class InvoicesApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    def cancel_invoice(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CancelInvoiceResponse:
+        """Cancel an invoice
+
+        Use this endpoint to cancel an invoice.     Only an approved invoice with no payments recorded can be cancelled.     Cancelling an invoice cannot be undone.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._cancel_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CancelInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def cancel_invoice_with_http_info(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CancelInvoiceResponse]:
+        """Cancel an invoice
+
+        Use this endpoint to cancel an invoice.     Only an approved invoice with no payments recorded can be cancelled.     Cancelling an invoice cannot be undone.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._cancel_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CancelInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def cancel_invoice_without_preload_content(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Cancel an invoice
+
+        Use this endpoint to cancel an invoice.     Only an approved invoice with no payments recorded can be cancelled.     Cancelling an invoice cannot be undone.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._cancel_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CancelInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _cancel_invoice_serialize(
+        self,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/invoices/{invoiceId}/cancel',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_invoice(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DeleteInvoiceResponse:
+        """Delete Invoice
+
+        Delete a Invoice by id.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_invoice_with_http_info(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DeleteInvoiceResponse]:
+        """Delete Invoice
+
+        Delete a Invoice by id.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_invoice_without_preload_content(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Invoice
+
+        Delete a Invoice by id.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_invoice_serialize(
+        self,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/invoices/{invoiceId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -598,9 +1165,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
-        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
-        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
+        billing_status: Optional[InvoiceBillingStatus] = None,
+        issued_after: Optional[StrictStr] = None,
+        issued_before: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -624,12 +1191,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status: Filter invoices by their billing status
-        :type billing_status: str
-        :param issued_at_from: Only include invoices issued on or after this timestamp
-        :type issued_at_from: datetime
-        :param issued_at_to: Only include invoices issued on or before this timestamp
-        :type issued_at_to: datetime
+        :param billing_status:
+        :type billing_status: InvoiceBillingStatus
+        :param issued_after:
+        :type issued_after: str
+        :param issued_before:
+        :type issued_before: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -657,8 +1224,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_at_from=issued_at_from,
-            issued_at_to=issued_at_to,
+            issued_after=issued_after,
+            issued_before=issued_before,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -689,9 +1256,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
-        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
-        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
+        billing_status: Optional[InvoiceBillingStatus] = None,
+        issued_after: Optional[StrictStr] = None,
+        issued_before: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -715,12 +1282,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status: Filter invoices by their billing status
-        :type billing_status: str
-        :param issued_at_from: Only include invoices issued on or after this timestamp
-        :type issued_at_from: datetime
-        :param issued_at_to: Only include invoices issued on or before this timestamp
-        :type issued_at_to: datetime
+        :param billing_status:
+        :type billing_status: InvoiceBillingStatus
+        :param issued_after:
+        :type issued_after: str
+        :param issued_before:
+        :type issued_before: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -748,8 +1315,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_at_from=issued_at_from,
-            issued_at_to=issued_at_to,
+            issued_after=issued_after,
+            issued_before=issued_before,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -780,9 +1347,9 @@ class InvoicesApi:
         limit: Optional[Union[Annotated[float, Field(le=1000, strict=True, ge=1)], Annotated[int, Field(le=1000, strict=True, ge=1)]]] = None,
         cursor: Optional[StrictStr] = None,
         customer_id: Optional[Annotated[str, Field(strict=True)]] = None,
-        billing_status: Annotated[Optional[StrictStr], Field(description="Filter invoices by their billing status")] = None,
-        issued_at_from: Annotated[Optional[datetime], Field(description="Only include invoices issued on or after this timestamp")] = None,
-        issued_at_to: Annotated[Optional[datetime], Field(description="Only include invoices issued on or before this timestamp")] = None,
+        billing_status: Optional[InvoiceBillingStatus] = None,
+        issued_after: Optional[StrictStr] = None,
+        issued_before: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -806,12 +1373,12 @@ class InvoicesApi:
         :type cursor: str
         :param customer_id:
         :type customer_id: str
-        :param billing_status: Filter invoices by their billing status
-        :type billing_status: str
-        :param issued_at_from: Only include invoices issued on or after this timestamp
-        :type issued_at_from: datetime
-        :param issued_at_to: Only include invoices issued on or before this timestamp
-        :type issued_at_to: datetime
+        :param billing_status:
+        :type billing_status: InvoiceBillingStatus
+        :param issued_after:
+        :type issued_after: str
+        :param issued_before:
+        :type issued_before: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -839,8 +1406,8 @@ class InvoicesApi:
             cursor=cursor,
             customer_id=customer_id,
             billing_status=billing_status,
-            issued_at_from=issued_at_from,
-            issued_at_to=issued_at_to,
+            issued_after=issued_after,
+            issued_before=issued_before,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -867,8 +1434,8 @@ class InvoicesApi:
         cursor,
         customer_id,
         billing_status,
-        issued_at_from,
-        issued_at_to,
+        issued_after,
+        issued_before,
         _request_auth,
         _content_type,
         _headers,
@@ -905,33 +1472,15 @@ class InvoicesApi:
             
         if billing_status is not None:
             
-            _query_params.append(('billingStatus', billing_status))
+            _query_params.append(('billingStatus', billing_status.value))
             
-        if issued_at_from is not None:
-            if isinstance(issued_at_from, datetime):
-                _query_params.append(
-                    (
-                        'issuedAtFrom',
-                        issued_at_from.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('issuedAtFrom', issued_at_from))
+        if issued_after is not None:
             
-        if issued_at_to is not None:
-            if isinstance(issued_at_to, datetime):
-                _query_params.append(
-                    (
-                        'issuedAtTo',
-                        issued_at_to.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('issuedAtTo', issued_at_to))
+            _query_params.append(('issuedAfter', issued_after))
+            
+        if issued_before is not None:
+            
+            _query_params.append(('issuedBefore', issued_before))
             
         # process the header parameters
         # process the form parameters
@@ -955,6 +1504,1212 @@ class InvoicesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/invoices',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def record_invoice_payment(
+        self,
+        record_invoice_payment_request: RecordInvoicePaymentRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RecordInvoicePaymentResponse:
+        """Record a payment on an invoice
+
+        Use this endpoint to record a payment on an approved invoice.     Provide the amount and an idempotencyKey in the request body.     Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.     That credit is not exported as a credit memo to a connected accounting system.     The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.     An idempotencyKey is remembered for 24 hours.     A request whose transactionId is already recorded on the invoice is refused.     If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.     A recorded payment cannot be edited or deleted through the API.
+
+        :param record_invoice_payment_request: (required)
+        :type record_invoice_payment_request: RecordInvoicePaymentRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._record_invoice_payment_serialize(
+            record_invoice_payment_request=record_invoice_payment_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RecordInvoicePaymentResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '422': "UnprocessableEntityErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def record_invoice_payment_with_http_info(
+        self,
+        record_invoice_payment_request: RecordInvoicePaymentRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RecordInvoicePaymentResponse]:
+        """Record a payment on an invoice
+
+        Use this endpoint to record a payment on an approved invoice.     Provide the amount and an idempotencyKey in the request body.     Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.     That credit is not exported as a credit memo to a connected accounting system.     The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.     An idempotencyKey is remembered for 24 hours.     A request whose transactionId is already recorded on the invoice is refused.     If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.     A recorded payment cannot be edited or deleted through the API.
+
+        :param record_invoice_payment_request: (required)
+        :type record_invoice_payment_request: RecordInvoicePaymentRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._record_invoice_payment_serialize(
+            record_invoice_payment_request=record_invoice_payment_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RecordInvoicePaymentResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '422': "UnprocessableEntityErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def record_invoice_payment_without_preload_content(
+        self,
+        record_invoice_payment_request: RecordInvoicePaymentRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Record a payment on an invoice
+
+        Use this endpoint to record a payment on an approved invoice.     Provide the amount and an idempotencyKey in the request body.     Partial payments are allowed. When the amount is higher than what is still owed, the invoice is marked as paid and the excess is added as a credit to the customer.     That credit is not exported as a credit memo to a connected accounting system.     The idempotencyKey makes a retry safe: repeating a request with the same key and the same body does not record a second payment, and the same key with a different body is rejected.     An idempotencyKey is remembered for 24 hours.     A request whose transactionId is already recorded on the invoice is refused.     If a request with the same idempotencyKey is still being processed or ended without a result, the answer is a conflict: retry after a short delay, and if the answer stays the same, read the invoice to check whether the payment was recorded and, if it was not, send the request again with a new idempotencyKey.     A recorded payment cannot be edited or deleted through the API.
+
+        :param record_invoice_payment_request: (required)
+        :type record_invoice_payment_request: RecordInvoicePaymentRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._record_invoice_payment_serialize(
+            record_invoice_payment_request=record_invoice_payment_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RecordInvoicePaymentResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '422': "UnprocessableEntityErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _record_invoice_payment_serialize(
+        self,
+        record_invoice_payment_request,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if record_invoice_payment_request is not None:
+            _body_params = record_invoice_payment_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/invoices/{invoiceId}/payments',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def reissue_invoice(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ReissueInvoiceResponse:
+        """Reissue an invoice
+
+        Use this endpoint to reissue an invoice: the original invoice is cancelled and a replacement is produced.     Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.     The original invoice is cancelled and cannot be restored.     For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.     For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement's id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.     A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.     Invoice reissue must be enabled for your account.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reissue_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ReissueInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '403': "ForbiddenErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def reissue_invoice_with_http_info(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ReissueInvoiceResponse]:
+        """Reissue an invoice
+
+        Use this endpoint to reissue an invoice: the original invoice is cancelled and a replacement is produced.     Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.     The original invoice is cancelled and cannot be restored.     For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.     For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement's id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.     A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.     Invoice reissue must be enabled for your account.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reissue_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ReissueInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '403': "ForbiddenErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def reissue_invoice_without_preload_content(
+        self,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Reissue an invoice
+
+        Use this endpoint to reissue an invoice: the original invoice is cancelled and a replacement is produced.     Only an approved invoice with no payments or credits applied that is not linked to a parent or child invoice can be reissued.     The original invoice is cancelled and cannot be restored.     For a manually created invoice, the replacement is created right away and its id is returned in replacementInvoiceId by this call only. Store it, because calling this endpoint again for that invoice is refused.     For an invoice generated from a contract, replacementInvoiceId is null at first because the replacement is generated shortly after the request. Calling this endpoint again returns the replacement's id once it exists and can be matched to this invoice; otherwise it returns null and asks again for the replacement to be generated.     A replacement can be read through GET /invoices/{invoiceId} only once it has finished calculating, because invoices that are still being calculated are not returned.     Invoice reissue must be enabled for your account.
+
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reissue_invoice_serialize(
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ReissueInvoiceResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '403': "ForbiddenErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '424': "FailedDependencyErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _reissue_invoice_serialize(
+        self,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/invoices/{invoiceId}/reissue',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_invoice_due_date(
+        self,
+        update_invoice_due_date_request: UpdateInvoiceDueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateInvoiceDueDateResponse:
+        """Update the due date of an invoice
+
+        Use this endpoint to change the due date of an invoice.     Provide the new dueDate in the request body.     The due date of an invoice that is already paid or cancelled cannot be changed.
+
+        :param update_invoice_due_date_request: (required)
+        :type update_invoice_due_date_request: UpdateInvoiceDueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_due_date_serialize(
+            update_invoice_due_date_request=update_invoice_due_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceDueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def update_invoice_due_date_with_http_info(
+        self,
+        update_invoice_due_date_request: UpdateInvoiceDueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateInvoiceDueDateResponse]:
+        """Update the due date of an invoice
+
+        Use this endpoint to change the due date of an invoice.     Provide the new dueDate in the request body.     The due date of an invoice that is already paid or cancelled cannot be changed.
+
+        :param update_invoice_due_date_request: (required)
+        :type update_invoice_due_date_request: UpdateInvoiceDueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_due_date_serialize(
+            update_invoice_due_date_request=update_invoice_due_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceDueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_invoice_due_date_without_preload_content(
+        self,
+        update_invoice_due_date_request: UpdateInvoiceDueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update the due date of an invoice
+
+        Use this endpoint to change the due date of an invoice.     Provide the new dueDate in the request body.     The due date of an invoice that is already paid or cancelled cannot be changed.
+
+        :param update_invoice_due_date_request: (required)
+        :type update_invoice_due_date_request: UpdateInvoiceDueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_due_date_serialize(
+            update_invoice_due_date_request=update_invoice_due_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceDueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_invoice_due_date_serialize(
+        self,
+        update_invoice_due_date_request,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if update_invoice_due_date_request is not None:
+            _body_params = update_invoice_due_date_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/invoices/{invoiceId}/due-date',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_invoice_issue_date(
+        self,
+        update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateInvoiceIssueDateResponse:
+        """Update the issue date of an invoice
+
+        Use this endpoint to change the issue date of an invoice.     Provide the new issuedAt date in the request body.     The issue date can only be changed before the invoice is approved.     Changing it recalculates the due date from the invoice's payment terms.
+
+        :param update_invoice_issue_date_request: (required)
+        :type update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_issue_date_serialize(
+            update_invoice_issue_date_request=update_invoice_issue_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceIssueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def update_invoice_issue_date_with_http_info(
+        self,
+        update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateInvoiceIssueDateResponse]:
+        """Update the issue date of an invoice
+
+        Use this endpoint to change the issue date of an invoice.     Provide the new issuedAt date in the request body.     The issue date can only be changed before the invoice is approved.     Changing it recalculates the due date from the invoice's payment terms.
+
+        :param update_invoice_issue_date_request: (required)
+        :type update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_issue_date_serialize(
+            update_invoice_issue_date_request=update_invoice_issue_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceIssueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_invoice_issue_date_without_preload_content(
+        self,
+        update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest,
+        invoice_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update the issue date of an invoice
+
+        Use this endpoint to change the issue date of an invoice.     Provide the new issuedAt date in the request body.     The issue date can only be changed before the invoice is approved.     Changing it recalculates the due date from the invoice's payment terms.
+
+        :param update_invoice_issue_date_request: (required)
+        :type update_invoice_issue_date_request: UpdateInvoiceIssueDateRequest
+        :param invoice_id: (required)
+        :type invoice_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_invoice_issue_date_serialize(
+            update_invoice_issue_date_request=update_invoice_issue_date_request,
+            invoice_id=invoice_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateInvoiceIssueDateResponse",
+            '400': "ValidationErrorResponse",
+            '401': "UnauthorizedErrorResponse",
+            '404': "NotFoundErrorResponse",
+            '409': "ActionRefusedErrorResponse",
+            '429': "RateLimitErrorResponse",
+            '500': "InternalServerErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_invoice_issue_date_serialize(
+        self,
+        update_invoice_issue_date_request,
+        invoice_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invoice_id is not None:
+            _path_params['invoiceId'] = invoice_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if update_invoice_issue_date_request is not None:
+            _body_params = update_invoice_issue_date_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuthorizer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/invoices/{invoiceId}/issue-date',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

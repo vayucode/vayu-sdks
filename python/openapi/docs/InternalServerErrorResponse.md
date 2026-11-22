@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **code** | **str** |  | 
 **message** | **str** | Human-readable error explanation | 
+**required_scope** | **str** | Scope the token was missing, present on insufficient_scope errors | [optional] 
 
 ## Example
 

@@ -31,7 +31,7 @@ type ProductGroup struct {
 	NsClass NullableString `json:"nsClass,omitempty"`
 	// The id of the class of the product in NetSuite ERP
 	NsClassId NullableString `json:"nsClassId,omitempty"`
-	// The products that the product group is associated with
+	// The usage-priced (PER_UNIT or TIERED) products that the product group is associated with. A fixed-priced product cannot be a member of a group; list it under products instead.
 	Products []ProductGroupProductsInner `json:"products"`
 	// The base amount for the customer to pay even if the amount based on usage is lower
 	BaseAmount NullableFloat32 `json:"baseAmount,omitempty"`

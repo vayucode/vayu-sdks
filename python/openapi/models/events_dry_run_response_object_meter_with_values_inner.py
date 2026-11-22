@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from openapi.models.aggregation_method import AggregationMethod
@@ -32,12 +32,14 @@ class EventsDryRunResponseObjectMeterWithValuesInner(BaseModel):
     """ # noqa: E501
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the meter")
     event_name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="The name of the event that the meter is tracking.", alias="eventName")
+    product_code: Optional[StrictStr] = Field(default=None, description="The product code of the meter", alias="productCode")
     aggregation_method: AggregationMethod = Field(alias="aggregationMethod")
     filter: Optional[Filter] = None
+    sales_force_product_id: Optional[StrictStr] = Field(default=None, description="The ID of the meter in the Salesforce system", alias="salesForceProductId")
     value: Optional[Union[StrictFloat, StrictInt]]
     instance_value: Optional[Any] = Field(default=None, alias="instanceValue")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "eventName", "aggregationMethod", "filter", "value", "instanceValue"]
+    __properties: ClassVar[List[str]] = ["name", "eventName", "productCode", "aggregationMethod", "filter", "salesForceProductId", "value", "instanceValue"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +93,11 @@ class EventsDryRunResponseObjectMeterWithValuesInner(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if sales_force_product_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.sales_force_product_id is None and "sales_force_product_id" in self.model_fields_set:
+            _dict['salesForceProductId'] = None
+
         # set to None if value (nullable) is None
         # and model_fields_set contains the field
         if self.value is None and "value" in self.model_fields_set:
@@ -115,8 +122,10 @@ class EventsDryRunResponseObjectMeterWithValuesInner(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "eventName": obj.get("eventName"),
+            "productCode": obj.get("productCode"),
             "aggregationMethod": AggregationMethod.from_dict(obj["aggregationMethod"]) if obj.get("aggregationMethod") is not None else None,
             "filter": Filter.from_dict(obj["filter"]) if obj.get("filter") is not None else None,
+            "salesForceProductId": obj.get("salesForceProductId"),
             "value": obj.get("value"),
             "instanceValue": obj.get("instanceValue")
         })

@@ -35,6 +35,10 @@ class Currency(str, Enum):
     AUD = 'AUD'
     COP = 'COP'
     BRL = 'BRL'
+    ARS = 'ARS'
+    INR = 'INR'
+    MXN = 'MXN'
+    CHF = 'CHF'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

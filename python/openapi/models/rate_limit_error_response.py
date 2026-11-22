@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,8 +30,9 @@ class RateLimitErrorResponse(BaseModel):
     type: StrictStr
     code: StrictStr
     message: StrictStr = Field(description="Human-readable error explanation")
+    required_scope: Optional[StrictStr] = Field(default=None, description="Scope the token was missing, present on insufficient_scope errors", alias="requiredScope")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "code", "message"]
+    __properties: ClassVar[List[str]] = ["type", "code", "message", "requiredScope"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -107,7 +108,8 @@ class RateLimitErrorResponse(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "code": obj.get("code"),
-            "message": obj.get("message")
+            "message": obj.get("message"),
+            "requiredScope": obj.get("requiredScope")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

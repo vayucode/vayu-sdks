@@ -26,10 +26,14 @@ type DeleteCatalogProductResponseCatalogProduct struct {
 	Name string `json:"name"`
 	// The description of the catalog product
 	Description *string `json:"description,omitempty"`
+	// The product code of the catalog product
+	ProductCode *string `json:"productCode,omitempty"`
 	// Whether to disable the default description on generated line items
 	DisableDescription *bool `json:"disableDescription,omitempty"`
 	// The external ID of the catalog product
 	ExternalId *string `json:"externalId,omitempty"`
+	// The ID of the catalog product in the Salesforce system
+	SalesForceProductId NullableString `json:"salesForceProductId,omitempty"`
 	Id string `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -117,6 +121,38 @@ func (o *DeleteCatalogProductResponseCatalogProduct) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetProductCode returns the ProductCode field value if set, zero value otherwise.
+func (o *DeleteCatalogProductResponseCatalogProduct) GetProductCode() string {
+	if o == nil || IsNil(o.ProductCode) {
+		var ret string
+		return ret
+	}
+	return *o.ProductCode
+}
+
+// GetProductCodeOk returns a tuple with the ProductCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteCatalogProductResponseCatalogProduct) GetProductCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.ProductCode) {
+		return nil, false
+	}
+	return o.ProductCode, true
+}
+
+// HasProductCode returns a boolean if a field has been set.
+func (o *DeleteCatalogProductResponseCatalogProduct) HasProductCode() bool {
+	if o != nil && !IsNil(o.ProductCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductCode gets a reference to the given string and assigns it to the ProductCode field.
+func (o *DeleteCatalogProductResponseCatalogProduct) SetProductCode(v string) {
+	o.ProductCode = &v
+}
+
 // GetDisableDescription returns the DisableDescription field value if set, zero value otherwise.
 func (o *DeleteCatalogProductResponseCatalogProduct) GetDisableDescription() bool {
 	if o == nil || IsNil(o.DisableDescription) {
@@ -179,6 +215,48 @@ func (o *DeleteCatalogProductResponseCatalogProduct) HasExternalId() bool {
 // SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
 func (o *DeleteCatalogProductResponseCatalogProduct) SetExternalId(v string) {
 	o.ExternalId = &v
+}
+
+// GetSalesForceProductId returns the SalesForceProductId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DeleteCatalogProductResponseCatalogProduct) GetSalesForceProductId() string {
+	if o == nil || IsNil(o.SalesForceProductId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SalesForceProductId.Get()
+}
+
+// GetSalesForceProductIdOk returns a tuple with the SalesForceProductId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DeleteCatalogProductResponseCatalogProduct) GetSalesForceProductIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SalesForceProductId.Get(), o.SalesForceProductId.IsSet()
+}
+
+// HasSalesForceProductId returns a boolean if a field has been set.
+func (o *DeleteCatalogProductResponseCatalogProduct) HasSalesForceProductId() bool {
+	if o != nil && o.SalesForceProductId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesForceProductId gets a reference to the given NullableString and assigns it to the SalesForceProductId field.
+func (o *DeleteCatalogProductResponseCatalogProduct) SetSalesForceProductId(v string) {
+	o.SalesForceProductId.Set(&v)
+}
+// SetSalesForceProductIdNil sets the value for SalesForceProductId to be an explicit nil
+func (o *DeleteCatalogProductResponseCatalogProduct) SetSalesForceProductIdNil() {
+	o.SalesForceProductId.Set(nil)
+}
+
+// UnsetSalesForceProductId ensures that no value is present for SalesForceProductId, not even an explicit nil
+func (o *DeleteCatalogProductResponseCatalogProduct) UnsetSalesForceProductId() {
+	o.SalesForceProductId.Unset()
 }
 
 // GetId returns the Id field value
@@ -291,11 +369,17 @@ func (o DeleteCatalogProductResponseCatalogProduct) ToMap() (map[string]interfac
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
+	if !IsNil(o.ProductCode) {
+		toSerialize["productCode"] = o.ProductCode
+	}
 	if !IsNil(o.DisableDescription) {
 		toSerialize["disableDescription"] = o.DisableDescription
 	}
 	if !IsNil(o.ExternalId) {
 		toSerialize["externalId"] = o.ExternalId
+	}
+	if o.SalesForceProductId.IsSet() {
+		toSerialize["salesForceProductId"] = o.SalesForceProductId.Get()
 	}
 	toSerialize["id"] = o.Id
 	toSerialize["createdAt"] = o.CreatedAt
@@ -350,8 +434,10 @@ func (o *DeleteCatalogProductResponseCatalogProduct) UnmarshalJSON(data []byte) 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "description")
+		delete(additionalProperties, "productCode")
 		delete(additionalProperties, "disableDescription")
 		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "salesForceProductId")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "createdAt")
 		delete(additionalProperties, "updatedAt")

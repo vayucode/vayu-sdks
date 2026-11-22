@@ -25,6 +25,7 @@ type IntegrationEntity struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 	IntegrationProvider IntegrationProviders `json:"integrationProvider"`
 	IntegrationExternalId string `json:"integrationExternalId"`
+	SubsidiaryId *string `json:"subsidiaryId,omitempty"`
 	SyncStatus SyncStatus `json:"syncStatus"`
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 	RawSyncedData map[string]interface{} `json:"rawSyncedData,omitempty"`
@@ -124,6 +125,38 @@ func (o *IntegrationEntity) GetIntegrationExternalIdOk() (*string, bool) {
 // SetIntegrationExternalId sets field value
 func (o *IntegrationEntity) SetIntegrationExternalId(v string) {
 	o.IntegrationExternalId = v
+}
+
+// GetSubsidiaryId returns the SubsidiaryId field value if set, zero value otherwise.
+func (o *IntegrationEntity) GetSubsidiaryId() string {
+	if o == nil || IsNil(o.SubsidiaryId) {
+		var ret string
+		return ret
+	}
+	return *o.SubsidiaryId
+}
+
+// GetSubsidiaryIdOk returns a tuple with the SubsidiaryId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IntegrationEntity) GetSubsidiaryIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SubsidiaryId) {
+		return nil, false
+	}
+	return o.SubsidiaryId, true
+}
+
+// HasSubsidiaryId returns a boolean if a field has been set.
+func (o *IntegrationEntity) HasSubsidiaryId() bool {
+	if o != nil && !IsNil(o.SubsidiaryId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubsidiaryId gets a reference to the given string and assigns it to the SubsidiaryId field.
+func (o *IntegrationEntity) SetSubsidiaryId(v string) {
+	o.SubsidiaryId = &v
 }
 
 // GetSyncStatus returns the SyncStatus field value
@@ -229,6 +262,9 @@ func (o IntegrationEntity) ToMap() (map[string]interface{}, error) {
 	toSerialize["updatedAt"] = o.UpdatedAt
 	toSerialize["integrationProvider"] = o.IntegrationProvider
 	toSerialize["integrationExternalId"] = o.IntegrationExternalId
+	if !IsNil(o.SubsidiaryId) {
+		toSerialize["subsidiaryId"] = o.SubsidiaryId
+	}
 	toSerialize["syncStatus"] = o.SyncStatus
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata
@@ -285,6 +321,7 @@ func (o *IntegrationEntity) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "updatedAt")
 		delete(additionalProperties, "integrationProvider")
 		delete(additionalProperties, "integrationExternalId")
+		delete(additionalProperties, "subsidiaryId")
 		delete(additionalProperties, "syncStatus")
 		delete(additionalProperties, "metadata")
 		delete(additionalProperties, "rawSyncedData")

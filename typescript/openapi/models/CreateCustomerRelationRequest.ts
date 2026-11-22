@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { CustomerRelationType } from '../models/CustomerRelationType';
 import { HttpFile } from '../http/http';
 
 export class CreateCustomerRelationRequest {
@@ -21,6 +22,7 @@ export class CreateCustomerRelationRequest {
     * Identifier of the child customer in Vayu.
     */
     'vayuChildCustomerId': string;
+    'relationType': CustomerRelationType;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -38,6 +40,12 @@ export class CreateCustomerRelationRequest {
             "baseName": "vayuChildCustomerId",
             "type": "string",
             "format": ""
+        },
+        {
+            "name": "relationType",
+            "baseName": "relationType",
+            "type": "CustomerRelationType",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
@@ -47,3 +55,5 @@ export class CreateCustomerRelationRequest {
     public constructor() {
     }
 }
+
+

@@ -24,6 +24,8 @@ const (
 	CUSTOMERRELATIONTYPE_ACCUMULATE_USAGE CustomerRelationType = "accumulateUsage"
 	CUSTOMERRELATIONTYPE_ACCUMULATE_CHARGES CustomerRelationType = "accumulateCharges"
 	CUSTOMERRELATIONTYPE_ERP_INVOICE_SYNC_ON_BEHALF_PARENT CustomerRelationType = "erpInvoiceSyncOnBehalfParent"
+	CUSTOMERRELATIONTYPE_BILL_TO_PARENT CustomerRelationType = "billToParent"
+	CUSTOMERRELATIONTYPE_REPORTING_ONLY CustomerRelationType = "reportingOnly"
 )
 
 // All allowed values of CustomerRelationType enum
@@ -31,6 +33,8 @@ var AllowedCustomerRelationTypeEnumValues = []CustomerRelationType{
 	"accumulateUsage",
 	"accumulateCharges",
 	"erpInvoiceSyncOnBehalfParent",
+	"billToParent",
+	"reportingOnly",
 }
 
 func (v *CustomerRelationType) UnmarshalJSON(src []byte) error {

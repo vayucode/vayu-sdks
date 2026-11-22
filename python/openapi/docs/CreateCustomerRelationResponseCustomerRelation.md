@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **vayu_parent_customer_id** | **str** | Identifier of the parent customer in Vayu. | 
 **vayu_child_customer_id** | **str** | Identifier of the child customer in Vayu. | 
+**relation_type** | [**CustomerRelationType**](CustomerRelationType.md) |  | [default to CustomerRelationType.ACCUMULATEUSAGE]
 **id** | **str** |  | 
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 

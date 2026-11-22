@@ -33,11 +33,12 @@ class IntegrationEntity(BaseModel):
     updated_at: datetime = Field(alias="updatedAt")
     integration_provider: IntegrationProviders = Field(alias="integrationProvider")
     integration_external_id: StrictStr = Field(alias="integrationExternalId")
+    subsidiary_id: Optional[StrictStr] = Field(default=None, alias="subsidiaryId")
     sync_status: SyncStatus = Field(alias="syncStatus")
     metadata: Optional[Dict[str, Any]] = None
     raw_synced_data: Optional[Dict[str, Any]] = Field(default=None, alias="rawSyncedData")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["updatedAt", "integrationProvider", "integrationExternalId", "syncStatus", "metadata", "rawSyncedData"]
+    __properties: ClassVar[List[str]] = ["updatedAt", "integrationProvider", "integrationExternalId", "subsidiaryId", "syncStatus", "metadata", "rawSyncedData"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -110,6 +111,7 @@ class IntegrationEntity(BaseModel):
             "updatedAt": obj.get("updatedAt"),
             "integrationProvider": obj.get("integrationProvider"),
             "integrationExternalId": obj.get("integrationExternalId"),
+            "subsidiaryId": obj.get("subsidiaryId"),
             "syncStatus": obj.get("syncStatus"),
             "metadata": obj.get("metadata"),
             "rawSyncedData": obj.get("rawSyncedData")

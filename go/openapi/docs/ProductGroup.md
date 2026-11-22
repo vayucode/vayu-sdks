@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **ProductErpId** | Pointer to **NullableString** | The id of the product in NetSuite ERP | [optional] 
 **NsClass** | Pointer to **NullableString** | The class of the product in NetSuite ERP | [optional] 
 **NsClassId** | Pointer to **NullableString** | The id of the class of the product in NetSuite ERP | [optional] 
-**Products** | [**[]ProductGroupProductsInner**](ProductGroupProductsInner.md) | The products that the product group is associated with | 
+**Products** | [**[]ProductGroupProductsInner**](ProductGroupProductsInner.md) | The usage-priced (PER_UNIT or TIERED) products that the product group is associated with. A fixed-priced product cannot be a member of a group; list it under products instead. | 
 **BaseAmount** | Pointer to **NullableFloat32** | The base amount for the customer to pay even if the amount based on usage is lower | [optional] 
 **Commitment** | Pointer to [**NullableProductGroupCommitment**](ProductGroupCommitment.md) |  | [optional] 
 **IsCalendarAligned** | Pointer to **bool** | Whether the invoicing period should be calendar aligned. If not provided, it will default to false. ONE_TIME and COMMERCIAL_TERMS pricing models cannot be calendar aligned. | [optional] 
